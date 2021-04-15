@@ -1,0 +1,3 @@
+[submodule "softwipe"]
+	path = softwipe
+	url = https://github.com/adrianzap/softwipe
