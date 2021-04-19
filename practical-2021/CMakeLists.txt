@@ -11,3 +11,7 @@ add_subdirectory(libs)
 add_subdirectory(src)
 add_subdirectory(utils)
 add_subdirectory(test)
+
+add_subdirectory(googletest EXCLUDE_FROM_ALL)
+include_directories(SYSTEM ${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+include_directories(SYSTEM ${gtest_SOURCE_DIR}/../googlemock/include ${gtest_SOURCE_DIR}/../googlemock/)
