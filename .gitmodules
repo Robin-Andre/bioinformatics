@@ -1,6 +1,6 @@
 [submodule "softwipe"]
 	path = softwipe
 	url = https://github.com/adrianzap/softwipe
-[submodule "googletest"]
-	path = googletest
+[submodule "practical-2021/googletest"]
+	path = practical-2021/googletest
 	url = https://github.com/google/googletest.git
