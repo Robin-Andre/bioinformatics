@@ -18,14 +18,15 @@ RFDistance::RFDistance(const std::string &data_set_path){
       std::getline(tree_file, line);
       PllTree first_tree = PllTree(line);
       tip_count = first_tree.getTipCount();
-      tree_splits = std::vector<PllSplitList>();
       tree_splits.reserve(tree_count);
-      tree_splits.push_back(PllSplitList(first_tree));
+      tree_splits[0] = new PllSplitList(first_tree);
+      unsigned int i=1;
       while(std::getline(tree_file, line)){
         PllTree tree = PllTree(line);
         tree.alignNodeIndices(first_tree);
-        PllSplitList split_list = PllSplitList(tree);
-        tree_splits.push_back(split_list);
+        PllSplitList* split_list = new PllSplitList(tree);
+        tree_splits[i] = split_list;
+        i++;
       }
       tree_file.close();
   }
@@ -40,10 +41,10 @@ void RFDistance::run() {
     is_unique = true;
     for(unsigned int j = i+1; j < tree_count; j++){
       for(unsigned int k = 0; k < tip_count -3; k++){
-        s1[k] = tree_splits[i][k].getSplit();
-        s2[k] = tree_splits[j][k].getSplit();
+        s1[k] = (*tree_splits[i])[k].getSplit();
+        s2[k] = (*tree_splits[j])[k].getSplit();
       }
-      unsigned int dist = static_cast<unsigned int(*)(pll_split_t*, pll_split_t*, unsigned int)>(&pllmod_utree_split_rf_distance)(s1, s2, tip_count);
+      unsigned int dist = pllmod_utree_split_rf_distance(s1, s2, tip_count);
       //float normalized_dist = (float) dist / (2*(tip_count-3));
       if (dist==0 && is_unique){
         is_unique = false;

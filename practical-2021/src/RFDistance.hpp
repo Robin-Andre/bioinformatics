@@ -14,13 +14,18 @@ extern "C" {
 #include <iostream>
 #include <filesystem>
 #include <numeric>
+#include <bitset>
 
 //class PllTree;
 
 class RFDistance {
 public:
   RFDistance(const std::string &data_set_path);
-  ~RFDistance(){};
+  ~RFDistance(){
+    for(unsigned int i=0; i < tree_splits.size(); i++){
+      delete(tree_splits[i]);
+    }
+  };
   unsigned int getTreeCount() const {return tree_count;};
   unsigned int getTipCount() const {return tip_count;};
   void run();
@@ -30,7 +35,7 @@ public:
   void writeResults(const std::string &output_path) const;
 
 private:
-  std::vector <PllSplitList> tree_splits;
+  std::vector <PllSplitList*> tree_splits;
   unsigned int tree_count;
   unsigned int tip_count;
   unsigned int unique_count;
