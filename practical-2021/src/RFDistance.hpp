@@ -24,7 +24,7 @@ public:
   unsigned int getTreeCount() const {return tree_count;};
   unsigned int getTipCount() const {return tip_count;};
   void run();
-  std::vector<float> getDistances() const;
+  std::vector<unsigned int> getDistances() const;
   unsigned int getUniqueCount() const;
   float getAverageDistance() const;
   void writeResults(const std::string &output_path) const;
@@ -34,5 +34,5 @@ private:
   unsigned int tree_count;
   unsigned int tip_count;
   unsigned int unique_count;
-  std::vector<float> distances;
+  std::vector<unsigned int> distances;
 };
