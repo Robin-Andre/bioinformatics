@@ -36,6 +36,8 @@ public:
   size_t   popcount(size_t len);
   uint32_t bitExtract(size_t bit_index);
 
+  pll_split_t getSplit() {return _split;};
+
 private:
   constexpr size_t splitBitWidth() const {
     return sizeof(pll_split_base_t) * 8;
@@ -70,6 +72,7 @@ public:
   };
 
   PllSplit operator[](size_t index) const { return _splits[index]; }
+
 
 private:
   /* Computes the number of bits per split base */

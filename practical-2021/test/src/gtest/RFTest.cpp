@@ -6,17 +6,18 @@
 #include <filesystem>
 #include <vector>
 #include <algorithm>
+#include <RFDistance.hpp>
 
 
 class RFTest: public testing::Test{
 protected:
   float getDistanceFromString(const std::string &line) const;
-  u_int64_t readTreeCount(std::string data_set_name) const;
-  u_int64_t readUniqueTreeCount(std::string data_set_name) const;
+  unsigned int readTreeCount(std::string data_set_name) const;
+  unsigned int readUniqueTreeCount(std::string data_set_name) const;
   float readAverageDistance(std::string data_set_name) const;
   std::string readFromInfoFile(std::string data_set_name, std::string prefix) const;
   std::vector<float> readDistances(std::string data_set_name) const;
-  float getDistance(u_int64_t tree1, u_int64_t tree2, const std::vector<float> &distances, u_int64_t tree_count) const;
+  float getDistance(unsigned int tree1, unsigned int tree2, const std::vector<float> &distances, unsigned int tree_count) const;
 
 
 };
@@ -24,7 +25,7 @@ protected:
 float RFTest::getDistanceFromString(const std::string &line) const {
     std::istringstream iss (line);
     std::string item;
-    u_int64_t i = 0;
+    unsigned int i = 0;
     while (std::getline(iss, item, ' ') && i < 3) {
         i++;
     }
@@ -47,12 +48,12 @@ float RFTest::getDistanceFromString(const std::string &line) const {
   return distances;
 }
 
-u_int64_t RFTest::readTreeCount(std::string data_set_name) const
+unsigned int RFTest::readTreeCount(std::string data_set_name) const
 {
   return std::stoi(readFromInfoFile(data_set_name, "Found "));
 }
 
-u_int64_t RFTest::readUniqueTreeCount(std::string data_set_name) const
+unsigned int RFTest::readUniqueTreeCount(std::string data_set_name) const
 {
   return std::stoi(readFromInfoFile(data_set_name, "Number of unique trees in this tree set: "));
 }
@@ -90,15 +91,15 @@ std::string RFTest::readFromInfoFile(std::string data_set_name, std::string pref
  return result;
 }
 
-float RFTest::getDistance(u_int64_t tree1, u_int64_t tree2, const std::vector<float> &distances, u_int64_t tree_count) const
+float RFTest::getDistance(unsigned int tree1, unsigned int tree2, const std::vector<float> &distances, unsigned int tree_count) const
 {
   if (tree1 == tree2){
     return 0;
   }
-  u_int64_t first_tree = std::min(tree1, tree2);
-  u_int64_t second_tree = std::max(tree1, tree2);
-  u_int64_t offset =(first_tree*(2*tree_count-first_tree-1))/2;
-  u_int64_t index = offset + (second_tree - first_tree - 1);
+  unsigned int first_tree = std::min(tree1, tree2);
+  unsigned int second_tree = std::max(tree1, tree2);
+  unsigned int offset =(first_tree*(2*tree_count-first_tree-1))/2;
+  unsigned int index = offset + (second_tree - first_tree - 1);
   return distances[index];
 
 }
@@ -106,12 +107,28 @@ float RFTest::getDistance(u_int64_t tree1, u_int64_t tree2, const std::vector<fl
 
 TEST_F(RFTest, basic_test)
 {
-    u_int64_t tree_count = 10;
-    std::vector<float> distances = readDistances("24");
-    std::cout << readTreeCount("24") << std::endl;
-    std::cout << readUniqueTreeCount("24") << std::endl;
-    std::cout << readAverageDistance("24") << std::endl;
-    std::cout << getDistance(0,2,distances,tree_count) << std::endl;
-    EXPECT_EQ(1, 1);
+    std::string test_set = "24";
+    float error = 0.01;
+
+    RFDistance rf_distance = RFDistance("../../../../test/res/data/heads/BS/" + test_set);
+    rf_distance.run();
+    rf_distance.writeResults("../../../../output/" + test_set);
+    EXPECT_EQ(rf_distance.getTreeCount(), readTreeCount(test_set));
+    unsigned int tree_count = rf_distance.getTreeCount();
+    EXPECT_EQ(rf_distance.getUniqueCount(), readTreeCount(test_set));
+    EXPECT_NEAR(rf_distance.getAverageDistance(), readAverageDistance(test_set), error);
+    unsigned int k=0;
+    std::vector<float> calculated_distances = rf_distance.getDistances();
+    std::vector<float> reference_distances = readDistances(test_set);
+    for (unsigned int i=0; i < tree_count; i++){
+      for (unsigned int j=i+1; j < tree_count; j++){
+        std::cout << k << std::endl;
+        EXPECT_NEAR(calculated_distances[k], reference_distances[k], error);
+        k++;
+      }
+    }
+
+    //std::cout << getDistance(0,2,distances,tree_count) << std::endl;
+
 
 }

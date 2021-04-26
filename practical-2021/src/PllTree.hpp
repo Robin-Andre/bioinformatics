@@ -38,6 +38,8 @@ public:
   PllSplitList makeSplits() const;
   void         alignNodeIndices(const PllTree &other);
 
+  unsigned int getTipCount() const;
+
 private:
   pll_utree_t *_tree;
 };

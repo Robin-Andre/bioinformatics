@@ -14,6 +14,7 @@ PllTree::PllTree(const PllTree &other) { _tree = pll_utree_clone(other._tree); }
 
 PllTree::~PllTree() { pll_utree_destroy(_tree, nullptr); }
 
+
 PllSplitList PllTree::makeSplits() const { return PllSplitList(*this); }
 
 void PllTree::alignNodeIndices(const PllTree &other) {
@@ -23,3 +24,5 @@ void PllTree::alignNodeIndices(const PllTree &other) {
   auto success = pllmod_utree_consistency_set(other._tree, _tree);
   if (success != PLL_SUCCESS) { throw std::runtime_error{pll_errmsg}; }
 }
+
+unsigned int PllTree::getTipCount() const { return _tree->tip_count;}
