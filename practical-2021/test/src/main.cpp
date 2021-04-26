@@ -1,4 +1,5 @@
 #include "PllSplits.hpp"
+#include "RFDistance.hpp"
 #include "PllTree.hpp"
 #include <string>
 #include <iostream>

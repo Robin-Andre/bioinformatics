@@ -23,7 +23,6 @@ PllSplitList::PllSplitList(const PllTree &tree) {
   for (size_t i = 0; i < tree.tree()->tip_count - 3; ++i) {
     _splits.emplace_back(tmp_splits[i]);
   }
-
   free(tmp_splits);
 }
 
