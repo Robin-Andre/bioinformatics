@@ -108,7 +108,7 @@ unsigned int RFTest::getDistance(unsigned int tree1, unsigned int tree2, const s
 TEST_F(RFTest, basic_test)
 {
     std::string test_set = "24";
-    unsigned int error = 0.01;
+    float error = 0.01;
 
     RFDistance rf_distance = RFDistance("../../../../test/res/data/heads/BS/" + test_set);
     rf_distance.run();
@@ -116,7 +116,7 @@ TEST_F(RFTest, basic_test)
     EXPECT_EQ(rf_distance.getTreeCount(), readTreeCount(test_set));
     unsigned int tree_count = rf_distance.getTreeCount();
     EXPECT_EQ(rf_distance.getUniqueCount(), readUniqueTreeCount(test_set));
-    //EXPECT_NEAR(rf_distance.getAverageDistance(), readAverageDistance(test_set), error);
+    EXPECT_NEAR(rf_distance.getAverageDistance(), readAverageDistance(test_set), error);
     unsigned int k=0;
     std::vector<unsigned int> calculated_distances = rf_distance.getDistances();
     std::vector<unsigned int> reference_distances = readDistances(test_set);
