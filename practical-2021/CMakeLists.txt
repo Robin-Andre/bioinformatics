@@ -27,6 +27,6 @@ set(SOFTWIPE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/../../softwipe)
 
 add_custom_command(OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/softwipe.txt"
                  WORKING_DIRECTORY ${SOFTWIPE_DIRECTORY}
-                  COMMAND python3.9 softwipe.py -Cm -e ../practical-2021/softwipe_call ../practical-2021/src --exclude-cppcheck --exclude-lizard --exclude-clang-tidy --exclude-kwstyle 
+                  COMMAND python3.9 softwipe.py -Cm -e ../practical-2021/softwipe_call ../practical-2021/src 
                   COMMENT "Running softwipe"
                   POST_BUILD)
