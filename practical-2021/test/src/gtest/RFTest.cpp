@@ -116,14 +116,13 @@ TEST_F(RFTest, basic_test)
     EXPECT_EQ(rf_distance.getTreeCount(), readTreeCount(test_set));
     unsigned int tree_count = rf_distance.getTreeCount();
     EXPECT_EQ(rf_distance.getUniqueCount(), readUniqueTreeCount(test_set));
-    std::cout << rf_distance.getUniqueCount() << std::endl;
     //EXPECT_NEAR(rf_distance.getAverageDistance(), readAverageDistance(test_set), error);
     unsigned int k=0;
     std::vector<unsigned int> calculated_distances = rf_distance.getDistances();
     std::vector<unsigned int> reference_distances = readDistances(test_set);
     for (unsigned int i=0; i < tree_count; i++){
       for (unsigned int j=i+1; j < tree_count; j++){
-        //EXPECT_EQ(calculated_distances[k], reference_distances[k]);
+        EXPECT_EQ(calculated_distances[k], reference_distances[k]);
         k++;
       }
     }
