@@ -25,9 +25,9 @@ public:
     for(unsigned int i=0; i < tree_splits.size(); i++){
       delete(tree_splits[i]);
     }
-  };
-  unsigned int getTreeCount() const {return tree_count;};
-  unsigned int getTipCount() const {return tip_count;};
+  }
+  unsigned int getTreeCount() const {return tree_count;}
+  unsigned int getTipCount() const {return tip_count;}
   void run();
   std::vector<unsigned int> getDistances() const;
   unsigned int getUniqueCount() const;

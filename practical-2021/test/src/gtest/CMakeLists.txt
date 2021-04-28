@@ -1,6 +1,7 @@
 file(GLOB test_src
      "*.cpp"
 )
+
 add_executable(Google_Tests_run ${test_src})
 target_link_libraries(Google_Tests_run
   gtest
@@ -18,9 +19,10 @@ target_include_directories(Google_Tests_run PUBLIC
 add_test(Google_Tests_run Google_Tests_run)
 
 set(target Google_Tests_run)
-
+message(We are working in:)
+message(${CMAKE_CURRENT_BINARY_DIR})
 add_custom_command(TARGET ${target}
                    POST_BUILD
                    COMMAND ${target}
-                   WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+                   WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
                    COMMENT "Running ${target}" VERBATIM)

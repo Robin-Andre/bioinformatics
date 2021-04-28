@@ -22,11 +22,10 @@ include_directories(SYSTEM ${gtest_SOURCE_DIR}/../googlemock/include ${gtest_SOU
 add_custom_target(softwipe ALL
     DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/softwipe.txt")
 
-set(SOFTWIPE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/../../softwipe)
-
+set(SOFTWIPE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/../../softwipe/softwipe_detailed_result/)
 
 add_custom_command(OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/softwipe.txt"
                  WORKING_DIRECTORY ${SOFTWIPE_DIRECTORY}
-                  COMMAND python3.9 softwipe.py -Cm -e ../practical-2021/softwipe_call ../practical-2021/src 
+                  COMMAND python3.9 ../softwipe.py -Cm -e ../../practical-2021/softwipe_call ../../practical-2021/src 
                   COMMENT "Running softwipe"
                   POST_BUILD)

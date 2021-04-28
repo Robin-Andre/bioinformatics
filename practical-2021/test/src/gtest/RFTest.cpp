@@ -28,6 +28,7 @@ unsigned int RFTest::getDistanceFromString(const std::string &line) const {
     unsigned int i = 0;
     while (std::getline(iss, item, ' ') && i < 2) {
         i++;
+      
     }
     return std::stoi(item);
 }
@@ -36,7 +37,7 @@ unsigned int RFTest::getDistanceFromString(const std::string &line) const {
 {
     std::vector<unsigned int> distances;
     std::fstream res_file;
-    res_file.open("../../../../test/res/reference_results/" + data_set_name + "/RAxML_RF-Distances.0"  ,std::ios::in);
+    res_file.open("../test/res/reference_results/" + data_set_name + "/RAxML_RF-Distances.0"  ,std::ios::in);
     if (res_file.is_open()){
       std::string line;
       std::vector<std::string> parts;
@@ -68,7 +69,7 @@ std::string RFTest::readFromInfoFile(std::string data_set_name, std::string pref
 {
    std::string result;
    std::fstream res_file;
-   res_file.open("../../../../test/res/reference_results/" + data_set_name + "/RAxML_info.0"  ,std::ios::in);
+   res_file.open("../test/res/reference_results/" + data_set_name + "/RAxML_info.0"  ,std::ios::in);
    if (res_file.is_open()){
      std::string line;
      std::vector<std::string> parts;
@@ -109,12 +110,14 @@ TEST_F(RFTest, basic_test)
 {
     std::string test_set = "24";
     float error = 0.01;
-
-    RFDistance rf_distance = RFDistance("../../../../test/res/data/heads/BS/" + test_set);
+    RFDistance rf_distance = RFDistance("../test/res/data/heads/BS/" + test_set);
     rf_distance.run();
     rf_distance.writeResults("../../../../output/" + test_set);
     EXPECT_EQ(rf_distance.getTreeCount(), readTreeCount(test_set));
+    //EXPECT_EQ(rf_distance.getTreeCount(), 10);
+    std::cout << "rollcall" << "\n";
     unsigned int tree_count = rf_distance.getTreeCount();
+    std::cout <<"Treecount: "<< tree_count << "\n";
     EXPECT_EQ(rf_distance.getUniqueCount(), readUniqueTreeCount(test_set));
     EXPECT_NEAR(rf_distance.getAverageDistance(), readAverageDistance(test_set), error);
     unsigned int k=0;
