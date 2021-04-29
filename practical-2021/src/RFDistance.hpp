@@ -40,4 +40,7 @@ private:
   unsigned int tip_count;
   unsigned int unique_count;
   std::vector<unsigned int> distances;
+
+  int compare_splits (pll_split_t s1, pll_split_t s2, unsigned int split_len);
+  unsigned int bitv_length(unsigned int bit_count);
 };
