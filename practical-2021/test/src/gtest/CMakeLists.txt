@@ -19,8 +19,6 @@ target_include_directories(Google_Tests_run PUBLIC
 add_test(Google_Tests_run Google_Tests_run)
 
 set(target Google_Tests_run)
-message(We are working in:)
-message(${CMAKE_CURRENT_BINARY_DIR})
 add_custom_command(TARGET ${target}
                    POST_BUILD
                    COMMAND ${target}

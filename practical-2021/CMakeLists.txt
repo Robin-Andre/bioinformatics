@@ -18,14 +18,16 @@ add_subdirectory(googletest EXCLUDE_FROM_ALL)
 include_directories(SYSTEM ${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 include_directories(SYSTEM ${gtest_SOURCE_DIR}/../googlemock/include ${gtest_SOURCE_DIR}/../googlemock/)
 
+message(${CMAKE_CURRENT_BINARY_DIR})
+#add_custom_target(softwipe ALL
+#    DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/softwipe.txt")
 
-add_custom_target(softwipe ALL
-    DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/softwipe.txt")
+#set(SOFTWIPE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/../../softwipe/softwipe_detailed_result/)
 
-set(SOFTWIPE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/../../softwipe/softwipe_detailed_result/)
-
-add_custom_command(OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/softwipe.txt"
-                 WORKING_DIRECTORY ${SOFTWIPE_DIRECTORY}
-                  COMMAND python3.9 ../softwipe.py -Cm -e ../../practical-2021/softwipe_call ../../practical-2021/src 
-                  COMMENT "Running softwipe"
-                  POST_BUILD)
+#add_custom_command(OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/softwipe.txt"
+#                 WORKING_DIRECTORY ${SOFTWIPE_DIRECTORY}
+#                  COMMAND python3.9 ../softwipe.py -Cm -e ../../practical-2021/softwipe_call -f ../../practical-2021/softwipe_command_file  ../../practical-2021/ -x ../../practical-2021/googletest/,../../practical-2021/libs
+#                  COMMENT "Running softwipe"
+#                  POST_BUILD)
+#python3.9 ../softwipe.py -Cm -e ../../practical-2021/softwipe_call -f ../../practical-2021/softwipe_command_file  ../../practical-2021/ -x ../../practical-2021/googletest/,../../practical-2021/libs
+#python3.9 ../softwipe.py -Cm -e ../../practical-2021/softwipe_call -f ../../practical-2021/softwipe_command_file ../../practical-2021/src/

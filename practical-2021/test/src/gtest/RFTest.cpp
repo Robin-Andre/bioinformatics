@@ -114,10 +114,7 @@ TEST_F(RFTest, basic_test)
     rf_distance.run();
     rf_distance.writeResults("../../../../output/" + test_set);
     EXPECT_EQ(rf_distance.getTreeCount(), readTreeCount(test_set));
-    //EXPECT_EQ(rf_distance.getTreeCount(), 10);
-    std::cout << "rollcall" << "\n";
     unsigned int tree_count = rf_distance.getTreeCount();
-    std::cout <<"Treecount: "<< tree_count << "\n";
     EXPECT_EQ(rf_distance.getUniqueCount(), readUniqueTreeCount(test_set));
     EXPECT_NEAR(rf_distance.getAverageDistance(), readAverageDistance(test_set), error);
     unsigned int k=0;
