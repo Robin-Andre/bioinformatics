@@ -40,4 +40,10 @@ private:
   unsigned int unique_count;
   std::vector<unsigned int> distances;
 
+  //determines position in linear array, make sure that i < j
+  unsigned int getPos(unsigned int i, unsigned int j) const {
+    unsigned int offset =(i*(2*tree_count-i-1))/2;
+    return offset + (j - i - 1);
+  }
+
 };

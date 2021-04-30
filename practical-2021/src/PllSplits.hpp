@@ -7,6 +7,8 @@ extern "C" {
 #include <stdexcept>
 #include <utility>
 #include <vector>
+#include <iostream>
+#include <bitset>
 
 class PllTree;
 
@@ -38,7 +40,10 @@ public:
 
   int compareTo(PllSplit other, size_t split_len) const;
 
-  pll_split_t getSplit() {return _split;};
+
+  void printSplit(size_t len) const {
+    std::cout << (std::bitset<32>(*_split)) << std::endl;
+  }
 
 private:
   constexpr size_t splitBitWidth() const {
@@ -53,19 +58,20 @@ private:
     return index % splitBitWidth();
   }
 
+
   pll_split_t _split;
 };
 
 class PllSplitList {
 public:
   PllSplitList(const PllTree &tree);
-  PllSplitList(const std::vector<PllSplit> &splits);
+  PllSplitList(const std::vector<PllSplit> &splits, size_t len);
 
   /* Rule of 5 constructors/destructors */
   ~PllSplitList();
   PllSplitList(const PllSplitList &other);
   PllSplitList(PllSplitList &&other) :
-      _splits(std::exchange(other._splits, {})) {}
+      _splits(std::exchange(other._splits, {})), split_len(other.split_len) {}
   PllSplitList &operator=(const PllSplitList &other) {
     return *this = PllSplitList(other);
   };
@@ -77,19 +83,29 @@ public:
   PllSplit operator[](size_t index) const { return _splits[index]; }
 
   size_t getSplitCount() const {return _splits.size();}
-  PllSplitList* symmetricDifference(PllSplitList* other) const;
+  PllSplitList symmetricDifference(const PllSplitList& other) const;
 
   /* Computes the number of pll_split_base_t's that are needed to store a single
    * split
    */
-  size_t computeSplitLen() const {
+  /*size_t computeSplitLen() const {
     size_t tip_count = _splits.size() + 3;
     size_t split_len = (tip_count / computSplitBaseSize());
 
     if ((tip_count % computSplitBaseSize()) > 0) { split_len += 1; }
 
     return split_len;
+  }*/
+
+  void printSplits() const {
+    std::cout << "-------------------------"<< std::endl;
+    for(size_t i = 0; i < _splits.size(); i++){
+      _splits[i].printSplit(split_len);
+    }
+    std::cout << "-------------------------"<< std::endl;
   }
+
+  size_t getSplitLen() const {return split_len;}
 
 
 private:
@@ -101,7 +117,8 @@ private:
 
 
   size_t computeSplitArraySize() const {
-    return computeSplitLen() * _splits.size();
+    return split_len * _splits.size();
   }
   std::vector<PllSplit> _splits;
+  size_t split_len;
 };
