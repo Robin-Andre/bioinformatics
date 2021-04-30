@@ -36,6 +36,8 @@ public:
   size_t   popcount(size_t len);
   uint32_t bitExtract(size_t bit_index);
 
+  int compareTo(PllSplit other, size_t split_len) const;
+
   pll_split_t getSplit() {return _split;};
 
 private:
@@ -57,6 +59,7 @@ private:
 class PllSplitList {
 public:
   PllSplitList(const PllTree &tree);
+  PllSplitList(const std::vector<PllSplit> &splits);
 
   /* Rule of 5 constructors/destructors */
   ~PllSplitList();
@@ -73,12 +76,8 @@ public:
 
   PllSplit operator[](size_t index) const { return _splits[index]; }
 
-
-private:
-  /* Computes the number of bits per split base */
-  constexpr size_t computSplitBaseSize() const {
-    return sizeof(pll_split_base_t) * 8;
-  }
+  size_t getSplitCount() const {return _splits.size();}
+  PllSplitList* symmetricDifference(PllSplitList* other) const;
 
   /* Computes the number of pll_split_base_t's that are needed to store a single
    * split
@@ -92,9 +91,17 @@ private:
     return split_len;
   }
 
+
+private:
+  /* Computes the number of bits per split base */
+  constexpr size_t computSplitBaseSize() const {
+    return sizeof(pll_split_base_t) * 8;
+  }
+
+
+
   size_t computeSplitArraySize() const {
     return computeSplitLen() * _splits.size();
   }
-
   std::vector<PllSplit> _splits;
 };

@@ -16,6 +16,17 @@ uint32_t PllSplit::bitExtract(size_t bit_index) {
          computeMinorIndex(bit_index);
 }
 
+int PllSplit::compareTo(PllSplit other, size_t split_len) const {
+  pll_split_t other_split = other.getSplit();
+  unsigned int i;
+  for (i = 0; i < split_len; i++) {
+    if (_split[i] != other_split[i]){
+      return (int) (_split[i] > other_split[i]?1:-1);
+    }
+  }
+  return 0;
+}
+
 PllSplitList::PllSplitList(const PllTree &tree) {
   auto tmp_splits = pllmod_utree_split_create(
       tree.tree()->vroot, tree.tree()->tip_count, nullptr);
@@ -24,6 +35,10 @@ PllSplitList::PllSplitList(const PllTree &tree) {
     _splits.emplace_back(tmp_splits[i]);
   }
   free(tmp_splits);
+}
+
+PllSplitList::PllSplitList(const std::vector<PllSplit> &splits) {
+  _splits=splits;
 }
 
 PllSplitList::PllSplitList(const PllSplitList &other) {
@@ -41,4 +56,29 @@ PllSplitList::PllSplitList(const PllSplitList &other) {
 
 PllSplitList::~PllSplitList() {
   if (!_splits.empty()) { free(_splits[0]()); }
+}
+
+
+
+PllSplitList* PllSplitList::symmetricDifference(PllSplitList* other) const {
+  std::vector<PllSplit> different_splits;
+  size_t i = 0;
+  size_t j= 0;
+  size_t split_len = computeSplitLen();
+  size_t other_split_count = other->getSplitCount();
+  while (i < _splits.size() && j < other_split_count){
+    int cmp = _splits[i].compareTo((*other)[j], split_len);
+    if (cmp == -1) { //this < other
+      different_splits.push_back(_splits[i]);
+      i++;
+    } else if (cmp == 1){ //this > other
+      different_splits.push_back(_splits[j]);
+      j++;
+    } else { //cmp == 0, this = other
+      i++;
+      j++;
+    }
+  }
+  return new PllSplitList(different_splits);
+
 }

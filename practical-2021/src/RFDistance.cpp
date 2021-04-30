@@ -86,62 +86,28 @@ RFDistance::RFDistance(const std::string &data_set_path){
 
 void RFDistance::run() {
   unsigned int split_count = tip_count - 3;
-  unsigned int split_len   = bitv_length(tip_count);
+  unsigned int split_len   = (*tree_splits[0]).computeSplitLen();
   unique_count = tree_count;
   bool is_unique = true;
-  unsigned int equal = 0;
-  unsigned int s1_idx = 0,
-               s2_idx = 0;
-  PllSplitList* s1 = nullptr;
-  PllSplitList* s2 = nullptr;
+  unsigned int distance = 0;
+  PllSplitList* symmetric_difference = nullptr;
   for(unsigned int i = 0; i < tree_count; i++){
     is_unique = true;
     for(unsigned int j = i+1; j < tree_count; j++){
-      s1 = tree_splits[i];
-      s2 = tree_splits[j];
-      equal = 0;
-      s1_idx = 0;
-      s2_idx = 0;
-      for (s1_idx=0; s1_idx < split_count && s2_idx < split_count; s1_idx++){
-        int cmp = compare_splits((*s1)[s1_idx].getSplit(), (*s2)[s2_idx].getSplit(), split_len);
-        if (!cmp) {
-          equal++;
-          s2_idx++;
-        } else {
-          if (cmp > 0) {
-            while(++s2_idx < split_count && (cmp = compare_splits((*s1)[s1_idx].getSplit(), (*s2)[s2_idx].getSplit(), split_len)) > 0);
-            if (!cmp) {
-              equal++;
-            }
-          }
-        }
-      }
-      equal = 2*(tip_count - 3 - equal);
-      if (equal==0 && is_unique){
+      symmetric_difference = tree_splits[i]->symmetricDifference(tree_splits[j]);
+      distance = symmetric_difference->getSplitCount();
+      if (distance==0 && is_unique){
         is_unique = false;
         unique_count--;
       }
-      distances.emplace_back(equal);
+      distances.emplace_back(distance);
+      //delete(symmetric_difference);
     }
   }
 }
 
 
-int RFDistance::compare_splits (pll_split_t s1, pll_split_t s2, unsigned int split_len) {
-  unsigned int i;
-  for (i = 0; i < split_len; i++) {
-    if (s1[i] != s2[i]){
-      return (int) (s1[i] > s2[i]?1:-1);
-    }
-  }
-  return 0;
-}
 
-unsigned int RFDistance::bitv_length(unsigned int bit_count) {
-  unsigned int split_size = sizeof(pll_split_base_t) * 8;
-  unsigned int split_offset = bit_count % split_size;
-  return bit_count / split_size + (split_offset>0);
-}
 
 std::vector<unsigned int> RFDistance::getDistances() const {
   return distances;
