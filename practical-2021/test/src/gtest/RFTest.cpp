@@ -6,7 +6,7 @@
 #include <filesystem>
 #include <vector>
 #include <algorithm>
-#include <RFDistance.hpp>
+#include <../../../src/RFDistance.hpp>
 
 
 class RFTest: public testing::Test{

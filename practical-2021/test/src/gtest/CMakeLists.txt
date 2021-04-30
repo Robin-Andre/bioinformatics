@@ -1,26 +1,33 @@
-file(GLOB test_src
+
+option(ENABLE_TESTS "Manually Compile Googletest (currently incomapatible with softwipe)" OFF)
+if(ENABLE_TESTS) 
+
+  set(TEST_EXE_NAME Google_Test_run)
+
+  message("Testcase compilation active")
+  #Collect all testcases into one target (does not support directories yet)
+  file(GLOB test_src
      "*.cpp"
-)
-
-add_executable(Google_Tests_run ${test_src})
-target_link_libraries(Google_Tests_run
-  gtest
-  gtest_main
-  inforf
-  ${PLLMODULES_LIBRARIES}
-  ${PLL_LIBRARIES}
-  ${PLLMODULES_LIBRARIES}
-)
-
-target_include_directories(Google_Tests_run PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src>
-    $<BUILD_INTERFACE:${LOCALDEPS_DIR}/include>)
-
-add_test(Google_Tests_run Google_Tests_run)
-
-set(target Google_Tests_run)
-add_custom_command(TARGET ${target}
+  )
+  #Compile Google Executable
+  add_executable(${TEST_EXE_NAME} ${test_src})
+  #googletest requires gtest as library. gtest is not linked as system library which causes a lot of
+  #-Wundef errors in softwipe which are 
+  target_link_libraries(${TEST_EXE_NAME} gtest_main)
+  #Linking the entire project might be a bit overkill but the test cases need a link to the classes somewhere
+  #maybe figure out a smoother solution to this ... later
+  target_link_libraries(${TEST_EXE_NAME} inforf)
+  #This includes libpll somehow. I again it might be solved more elegantly but at a later stage
+  target_include_directories(${TEST_EXE_NAME} SYSTEM PUBLIC $<BUILD_INTERFACE:${LOCALDEPS_DIR}/include>)
+  #This tells Cmake that this executable is meant as a test (I have not yet understood what it does)
+  add_test(Random_Name ${TEST_EXE_NAME})
+  #And this ensures that the tests do run from make
+  set(target ${TEST_EXE_NAME})
+  add_custom_command(TARGET ${target}
                    POST_BUILD
                    COMMAND ${target}
                    WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
                    COMMENT "Running ${target}" VERBATIM)
+else()
+  message(WARNING "Testcase compilation not active")
+endif()

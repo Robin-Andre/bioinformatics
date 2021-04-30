@@ -15,10 +15,10 @@ add_subdirectory(test)
 
 
 add_subdirectory(googletest EXCLUDE_FROM_ALL)
-include_directories(SYSTEM ${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
-include_directories(SYSTEM ${gtest_SOURCE_DIR}/../googlemock/include ${gtest_SOURCE_DIR}/../googlemock/)
 
-message(${CMAKE_CURRENT_BINARY_DIR})
+include_directories(SYSTEM ${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+#include_directories(SYSTEM ${gtest_SOURCE_DIR}/../googlemock/include ${gtest_SOURCE_DIR}/../googlemock/)
+
 #add_custom_target(softwipe ALL
 #    DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/softwipe.txt")
 
