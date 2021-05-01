@@ -11,6 +11,7 @@ static std::vector<PllTree> readTreeFile(const std::string& filepath) {
       std::string line;
       while(std::getline(file, line)) {
           PllTree test(line);
+          std::cout << line << "\n";
           tree_vector.push_back(test);
       }
   }

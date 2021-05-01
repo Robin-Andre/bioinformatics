@@ -1,3 +1,4 @@
+#pragma once
 #include "PllSplits.hpp"
 #include "RFDistance.hpp"
 #include "PllTree.hpp"

@@ -7,6 +7,8 @@ extern "C" {
 #include <stdexcept>
 #include <utility>
 #include <vector>
+#include <immintrin.h>
+
 
 class PllTree;
 
@@ -34,26 +36,35 @@ public:
   pll_split_t operator()() const { return _split; }
 
   size_t   popcount(size_t len);
-  uint32_t bitExtract(size_t bit_index);
-
-  pll_split_t getSplit() {return _split;};
-
+  uint32_t bitExtract(size_t bit_index) const;
+  pll_split_t getSplit() {return _split;}
+  void set_length(size_t len){_len = len;}
+  size_t get_length() const {return _len;}
+  // This is a test method on how to access registers directly and the worst part, it actually works
+  unsigned popcount_vector() {
+    
+    return __builtin_popcount(2);
+  }
+  friend bool operator == (const PllSplit& p1, const PllSplit& p2);
+  friend bool operator < (const PllSplit& p1, const PllSplit& p2);
+  
 private:
   constexpr size_t splitBitWidth() const {
     return sizeof(pll_split_base_t) * 8;
   }
 
-  constexpr size_t computeMajorIndex(size_t index) {
+  constexpr size_t computeMajorIndex(size_t index) const {
     return index / splitBitWidth();
   }
 
-  constexpr size_t computeMinorIndex(size_t index) {
+  constexpr size_t computeMinorIndex(size_t index) const {
     return index % splitBitWidth();
   }
 
   pll_split_t _split;
+  size_t _len;
 };
-
+//bool operator == (const PllSplit & p1, const PllSplit& p2);
 class PllSplitList {
 public:
   PllSplitList(const PllTree &tree);
@@ -72,8 +83,8 @@ public:
   };
 
   PllSplit operator[](size_t index) const { return _splits[index]; }
-
-
+  std::vector<PllSplit> getSplits() const {return _splits;}
+  size_t size() const {return _splits.size();}
 private:
   /* Computes the number of bits per split base */
   constexpr size_t computSplitBaseSize() const {

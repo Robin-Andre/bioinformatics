@@ -9,13 +9,19 @@ size_t PllSplit::popcount(size_t len) {
   }
   return popcount;
 }
+//TODO extend operators to arbitrary amount of registers (we will need this for taxa > 32)
+bool operator == (const PllSplit& p1, const PllSplit& p2) {
+  return p1._split[0] = p2._split[0];
+}
+bool operator < (const PllSplit&p1, const PllSplit& p2) {
+  return p1._split[0] < p2._split[0];
+}
 
-uint32_t PllSplit::bitExtract(size_t bit_index) {
+uint32_t PllSplit::bitExtract(size_t bit_index) const {
   pll_split_base_t split_part = _split[computeMajorIndex(bit_index)];
   return (split_part & (1u << computeMinorIndex(bit_index))) >>
          computeMinorIndex(bit_index);
 }
-
 PllSplitList::PllSplitList(const PllTree &tree) {
   auto tmp_splits = pllmod_utree_split_create(
       tree.tree()->vroot, tree.tree()->tip_count, nullptr);
