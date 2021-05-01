@@ -1,11 +1,16 @@
 #include "gtest/gtest.h"
 #include "../../../src/io/FileReader.hpp"
-#include "../../../src/RFDistance2.cpp"
+#include "../../../src/RFDistance2.hpp"
 #include <bitset>
 class IOTest : public testing::Test {
     
 };
+TEST_F(IOTest, full_calculation) {
+    //The results are actually correct 
+    std::vector<size_t> results = measure::full_calculation("../test/res/data/heads/BS/24");
+    std::cout << results.size() << "VALUES THAT I DON'T CARE ABOUT\n";
 
+}
 TEST_F(IOTest, readin) {
   std::vector<PllTree> current = io::readTreeFile("../test/res/data/heads/BS/simple_newick");
   //EXPECT_EQ(current.size(), 10);
@@ -32,7 +37,7 @@ TEST_F(IOTest, readin) {
    std::cout << *(test()+2) << "\n";
   EXPECT_EQ(1,1);
 }
-// These are from the 24 set, tree 0 and 2 respectively
+// These are from the 24 set, tree 0 and 2 respectively (Alexis code says distance 4)
 TEST_F(IOTest, UnequalTrees) {
     std::vector<PllTree> current = io::readTreeFile("../test/res/data/heads/BS/TwoTreesUnequal");
     current[0].alignNodeIndices(current[1]);
@@ -40,7 +45,7 @@ TEST_F(IOTest, UnequalTrees) {
     PllSplitList secondset = current[1].makeSplits();
     
     std::cout << measure::rf_distance(firstset, secondset) << "Thisisaresult and it might be shit\n";
-    EXPECT_EQ(1,1);
+    EXPECT_EQ(measure::rf_distance(firstset, secondset) ,4);
 }
 TEST_F(IOTest, EqualTrees) {
     std::vector<PllTree> current = io::readTreeFile("../test/res/data/heads/BS/TwoTreesEqual");

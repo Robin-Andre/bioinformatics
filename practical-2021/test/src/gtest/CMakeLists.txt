@@ -18,9 +18,11 @@ if(ENABLE_TESTS)
   #maybe figure out a smoother solution to this ... later
   target_link_libraries(${TEST_EXE_NAME} inforf)
   #This includes libpll somehow. I again it might be solved more elegantly but at a later stage
-  target_include_directories(${TEST_EXE_NAME} SYSTEM PUBLIC $<BUILD_INTERFACE:${LOCALDEPS_DIR}/include>)
+  target_include_directories(${TEST_EXE_NAME} SYSTEM PUBLIC $<BUILD_INTERFACE:${LOCALDEPS_DIR}/include>)  
   #This tells Cmake that this executable is meant as a test (I have not yet understood what it does)
   add_test(Random_Name ${TEST_EXE_NAME})
+
+ 
   #And this ensures that the tests do run from make
   set(target ${TEST_EXE_NAME})
   add_custom_command(TARGET ${target}

@@ -9,12 +9,28 @@ size_t PllSplit::popcount(size_t len) {
   }
   return popcount;
 }
-//TODO extend operators to arbitrary amount of registers (we will need this for taxa > 32)
+/*@Luise This is the stuff I am really not proud of :( The two operators are needed for
+sorting and they are far from correct. Right now they only check the first register instead of all
+of them and I have no clue how we are gonna pass the information of how many registers are actually
+required for the corresponding amount of taxa. The information is there (for example in the PllSplitlist.computeSplitLen())
+but I lack a good idea to integrate it. What is worse that the < operator might even be correct for most cases
+the == operator is essentially always wrong for taxa > 32. In the end it might even turn out that the
+Split infer from plllib is already sorted and that all of this is void. 
+
+Also I have no idea how the taxa are stored. Is it MSB or LSB? Take a 33 taxa tree for example. 
+Would the first taxa X be either located :
+          Register[0]                  |            Register[1]
+00000000000000000000000000000000       | 0000000000000000000000000000000X <- here
+0000000000000000000000000000000X <-here| 00000000000000000000000000000000
+Not that it matters for sorting at all.  just that I am clueless
+
+Also if the two operators are working properly then so should the (currently inefficient) algorithm
+  */
 bool operator == (const PllSplit& p1, const PllSplit& p2) {
-  return p1._split[0] = p2._split[0];
+  return p1._split[0] == p2._split[0]; //The way to fix this would be r[0] == s[0] && r[1]==s[1] && .. &&r[n]==s[n] but the ominous number n is missing
 }
 bool operator < (const PllSplit&p1, const PllSplit& p2) {
-  return p1._split[0] < p2._split[0];
+  return p1._split[0] < p2._split[0]; // Similar to above, some cool way to fix it if the info of registers is known
 }
 
 uint32_t PllSplit::bitExtract(size_t bit_index) const {

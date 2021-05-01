@@ -17,5 +17,6 @@ extern "C" {
 #include <bitset>
 namespace measure{
 size_t rf_distance(const PllSplitList& p1, const PllSplitList& p2);
-int lol();
+size_t rf_distance(const PllTree& t1, const PllTree& t2);
+std::vector<size_t> full_calculation(const std::string& file);
 } //namespace measure
