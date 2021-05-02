@@ -40,8 +40,8 @@ public:
   size_t   popcount(size_t len);
   uint32_t bitExtract(size_t bit_index) const;
   pll_split_t getSplit() {return _split;}
-  void set_length(size_t len){_len = len;}
-  size_t get_length() const {return _len;}
+  void set_amount_of_registers(size_t len){_amount_of_registers = len;}
+  //size_t get_length() const {return _len;}
   void print(size_t len) const {
     for(unsigned i = 0; i < len; ++i) {
       std::cout  << std::bitset<32>(_split[i])<<",";
@@ -65,7 +65,7 @@ private:
   }
 
   pll_split_t _split;
-  size_t _len;
+  size_t _amount_of_registers = 1;
 };
 //bool operator == (const PllSplit & p1, const PllSplit& p2);
 class PllSplitList {
@@ -93,6 +93,14 @@ public:
   PllSplit operator[](size_t index) const { return _splits[index]; }
   std::vector<PllSplit> getSplits() const {return _splits;}
   size_t size() const {return _splits.size();}
+  
+  // This is part of the quick solution and maybe should be reworked
+  void update_proper_register_size() {
+    for(unsigned i = 0; i < _splits.size(); ++i) {
+     
+      _splits[i].set_amount_of_registers(computeSplitLen());
+    }
+  }
 private:
   /* Computes the number of bits per split base */
   constexpr size_t computSplitBaseSize() const {

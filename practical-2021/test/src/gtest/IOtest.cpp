@@ -5,12 +5,12 @@
 class IOTest : public testing::Test {
     
 };
-/*TEST_F(IOTest, full_calculation) {
+TEST_F(IOTest, full_calculation) {
     //The results are actually correct 
     std::vector<size_t> results = measure::full_calculation("../test/res/data/heads/BS/24");
     std::cout << results.size() << "VALUES THAT I DON'T CARE ABOUT\n";
 
-}*/
+}
 TEST_F(IOTest, full_calculation125) {
     //The results are actually correct 
     std::vector<size_t> results = measure::full_calculation("../test/res/data/heads/BS/125");

@@ -27,10 +27,18 @@ Not that it matters for sorting at all.  just that I am clueless
 Also if the two operators are working properly then so should the (currently inefficient) algorithm
   */
 bool operator == (const PllSplit& p1, const PllSplit& p2) {
-  return p1._split[0] == p2._split[0] && p1._split[1] == p2._split[1]&& p1._split[2] == p2._split[2] && p1._split[3] == p2._split[3]; //The way to fix this would be r[0] == s[0] && r[1]==s[1] && .. &&r[n]==s[n] but the ominous number n is missing
+  for(unsigned i = 0; i < p1._amount_of_registers; ++i) {
+    if(p1._split[i] != p2._split[i]) {return false;}
+  }
+  return true;
+  //return p1._split[0] == p2._split[0] && p1._split[1] == p2._split[1]&& p1._split[2] == p2._split[2] && p1._split[3] == p2._split[3]; //The way to fix this would be r[0] == s[0] && r[1]==s[1] && .. &&r[n]==s[n] but the ominous number n is missing
 }
 bool operator < (const PllSplit&p1, const PllSplit& p2) {
-  return !(p1._split[0] >= p2._split[0] && p1._split[1] >= p2._split[1]&& p1._split[2] >= p2._split[2] && p1._split[3] >= p2._split[3]); // Similar to above, some cool way to fix it if the info of registers is known
+  for(unsigned i = 0; i < p1._amount_of_registers; ++i) {
+    if(p1._split[i] < p2._split[i]) {return true;}
+  }
+  return false;
+  //return !(p1._split[0] >= p2._split[0] && p1._split[1] >= p2._split[1]&& p1._split[2] >= p2._split[2] && p1._split[3] >= p2._split[3]); // Similar to above, some cool way to fix it if the info of registers is known
 }
 
 uint32_t PllSplit::bitExtract(size_t bit_index) const {

@@ -41,7 +41,12 @@ size_t rf_distance(const PllSplitList& p1, const PllSplitList& p2) {
 /* TODO this should never be called and maybe even removed, it makes absolutely no sense to recalculate
    the splits every ...single...time ... but then again lazy me wants this done so I can learn*/
 size_t rf_distance(const PllTree& t1, const PllTree& t2) {
-    return rf_distance(t1.makeSplits(), t2.makeSplits());
+    PllSplitList list1 = t1.makeSplits();
+    PllSplitList list2 = t2.makeSplits();
+    list1.update_proper_register_size();
+    list2.update_proper_register_size();
+    return rf_distance(list1, list2);
+    //return rf_distance(t1.makeSplits(), t2.makeSplits());
 }
 
 
@@ -49,6 +54,7 @@ size_t rf_distance(const PllTree& t1, const PllTree& t2) {
   output format. But then again a problem for another time*/
 std::vector<size_t> full_calculation(const std::string& file) {
     std::vector<PllTree> tree_vector = io::readTreeFile(file);
+
     std::vector<size_t> result; // TODO This should be preallocated to the exact amount of expected results
     
     
