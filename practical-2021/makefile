@@ -1,7 +1,5 @@
 all:
 	@cmake -Bbuild -H. -DCMAKE_EXPORT_COMPILE_COMMANDS=YES
-cleanel:
-	echo "DO NOT DO ANYTHING BECAUSE SOFTWIPE CALLS MAKE CLEAN AND WE CANNOT DO ANYTHING AGAINST IT"
 clean:
 	rm -rf bin build
 full:

@@ -7,7 +7,9 @@ extern "C" {
 #include <stdexcept>
 #include <utility>
 #include <vector>
+#include <iostream>
 #include <immintrin.h>
+#include <bitset>
 
 
 class PllTree;
@@ -40,10 +42,11 @@ public:
   pll_split_t getSplit() {return _split;}
   void set_length(size_t len){_len = len;}
   size_t get_length() const {return _len;}
-  // This is a test method on how to access registers directly and the worst part, it actually works
-  unsigned popcount_vector() {
-    
-    return __builtin_popcount(2);
+  void print(size_t len) const {
+    for(unsigned i = 0; i < len; ++i) {
+      std::cout  << std::bitset<32>(_split[i])<<",";
+    }
+    std::cout << "\n";
   }
   friend bool operator == (const PllSplit& p1, const PllSplit& p2);
   friend bool operator < (const PllSplit& p1, const PllSplit& p2);
@@ -81,7 +84,12 @@ public:
     std::swap(_splits, other._splits);
     return *this;
   };
-
+  void print() const{
+    for(unsigned i = 0; i < _splits.size(); ++i) {
+      _splits[i].print(computeSplitLen());
+    }
+    std::cout << "\n";
+  }
   PllSplit operator[](size_t index) const { return _splits[index]; }
   std::vector<PllSplit> getSplits() const {return _splits;}
   size_t size() const {return _splits.size();}

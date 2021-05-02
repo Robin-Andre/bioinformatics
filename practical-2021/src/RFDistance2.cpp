@@ -11,7 +11,7 @@ size_t rf_distance(const PllSplitList& p1, const PllSplitList& p2) {
     /* Also I have no clue how to properly assert a sorted input :sweat_smile: Uncommenting the above lines
     will result in noncompilation (We should treat it as pseudocode for now :P) */
 
-
+    //p1.print();
 
     /* It might seem really silly to copy the Pll-vectors and I would wholeheartedly agree.
     but as long as the sorting happens in this method I felt unsure to remove this. Perhaps
@@ -28,8 +28,9 @@ size_t rf_distance(const PllSplitList& p1, const PllSplitList& p2) {
 
     /*TODO it makes no sense to sort the splitlists every ...single...time.
     we should sort them beforehand and simply expect that behaviour to stick */ 
-    std::sort(set_A.begin(), set_A.end());
-    std::sort(set_A.begin(), set_A.end());
+    //TODO spontaneous disabling of sorting
+    //std::sort(set_A.begin(), set_A.end());
+    //std::sort(set_A.begin(), set_A.end());
     /*TODO need to implement a simple counter instead of collecting the entire vectors, we are not 
     interested in the intersection/union elements ...yet.  Maybe even do both the intersection
     and union in one sweep instead of two */
@@ -49,8 +50,10 @@ size_t rf_distance(const PllTree& t1, const PllTree& t2) {
 std::vector<size_t> full_calculation(const std::string& file) {
     std::vector<PllTree> tree_vector = io::readTreeFile(file);
     std::vector<size_t> result; // TODO This should be preallocated to the exact amount of expected results
+    
+    
+    
     //Align the trees, really weird stuff happens when they are misaligned
-
 
     for(unsigned i = 1/* This i=1 is intentional */; i < tree_vector.size(); ++i){
         tree_vector[i].alignNodeIndices(tree_vector[0]);

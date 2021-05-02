@@ -5,9 +5,15 @@
 class IOTest : public testing::Test {
     
 };
-TEST_F(IOTest, full_calculation) {
+/*TEST_F(IOTest, full_calculation) {
     //The results are actually correct 
     std::vector<size_t> results = measure::full_calculation("../test/res/data/heads/BS/24");
+    std::cout << results.size() << "VALUES THAT I DON'T CARE ABOUT\n";
+
+}*/
+TEST_F(IOTest, full_calculation125) {
+    //The results are actually correct 
+    std::vector<size_t> results = measure::full_calculation("../test/res/data/heads/BS/125");
     std::cout << results.size() << "VALUES THAT I DON'T CARE ABOUT\n";
 
 }
@@ -19,12 +25,8 @@ TEST_F(IOTest, readin) {
   
   PllSplit test = murks[0];
   PllSplit test2 = murks[1];
-  std::cout << test.popcount_vector() << "EGEGEGEG\n";
   std::cout << murks[0].popcount(1) << "\n";
   std::cout << (test == test2) << (test < test2) << "EQUALITY\n";
-  std::cout << std::bitset<5>(*test()) <<  " " <<std::bitset<5>(*test2()) << "\n";
-  std::cout << test.bitExtract(0) << " "<< test.bitExtract(1) << test.bitExtract(2) << test.bitExtract(3) << test.bitExtract(4)  << " " << "WOLOLOL" << "\n";
-  std::cout << test2.bitExtract(0) << " "<< test2.bitExtract(1) << test2.bitExtract(2) << test2.bitExtract(3) << test2.bitExtract(4)  << " " << "WOLOLOL" << "\n";
   std::cout << *test() << "\n";
   for(unsigned i = 0; i < 24; ++i) {
       std::cout << "Popcount with: " << i << " elements: " << test.popcount(i) << "\n";
@@ -32,7 +34,6 @@ TEST_F(IOTest, readin) {
   pll_split_base_t lol = test()[0];
   std::cout << lol << "OFLF\n";
   std::cout << sizeof(pll_split_base_t) * 8 << "THATSTHESIZE\n";
-  std::cout << test.popcount(1) << "\n";
    std::cout << *(test()+1) << "\n";
    std::cout << *(test()+2) << "\n";
   EXPECT_EQ(1,1);
@@ -62,6 +63,8 @@ TEST_F(IOTest, LectureExample) {
     current[0].alignNodeIndices(current[1]);
     PllSplitList firstset = current[0].makeSplits();
     PllSplitList secondset = current[1].makeSplits();
+    firstset.print();
+    secondset.print();
     std::cout << *firstset[0]() << " " << *firstset[1]() << " " << *firstset[2]() << "Thefirstset\n";
     std::cout << std::bitset<6>(*firstset[0]())<< " " << std::bitset<6>(*firstset[1]()) << " " << std::bitset<6>(*firstset[2]()) << "Thefirstset\n";
     std::cout << std::bitset<6>(*secondset[0]())<< " " << std::bitset<6>(*secondset[1]()) << " " << std::bitset<6>(*secondset[2]()) << "Thefirstset\n";
