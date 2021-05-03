@@ -5,8 +5,6 @@ add_library(inforf STATIC
     PllSplits.hpp
     RFDistance.cpp
     RFDistance.hpp
-    RFDistance2.cpp
-    RFDistance2.hpp
 )
 
 set_target_properties(inforf PROPERTIES

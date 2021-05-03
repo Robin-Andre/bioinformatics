@@ -4,7 +4,7 @@
 /*  This is an example function. It is _slow_. You should replace it */
 size_t PllSplit::popcount() {
   size_t popcount = 0;
-  for (size_t index = 0; index < _amount_of_register * splitBitWidth(); ++index) {
+  for (size_t index = 0; index < _amount_of_registers * splitBitWidth(); ++index) {
     if (bitExtract(index) == 1) { popcount += 1; }
   }
   return popcount;
@@ -48,7 +48,7 @@ uint32_t PllSplit::bitExtract(size_t bit_index) const {
 }
 
 int PllSplit::compareTo(PllSplit other) const {
-  for (size_t i = 0; i < _amount_of_register; ++i) {
+  for (size_t i = 0; i < _amount_of_registers; ++i) {
     if (_split[i] != other()[i]){
       return (int) (_split[i] > other()[i]?1:-1);
     }
@@ -78,8 +78,6 @@ PllSplitList::PllSplitList(const std::vector<PllSplit> &splits) {
     }
   }
 }
-
-
 
 PllSplitList::~PllSplitList() {
   if (!_splits.empty()) { free(_splits[0]()); }

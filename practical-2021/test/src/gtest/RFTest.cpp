@@ -110,15 +110,13 @@ TEST_F(RFTest, basic_test)
 {
     std::string test_set = "350";
     float error = 0.01;
-    RFDistance rf_distance = RFDistance();
-    rf_distance.run("../test/res/data/heads/BS/" + test_set);
-    rf_distance.writeResults("../output/" + test_set);
-    EXPECT_EQ(rf_distance.getTreeCount(), readTreeCount(test_set));
-    size_t tree_count = rf_distance.getTreeCount();
-    EXPECT_EQ(rf_distance.getUniqueCount(), readUniqueTreeCount(test_set));
-    EXPECT_NEAR(rf_distance.getAverageDistance(), readAverageDistance(test_set), error);
+    RFDistance distance;
+    RFData result = distance.computeRF("../test/res/data/heads/BS/" + test_set);
+    size_t tree_count = readTreeCount(test_set);
+    EXPECT_EQ(result.unique_count, readUniqueTreeCount(test_set));
+    EXPECT_NEAR(result.average_distance, readAverageDistance(test_set), error);
     size_t k=0;
-    std::vector<size_t> calculated_distances = rf_distance.getDistances();
+    std::vector<size_t> calculated_distances = result.distances;
     std::vector<size_t> reference_distances = readDistances(test_set);
     for (size_t i=0; i < tree_count; i++){
       for (size_t j=i+1; j < tree_count; j++){
@@ -126,8 +124,4 @@ TEST_F(RFTest, basic_test)
         k++;
       }
     }
-
-    //std::cout << getDistance(0,2,distances,tree_count) << std::endl;
-
-
 }

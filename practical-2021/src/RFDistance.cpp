@@ -1,11 +1,12 @@
 #include "RFDistance.hpp"
 
 
-void RFDistance::run(const std::string &data_set_path) {
+RFData RFDistance::computeRF(const std::string &data_set_path) {
   std::vector<PllSplitList> tree_splits;
+  size_t tip_count;
   std::fstream tree_file;
   tree_file.open(data_set_path, std::ios::in);
-  tree_count = 0;
+  size_t tree_count = 0;
   if (tree_file.is_open()){
     std::string line;
     while(std::getline(tree_file, line)){
@@ -34,7 +35,9 @@ void RFDistance::run(const std::string &data_set_path) {
   /*else {
   exceptionhandeling
   }*/
-  distances = std::vector<size_t>((tree_count*(tree_count-1))/2);
+
+  RFData result;
+  result.distances = std::vector<size_t>((tree_count*(tree_count-1))/2);
   //stores for every tree T_i the tree T_j which admits the smallest RF-Distance to T_i for all j < i
   std::vector<size_t> closest_tree(tree_count);
   //stores for every tree T the splits in the symmetric difference to closest_tree[T]
@@ -44,7 +47,7 @@ void RFDistance::run(const std::string &data_set_path) {
   //stores the current distance
   size_t dist;
 
-  unique_count = tree_count;
+  result.unique_count = tree_count;
   closest_tree[0] = 0;
   D_closest.push_back(tree_splits[0]);
   for(size_t i = 1; i < tree_count; ++i){
@@ -53,50 +56,29 @@ void RFDistance::run(const std::string &data_set_path) {
     D.push_back(tree_splits[i].symmetricDifference(tree_splits[0]));
     //as RF distance is the cardinality of the symmetric difference
     dist = D[0].getSplitCount();
-    distances[getPos(0, i)] = dist;
+    result.distances[arrayPos(0, i, tree_count)] = dist;
     closest_tree[i] = 0;
     D_closest.push_back(PllSplitList(D[0]));
     min_dist = dist;
-    if(dist == 0) --unique_count;
+    if(dist == 0) --result.unique_count;
     for(size_t j = 1; j < i; ++j){
       D.push_back(D[closest_tree[j]].symmetricDifference(D_closest[j]));
       dist = D[j].getSplitCount();
-      distances[getPos(j, i)] = dist;
+      result.distances[arrayPos(j, i, tree_count)] = dist;
       if (dist < min_dist){
         closest_tree[i] = j;
         D_closest[i] = D[j];
         min_dist = dist;
-        if(dist == 0) --unique_count;
+        if(dist == 0) --result.unique_count;
       }
     }
   }
-}
 
-
-
-
-
-void RFDistance::writeResults(const std::string &output_path) const {
-  std::fstream distance_file;
-  distance_file.open(output_path+"/distances", std::ios::out);
-  if (distance_file.is_open()) {
-    size_t k=0;
-    for(size_t i = 0; i < tree_count; ++i){
-      for(size_t j = i+1; j < tree_count; ++j){
-        distance_file << i << " " << j << ": " << distances[k] << "\n";
-        ++k;
-      }
-    }
-    distance_file.close();
+  result.relative_distances = std::vector<float>();
+  for(size_t i = 0; i < result.distances.size(); ++i){
+    result.relative_distances.emplace_back(result.distances[i] / (2*(tip_count-3)));
   }
+  result.average_distance = (std::accumulate(result.distances.begin(), result.distances.end(), 0.0) / (2*(tip_count - 3))) / result.distances.size();
 
-  std::fstream info_file;
-  info_file.open(output_path+"/info", std::ios::out);
-  if (info_file.is_open()) {
-    info_file << "Found " << tree_count << " trees\n";
-    info_file << "Average relative RF in this set: " << getAverageDistance() << "\n";
-    info_file << "Number of unique trees in this tree set: " << unique_count << "\n";
-    info_file.close();
-  }
-
+  return result;
 }
