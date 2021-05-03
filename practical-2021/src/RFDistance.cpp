@@ -2,6 +2,7 @@
 
 
 RFData RFDistance::computeRF(const std::string &data_set_path) {
+
   std::vector<PllSplitList> tree_splits;
   size_t tip_count;
   std::fstream tree_file;

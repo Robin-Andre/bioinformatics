@@ -7,7 +7,7 @@
 #include <vector>
 #include <algorithm>
 #include <../../../src/RFDistance.hpp>
-
+#include <../../../src/io/FileReader.hpp>
 
 class RFTest: public testing::Test{
 protected:
@@ -33,21 +33,7 @@ size_t RFTest::getDistanceFromString(const std::string &line) const {
     return std::stoi(item);
 }
 
- std::vector<size_t> RFTest::readDistances(std::string data_set_name) const
-{
-    std::vector<size_t> distances;
-    std::fstream res_file;
-    res_file.open("../test/res/reference_results/" + data_set_name + "/RAxML_RF-Distances.0"  ,std::ios::in);
-    if (res_file.is_open()){
-      std::string line;
-      std::vector<std::string> parts;
-      while(std::getline(res_file, line)){
-        distances.push_back(getDistanceFromString(line));
-      }
-      res_file.close(); //close the file object.
-  }
-  return distances;
-}
+
 
 size_t RFTest::readTreeCount(std::string data_set_name) const
 {
@@ -117,7 +103,7 @@ TEST_F(RFTest, basic_test)
     EXPECT_NEAR(result.average_distance, readAverageDistance(test_set), error);
     size_t k=0;
     std::vector<size_t> calculated_distances = result.distances;
-    std::vector<size_t> reference_distances = readDistances(test_set);
+    std::vector<size_t> reference_distances = io::readDistances(test_set);
     for (size_t i=0; i < tree_count; i++){
       for (size_t j=i+1; j < tree_count; j++){
         EXPECT_EQ(calculated_distances[k], reference_distances[k]) << i << " " << j;

@@ -43,8 +43,8 @@ size_t rf_distance(const PllSplitList& p1, const PllSplitList& p2) {
 size_t rf_distance(const PllTree& t1, const PllTree& t2) {
     PllSplitList list1 = t1.makeSplits();
     PllSplitList list2 = t2.makeSplits();
-    list1.update_proper_register_size();
-    list2.update_proper_register_size();
+    //list1.update_proper_register_size();
+    //list2.update_proper_register_size();
     return rf_distance(list1, list2);
     //return rf_distance(t1.makeSplits(), t2.makeSplits());
 }

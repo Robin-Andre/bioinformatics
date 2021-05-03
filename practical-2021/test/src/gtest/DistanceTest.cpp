@@ -11,22 +11,25 @@ RFDistance test;
 to be adjusted.
 */
 std::string current_test_dir = "../test/res/data/heads/BS/";
-
+float epsilon = 0.001;
 /*
   Compares two vectors, there is probably a smart method to do this within googletest 
-  but I don't know it (yet)
+  but I don't know it (yet). Maybe a macro, maybe a selfdefined template...
 */
-void evaluate(const std::vector<size_t>& actual_values, const std::vector<size_t>& expected_values) {
-    EXPECT_EQ(actual_values.size(), expected_values.size());
-    for(unsigned i = 0; i < actual_values.size(); ++i) {
-        EXPECT_EQ(actual_values[i], expected_values[i]);
+void evaluate(const RFData& result, const std::vector<size_t>& expected_values) {
+    EXPECT_EQ(result.distances.size(), expected_values.size());
+    for(unsigned i = 0; i < expected_values.size(); ++i) {
+        EXPECT_EQ(result.distances[i], expected_values[i]);
     }
 }
 /*Method to reduce code complexity :)
 */
 void execute_test(std::string test_file) {
     RFData results = test.computeRF(current_test_dir + test_file);
-    evaluate(results.distances, io::readDistances(test_file));
+    evaluate(results, io::readDistances(test_file));
+    EXPECT_NEAR(results.average_distance, io::readAverageDistance(test_file), epsilon);
+    EXPECT_EQ(results.unique_count, io::readUniqueTreeCount(test_file));
+    
 }
 };
 /*
@@ -35,7 +38,6 @@ but I would like to have all tests separate
 */
 TEST_F(DistanceTest, 24taxa) {
     execute_test("24");
-
 }
 TEST_F(DistanceTest, 125taxa) {
     execute_test("125");
