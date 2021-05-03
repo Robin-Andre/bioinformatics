@@ -4,128 +4,102 @@
 #include "../../../src/io/FileReader.hpp"
 class DistanceTest : public testing::Test {
 protected:
+/*Right now an instanciation of test is needed, if we turn it into a free function this needs 
+to be adapted*/
 RFDistance test;
+/*This is a hardcoded link to the test dir. IF changes to the project structure are made this needs 
+to be adjusted.
+*/
 std::string current_test_dir = "../test/res/data/heads/BS/";
+
+/*
+  Compares two vectors, there is probably a smart method to do this within googletest 
+  but I don't know it (yet)
+*/
 void evaluate(const std::vector<size_t>& actual_values, const std::vector<size_t>& expected_values) {
     EXPECT_EQ(actual_values.size(), expected_values.size());
     for(unsigned i = 0; i < actual_values.size(); ++i) {
         EXPECT_EQ(actual_values[i], expected_values[i]);
     }
 }
-};
-
-TEST_F(DistanceTest, 24taxa) {
-    std::string test_file = "24";
+/*Method to reduce code complexity :)
+*/
+void execute_test(std::string test_file) {
     RFData results = test.computeRF(current_test_dir + test_file);
     evaluate(results.distances, io::readDistances(test_file));
+}
+};
+/*
+Yes it would be smart to simply loop over an array of strings and call them instead of this repetitive nonsense
+but I would like to have all tests separate 
+*/
+TEST_F(DistanceTest, 24taxa) {
+    execute_test("24");
+
 }
 TEST_F(DistanceTest, 125taxa) {
-    std::string test_file = "125";
-    RFData results = test.computeRF(current_test_dir + test_file);
-    evaluate(results.distances, io::readDistances(test_file));
+    execute_test("125");
 }
 TEST_F(DistanceTest, 141taxa) {
-    std::string test_file = "141";
-    RFData results = test.computeRF(current_test_dir + test_file);
-    evaluate(results.distances, io::readDistances(test_file));
+    execute_test("141");
 }
 TEST_F(DistanceTest, 143taxa) {
-    std::string test_file = "143";
-    RFData results = test.computeRF(current_test_dir + test_file);
-    evaluate(results.distances, io::readDistances(test_file));
+    execute_test("143");
 }
 TEST_F(DistanceTest, 148taxa) {
-    std::string test_file = "148";
-    RFData results = test.computeRF(current_test_dir + test_file);
-    evaluate(results.distances, io::readDistances(test_file));
+    execute_test("148");
 }
 TEST_F(DistanceTest, 150taxa) {
-    std::string test_file = "150";
-    RFData results = test.computeRF(current_test_dir + test_file);
-    evaluate(results.distances, io::readDistances(test_file));
+    execute_test("150");
 }
 TEST_F(DistanceTest, 218taxa) {
-    std::string test_file = "218";
-    RFData results = test.computeRF(current_test_dir + test_file);
-    evaluate(results.distances, io::readDistances(test_file));
+    execute_test("218");
 }
 TEST_F(DistanceTest, 350taxa) {
-    std::string test_file = "350";
-    RFData results = test.computeRF(current_test_dir + test_file);
-    evaluate(results.distances, io::readDistances(test_file));
+    execute_test("350");
 }
 TEST_F(DistanceTest, 354taxa) {
-    std::string test_file = "354";
-    RFData results = test.computeRF(current_test_dir + test_file);
-    evaluate(results.distances, io::readDistances(test_file));
+    execute_test("354");
 }
 TEST_F(DistanceTest, 404taxa) {
-    std::string test_file = "404";
-    RFData results = test.computeRF(current_test_dir + test_file);
-    evaluate(results.distances, io::readDistances(test_file));
+    execute_test("404");
 }
 TEST_F(DistanceTest, 500taxa) {
-    std::string test_file = "500";
-    RFData results = test.computeRF(current_test_dir + test_file);
-    evaluate(results.distances, io::readDistances(test_file));
+    execute_test("500");
 }
 TEST_F(DistanceTest, 628taxa) {
-    std::string test_file = "628";
-    RFData results = test.computeRF(current_test_dir + test_file);
-    evaluate(results.distances, io::readDistances(test_file));
+    execute_test("628");
 }
 TEST_F(DistanceTest, 714taxa) {
-    std::string test_file = "714";
-    RFData results = test.computeRF(current_test_dir + test_file);
-    evaluate(results.distances, io::readDistances(test_file));
+    execute_test("24");
 }
 TEST_F(DistanceTest, 885taxa) {
-    std::string test_file = "885";
-    RFData results = test.computeRF(current_test_dir + test_file);
-    evaluate(results.distances, io::readDistances(test_file));
+    execute_test("885");
 }
 TEST_F(DistanceTest, 994taxa) {
-    std::string test_file = "994";
-    RFData results = test.computeRF(current_test_dir + test_file);
-    evaluate(results.distances, io::readDistances(test_file));
+    execute_test("994");
 }
 TEST_F(DistanceTest, 1288taxa) {
-    std::string test_file = "1288";
-    RFData results = test.computeRF(current_test_dir + test_file);
-    evaluate(results.distances, io::readDistances(test_file));
+    execute_test("1288");
 }
 TEST_F(DistanceTest, 1481taxa) {
-    std::string test_file = "1481";
-    RFData results = test.computeRF(current_test_dir + test_file);
-    evaluate(results.distances, io::readDistances(test_file));
+    execute_test("1481");
 }
 TEST_F(DistanceTest, 1512taxa) {
-    std::string test_file = "1512";
-    RFData results = test.computeRF(current_test_dir + test_file);
-    evaluate(results.distances, io::readDistances(test_file));
+    execute_test("1512");
 }
 TEST_F(DistanceTest, 1604taxa) {
-    std::string test_file = "1604";
-    RFData results = test.computeRF(current_test_dir + test_file);
-    evaluate(results.distances, io::readDistances(test_file));
+    execute_test("1604");
 }
 TEST_F(DistanceTest, 1908taxa) {
-    std::string test_file = "1908";
-    RFData results = test.computeRF(current_test_dir + test_file);
-    evaluate(results.distances, io::readDistances(test_file));
+    execute_test("1908");
 }
 TEST_F(DistanceTest, 2000taxa) {
-    std::string test_file = "2000";
-    RFData results = test.computeRF(current_test_dir + test_file);
-    evaluate(results.distances, io::readDistances(test_file));
+    execute_test("2000");
 }
 TEST_F(DistanceTest, 2308taxa) {
-    std::string test_file = "2308";
-    RFData results = test.computeRF(current_test_dir + test_file);
-    evaluate(results.distances, io::readDistances(test_file));
+    execute_test("2308");
 }
 TEST_F(DistanceTest, 2554taxa) {
-    std::string test_file = "2554";
-    RFData results = test.computeRF(current_test_dir + test_file);
-    evaluate(results.distances, io::readDistances(test_file));
+    execute_test("2554");
 }
