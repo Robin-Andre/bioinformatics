@@ -17,11 +17,14 @@ extern "C" {
 #include <bitset>
 
 
+typedef unsigned int tree_t;
+
+
 class RFDistance {
 public:
   RFDistance(const std::string &data_set_path);
   ~RFDistance(){
-    for(unsigned int i=0; i < tree_splits.size(); i++){
+    for(unsigned int i=0; i < tree_splits.size(); ++i){
       delete(tree_splits[i]);
     }
   }

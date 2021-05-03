@@ -108,7 +108,7 @@ unsigned int RFTest::getDistance(unsigned int tree1, unsigned int tree2, const s
 
 TEST_F(RFTest, basic_test)
 {
-    std::string test_set = "24";
+    std::string test_set = "350";
     float error = 0.01;
     RFDistance rf_distance = RFDistance("../test/res/data/heads/BS/" + test_set);
     rf_distance.run();

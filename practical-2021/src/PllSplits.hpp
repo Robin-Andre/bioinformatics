@@ -31,19 +31,45 @@ class PllTree;
  */
 class PllSplit {
 public:
-  PllSplit(pll_split_t s) : _split{s} {}
+  PllSplit(pll_split_t s, size_t amount_of_register) : _split{s}, _amount_of_register(amount_of_register) {}
+
+  /*~PllSplit() {
+    delete [] _split;
+  }
+  PllSplit(const PllSplit &other) : _amount_of_register(other._amount_of_register){
+    _split = &(malloc(sizeof(pll_split_t)));
+    memcpy(_split, other._split, sizeof(pll_split_t));
+  }
+
+  Array::Array(const Array &other)
+    : m_size(other.m_size)
+{
+    std::cout << "I am copy constructor" << std::endl;
+
+    m_array = new int[m_size];
+    std::copy(other.m_array, other.m_array + m_size, m_array);
+}
+  PllSplit(PllSplit &&other) :
+      _split(std::exchange(other._split, {})), split_len(other.split_len) {}*/
 
   pll_split_t operator()() const { return _split; }
 
-  size_t   popcount(size_t len);
+  size_t   popcount();
   uint32_t bitExtract(size_t bit_index);
 
-  int compareTo(PllSplit other, size_t split_len) const;
+  int compareTo(PllSplit other) const;
 
 
-  void printSplit(size_t len) const {
-    std::cout << (std::bitset<32>(*_split)) << std::endl;
+  void printSplit() const {
+    std::cout <<_split << ": ";
+    for (size_t i = 0; i < _amount_of_register; ++i){
+      std::cout << (std::bitset<32>(_split[i]));
+    }
+  std::cout << std::endl;
   }
+
+  size_t getAmountOfRegister() const {
+    return _amount_of_register;}
 
 private:
   constexpr size_t splitBitWidth() const {
@@ -60,18 +86,19 @@ private:
 
 
   pll_split_t _split;
+  size_t _amount_of_register;
 };
 
 class PllSplitList {
 public:
   PllSplitList(const PllTree &tree);
-  PllSplitList(const std::vector<PllSplit> &splits, size_t len);
+  PllSplitList(const std::vector<PllSplit> &splits);
 
   /* Rule of 5 constructors/destructors */
   ~PllSplitList();
-  PllSplitList(const PllSplitList &other);
+  PllSplitList(const PllSplitList &other) : PllSplitList(other._splits) {}
   PllSplitList(PllSplitList &&other) :
-      _splits(std::exchange(other._splits, {})), split_len(other.split_len) {}
+      _splits(std::exchange(other._splits, {})) {}
   PllSplitList &operator=(const PllSplitList &other) {
     return *this = PllSplitList(other);
   };
@@ -85,27 +112,15 @@ public:
   size_t getSplitCount() const {return _splits.size();}
   PllSplitList symmetricDifference(const PllSplitList& other) const;
 
-  /* Computes the number of pll_split_base_t's that are needed to store a single
-   * split
-   */
-  /*size_t computeSplitLen() const {
-    size_t tip_count = _splits.size() + 3;
-    size_t split_len = (tip_count / computSplitBaseSize());
-
-    if ((tip_count % computSplitBaseSize()) > 0) { split_len += 1; }
-
-    return split_len;
-  }*/
 
   void printSplits() const {
     std::cout << "-------------------------"<< std::endl;
-    for(size_t i = 0; i < _splits.size(); i++){
-      _splits[i].printSplit(split_len);
+    for(size_t i = 0; i < _splits.size(); ++i){
+      _splits[i].printSplit();
     }
     std::cout << "-------------------------"<< std::endl;
   }
 
-  size_t getSplitLen() const {return split_len;}
 
 
 private:
@@ -117,8 +132,7 @@ private:
 
 
   size_t computeSplitArraySize() const {
-    return split_len * _splits.size();
+    return _splits.size() == 0 ? 0 : _splits[0].getAmountOfRegister() * _splits.size();
   }
   std::vector<PllSplit> _splits;
-  size_t split_len;
 };
