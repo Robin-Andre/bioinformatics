@@ -3,6 +3,8 @@
 #include <fstream>
 #include <iostream>
 #include "../PllTree.hpp"
+#include "../RFDistance.hpp"
+#include "CommandLineOptions.hpp"
 namespace io {
 static std::vector<PllTree> readTreeFile(const std::string& filepath) {
   std::vector<PllTree> tree_vector;
@@ -22,6 +24,12 @@ static std::vector<PllTree> readTreeFile(const std::string& filepath) {
 /* This is reaaaally silly, there should be another way to get the tipcount but all I'm doing is
 returning a Plllist right now. maybe size of splits can be used. 
 */
+static void writeOutput(const RFData& result, const Config& config) {
+  std::cout << "Result Vector:\n";
+  for(size_t i = 0; i < result.distances.size(); ++i) {
+    std::cout << result.distances[i] << "\n";
+  }
+}
 static size_t readTreeTipCount(const std::string& filepath) {
   std::ifstream file(filepath);
   size_t tip_count; 

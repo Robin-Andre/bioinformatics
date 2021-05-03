@@ -17,6 +17,8 @@ add_subdirectory(test)
 add_subdirectory(googletest EXCLUDE_FROM_ALL)
 
 include_directories(SYSTEM ${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+
+#target_link_libraries(rfdist inforf)
 #include_directories(SYSTEM ${gtest_SOURCE_DIR}/../googlemock/include ${gtest_SOURCE_DIR}/../googlemock/)
 
 #add_custom_target(softwipe ALL
