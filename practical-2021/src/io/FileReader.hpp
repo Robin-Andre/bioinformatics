@@ -41,11 +41,11 @@ static std::vector<PllSplitList> readTreeFile2(const std::string& filepath) {
     std::string line;
     std::getline(file, line);
     PllTree first_tree = PllTree(line);
-    pll_list.push_back(first_tree.makeSplits());
+    pll_list.emplace_back(PllSplitList(first_tree));
     while(std::getline(file, line)) {
       PllTree test(line);
       test.alignNodeIndices(first_tree);
-      pll_list.push_back(first_tree.makeSplits());
+      pll_list.emplace_back(PllSplitList(test));
     }
   }
   file.close();

@@ -1,11 +1,12 @@
 #include "RFDistance.hpp"
-
+#include "io/FileReader.hpp"
 
 RFData RFDistance::computeRF(const std::string &data_set_path) {
 
-  std::vector<PllSplitList> tree_splits;
-  size_t tip_count;
-  std::fstream tree_file;
+  std::vector<PllSplitList> tree_splits = io::readTreeFile2(data_set_path);
+  size_t tip_count = io::readTreeTipCount(data_set_path);
+  size_t tree_count = tree_splits.size();
+  /*std::fstream tree_file;
   tree_file.open(data_set_path, std::ios::in);
   size_t tree_count = 0;
   if (tree_file.is_open()){
@@ -32,7 +33,7 @@ RFData RFDistance::computeRF(const std::string &data_set_path) {
       ++i;
     }
     tree_file.close();
-  }
+  } */
   /*else {
   exceptionhandeling
   }*/
