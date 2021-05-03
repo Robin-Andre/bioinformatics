@@ -33,10 +33,30 @@ class PllTree;
  */
 class PllSplit {
 public:
-  PllSplit(pll_split_t s) : _split{s} {}
+  PllSplit(pll_split_t s, size_t amount_of_register) : _split{s}, _amount_of_register(amount_of_register) {}
+
+  /*~PllSplit() {
+    delete [] _split;
+  }
+  PllSplit(const PllSplit &other) : _amount_of_register(other._amount_of_register){
+    _split = &(malloc(sizeof(pll_split_t)));
+    memcpy(_split, other._split, sizeof(pll_split_t));
+  }
+
+  Array::Array(const Array &other)
+    : m_size(other.m_size)
+{
+    std::cout << "I am copy constructor" << std::endl;
+
+    m_array = new int[m_size];
+    std::copy(other.m_array, other.m_array + m_size, m_array);
+}
+  PllSplit(PllSplit &&other) :
+      _split(std::exchange(other._split, {})), split_len(other.split_len) {}*/
 
   pll_split_t operator()() const { return _split; }
 
+<<<<<<< HEAD
   size_t   popcount(size_t len);
   uint32_t bitExtract(size_t bit_index) const;
   pll_split_t getSplit() {return _split;}
@@ -50,7 +70,26 @@ public:
   }
   friend bool operator == (const PllSplit& p1, const PllSplit& p2);
   friend bool operator < (const PllSplit& p1, const PllSplit& p2);
-  
+
+=======
+  size_t   popcount();
+  uint32_t bitExtract(size_t bit_index);
+
+  int compareTo(PllSplit other) const;
+
+
+  void printSplit() const {
+    std::cout <<_split << ": ";
+    for (size_t i = 0; i < _amount_of_register; ++i){
+      std::cout << (std::bitset<32>(_split[i]));
+    }
+  std::cout << std::endl;
+  }
+
+  size_t getAmountOfRegister() const {
+    return _amount_of_register;}
+
+>>>>>>> rf_implementation
 private:
   constexpr size_t splitBitWidth() const {
     return sizeof(pll_split_base_t) * 8;
@@ -64,17 +103,23 @@ private:
     return index % splitBitWidth();
   }
 
+
   pll_split_t _split;
+<<<<<<< HEAD
   size_t _amount_of_registers = 1;
+=======
+  size_t _amount_of_register;
+>>>>>>> rf_implementation
 };
 //bool operator == (const PllSplit & p1, const PllSplit& p2);
 class PllSplitList {
 public:
   PllSplitList(const PllTree &tree);
+  PllSplitList(const std::vector<PllSplit> &splits);
 
   /* Rule of 5 constructors/destructors */
   ~PllSplitList();
-  PllSplitList(const PllSplitList &other);
+  PllSplitList(const PllSplitList &other) : PllSplitList(other._splits) {}
   PllSplitList(PllSplitList &&other) :
       _splits(std::exchange(other._splits, {})) {}
   PllSplitList &operator=(const PllSplitList &other) {
@@ -91,37 +136,44 @@ public:
     std::cout << "\n";
   }
   PllSplit operator[](size_t index) const { return _splits[index]; }
+<<<<<<< HEAD
   std::vector<PllSplit> getSplits() const {return _splits;}
   size_t size() const {return _splits.size();}
-  
+
   // This is part of the quick solution and maybe should be reworked
   void update_proper_register_size() {
     for(unsigned i = 0; i < _splits.size(); ++i) {
-     
+
       _splits[i].set_amount_of_registers(computeSplitLen());
     }
   }
+=======
+
+  size_t getSplitCount() const {return _splits.size();}
+  PllSplitList symmetricDifference(const PllSplitList& other) const;
+
+
+  void printSplits() const {
+    std::cout << "-------------------------"<< std::endl;
+    for(size_t i = 0; i < _splits.size(); ++i){
+      _splits[i].printSplit();
+    }
+    std::cout << "-------------------------"<< std::endl;
+  }
+
+
+
+>>>>>>> rf_implementation
 private:
   /* Computes the number of bits per split base */
   constexpr size_t computSplitBaseSize() const {
     return sizeof(pll_split_base_t) * 8;
   }
 
-  /* Computes the number of pll_split_base_t's that are needed to store a single
-   * split
-   */
-  size_t computeSplitLen() const {
-    size_t tip_count = _splits.size() + 3;
-    size_t split_len = (tip_count / computSplitBaseSize());
 
-    if ((tip_count % computSplitBaseSize()) > 0) { split_len += 1; }
-
-    return split_len;
-  }
 
   size_t computeSplitArraySize() const {
-    return computeSplitLen() * _splits.size();
+    return _splits.size() == 0 ? 0 : _splits[0].getAmountOfRegister() * _splits.size();
   }
-
   std::vector<PllSplit> _splits;
 };

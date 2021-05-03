@@ -3,7 +3,7 @@
 #include "../../../src/RFDistance2.hpp"
 #include <bitset>
 class IOTest : public testing::Test {
-    
+
 };
 TEST_F(IOTest, full_calculation) {
     //The results are actually correct 
@@ -21,6 +21,7 @@ TEST_F(IOTest, readin) {
   std::vector<PllTree> current = io::readTreeFile("../test/res/data/heads/BS/simple_newick");
   //EXPECT_EQ(current.size(), 10);
   PllSplitList murks = current[0].makeSplits();
+<<<<<<< HEAD
   
   
   PllSplit test = murks[0];
@@ -71,3 +72,8 @@ TEST_F(IOTest, LectureExample) {
     //std::cout << measure::rf_distance(firstset, secondset) << "Thisisaresult and it might be shit\n";
     EXPECT_EQ(measure::rf_distance(firstset, secondset),2);
 }
+=======
+  std::cout << murks[0].popcount() << "\n";
+  EXPECT_EQ(1,1);
+}
+>>>>>>> rf_implementation
