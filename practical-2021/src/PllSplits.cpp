@@ -17,11 +17,9 @@ uint32_t PllSplit::bitExtract(size_t bit_index) {
 }
 
 int PllSplit::compareTo(PllSplit other) const {
-  pll_split_t other_split = other();
-  unsigned int i;
-  for (i = 0; i < _amount_of_register; ++i) {
-    if (_split[i] != other_split[i]){
-      return (int) (_split[i] > other_split[i]?1:-1);
+  for (size_t i = 0; i < _amount_of_register; ++i) {
+    if (_split[i] != other()[i]){
+      return (int) (_split[i] > other()[i]?1:-1);
     }
   }
   return 0;

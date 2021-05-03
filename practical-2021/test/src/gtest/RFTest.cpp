@@ -11,21 +11,21 @@
 
 class RFTest: public testing::Test{
 protected:
-  unsigned int getDistanceFromString(const std::string &line) const;
-  unsigned int readTreeCount(std::string data_set_name) const;
-  unsigned int readUniqueTreeCount(std::string data_set_name) const;
+  size_t getDistanceFromString(const std::string &line) const;
+  size_t readTreeCount(std::string data_set_name) const;
+  size_t readUniqueTreeCount(std::string data_set_name) const;
   float readAverageDistance(std::string data_set_name) const;
   std::string readFromInfoFile(std::string data_set_name, std::string prefix) const;
-  std::vector<unsigned int> readDistances(std::string data_set_name) const;
-  unsigned int getDistance(unsigned int tree1, unsigned int tree2, const std::vector<unsigned int> &distances, unsigned int tree_count) const;
+  std::vector<size_t> readDistances(std::string data_set_name) const;
+  size_t getDistance(size_t tree1, size_t tree2, const std::vector<size_t> &distances, size_t tree_count) const;
 
 
 };
 
-unsigned int RFTest::getDistanceFromString(const std::string &line) const {
+size_t RFTest::getDistanceFromString(const std::string &line) const {
     std::istringstream iss (line);
     std::string item;
-    unsigned int i = 0;
+    size_t i = 0;
     while (std::getline(iss, item, ' ') && i < 2) {
         i++;
 
@@ -33,9 +33,9 @@ unsigned int RFTest::getDistanceFromString(const std::string &line) const {
     return std::stoi(item);
 }
 
- std::vector<unsigned int> RFTest::readDistances(std::string data_set_name) const
+ std::vector<size_t> RFTest::readDistances(std::string data_set_name) const
 {
-    std::vector<unsigned int> distances;
+    std::vector<size_t> distances;
     std::fstream res_file;
     res_file.open("../test/res/reference_results/" + data_set_name + "/RAxML_RF-Distances.0"  ,std::ios::in);
     if (res_file.is_open()){
@@ -49,12 +49,12 @@ unsigned int RFTest::getDistanceFromString(const std::string &line) const {
   return distances;
 }
 
-unsigned int RFTest::readTreeCount(std::string data_set_name) const
+size_t RFTest::readTreeCount(std::string data_set_name) const
 {
   return std::stoi(readFromInfoFile(data_set_name, "Found "));
 }
 
-unsigned int RFTest::readUniqueTreeCount(std::string data_set_name) const
+size_t RFTest::readUniqueTreeCount(std::string data_set_name) const
 {
   return std::stoi(readFromInfoFile(data_set_name, "Number of unique trees in this tree set: "));
 }
@@ -92,15 +92,15 @@ std::string RFTest::readFromInfoFile(std::string data_set_name, std::string pref
  return result;
 }
 
-unsigned int RFTest::getDistance(unsigned int tree1, unsigned int tree2, const std::vector<unsigned int> &distances, unsigned int tree_count) const
+size_t RFTest::getDistance(size_t tree1, size_t tree2, const std::vector<size_t> &distances, size_t tree_count) const
 {
   if (tree1 == tree2){
     return 0;
   }
-  unsigned int first_tree = std::min(tree1, tree2);
-  unsigned int second_tree = std::max(tree1, tree2);
-  unsigned int offset =(first_tree*(2*tree_count-first_tree-1))/2;
-  unsigned int index = offset + (second_tree - first_tree - 1);
+  size_t first_tree = std::min(tree1, tree2);
+  size_t second_tree = std::max(tree1, tree2);
+  size_t offset =(first_tree*(2*tree_count-first_tree-1))/2;
+  size_t index = offset + (second_tree - first_tree - 1);
   return distances[index];
 
 }
@@ -110,18 +110,18 @@ TEST_F(RFTest, basic_test)
 {
     std::string test_set = "350";
     float error = 0.01;
-    RFDistance rf_distance = RFDistance("../test/res/data/heads/BS/" + test_set);
-    rf_distance.run();
+    RFDistance rf_distance = RFDistance();
+    rf_distance.run("../test/res/data/heads/BS/" + test_set);
     rf_distance.writeResults("../output/" + test_set);
     EXPECT_EQ(rf_distance.getTreeCount(), readTreeCount(test_set));
-    unsigned int tree_count = rf_distance.getTreeCount();
-    //EXPECT_EQ(rf_distance.getUniqueCount(), readUniqueTreeCount(test_set));
+    size_t tree_count = rf_distance.getTreeCount();
+    EXPECT_EQ(rf_distance.getUniqueCount(), readUniqueTreeCount(test_set));
     EXPECT_NEAR(rf_distance.getAverageDistance(), readAverageDistance(test_set), error);
-    unsigned int k=0;
-    std::vector<unsigned int> calculated_distances = rf_distance.getDistances();
-    std::vector<unsigned int> reference_distances = readDistances(test_set);
-    for (unsigned int i=0; i < tree_count; i++){
-      for (unsigned int j=i+1; j < tree_count; j++){
+    size_t k=0;
+    std::vector<size_t> calculated_distances = rf_distance.getDistances();
+    std::vector<size_t> reference_distances = readDistances(test_set);
+    for (size_t i=0; i < tree_count; i++){
+      for (size_t j=i+1; j < tree_count; j++){
         EXPECT_EQ(calculated_distances[k], reference_distances[k]) << i << " " << j;
         k++;
       }
