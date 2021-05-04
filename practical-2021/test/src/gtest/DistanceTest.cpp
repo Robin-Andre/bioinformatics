@@ -4,16 +4,17 @@
 #include "../../../src/io/FileReader.hpp"
 class DistanceTest : public testing::Test {
 protected:
-/*Right now an instanciation of test is needed, if we turn it into a free function this needs 
+/*Right now an instanciation of test is needed, if we turn it into a free function this needs
 to be adapted*/
 RFDistance test;
-/*This is a hardcoded link to the test dir. IF changes to the project structure are made this needs 
+/*This is a hardcoded link to the test dir. IF changes to the project structure are made this needs
 to be adjusted.
 */
-std::string current_test_dir = "../test/res/data/heads/BS/";
+//std::string current_test_dir = "../test/res/data/heads/BS/";
+std::string current_test_dir = "../test/res/data/full/BS/";
 float epsilon = 0.001;
 /*
-  Compares two vectors, there is probably a smart method to do this within googletest 
+  Compares two vectors, there is probably a smart method to do this within googletest
   but I don't know it (yet). Maybe a macro, maybe a selfdefined template...
 */
 void evaluate(const RFData& result, const std::vector<size_t>& expected_values) {
@@ -29,17 +30,17 @@ void execute_test(std::string test_file) {
     evaluate(results, io::readDistances(test_file));
     EXPECT_NEAR(results.average_distance, io::readAverageDistance(test_file), epsilon);
     EXPECT_EQ(results.unique_count, io::readUniqueTreeCount(test_file));
-    
+
 }
 };
 /*
 Yes it would be smart to simply loop over an array of strings and call them instead of this repetitive nonsense
-but I would like to have all tests separate 
+but I would like to have all tests separate
 */
 TEST_F(DistanceTest, 24taxa) {
     execute_test("24");
 }
-TEST_F(DistanceTest, 125taxa) {
+/*TEST_F(DistanceTest, 125taxa) {
     execute_test("125");
 }
 TEST_F(DistanceTest, 141taxa) {
@@ -104,4 +105,4 @@ TEST_F(DistanceTest, 2308taxa) {
 }
 TEST_F(DistanceTest, 2554taxa) {
     execute_test("2554");
-}
+}*/
