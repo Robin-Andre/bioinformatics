@@ -81,6 +81,9 @@ PllSplitList::PllSplitList(const std::vector<PllSplit> &splits) {
 
 PllSplitList::~PllSplitList() {
   if (!_splits.empty()) { free(_splits[0]()); }
+  /*for (size_t i = 0; i < _splits.size(); ++i){
+    free(_splits[i]());
+  }*/
 }
 
 
@@ -119,4 +122,29 @@ PllSplitList PllSplitList::symmetricDifference(const PllSplitList& other) const 
   }
   return PllSplitList(different_splits);
 
+}
+
+size_t PllSplitList::rfDistance(const PllSplitList& other) const {
+  size_t other_split_count = other.getSplitCount();
+  if (_splits.size() == 0) return other_split_count;
+  if(other_split_count == 0) return _splits.size();
+  size_t i = 0;
+  size_t j= 0;
+  size_t distance = 0;
+  while (i < _splits.size() && j < other_split_count){
+    int cmp = _splits[i].compareTo(other[j]);
+    if (cmp == -1) { //this < other
+      ++distance;
+      ++i;
+    } else if (cmp == 1){ //this > other
+      ++distance;
+      ++j;
+    } else { //cmp == 0, this = other
+      ++i;
+      ++j;
+    }
+  }
+  distance+=(_splits.size() - i);
+  distance+=(other_split_count - j);
+  return distance;
 }

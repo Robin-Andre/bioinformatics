@@ -6,40 +6,9 @@ RFData RFDistance::computeRF(const std::string &data_set_path) {
   std::vector<PllSplitList> tree_splits = io::readTreeFile2(data_set_path);
   size_t tip_count = io::readTreeTipCount(data_set_path);
   size_t tree_count = tree_splits.size();
-  /*std::fstream tree_file;
-  tree_file.open(data_set_path, std::ios::in);
-  size_t tree_count = 0;
-  if (tree_file.is_open()){
-    std::string line;
-    while(std::getline(tree_file, line)){
-      ++tree_count;
-    }
-    tree_file.close();
-  }
-  tree_file.open(data_set_path, std::ios::in);
-  if (tree_file.is_open()){
-    std::string line;
-    std::getline(tree_file, line);
-    PllTree first_tree = PllTree(line);
-    tip_count = first_tree.getTipCount();
-    PllSplitList first_split = PllSplitList(first_tree);
-    tree_splits.emplace_back(first_split);
-    size_t i=1;
-    while(std::getline(tree_file, line)){
-      PllTree tree = PllTree(line);
-      tree.alignNodeIndices(first_tree);
-      PllSplitList split_list = PllSplitList(tree);
-      tree_splits.emplace_back(split_list);
-      ++i;
-    }
-    tree_file.close();
-  } */
-  /*else {
-  exceptionhandeling
-  }*/
 
   RFData result;
-  result.distances = std::vector<size_t>((tree_count*(tree_count-1))/2);
+  /*result.distances = std::vector<size_t>((tree_count*(tree_count-1))/2);
   //stores for every tree T_i the tree T_j which admits the smallest RF-Distance to T_i for all j < i
   std::vector<size_t> closest_tree(tree_count);
   //stores for every tree T the splits in the symmetric difference to closest_tree[T]
@@ -51,7 +20,7 @@ RFData RFDistance::computeRF(const std::string &data_set_path) {
 
   result.unique_count = tree_count;
   closest_tree[0] = 0;
-  D_closest.push_back(tree_splits[0]);
+  //D_closest.push_back(tree_splits[0]);
   for(size_t i = 1; i < tree_count; ++i){
     //D[j] stores the splits in the symmetric difference of T_j and the current tree T_i
     std::vector<PllSplitList> D;
@@ -73,6 +42,22 @@ RFData RFDistance::computeRF(const std::string &data_set_path) {
         min_dist = dist;
         if(dist == 0) --result.unique_count;
       }
+    }
+  }*/
+
+
+  result.unique_count = tree_splits.size();
+  bool is_unique = true;
+  size_t dist = 0;
+  for(size_t i = 0; i < tree_splits.size(); i++){
+    is_unique = true;
+    for(size_t j = i+1; j < tree_splits.size(); j++){
+      dist = tree_splits[i].rfDistance(tree_splits[j]);
+      if (dist==0 && is_unique){
+        is_unique = false;
+        result.unique_count--;
+      }
+      result.distances.emplace_back(dist);
     }
   }
 

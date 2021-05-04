@@ -34,6 +34,9 @@ class PllTree;
 class PllSplit {
 public:
   PllSplit(pll_split_t s, size_t amount_of_registers) : _split{s}, _amount_of_registers(amount_of_registers) {}
+  /*~PllSplit() {
+    //free(_split);
+  }*/
   pll_split_t operator()() const { return _split; }
   size_t   popcount();
   uint32_t bitExtract(size_t bit_index) const;
@@ -95,6 +98,7 @@ public:
 
   size_t getSplitCount() const {return _splits.size();}
   PllSplitList symmetricDifference(const PllSplitList& other) const;
+  size_t rfDistance(const PllSplitList& other) const;
 
 
   void printSplits() const {

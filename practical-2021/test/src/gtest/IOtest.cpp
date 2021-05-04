@@ -7,7 +7,7 @@ class IOTest : public testing::Test {
 };
 
 TEST_F(IOTest, readin) {
-  std::vector<PllTree> current = io::readTreeFile("../test/res/data/heads/BS/simple_newick");
+  std::vector<PllTree> current = io::readTreeFile("../test/res/data/simple_newick");
   //EXPECT_EQ(current.size(), 10);
   PllSplitList murks = current[0].makeSplits();
   PllSplit test = murks[0];
