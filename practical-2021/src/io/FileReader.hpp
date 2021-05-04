@@ -22,7 +22,7 @@ static std::vector<PllTree> readTreeFile(const std::string& filepath) {
 
 }
 /* This is reaaaally silly, there should be another way to get the tipcount but all I'm doing is
-returning a Plllist right now. maybe size of splits can be used. 
+returning a Plllist right now. maybe size of splits can be used.
 */
 static void writeOutput(const RFData& result, const Config& config) {
   std::cout << "Result Vector:\n";
@@ -32,7 +32,7 @@ static void writeOutput(const RFData& result, const Config& config) {
 }
 static size_t readTreeTipCount(const std::string& filepath) {
   std::ifstream file(filepath);
-  size_t tip_count; 
+  size_t tip_count;
   if(file.is_open()) {
     std::string line;
     std::getline(file, line);
@@ -43,7 +43,7 @@ static size_t readTreeTipCount(const std::string& filepath) {
   return tip_count;
 }
 static std::vector<PllSplitList> readTreeFile2(const std::string& filepath) {
-  std::vector<PllSplitList> pll_list; 
+  std::vector<PllSplitList> pll_list;
   std::ifstream file(filepath);
   if(file.is_open()) {
     std::string line;
@@ -51,14 +51,14 @@ static std::vector<PllSplitList> readTreeFile2(const std::string& filepath) {
     PllTree first_tree = PllTree(line);
     pll_list.emplace_back(PllSplitList(first_tree));
     while(std::getline(file, line)) {
-      PllTree test(line);
-      test.alignNodeIndices(first_tree);
-      pll_list.emplace_back(PllSplitList(test));
+      pll_list.emplace_back(PllSplitList(PllTree(line, first_tree)));
     }
   }
   file.close();
   return pll_list;
 }
+
+
 static size_t getDistanceFromString(const std::string &line) {
     std::istringstream iss (line);
     std::string item;

@@ -38,9 +38,12 @@ Yes it would be smart to simply loop over an array of strings and call them inst
 but I would like to have all tests separate
 */
 TEST_F(DistanceTest, 24taxa) {
-    execute_test("head/24");
+    execute_test("heads/24");
 }
-TEST_F(DistanceTest, 125taxa) {
+/*TEST_F(DistanceTest, 24taxa) {
+    execute_test("heads/24");
+}
+/*TEST_F(DistanceTest, 125taxa) {
     execute_test("heads/125");
 }
 TEST_F(DistanceTest, 141taxa) {
@@ -105,4 +108,4 @@ TEST_F(DistanceTest, 2308taxa) {
 }
 TEST_F(DistanceTest, 2554taxa) {
     execute_test("heads/2554");
-}
+}*/

@@ -59,31 +59,25 @@ int PllSplit::compareTo(PllSplit other) const {
 PllSplitList::PllSplitList(const PllTree &tree) {
   size_t split_len = (tree.getTipCount() / computSplitBaseSize());
   if ((tree.getTipCount()  % computSplitBaseSize()) > 0) { split_len += 1; }
-  auto tmp_splits = pllmod_utree_split_create(
+  pll_split_t* tmp_splits = pllmod_utree_split_create(
       tree.tree()->vroot, tree.tree()->tip_count, nullptr);
-
+  //_splits.reserve(tree.tree()->tip_count - 3);
   for (size_t i = 0; i < tree.tree()->tip_count - 3; ++i) {
     _splits.emplace_back(PllSplit(tmp_splits[i], split_len));
   }
-  free(tmp_splits);
+  //free(tmp_splits);
 }
 
 PllSplitList::PllSplitList(const std::vector<PllSplit> &splits) {
   if(splits.size() > 0){
     size_t split_len = splits[0].getAmountOfRegister();
+    //_splits.reserve(splits.size());
     for (size_t i = 0; i < splits.size(); ++i) {
       auto tmp_splits = (pll_split_t)calloc(split_len, sizeof(pll_split_base_t));
       memcpy(tmp_splits, splits[i](), split_len * sizeof(pll_split_base_t));
       _splits.emplace_back(PllSplit(tmp_splits, split_len));
     }
   }
-}
-
-PllSplitList::~PllSplitList() {
-  if (!_splits.empty()) { free(_splits[0]()); }
-  /*for (size_t i = 0; i < _splits.size(); ++i){
-    free(_splits[i]());
-  }*/
 }
 
 

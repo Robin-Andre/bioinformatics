@@ -11,10 +11,8 @@ std::vector<PllTree>& readTreeFile(const std::string& filepath) {
           std::cout << line << "\n";
       }
   }
-  //tree_vector.push_back(PllTree("roflcopter"));
   return tree_vector;
 }
 static void writeResultFile(const std::string& filepath) {
-    //TODO build and fix 
+    //TODO build and fix
 }
-
