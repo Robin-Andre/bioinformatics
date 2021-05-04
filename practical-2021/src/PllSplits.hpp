@@ -34,9 +34,32 @@ class PllTree;
 class PllSplit {
 public:
   PllSplit(pll_split_t s, size_t amount_of_registers) : _split{s}, _amount_of_registers(amount_of_registers) {}
-  /*~PllSplit() {
-    //free(_split);
-  }*/
+  ~PllSplit() {
+    if(_split != nullptr){
+      //BIG TROUBLE GOING ON HERE!
+      //free(_split);
+    }
+
+  }
+  PllSplit(const PllSplit& other) {
+    _split  = (pll_split_t)calloc(other.getAmountOfRegister(), sizeof(pll_split_base_t));
+    memcpy(_split, other(), other.getAmountOfRegister() * sizeof(pll_split_base_t));
+    _amount_of_registers = other.getAmountOfRegister();
+  }
+
+  PllSplit(PllSplit &&other) {
+    _split = std::exchange(other._split, nullptr);
+    _amount_of_registers = std::exchange(other._amount_of_registers, 0);
+  }
+
+  PllSplit &operator=(const PllSplit &other) {
+    return *this = PllSplit(other);
+  };
+  PllSplit &operator=(PllSplit &&other) {
+    std::swap(_split, other._split);
+    return *this;
+  };
+
   pll_split_t operator()() const { return _split; }
   size_t   popcount();
   uint32_t bitExtract(size_t bit_index) const;
@@ -56,7 +79,8 @@ public:
   }
 
   size_t getAmountOfRegister() const {
-    return _amount_of_registers;}
+    return _amount_of_registers;
+  }
 
 private:
   constexpr size_t splitBitWidth() const {
@@ -72,7 +96,7 @@ private:
   }
 
 
-  pll_split_t _split;
+  pll_split_t _split = nullptr;
   size_t _amount_of_registers = 1;
 };
 //bool operator == (const PllSplit & p1, const PllSplit& p2);
@@ -82,7 +106,7 @@ public:
   PllSplitList(const std::vector<PllSplit> &splits);
 
   /* Rule of 5 constructors/destructors */
-  ~PllSplitList();
+  ~PllSplitList() {}
   PllSplitList(const PllSplitList &other) : PllSplitList(other._splits) {}
   PllSplitList(PllSplitList &&other) :
       _splits(std::exchange(other._splits, {})) {}
@@ -115,11 +139,6 @@ private:
   /* Computes the number of bits per split base */
   constexpr size_t computSplitBaseSize() const {
     return sizeof(pll_split_base_t) * 8;
-  }
-
-
-  size_t computeSplitArraySize() const {
-    return _splits.size() == 0 ? 0 : _splits[0].getAmountOfRegister() * _splits.size();
   }
   std::vector<PllSplit> _splits;
 };

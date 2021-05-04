@@ -39,8 +39,14 @@ but I would like to have all tests separate
 */
 TEST_F(DistanceTest, 24taxa) {
     execute_test("heads/24");
+<<<<<<< HEAD
+=======
 }
-TEST_F(DistanceTest, 125taxa) {
+/*TEST_F(DistanceTest, 24taxa) {
+    execute_test("heads/24");
+>>>>>>> d41fbb94b4c4a1b744b17407c0a08370f5111400
+}
+/*TEST_F(DistanceTest, 125taxa) {
     execute_test("heads/125");
 }
 TEST_F(DistanceTest, 141taxa) {
@@ -105,4 +111,4 @@ TEST_F(DistanceTest, 2308taxa) {
 }
 TEST_F(DistanceTest, 2554taxa) {
     execute_test("heads/2554");
-}
+}*/
