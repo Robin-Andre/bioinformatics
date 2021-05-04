@@ -31,5 +31,5 @@ include_directories(SYSTEM ${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 #                  COMMAND python3.9 ../softwipe.py -Cm -e ../../practical-2021/softwipe_call -f ../../practical-2021/softwipe_command_file  ../../practical-2021/ -x ../../practical-2021/googletest/,../../practical-2021/libs
 #                  COMMENT "Running softwipe"
 #                  POST_BUILD)
-#python3.9 ../softwipe.py -Cm -e ../../practical-2021/softwipe_call -f ../../practical-2021/softwipe_command_file  ../../practical-2021/ -x ../../practical-2021/googletest/,../../practical-2021/libs
+#python3.9 ../softwipe.py -Cm -e ../../practical-2021/softwipe_call -f ../../practical-2021/softwipe_command_file  ../../practical-2021/ -x ../../practical-2021/googletest/,../../practical-2021/libs,../../practical-2021/utils
 #python3.9 ../softwipe.py -Cm -e ../../practical-2021/softwipe_call -f ../../practical-2021/softwipe_command_file ../../practical-2021/src/

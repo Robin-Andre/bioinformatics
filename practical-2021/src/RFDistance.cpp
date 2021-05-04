@@ -3,37 +3,23 @@
 
 RFData RFDistance::computeRF(const std::string &data_set_path) {
 
-  std::vector<PllSplitList> tree_splits = io::readTreeFile2(data_set_path);
+ //std::vector<PllSplitList> tree_splits = io::readTreeFile2(data_set_path);
+
+
+
+ std::vector<PllTree> tree_list = io::readTreeFile(data_set_path);
+  std::vector<PllSplitList> tree_splits;
+  tree_splits.emplace_back(PllSplitList(tree_list[0]));
+  for(size_t i = 1; i < tree_list.size(); ++i) {
+    PllSplitList random = PllSplitList(tree_list[i]);
+    tree_splits.emplace_back(PllSplitList(random));
+  }
+
+
+
+
   size_t tip_count = io::readTreeTipCount(data_set_path);
   size_t tree_count = tree_splits.size();
-  /*std::fstream tree_file;
-  tree_file.open(data_set_path, std::ios::in);
-  size_t tree_count = 0;
-  if (tree_file.is_open()){
-    std::string line;
-    while(std::getline(tree_file, line)){
-      ++tree_count;
-    }
-    tree_file.close();
-  }
-  tree_file.open(data_set_path, std::ios::in);
-  if (tree_file.is_open()){
-    std::string line;
-    std::getline(tree_file, line);
-    PllTree first_tree = PllTree(line);
-    tip_count = first_tree.getTipCount();
-    PllSplitList first_split = PllSplitList(first_tree);
-    tree_splits.emplace_back(first_split);
-    size_t i=1;
-    while(std::getline(tree_file, line)){
-      PllTree tree = PllTree(line);
-      tree.alignNodeIndices(first_tree);
-      PllSplitList split_list = PllSplitList(tree);
-      tree_splits.emplace_back(split_list);
-      ++i;
-    }
-    tree_file.close();
-  } */
   /*else {
   exceptionhandeling
   }*/

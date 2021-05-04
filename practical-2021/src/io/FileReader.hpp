@@ -11,9 +11,13 @@ static std::vector<PllTree> readTreeFile(const std::string& filepath) {
   std::ifstream file(filepath);
   if(file.is_open()) {
       std::string line;
+      std::getline(file, line);
+      PllTree align_tree(line);
+      tree_vector.emplace_back(align_tree);
       while(std::getline(file, line)) {
-          PllTree test(line);
-          tree_vector.push_back(test);
+          PllTree another_tree = PllTree(line);
+          another_tree.alignNodeIndices(align_tree);
+          tree_vector.emplace_back(another_tree);
       }
   }
   file.close();
@@ -51,9 +55,9 @@ static std::vector<PllSplitList> readTreeFile2(const std::string& filepath) {
     PllTree first_tree = PllTree(line);
     pll_list.emplace_back(PllSplitList(first_tree));
     while(std::getline(file, line)) {
-      PllTree test(line);
-      test.alignNodeIndices(first_tree);
-      pll_list.emplace_back(PllSplitList(test));
+      PllTree tree_from_line = PllTree(line);
+      tree_from_line.alignNodeIndices(first_tree);
+      pll_list.emplace_back(PllSplitList(tree_from_line));
     }
   }
   file.close();
