@@ -63,9 +63,9 @@ RFData RFDistance::computeRF(const std::string &data_set_path) {
 
   result.relative_distances = std::vector<float>();
   for(size_t i = 0; i < result.distances.size(); ++i){
-    result.relative_distances.emplace_back(result.distances[i] / (2*(tip_count-3)));
+    result.relative_distances.emplace_back((float) result.distances[i] / (2*(tip_count-3)));
   }
   result.average_distance = (std::accumulate(result.distances.begin(), result.distances.end(), 0.0) / (2*(tip_count - 3))) / result.distances.size();
-
+  result.tree_count = tree_count;
   return result;
 }

@@ -21,6 +21,7 @@ extern "C" {
     std::vector<float> relative_distances;
     size_t unique_count;
     float average_distance;
+    size_t tree_count;
   };
 
 class RFDistance {
