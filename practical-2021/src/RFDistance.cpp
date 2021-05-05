@@ -10,7 +10,7 @@ RFData RFDistance::computeRF(const std::string &data_set_path) {
   assert(result.tip_count > 3);
 
 
-  /*result.distances = std::vector<size_t>((result.tree_count*(result.tree_count-1))/2);
+  result.distances = std::vector<size_t>((result.tree_count*(result.tree_count-1))/2);
   //stores for every tree T_i the tree T_j which admits the smallest RF-Distance to T_i for all j < i
   std::vector<size_t> closest_tree(result.tree_count);
   //stores for every tree T the splits in the symmetric difference to closest_tree[T]
@@ -50,10 +50,10 @@ RFData RFDistance::computeRF(const std::string &data_set_path) {
         if(dist == 0) --result.unique_count;
       }
     }
-  }*/
+  }
 
 
-  result.unique_count = result.tree_count;
+  /*result.unique_count = result.tree_count;
   bool is_unique = true;
   size_t dist = 0;
   for(size_t i = 0; i < result.tree_count; i++){
@@ -68,7 +68,7 @@ RFData RFDistance::computeRF(const std::string &data_set_path) {
       result.distances.emplace_back(dist);
     }
   }
-  assert(result.distances.size() == (result.tree_count * (result.tree_count - 1)) / 2);
+  assert(result.distances.size() == (result.tree_count * (result.tree_count - 1)) / 2);*/
 
   result.relative_distances = std::vector<float>();
   for(size_t i = 0; i < result.distances.size(); ++i){

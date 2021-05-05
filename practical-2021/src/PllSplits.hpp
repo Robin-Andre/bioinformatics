@@ -35,36 +35,6 @@ class PllTree;
 class PllSplit {
 public:
   PllSplit(pll_split_t s, size_t amount_of_registers) : _split{s}, _amount_of_registers(amount_of_registers) {}
-  /*~PllSplit() {
-    if(_split != nullptr){
-      //BIG TROUBLE GOING ON HERE!
-      //free(_split);
-    }
-
-  }
-  PllSplit(const PllSplit& other) {
-    _split  = (pll_split_t)calloc(other.getAmountOfRegister(), sizeof(pll_split_base_t));
-    memcpy(_split, other(), other.getAmountOfRegister() * sizeof(pll_split_base_t));
-    _amount_of_registers = other.getAmountOfRegister();
-  }
-
-  PllSplit(PllSplit &&other) {
-    std::cout << "moving " <<std::endl;
-    other.printSplit();
-    _split = std::exchange(other._split, nullptr);
-    _amount_of_registers = std::exchange(other._amount_of_registers, 0);
-    std::cout << "to " <<std::endl;
-    printSplit();
-    std::cout << "_______________" <<std::endl;
-  }
-
-  PllSplit &operator=(const PllSplit &other) {
-    return *this = PllSplit(other);
-  };
-  PllSplit &operator=(PllSplit &&other) {
-    std::swap(_split, other._split);
-    return *this;
-  };*/
 
   pll_split_t operator()() const { return _split; }
   size_t   popcount();
@@ -113,7 +83,7 @@ public:
   PllSplitList(const std::vector<PllSplit> &splits);
 
   /* Rule of 5 constructors/destructors */
-  ~PllSplitList() {}
+  ~PllSplitList();
   PllSplitList(const PllSplitList &other) : PllSplitList(other._splits) {}
   PllSplitList(PllSplitList &&other) :
       _splits(std::exchange(other._splits, {})) {}
