@@ -10,26 +10,27 @@ RFDistance test;
 to be adjusted.
 */
 //std::string current_test_dir = "../test/res/data/heads/BS/";
-std::string current_test_dir = "../test/res/data/";
+std::string current_data_dir = "../test/res/data/";
+std::string current_ref_dir = "../test/res/reference_results/";
 float epsilon = 0.001;
 /*
   Compares two vectors, there is probably a smart method to do this within googletest
   but I don't know it (yet). Maybe a macro, maybe a selfdefined template...
 */
-void evaluate(const RFData& result, const std::vector<size_t>& expected_values) {
-    EXPECT_EQ(result.distances.size(), expected_values.size());
-    for(unsigned i = 0; i < expected_values.size(); ++i) {
-        EXPECT_EQ(result.distances[i], expected_values[i]);
-    }
+void rf_data_eq(const RFData& d1, const RFData& d2) {
+  EXPECT_NEAR(d1.average_distance, d2.average_distance, epsilon);
+  EXPECT_EQ(d1.distances.size(), d2.distances.size());
+  EXPECT_EQ(d1.unique_count, d2.unique_count);
+  for(unsigned i = 0; i < d1.distances.size(); ++i) {
+    EXPECT_EQ(d1.distances[i], d2.distances[i]);
+    EXPECT_NEAR(d1.relative_distances[i], d2.relative_distances[i], epsilon);
+  }
 }
 /*Method to reduce code complexity :)
 */
 void execute_test(std::string test_file) {
-    RFData results = test.computeRF(current_test_dir + test_file);
-    evaluate(results, io::readDistances(test_file));
-    EXPECT_NEAR(results.average_distance, io::readAverageDistance(test_file), epsilon);
-    EXPECT_EQ(results.unique_count, io::readUniqueTreeCount(test_file));
-
+    RFData results = test.computeRF(current_data_dir + test_file);
+    rf_data_eq(results, io::readRFData(current_ref_dir + test_file, io::RAXML));
 }
 };
 /*

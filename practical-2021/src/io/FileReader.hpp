@@ -7,26 +7,37 @@
 #include "CommandLineOptions.hpp"
 namespace io {
 
-static void writeOutput(const RFData& result, const Config& config) {
-  if(config.output_file_path.size() <= 1) {
-    std::cerr << "The Output was not properly specified...exiting";
-    exit(1);
-  }
-  std::ofstream out_file(config.output_file_path);
+enum Format {RAXML};
+
+static void writeRAXML(const RFData& result, const std::string& path) {
+  std::ofstream out_file(path);
   unsigned k = 0;
   for(unsigned i = 0; i < result.tree_count; ++i) {
-
     for(unsigned j = i + 1; j < result.tree_count; ++j) {
       out_file << i << " " << j << " " << result.distances[k] << " " << result.relative_distances[k] << std::endl;
       ++k;
     }
   }
   out_file.close();
-  //for(const auto &e : result.distances) out_file << e << "\n";
+}
+
+static void writeRFData(const RFData& result, const Config& config) {
+  //Maybe an argument later
+  Format format = RAXML;
+
+  if(config.output_file_path.size() <= 1) {
+    std::cerr << "The Output was not properly specified...exiting";
+    exit(1);
+  }
+  switch (format) {
+    case RAXML:
+    {
+      writeRAXML(result, config.output_file_path);
+    }
+    default:
+      throw "No proper output format specified!";
+  }
   std::cout << "Result File written at: "<< config.output_file_path << std::endl;
-  /*for(size_t i = 0; i < result.distances.size(); ++i) {
-    std::cout << result.distances[i] << "\n";
-  }*/
 }
 
 static std::vector<PllSplitList> readTreeFile(const std::string& filepath) {
@@ -46,80 +57,99 @@ static std::vector<PllSplitList> readTreeFile(const std::string& filepath) {
 }
 
 
-static size_t getDistanceFromString(const std::string &line) {
+
+static size_t getAbsoluteDistanceFromString(const std::string &line) {
     std::istringstream iss (line);
     std::string item;
     size_t i = 0;
     while (std::getline(iss, item, ' ') && i < 2) {
         i++;
-
     }
     return std::stoi(item);
 }
-static void writeResultFile(const std::string& filepath){
 
+static float getRelativeDistanceFromString(const std::string &line) {
+    std::istringstream iss (line);
+    std::string item;
+    size_t i = 0;
+    while (std::getline(iss, item, ' ') && i < 3) {
+        i++;
+    }
+    return std::stof(item);
 }
-static std::vector<size_t> readDistances(std::string data_set_name) {
-    std::vector<size_t> distances;
-    std::fstream res_file;
-    res_file.open("../test/res/reference_results/" + data_set_name + "/RAxML_RF-Distances.0"  ,std::ios::in);
-    if (res_file.is_open()){
-      std::string line;
-      std::vector<std::string> parts;
-      while(std::getline(res_file, line)){
-        distances.push_back(getDistanceFromString(line));
-      }
-      res_file.close(); //close the file object.
+
+
+static std::string parseAfterPrefix(const std::string& line, const std::string& prefix){
+  std::string result;
+  std::string dummy;
+  std::istringstream iss (line);
+  std::istringstream iss2 (prefix);
+  while (std::getline(iss2, dummy, ' ')){
+    std::getline(iss, result, ' ');
   }
-  return distances;
-}
-static const std::string readFromInfoFile(std::string data_set_name, std::string prefix) {
-   std::string result;
-   std::fstream res_file;
-   res_file.open("../test/res/reference_results/" + data_set_name + "/RAxML_info.0"  ,std::ios::in);
-   if (res_file.is_open()){
-     std::string line;
-     std::vector<std::string> parts;
-     while(std::getline(res_file, line)){
-       auto match = std::mismatch(prefix.begin(), prefix.end(), line.begin());
-       if (match.first == prefix.end())
-       {
-         std::istringstream iss (line);
-         std::istringstream iss2 (prefix);
-         std::string dummy;
-         while (std::getline(iss2, dummy, ' ')){
-           std::getline(iss, result, ' ');
-         }
-         std::getline(iss, result, ' ');
-         break;
-       }
-     }
-     res_file.close(); //close the file object.
- }
- return result;
-}
-static size_t readTreeCount(std::string data_set_name) {
-  return std::stoi(readFromInfoFile(data_set_name, "Found "));
-}
+  std::getline(iss, result, ' ');
+  return result;
 
-static size_t readUniqueTreeCount(std::string data_set_name) {
-  return std::stoi(readFromInfoFile(data_set_name, "Number of unique trees in this tree set: "));
 }
 
 
-static float readAverageDistance(std::string data_set_name) {
-  return std::stof(readFromInfoFile(data_set_name, "Average relative RF in this set: "));
+
+static RFData readRAXML(const std::string& path) {
+  RFData data;
+  std::fstream res_file;
+  res_file.open(path + "/RAxML_RF-Distances.0"  ,std::ios::in);
+  if (res_file.is_open()){
+    std::string line;
+    std::vector<std::string> parts;
+    while(std::getline(res_file, line)){
+      data.distances.push_back(getAbsoluteDistanceFromString(line));
+      data.relative_distances.push_back(getRelativeDistanceFromString(line));
+    }
+    res_file.close(); //close the file object.
+  } else {
+    throw (path +  "/RAxML_RF-Distances.0 not found!");
+  }
+
+
+  std::vector<std::string> prefixes{"Found ",
+   "Number of unique trees in this tree set: ",
+   "Average relative RF in this set: "};
+
+  res_file.open(path + "/RAxML_info.0"  ,std::ios::in);
+  std::vector<std::string> prefix_matches(prefixes.size());
+  if (res_file.is_open()){
+    std::string line;
+    while(std::getline(res_file, line)){
+      for(size_t i = 0; i < prefixes.size(); ++i){
+        auto prefix = prefixes[i];
+        auto match = std::mismatch(prefix.begin(), prefix.end(), line.begin());
+        if (match.first == prefix.end())
+        {
+          prefix_matches[i] = parseAfterPrefix(line, prefix);
+        }
+      }
+
+    }
+    res_file.close();
+  } else {
+    throw (path +  "/RAxML_info.0 not found!");
+  }
+  data.tree_count = std::stoi(prefix_matches[0]);
+  data.unique_count = std::stoi(prefix_matches[1]);
+  data.average_distance = std::stof(prefix_matches[2]);
+  return data;
 }
 
-/*static RFData readRAxML(std::string data_set_name) {
-  RFData raxml_result;
-  return raxml_result;
-}*/
-
-
-
-
-
+static RFData readRFData(const std::string& path, Format format) {
+  switch(format) {
+    case RAXML:
+    {
+      return readRAXML(path);
+    }
+    default:
+      throw "No proper input format specified!";
+    }
+}
 
 
 }//namespace io
