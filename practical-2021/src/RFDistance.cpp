@@ -7,7 +7,7 @@ RFData RFDistance::computeRF(const std::string &data_set_path) {
   result.tree_count = tree_splits.size();
   assert(result.tree_count > 0);
   result.tip_count = tree_splits[0].getSplitCount() + 3;
-  assert(result.tip_count >= 3);
+  assert(result.tip_count > 3);
 
 
   /*result.distances = std::vector<size_t>((result.tree_count*(result.tree_count-1))/2);
