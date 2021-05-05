@@ -6,7 +6,7 @@
 #include "../RFDistance.hpp"
 #include "CommandLineOptions.hpp"
 namespace io {
-static std::vector<PllTree> readTreeFile(const std::string& filepath) {
+/*static std::vector<PllTree> readTreeFile(const std::string& filepath) {
   std::vector<PllTree> tree_vector;
   std::ifstream file(filepath);
   if(file.is_open()) {
@@ -23,7 +23,7 @@ static std::vector<PllTree> readTreeFile(const std::string& filepath) {
   file.close();
   //tree_vector.push_back(PllTree("roflcopter"));
   return tree_vector;
-}
+}*/
 
 static void writeOutput(const RFData& result, const Config& config) {
   if(config.output_file_path.size() <= 1) {
