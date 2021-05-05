@@ -1,6 +1,7 @@
 #include "RFDistance.hpp"
 #include "io/FileReader.hpp"
 
+
 RFData RFDistance::computeRF(const std::string &data_set_path) {
   RFData result;
   std::vector<PllSplitList> tree_splits = io::readTreeFile(data_set_path);
@@ -54,13 +55,13 @@ RFData RFDistance::computeRF(const std::string &data_set_path) {
 
 
   result.unique_count = result.tree_count;
-  bool is_unique = true;
-  size_t dist = 0;
+  bool is_unique;
+  size_t dist;
   for(size_t i = 0; i < result.tree_count; i++){
     is_unique = true;
     for(size_t j = i+1; j < result.tree_count; j++){
       dist = tree_splits[i].rfDistance(tree_splits[j]);
-      assert(dist >= 0 && dist <= 2*(result.tip_count - 3));
+      assert(dist <= 2*(result.tip_count - 3));
       if (dist==0 && is_unique){
         is_unique = false;
         result.unique_count--;
@@ -75,7 +76,8 @@ RFData RFDistance::computeRF(const std::string &data_set_path) {
     result.relative_distances.emplace_back((float) result.distances[i] / (2*(result.tip_count-3)));
   }
   assert(result.distances.size() == result.relative_distances.size());
-  result.average_distance = std::accumulate(result.relative_distances.begin(), result.relative_distances.end(), 0.0) / result.relative_distances.size();
+  result.average_distance = std::accumulate(result.relative_distances.begin(), 
+                                            result.relative_distances.end(), 0.0) / result.relative_distances.size();
   assert(result.average_distance >= 0 && result.average_distance <= 1);
   return result;
 }

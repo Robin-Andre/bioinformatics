@@ -12,7 +12,8 @@ size_t PllSplit::popcount() {
 /*@Luise This is the stuff I am really not proud of :( The two operators are needed for
 sorting and they are far from correct. Right now they only check the first register instead of all
 of them and I have no clue how we are gonna pass the information of how many registers are actually
-required for the corresponding amount of taxa. The information is there (for example in the PllSplitlist.computeSplitLen())
+required for the corresponding amount of taxa. The information is there 
+(for example in the PllSplitlist.computeSplitLen())
 but I lack a good idea to integrate it. What is worse that the < operator might even be correct for most cases
 the == operator is essentially always wrong for taxa > 32. In the end it might even turn out that the
 Split infer from plllib is already sorted and that all of this is void.
@@ -34,7 +35,9 @@ bool operator == (const PllSplit& p1, const PllSplit& p2) {
     }
   }
   return true;
-  //return p1._split[0] == p2._split[0] && p1._split[1] == p2._split[1]&& p1._split[2] == p2._split[2] && p1._split[3] == p2._split[3]; //The way to fix this would be r[0] == s[0] && r[1]==s[1] && .. &&r[n]==s[n] but the ominous number n is missing
+  //return p1._split[0] == p2._split[0] && p1._split[1] == p2._split[1]&& p1._split[2] 
+  //== p2._split[2] && p1._split[3] == p2._split[3]; 
+  //The way to fix this would be r[0] == s[0] && r[1]==s[1] && .. &&r[n]==s[n] but the ominous number n is missing
 }
 bool operator < (const PllSplit&p1, const PllSplit& p2) {
   assert(p1._amount_of_registers == p2._amount_of_registers);
@@ -44,7 +47,9 @@ bool operator < (const PllSplit&p1, const PllSplit& p2) {
     }
   }
   return false;
-  //return !(p1._split[0] >= p2._split[0] && p1._split[1] >= p2._split[1]&& p1._split[2] >= p2._split[2] && p1._split[3] >= p2._split[3]); // Similar to above, some cool way to fix it if the info of registers is known
+  //return !(p1._split[0] >= p2._split[0] && p1._split[1] >= p2._split[1]
+  //&& p1._split[2] >= p2._split[2] && p1._split[3] >= p2._split[3]); /
+  // Similar to above, some cool way to fix it if the info of registers is known
 }
 
 uint32_t PllSplit::bitExtract(size_t bit_index) const {
@@ -117,7 +122,7 @@ size_t PllSplitList::rfDistance(const PllSplitList& other) const {
   if(other_split_count == 0) return _splits.size();
   assert(_splits[0].getAmountOfRegister() == other[0].getAmountOfRegister());
   size_t i = 0;
-  size_t j= 0;
+  size_t j = 0;
   size_t distance = 0;
   while (i < _splits.size() && j < other_split_count){
     if (_splits[i] == other[j]) {
@@ -131,7 +136,7 @@ size_t PllSplitList::rfDistance(const PllSplitList& other) const {
       ++j;
     }
   }
-  distance+=(_splits.size() - i);
-  distance+=(other_split_count - j);
+  distance += (_splits.size() - i);
+  distance += (other_split_count - j);
   return distance;
 }

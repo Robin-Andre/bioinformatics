@@ -69,13 +69,13 @@ public:
   pll_split_t operator()() const { return _split; }
   size_t   popcount();
   uint32_t bitExtract(size_t bit_index) const;
-  pll_split_t getSplit() {return _split;}
+  //pll_split_t getSplit() {return _split;}
 
   friend bool operator == (const PllSplit& p1, const PllSplit& p2);
   friend bool operator < (const PllSplit& p1, const PllSplit& p2);
 
 
-  void printSplit() const {
+  /*void printSplit() const {
     std::cout << this << ": "<<_split << ": ";
     for (size_t i = 0; i < _amount_of_registers; ++i){
       auto str = std::bitset<32>(_split[i]).to_string();
@@ -83,7 +83,7 @@ public:
       std::cout << str << "|";
     }
   std::cout << std::endl;
-  }
+  }*/
 
   size_t getAmountOfRegister() const {
     return _amount_of_registers;
@@ -109,8 +109,8 @@ private:
 //bool operator == (const PllSplit & p1, const PllSplit& p2);
 class PllSplitList {
 public:
-  PllSplitList(const PllTree &tree);
-  PllSplitList(const std::vector<PllSplit> &splits);
+  explicit PllSplitList(const PllTree &tree);
+  explicit PllSplitList(const std::vector<PllSplit> &splits);
 
   /* Rule of 5 constructors/destructors */
   ~PllSplitList() {}
@@ -119,19 +119,19 @@ public:
       _splits(std::exchange(other._splits, {})) {}
   PllSplitList &operator=(const PllSplitList &other) {
     return *this = PllSplitList(other);
-  };
+  }
   PllSplitList &operator=(PllSplitList &&other) {
     std::swap(_splits, other._splits);
     return *this;
-  };
+  }
   PllSplit operator[](size_t index) const { return _splits[index]; }
+  
   std::vector<PllSplit> getSplits() const {return _splits;}
-
   size_t getSplitCount() const {return _splits.size();}
   PllSplitList symmetricDifference(const PllSplitList& other) const;
   size_t rfDistance(const PllSplitList& other) const;
 
-
+  /* Reenable for print debugging
   void printSplits() const {
     std::cout << "-------------------------"<< std::endl;
     for(size_t i = 0; i < _splits.size(); ++i){
@@ -139,7 +139,7 @@ public:
     }
     std::cout << "-------------------------"<< std::endl;
   }
-
+  */
 
 
 private:

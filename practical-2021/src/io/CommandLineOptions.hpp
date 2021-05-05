@@ -10,7 +10,7 @@ struct Config {
 static Config parseCommandLineOptions(int argc, char* argv[]){ 
     int opt;
     Config config; 
-    while((opt = getopt(argc, argv, "i:o:" ))!= -1) {
+    while((opt = getopt(argc, argv, "i:o:" )) != -1) {
     std::cout << opt << " " << optarg << "\n";
       switch(opt) {
           //std::cout << opt << " " << optarg << "\n";

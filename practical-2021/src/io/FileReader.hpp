@@ -24,6 +24,9 @@ static void writeOutput(const RFData& result, const Config& config) {
   out_file.close();
   //for(const auto &e : result.distances) out_file << e << "\n";
   std::cout << "Result File written at: "<< config.output_file_path << std::endl;
+  std::cout << "Unique count: " << result.unique_count
+            << " Average distance: " << result.average_distance
+            << " Tree count: " << result.tree_count << "\n";
   /*for(size_t i = 0; i < result.distances.size(); ++i) {
     std::cout << result.distances[i] << "\n";
   }*/
@@ -46,7 +49,7 @@ static std::vector<PllSplitList> readTreeFile(const std::string& filepath) {
 }
 
 
-static size_t getDistanceFromString(const std::string &line) {
+static int getDistanceFromString(const std::string &line) {
     std::istringstream iss (line);
     std::string item;
     size_t i = 0;
@@ -56,30 +59,26 @@ static size_t getDistanceFromString(const std::string &line) {
     }
     return std::stoi(item);
 }
-static void writeResultFile(const std::string& filepath){
 
-}
-static std::vector<size_t> readDistances(std::string data_set_name) {
+static std::vector<size_t> readDistances(const std::string& data_set_name) {
     std::vector<size_t> distances;
     std::fstream res_file;
     res_file.open("../test/res/reference_results/" + data_set_name + "/RAxML_RF-Distances.0"  ,std::ios::in);
     if (res_file.is_open()){
       std::string line;
-      std::vector<std::string> parts;
       while(std::getline(res_file, line)){
-        distances.push_back(getDistanceFromString(line));
+        distances.push_back((size_t) getDistanceFromString(line));
       }
       res_file.close(); //close the file object.
   }
   return distances;
 }
-static const std::string readFromInfoFile(std::string data_set_name, std::string prefix) {
+static const std::string readFromInfoFile(const std::string& data_set_name,const std::string& prefix) {
    std::string result;
    std::fstream res_file;
    res_file.open("../test/res/reference_results/" + data_set_name + "/RAxML_info.0"  ,std::ios::in);
    if (res_file.is_open()){
      std::string line;
-     std::vector<std::string> parts;
      while(std::getline(res_file, line)){
        auto match = std::mismatch(prefix.begin(), prefix.end(), line.begin());
        if (match.first == prefix.end())
@@ -98,16 +97,16 @@ static const std::string readFromInfoFile(std::string data_set_name, std::string
  }
  return result;
 }
-static size_t readTreeCount(std::string data_set_name) {
+/*static size_t readTreeCount(const std::string& data_set_name) {
   return std::stoi(readFromInfoFile(data_set_name, "Found "));
-}
+}*/
 
-static size_t readUniqueTreeCount(std::string data_set_name) {
+static int readUniqueTreeCount(const std::string& data_set_name) {
   return std::stoi(readFromInfoFile(data_set_name, "Number of unique trees in this tree set: "));
 }
 
 
-static float readAverageDistance(std::string data_set_name) {
+static float readAverageDistance(const std::string& data_set_name) {
   return std::stof(readFromInfoFile(data_set_name, "Average relative RF in this set: "));
 }
 

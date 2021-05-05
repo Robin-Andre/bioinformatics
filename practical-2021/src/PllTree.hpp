@@ -17,7 +17,7 @@ extern "C" {
  */
 class PllTree {
 public:
-  PllTree(const std::string &newick_string);
+  explicit PllTree(const std::string &newick_string);
   PllTree(const std::string &newick_string, const PllTree& alignment_tree);
   PllTree()=delete;
   /* Rule of 5 constructors/destructors */

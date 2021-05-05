@@ -19,10 +19,10 @@ extern "C" {
 
   struct RFData {
     size_t tree_count;
+    size_t unique_count;
     size_t tip_count;
     std::vector<size_t> distances;
     std::vector<float> relative_distances;
-    size_t unique_count;
     float average_distance;
   };
 
@@ -31,10 +31,10 @@ public:
   RFData computeRF(const std::string &data_set_path);
 private:
   //determines position in linear array, make sure that i < j
-  size_t arrayPos(size_t i, size_t j, size_t tree_count)  {
+  /*size_t arrayPos(size_t i, size_t j, size_t tree_count)  {
     assert(i < tree_count && j < tree_count);
     assert(i < j);
     size_t offset =(i*(2*tree_count-i-1))/2;
     return offset + (j - i - 1);
-  }
+  }*/
 };

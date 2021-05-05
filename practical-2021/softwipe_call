@@ -1,1 +1,1 @@
-bin/./inforf-example
+bin/./rfdist -i test/res/data/heads/24 -o test/output_softwipe
