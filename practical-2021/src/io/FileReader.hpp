@@ -6,21 +6,7 @@
 #include "../RFDistance.hpp"
 #include "CommandLineOptions.hpp"
 namespace io {
-static std::vector<PllTree> readTreeFile(const std::string& filepath) {
-  std::vector<PllTree> tree_vector;
-  std::ifstream file(filepath);
-  if(file.is_open()) {
-      std::string line;
-      while(std::getline(file, line)) {
-          PllTree test(line);
-          tree_vector.push_back(test);
-      }
-  }
-  file.close();
-  //tree_vector.push_back(PllTree("roflcopter"));
-  return tree_vector;
 
-}
 static void writeOutput(const RFData& result, const Config& config) {
   if(config.output_file_path.size() <= 1) {
     std::cerr << "The Output was not properly specified...exiting";
@@ -31,34 +17,19 @@ static void writeOutput(const RFData& result, const Config& config) {
   for(unsigned i = 0; i < result.tree_count; ++i) {
 
     for(unsigned j = i + 1; j < result.tree_count; ++j) {
-      out_file << i << " " << j << " " << result.distances[k] << " " << result.relative_distances[k] << "\n";
+      out_file << i << " " << j << " " << result.distances[k] << " " << result.relative_distances[k] << std::endl;
       ++k;
-    } 
+    }
   }
   out_file.close();
   //for(const auto &e : result.distances) out_file << e << "\n";
-  std::cout << "Result File written at: "<< config.output_file_path <<"\n";
+  std::cout << "Result File written at: "<< config.output_file_path << std::endl;
   /*for(size_t i = 0; i < result.distances.size(); ++i) {
     std::cout << result.distances[i] << "\n";
   }*/
 }
-/* This is reaaaally silly, there should be another way to get the tipcount but all I'm doing is
-returning a Plllist right now. maybe size of splits can be used. 
-*/
 
-static size_t readTreeTipCount(const std::string& filepath) {
-  std::ifstream file(filepath);
-  size_t tip_count;
-  if(file.is_open()) {
-    std::string line;
-    std::getline(file, line);
-    PllTree first_tree = PllTree(line);
-    tip_count = first_tree.getTipCount();
-  }
-  file.close();
-  return tip_count;
-}
-static std::vector<PllSplitList> readTreeFile2(const std::string& filepath) {
+static std::vector<PllSplitList> readTreeFile(const std::string& filepath) {
   std::vector<PllSplitList> pll_list;
   std::ifstream file(filepath);
   if(file.is_open()) {
@@ -139,6 +110,11 @@ static size_t readUniqueTreeCount(std::string data_set_name) {
 static float readAverageDistance(std::string data_set_name) {
   return std::stof(readFromInfoFile(data_set_name, "Average relative RF in this set: "));
 }
+
+/*static RFData readRAxML(std::string data_set_name) {
+  RFData raxml_result;
+  return raxml_result;
+}*/
 
 
 
