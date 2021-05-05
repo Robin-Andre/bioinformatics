@@ -7,6 +7,8 @@ set(LOCALDEPS_DIR ${PROJECT_BINARY_DIR}/localdeps)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address -g")
+
 
 add_subdirectory(libs)
 add_subdirectory(src)

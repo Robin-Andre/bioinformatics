@@ -1,1 +1,1 @@
-bin/./rfdist -i ../test/res/data/heads/BS/24
+bin/./rfdist -i test/res/data/heads/24 -o test/output_softwipe

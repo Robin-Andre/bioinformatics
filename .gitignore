@@ -1,2 +1,5 @@
 # exclude everything
 softwipe/*
+
+practical-2021/test/res/data/full
+practical-2021/test/res/reference_results/full
