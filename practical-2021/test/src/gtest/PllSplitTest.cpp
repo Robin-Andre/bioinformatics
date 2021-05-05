@@ -6,6 +6,11 @@ protected:
   PllSplit createSplit(size_t split_len, std::vector<size_t> part1) {
     if (part1[0] != 0) throw "In every split, 0 must be in Partition 1, hence it must hold that part1[0]==0";
     auto split_bits = (pll_split_t)calloc(split_len, sizeof(pll_split_base_t));
+    setBits(split_bits, split_len, part1);
+    return PllSplit(split_bits, split_len);
+  }
+
+  void setBits(pll_split_t split_bits, size_t split_len, std::vector<size_t> part1) {
     size_t major_idx;
     size_t minor_idx;
     for(size_t tip : part1){
@@ -13,13 +18,14 @@ protected:
       minor_idx = tip % (sizeof(pll_split_base_t) * 8);
       split_bits[major_idx] |= (1 << minor_idx);
     }
-    return PllSplit(split_bits, split_len);
   }
 
   PllSplitList createSplitList(size_t split_len, std::vector<std::vector<size_t>> part1s){
     std::vector<PllSplit> splits;
-    for (auto &part1 : part1s){
-      splits.emplace_back(createSplit(split_len, part1));
+    pll_split_t split_pointer = (pll_split_t) calloc(part1s.size()* split_len, sizeof(pll_split_base_t));
+    for (size_t i=0; i<part1s.size(); ++i) {
+      setBits(split_pointer + i*split_len, split_len, part1s[i]);
+      splits.emplace_back(PllSplit(split_pointer + i*split_len, split_len));
     }
     std::sort(splits.begin(), splits.end());
     return PllSplitList(splits);

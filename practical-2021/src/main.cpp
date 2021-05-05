@@ -7,5 +7,5 @@ int main(int argc, char* argv[]) {
     RFDistance distance_calculator;
 
     RFData result = distance_calculator.computeRF(config.input_file_path);
-    io::writeOutput(result, config);
+    io::writeRFData(result, config);
 }

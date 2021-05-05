@@ -73,11 +73,10 @@ PllSplitList::PllSplitList(const std::vector<PllSplit> &splits) {
   if(splits.size() > 0){
     size_t split_len = splits[0].getAmountOfRegister();
     assert(split_len > 0);
-    //_splits.reserve(splits.size());
-    for (size_t i = 0; i < splits.size(); ++i) {
-      auto tmp_splits = (pll_split_t)calloc(split_len, sizeof(pll_split_base_t));
-      memcpy(tmp_splits, splits[i](), split_len * sizeof(pll_split_base_t));
-      _splits.emplace_back(PllSplit(tmp_splits, split_len));
+    pll_split_t split_pointer = (pll_split_t) calloc(splits.size()* split_len, sizeof(pll_split_base_t));
+    for (size_t i=0; i<splits.size(); ++i) {
+      memcpy(split_pointer + i*split_len, splits[i](), split_len * sizeof(pll_split_base_t));
+      _splits.emplace_back(PllSplit(split_pointer + i*split_len, split_len));
     }
   }
 }
@@ -139,4 +138,8 @@ size_t PllSplitList::rfDistance(const PllSplitList& other) const {
   distance += (_splits.size() - i);
   distance += (other_split_count - j);
   return distance;
+}
+
+PllSplitList::~PllSplitList() {
+  if (!_splits.empty()) { free(_splits[0]()); }
 }
