@@ -10,29 +10,6 @@ RFData RFDistance::computeRF(const std::string &data_set_path) {
   result.tip_count = tree_splits[0].getSplitCount() + 3;
   assert(result.tip_count > 3);
 
-<<<<<<< HEAD
- //std::vector<PllSplitList> tree_splits = io::readTreeFile2(data_set_path);
-
-
-
- std::vector<PllTree> tree_list = io::readTreeFile(data_set_path);
-  std::vector<PllSplitList> tree_splits;
-  tree_splits.emplace_back(PllSplitList(tree_list[0]));
-  for(size_t i = 1; i < tree_list.size(); ++i) {
-    PllSplitList random = PllSplitList(tree_list[i]);
-    tree_splits.emplace_back(PllSplitList(random));
-  }
-
-
-
-
-  size_t tip_count = io::readTreeTipCount(data_set_path);
-  size_t tree_count = tree_splits.size();
-  /*else {
-  exceptionhandeling
-  }*/
-=======
->>>>>>> improve_implementation
 
   /*result.distances = std::vector<size_t>((result.tree_count*(result.tree_count-1))/2);
   //stores for every tree T_i the tree T_j which admits the smallest RF-Distance to T_i for all j < i
