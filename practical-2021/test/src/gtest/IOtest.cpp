@@ -1,6 +1,5 @@
 #include "gtest/gtest.h"
 #include "../../../src/io/FileReader.hpp"
-#include "../../../src/RFDistance2.hpp"
 #include <bitset>
 class IOTest : public testing::Test {
 

@@ -1,5 +1,4 @@
 #include "gtest/gtest.h"
-#include "../../../src/RFDistance2.hpp"
 #include "../../../src/RFDistance.hpp"
 #include "../../../src/io/FileReader.hpp"
 class DistanceTest : public testing::Test {
@@ -40,17 +39,13 @@ but I would like to have all tests separate
 TEST_F(DistanceTest, 24taxa) {
     execute_test("heads/24");
 }
-/*TEST_F(DistanceTest, 24taxa) {
-    execute_test("heads/24");
->>>>>>> d41fbb94b4c4a1b744b17407c0a08370f5111400
-}
-/*TEST_F(DistanceTest, 125taxa) {
+TEST_F(DistanceTest, 125taxa) {
     execute_test("heads/125");
 }
 TEST_F(DistanceTest, 141taxa) {
     execute_test("heads/141");
 }
-TEST_F(DistanceTest, 143taxa) {
+/*TEST_F(DistanceTest, 143taxa) {
     execute_test("heads/143");
 }
 TEST_F(DistanceTest, 148taxa) {

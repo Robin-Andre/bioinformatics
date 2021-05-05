@@ -10,6 +10,7 @@ extern "C" {
 #include <iostream>
 #include <immintrin.h>
 #include <bitset>
+#include <algorithm>
 
 
 class PllTree;
@@ -34,7 +35,7 @@ class PllTree;
 class PllSplit {
 public:
   PllSplit(pll_split_t s, size_t amount_of_registers) : _split{s}, _amount_of_registers(amount_of_registers) {}
-  ~PllSplit() {
+  /*~PllSplit() {
     if(_split != nullptr){
       //BIG TROUBLE GOING ON HERE!
       //free(_split);
@@ -48,8 +49,13 @@ public:
   }
 
   PllSplit(PllSplit &&other) {
+    std::cout << "moving " <<std::endl;
+    other.printSplit();
     _split = std::exchange(other._split, nullptr);
     _amount_of_registers = std::exchange(other._amount_of_registers, 0);
+    std::cout << "to " <<std::endl;
+    printSplit();
+    std::cout << "_______________" <<std::endl;
   }
 
   PllSplit &operator=(const PllSplit &other) {
@@ -58,7 +64,7 @@ public:
   PllSplit &operator=(PllSplit &&other) {
     std::swap(_split, other._split);
     return *this;
-  };
+  };*/
 
   pll_split_t operator()() const { return _split; }
   size_t   popcount();
@@ -67,13 +73,14 @@ public:
 
   friend bool operator == (const PllSplit& p1, const PllSplit& p2);
   friend bool operator < (const PllSplit& p1, const PllSplit& p2);
-  int compareTo(PllSplit other) const;
 
 
   void printSplit() const {
-    std::cout <<_split << ": ";
+    std::cout << this << ": "<<_split << ": ";
     for (size_t i = 0; i < _amount_of_registers; ++i){
-      std::cout << (std::bitset<32>(_split[i]));
+      auto str = std::bitset<32>(_split[i]).to_string();
+      std::reverse(str.begin(), str.end());
+      std::cout << str << "|";
     }
   std::cout << std::endl;
   }
