@@ -51,9 +51,10 @@ static void writeRFData(const RFData& result, const Config& config) {
     case RAXML:
     {
       writeRAXML(result, config.output_file_path);
+      break; //@Luise <- This one was missing :P
     }
     default:
-      throw "No proper output format specified!";
+      throw ("No proper output format specified!");
   }
   std::cout << "Result File written at: "<< config.output_file_path << std::endl;
   std::cout << "Unique count: " << result.unique_count
