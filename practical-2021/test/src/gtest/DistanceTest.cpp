@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 #include "../../../src/RFDistance.hpp"
-#include "../../../src/io/FileReader.hpp"
+#include "../../../src/io/RFDataReader.hpp"
 class DistanceTest : public testing::Test {
 protected:
 /*Right now an instanciation of test is needed, if we turn it into a free function this needs
@@ -30,7 +30,7 @@ void rf_data_eq(const RFData& d1, const RFData& d2) {
 */
 void execute_test(std::string test_file) {
     RFData results = test.computeRF(current_data_dir + test_file);
-    rf_data_eq(results, io::readRFData(current_ref_dir + test_file, io::RAXML));
+    rf_data_eq(results, RAXMLReader::read(current_ref_dir + test_file));
 }
 };
 /*

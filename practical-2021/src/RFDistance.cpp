@@ -1,5 +1,4 @@
 #include "RFDistance.hpp"
-#include "io/FileReader.hpp"
 
 
 RFData RFDistance::computeRF(const std::string &data_set_path) {

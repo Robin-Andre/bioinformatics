@@ -5,6 +5,7 @@ extern "C" {
 }
 #include "PllSplits.hpp"
 #include "PllTree.hpp"
+#include "io/TreeReader.hpp"
 #include <cstddef>
 #include <stdexcept>
 #include <utility>

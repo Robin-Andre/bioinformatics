@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 #include "../../../src/PllSplits.hpp"
-#include "../../../src/io/FileReader.hpp"
+#include "../../../src/io/TreeReader.hpp"
 class PllSplitTest : public testing::Test {
 protected:
   PllSplit createSplit(std::vector<size_t> part1) {
