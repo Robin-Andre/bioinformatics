@@ -19,7 +19,7 @@ float epsilon = 0.001;
 /*Method to reduce code complexity :)
 */
 void execute_test(std::string test_file) {
-    RFData results = test.computeRF(current_data_dir + test_file);
+    RFData results = test.computeRF(TreeReader::readTreeFile(current_data_dir + test_file));
     TestUtil::rf_data_eq(results, RAXMLReader::read(current_ref_dir + test_file), epsilon);
 }
 };

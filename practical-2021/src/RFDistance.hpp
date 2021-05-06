@@ -29,7 +29,7 @@ extern "C" {
 
 class RFDistance {
 public:
-  RFData computeRF(const std::string &data_set_path);
+  RFData computeRF(const std::vector<PllTree>& trees);
 private:
   //determines position in linear array, make sure that i < j
 size_t arrayPos(size_t i, size_t j, size_t tree_count)  {

@@ -1,13 +1,17 @@
 #include "RFDistance.hpp"
 
 
-RFData RFDistance::computeRF(const std::string &data_set_path) {
+RFData RFDistance::computeRF(const std::vector<PllTree>& trees) {
   RFData result;
-  std::vector<PllSplitList> tree_splits = TreeReader::readTreeFile(data_set_path);
-  result.tree_count = tree_splits.size();
+  result.tree_count = trees.size();
   assert(result.tree_count > 0);
-  result.tip_count = tree_splits[0].getSplitCount() + 3;
+  result.tip_count = trees[0].getTipCount();
   assert(result.tip_count > 3);
+  PllSplit::setSplitLen(PllSplit::computeSplitLen(result.tip_count));
+  std::vector<PllSplitList> tree_splits;
+  for(PllTree tree :  trees){
+    tree_splits.emplace_back(PllSplitList(tree));
+  }
 
 
   result.distances = std::vector<size_t>((result.tree_count*(result.tree_count-1))/2);
