@@ -1,6 +1,9 @@
 #include "gtest/gtest.h"
 #include "../../../src/PllSplits.hpp"
 #include "../../../src/io/TreeReader.hpp"
+#include "../TestUtil.hpp"
+
+
 class PllSplitTest : public testing::Test {
 protected:
   PllSplit createSplit(std::vector<size_t> part1) {
@@ -29,23 +32,6 @@ protected:
     }
     std::sort(splits.begin(), splits.end());
     return PllSplitList(splits);
-  }
-
-  void  split_lists_eq(const PllSplitList& l1, const PllSplitList& l2){
-    std::vector<PllSplit> splits1 = l1.getSplits();
-    std::vector<PllSplit> splits2 = l2.getSplits();
-    EXPECT_EQ(splits1.size(), splits2.size());
-    for(size_t i = 0; i < splits1.size(); ++i){
-      EXPECT_EQ(splits1[i], splits2[i]);
-    }
-
-  }
-  void split_vector_eq(const std::vector<PllSplit>& l1, const std::vector<PllSplit>& l2) {
-    EXPECT_EQ(l1.size(), l2.size());
-    for(size_t i = 0; i < l1.size(); ++i){
-      EXPECT_EQ(l1[i], l2[i]);
-    }
-
   }
 };
 
@@ -105,7 +91,7 @@ TEST_F(PllSplitTest, test_list_constructor) {
   std::vector<size_t> trd_part1 = {0, 19, 29, 39};
   splits.emplace_back(createSplit(trd_part1));
   PllSplitList split_list = PllSplitList(splits);
-  split_vector_eq(splits, split_list.getSplits());
+  TestUtil::split_vector_eq(splits, split_list.getSplits());
   for(PllSplit split : splits){
     free(split());
   }
@@ -123,7 +109,7 @@ TEST_F(PllSplitTest, test_tree_constructor) {
                 { 0, 1, 2, 3, 4},
   };
   PllSplitList expected_splitlist = createSplitList(expected);
-  split_lists_eq(expected_splitlist, split_list_from_tree);
+  TestUtil::split_lists_eq(expected_splitlist, split_list_from_tree);
 
 }
 
@@ -197,14 +183,14 @@ TEST_F(PllSplitTest, test_difference) {
   ASSERT_EQ(snd_splitlist.rfDistance(trd_splitlist), 3);
   ASSERT_EQ(trd_splitlist.rfDistance(snd_splitlist), 3);
 
-  split_lists_eq(fst_splitlist.symmetricDifference(snd_splitlist), delta12_splitlist);
-  split_lists_eq(snd_splitlist.symmetricDifference(fst_splitlist), delta12_splitlist);
+  TestUtil::split_lists_eq(fst_splitlist.symmetricDifference(snd_splitlist), delta12_splitlist);
+  TestUtil::split_lists_eq(snd_splitlist.symmetricDifference(fst_splitlist), delta12_splitlist);
 
-  split_lists_eq(fst_splitlist.symmetricDifference(trd_splitlist), delta13_splitlist);
-  split_lists_eq(trd_splitlist.symmetricDifference(fst_splitlist), delta13_splitlist);
+  TestUtil::split_lists_eq(fst_splitlist.symmetricDifference(trd_splitlist), delta13_splitlist);
+  TestUtil::split_lists_eq(trd_splitlist.symmetricDifference(fst_splitlist), delta13_splitlist);
 
-  split_lists_eq(snd_splitlist.symmetricDifference(trd_splitlist), delta23_splitlist);
-  split_lists_eq(trd_splitlist.symmetricDifference(snd_splitlist), delta23_splitlist);
+  TestUtil::split_lists_eq(snd_splitlist.symmetricDifference(trd_splitlist), delta23_splitlist);
+  TestUtil::split_lists_eq(trd_splitlist.symmetricDifference(snd_splitlist), delta23_splitlist);
 
 
 }

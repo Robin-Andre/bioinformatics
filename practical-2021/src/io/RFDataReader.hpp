@@ -17,7 +17,7 @@ public:
   static RFData read(const std::string& path) {
     RFData data;
     std::fstream res_file;
-    res_file.open(path + "/RAxML_RF-Distances.0"  ,std::ios::in);
+    res_file.open(path + "/distances"  ,std::ios::in);
     if (res_file.is_open()){
       std::string line;
       std::vector<std::string> parts;
@@ -27,7 +27,7 @@ public:
       }
       res_file.close(); //close the file object.
     } else {
-      throw (path +  "/RAxML_RF-Distances.0 not found!");
+      throw (path +  "/distances not found!");
     }
 
 
@@ -35,7 +35,7 @@ public:
      "Number of unique trees in this tree set: ",
      "Average relative RF in this set: "};
 
-    res_file.open(path + "/RAxML_info.0"  ,std::ios::in);
+    res_file.open(path + "/info"  ,std::ios::in);
     std::vector<std::string> prefix_matches(prefixes.size());
     if (res_file.is_open()){
       std::string line;
@@ -52,7 +52,7 @@ public:
       }
       res_file.close();
     } else {
-      throw (path +  "/RAxML_info.0 not found!");
+      throw (path +  "/info not found!");
     }
     data.tree_count = std::stoi(prefix_matches[0]);
     data.unique_count = std::stoi(prefix_matches[1]);

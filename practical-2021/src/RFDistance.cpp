@@ -3,7 +3,7 @@
 
 RFData RFDistance::computeRF(const std::string &data_set_path) {
   RFData result;
-  std::vector<PllSplitList> tree_splits = io::readTreeFile(data_set_path);
+  std::vector<PllSplitList> tree_splits = TreeReader::readTreeFile(data_set_path);
   result.tree_count = tree_splits.size();
   assert(result.tree_count > 0);
   result.tip_count = tree_splits[0].getSplitCount() + 3;

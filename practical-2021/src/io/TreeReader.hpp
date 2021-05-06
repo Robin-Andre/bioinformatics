@@ -5,8 +5,9 @@
 #include "../PllTree.hpp"
 //#include "../RFDistance.hpp"
 //#include "CommandLineOptions.hpp"
-namespace io {
+class TreeReader {
 
+public:
 
 static std::vector<PllSplitList> readTreeFile(const std::string& filepath) {
   std::vector<PllSplitList> pll_list;
@@ -27,7 +28,4 @@ static std::vector<PllSplitList> readTreeFile(const std::string& filepath) {
   file.close();
   return pll_list;
 }
-
-
-
-}//namespace io
+};

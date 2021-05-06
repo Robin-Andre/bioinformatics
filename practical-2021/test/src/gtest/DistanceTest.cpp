@@ -1,6 +1,8 @@
 #include "gtest/gtest.h"
 #include "../../../src/RFDistance.hpp"
 #include "../../../src/io/RFDataReader.hpp"
+#include "../../../src/io/RFDataReader.hpp"
+#include "../TestUtil.hpp"
 class DistanceTest : public testing::Test {
 protected:
 /*Right now an instanciation of test is needed, if we turn it into a free function this needs
@@ -13,24 +15,12 @@ to be adjusted.
 std::string current_data_dir = "../test/res/data/";
 std::string current_ref_dir = "../test/res/reference_results/";
 float epsilon = 0.001;
-/*
-  Compares two vectors, there is probably a smart method to do this within googletest
-  but I don't know it (yet). Maybe a macro, maybe a selfdefined template...
-*/
-void rf_data_eq(const RFData& d1, const RFData& d2) {
-  EXPECT_NEAR(d1.average_distance, d2.average_distance, epsilon);
-  EXPECT_EQ(d1.distances.size(), d2.distances.size());
-  EXPECT_EQ(d1.unique_count, d2.unique_count);
-  for(unsigned i = 0; i < d1.distances.size(); ++i) {
-    EXPECT_EQ(d1.distances[i], d2.distances[i]);
-    EXPECT_NEAR(d1.relative_distances[i], d2.relative_distances[i], epsilon);
-  }
-}
+
 /*Method to reduce code complexity :)
 */
 void execute_test(std::string test_file) {
     RFData results = test.computeRF(current_data_dir + test_file);
-    rf_data_eq(results, RAXMLReader::read(current_ref_dir + test_file));
+    TestUtil::rf_data_eq(results, RAXMLReader::read(current_ref_dir + test_file), epsilon);
 }
 };
 /*
