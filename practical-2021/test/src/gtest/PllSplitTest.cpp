@@ -3,14 +3,14 @@
 #include "../../../src/io/FileReader.hpp"
 class PllSplitTest : public testing::Test {
 protected:
-  PllSplit createSplit(size_t split_len, std::vector<size_t> part1) {
+  PllSplit createSplit(std::vector<size_t> part1) {
     if (part1[0] != 0) throw "In every split, 0 must be in Partition 1, hence it must hold that part1[0]==0";
-    auto split_bits = (pll_split_t)calloc(split_len, sizeof(pll_split_base_t));
-    setBits(split_bits, split_len, part1);
-    return PllSplit(split_bits, split_len);
+    auto split_bits = (pll_split_t)calloc(PllSplit::getSplitLen(), sizeof(pll_split_base_t));
+    setBits(split_bits, part1);
+    return PllSplit(split_bits);
   }
 
-  void setBits(pll_split_t split_bits, size_t split_len, std::vector<size_t> part1) {
+  void setBits(pll_split_t split_bits, std::vector<size_t> part1) {
     size_t major_idx;
     size_t minor_idx;
     for(size_t tip : part1){
@@ -20,12 +20,12 @@ protected:
     }
   }
 
-  PllSplitList createSplitList(size_t split_len, std::vector<std::vector<size_t>> part1s){
+  PllSplitList createSplitList(std::vector<std::vector<size_t>> part1s){
     std::vector<PllSplit> splits;
-    pll_split_t split_pointer = (pll_split_t) calloc(part1s.size()* split_len, sizeof(pll_split_base_t));
+    pll_split_t split_pointer = (pll_split_t) calloc(part1s.size()* PllSplit::getSplitLen(), sizeof(pll_split_base_t));
     for (size_t i=0; i<part1s.size(); ++i) {
-      setBits(split_pointer + i*split_len, split_len, part1s[i]);
-      splits.emplace_back(PllSplit(split_pointer + i*split_len, split_len));
+      setBits(split_pointer + i*PllSplit::getSplitLen(), part1s[i]);
+      splits.emplace_back(PllSplit(split_pointer + i*PllSplit::getSplitLen()));
     }
     std::sort(splits.begin(), splits.end());
     return PllSplitList(splits);
@@ -51,77 +51,77 @@ protected:
 
 
 TEST_F(PllSplitTest, test_bitExtract) {
-    // tips in the partition 1
-    //0 must never be in part1 due to normalization
+    PllSplit::setSplitLen(2);
+    // tips in the partition 1 (0 needs to be in)
     std::vector<size_t> part1 = {0, 2, 4, 8, 19, 45, 63};
-    size_t split_len = 2;
-    PllSplit split = createSplit(split_len, part1);
-    std::vector<bool> split_representation(split_len*32);
+    PllSplit split = createSplit(part1);
+    std::vector<bool> split_representation(64);
     for(size_t tip : part1) {
       split_representation[tip] = true;
     }
-    for(size_t i = 0; i < split_len*32; i++){
+    for(size_t i = 0; i < 64; i++){
       EXPECT_EQ(split_representation[i], split.bitExtract(i));
     }
 }
 
 
 TEST_F(PllSplitTest, test_popcount) {
-  // tips in the partition 1 (0 is always in, does not need to be added)
+  PllSplit::setSplitLen(2);
+  // tips in the partition 1 (0 needs to be in)
   std::vector<size_t> part1 = {0, 2, 4, 8, 19, 45, 63};
-  size_t split_len = 2;
-  PllSplit split = createSplit(split_len, part1);
+  PllSplit split = createSplit(part1);
   EXPECT_EQ(part1.size(), split.popcount());
 }
 
 
 TEST_F(PllSplitTest, test_operators) {
-  size_t split_len = 2;
+  PllSplit::setSplitLen(2);
   // tips in the partition 1
   // contains 0 impicitly
   std::vector<size_t> fst_part1 = {0, 2, 4, 8, 19, 45, 63};
-  PllSplit fst_split = createSplit(split_len, fst_part1);
+  PllSplit fst_split = createSplit(fst_part1);
   std::vector<size_t> snd_part1 = {0, 1, 4, 8, 19, 45, 63};
-  PllSplit snd_split = createSplit(split_len, snd_part1);
+  PllSplit snd_split = createSplit(snd_part1);
   ASSERT_TRUE(snd_split < fst_split);
 
   std::vector<size_t> trd_part1 = {0, 2, 4, 8, 19, 45, 63};
-  PllSplit trd_split = createSplit(split_len, trd_part1);
+  PllSplit trd_split = createSplit(trd_part1);
   ASSERT_TRUE(trd_split == fst_split);
   ASSERT_TRUE(snd_split < fst_split);
 }
 
 TEST_F(PllSplitTest, test_list_constructor) {
-  size_t split_len = 2;
+  PllSplit::setSplitLen(2);
   std::vector<PllSplit> splits;
   std::vector<size_t> fst_part1 = {0, 2, 4, 8, 19, 45, 63};
-  splits.emplace_back(createSplit(split_len, fst_part1));
+  splits.emplace_back(createSplit(fst_part1));
   std::vector<size_t> snd_part1 = {0, 1, 4, 8, 19, 45, 63};
-  splits.emplace_back(createSplit(split_len, snd_part1));
+  splits.emplace_back(createSplit(snd_part1));
   std::vector<size_t> trd_part1 = {0, 19, 29, 39};
-  splits.emplace_back(createSplit(split_len, trd_part1));
+  splits.emplace_back(createSplit(trd_part1));
   PllSplitList split_list = PllSplitList(splits);
   split_vector_eq(splits, split_list.getSplits());
 
 }
 
 TEST_F(PllSplitTest, test_tree_constructor) {
-  PllSplitList split_list_from_tree = PllSplitList(PllTree("((a1, a2), (b1,b2), (c, (d1, d2)));"));
-  size_t split_len = 1;
+  PllTree test_tree = PllTree("((a1, a2), (b1,b2), (c, (d1, d2)));");
+  PllSplit::setSplitLen(PllSplit::computeSplitLen(test_tree.getTipCount()));
+  PllSplitList split_list_from_tree = PllSplitList(test_tree);
   std::vector<std::vector<size_t>> expected = {
                 { 0, 1},
                 { 0, 1, 2, 3},
                 { 0, 1, 4, 5, 6},
                 { 0, 1, 2, 3, 4},
   };
-  PllSplitList expected_splitlist = createSplitList(split_len, expected);
+  PllSplitList expected_splitlist = createSplitList(expected);
   split_lists_eq(expected_splitlist, split_list_from_tree);
 
 }
 
 
 TEST_F(PllSplitTest, test_difference) {
-  size_t split_len = 1;
+  PllSplit::setSplitLen(2);
   // tips in the partition 1
   // contains 0 impicitly
   std::vector<std::vector<size_t>> fst_part1s = {
@@ -131,7 +131,7 @@ TEST_F(PllSplitTest, test_difference) {
                 { 0, 1, 2, 3, 4},
                 { 0, 1, 2, 3}
             };
-  PllSplitList fst_splitlist = createSplitList(split_len, fst_part1s);
+  PllSplitList fst_splitlist = createSplitList(fst_part1s);
 
   std::vector<std::vector<size_t>> snd_part1s = {
                 { 0, 1, 2, 3, 4, 5, 6, 7},
@@ -140,7 +140,7 @@ TEST_F(PllSplitTest, test_difference) {
                 { 0, 2, 3, 4, 6},
                 { 0, 2, 3, 6}
             };
-  PllSplitList snd_splitlist = createSplitList(split_len, snd_part1s);
+  PllSplitList snd_splitlist = createSplitList(snd_part1s);
 
   std::vector<std::vector<size_t>> trd_part1s = {
                 { 0, 2, 3, 4, 5, 6, 7},
@@ -148,7 +148,7 @@ TEST_F(PllSplitTest, test_difference) {
                 { 0, 2, 3, 4, 6},
                 { 0, 2, 3, 6}
             };
-  PllSplitList trd_splitlist = createSplitList(split_len, trd_part1s);
+  PllSplitList trd_splitlist = createSplitList(trd_part1s);
 
   std::vector<std::vector<size_t>> delta12 = {
                 { 0, 1, 2, 3, 4, 5},
@@ -158,7 +158,7 @@ TEST_F(PllSplitTest, test_difference) {
                 { 0, 1, 2, 3},
                 { 0, 2, 3, 6}
             };
-  PllSplitList delta12_splitlist = createSplitList(split_len, delta12);
+  PllSplitList delta12_splitlist = createSplitList(delta12);
 
   std::vector<std::vector<size_t>> delta13 = {
                 { 0, 1, 2, 3, 4, 5, 6, 7},
@@ -171,14 +171,14 @@ TEST_F(PllSplitTest, test_difference) {
                 { 0, 2, 3, 4, 6},
                 { 0, 2, 3, 6}
             };
-  PllSplitList delta13_splitlist = createSplitList(split_len, delta13);
+  PllSplitList delta13_splitlist = createSplitList(delta13);
 
   std::vector<std::vector<size_t>> delta23 = {
                 { 0, 1, 2, 3, 4, 5, 6, 7},
                 { 0, 1, 2, 3, 4, 5, 6},
                 { 0, 2, 3, 4, 5, 6, 7},
   };
-  PllSplitList delta23_splitlist = createSplitList(split_len, delta23);
+  PllSplitList delta23_splitlist = createSplitList(delta23);
 
   ASSERT_EQ(fst_splitlist.rfDistance(snd_splitlist), 6);
   ASSERT_EQ(snd_splitlist.rfDistance(fst_splitlist), 6);

@@ -72,9 +72,11 @@ static std::vector<PllSplitList> readTreeFile(const std::string& filepath) {
     std::string line;
     std::getline(file, line);
     PllTree first_tree = PllTree(line);
+    PllSplit::setSplitLen(PllSplit::computeSplitLen(first_tree.getTipCount()));
     pll_list.emplace_back(PllSplitList(first_tree));
     while(std::getline(file, line)) {
       PllTree tree_from_line = PllTree(line);
+      assert(first_tree.getTipCount() == tree_from_line.getTipCount());
       tree_from_line.alignNodeIndices(first_tree);
       pll_list.emplace_back(PllSplitList(tree_from_line));
     }

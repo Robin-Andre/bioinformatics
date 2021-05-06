@@ -34,7 +34,7 @@ class PllTree;
  */
 class PllSplit {
 public:
-  PllSplit(pll_split_t s, size_t amount_of_registers) : _split{s}, _amount_of_registers(amount_of_registers) {}
+  PllSplit(pll_split_t s) : _split{s} {}
 
   pll_split_t operator()() const { return _split; }
   size_t   popcount();
@@ -43,6 +43,22 @@ public:
 
   friend bool operator == (const PllSplit& p1, const PllSplit& p2);
   friend bool operator < (const PllSplit& p1, const PllSplit& p2);
+
+  static void setSplitLen(size_t val) {
+    PllSplit::split_len = val;
+  }
+
+  static size_t getSplitLen() {
+    return PllSplit::split_len;
+  }
+
+  static size_t computeSplitLen(size_t tip_count) {
+    size_t split_len = (tip_count / computSplitBaseSize());
+    if (tip_count % computSplitBaseSize() > 0) { split_len += 1; }
+    assert(split_len * computSplitBaseSize() >= tip_count);
+    return split_len;
+  }
+
 
 
   /*void printSplit() const {
@@ -55,9 +71,6 @@ public:
   std::cout << std::endl;
   }*/
 
-  size_t getAmountOfRegister() const {
-    return _amount_of_registers;
-  }
 
 private:
   constexpr size_t splitBitWidth() const {
@@ -72,9 +85,13 @@ private:
     return index % splitBitWidth();
   }
 
+  /* Computes the number of bits per split base */
+  static size_t computSplitBaseSize() {
+    return sizeof(pll_split_base_t) * 8;
+  }
 
   pll_split_t _split = nullptr;
-  size_t _amount_of_registers = 1;
+  static size_t split_len;
 };
 //bool operator == (const PllSplit & p1, const PllSplit& p2);
 class PllSplitList {
@@ -95,7 +112,7 @@ public:
     return *this;
   }
   PllSplit operator[](size_t index) const { return _splits[index]; }
-  
+
   std::vector<PllSplit> getSplits() const {return _splits;}
   size_t getSplitCount() const {return _splits.size();}
   PllSplitList symmetricDifference(const PllSplitList& other) const;
@@ -113,9 +130,5 @@ public:
 
 
 private:
-  /* Computes the number of bits per split base */
-  constexpr size_t computSplitBaseSize() const {
-    return sizeof(pll_split_base_t) * 8;
-  }
   std::vector<PllSplit> _splits;
 };

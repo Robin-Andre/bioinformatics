@@ -1,10 +1,12 @@
 #include "PllSplits.hpp"
 #include "PllTree.hpp"
 
+size_t PllSplit::split_len = 0;
+
 /*  This is an example function. It is _slow_. You should replace it */
 size_t PllSplit::popcount() {
   size_t popcount = 0;
-  for (size_t index = 0; index < _amount_of_registers * splitBitWidth(); ++index) {
+  for (size_t index = 0; index < PllSplit::split_len * splitBitWidth(); ++index) {
     if (bitExtract(index) == 1) { popcount += 1; }
   }
   return popcount;
@@ -12,7 +14,7 @@ size_t PllSplit::popcount() {
 /*@Luise This is the stuff I am really not proud of :( The two operators are needed for
 sorting and they are far from correct. Right now they only check the first register instead of all
 of them and I have no clue how we are gonna pass the information of how many registers are actually
-required for the corresponding amount of taxa. The information is there 
+required for the corresponding amount of taxa. The information is there
 (for example in the PllSplitlist.computeSplitLen())
 but I lack a good idea to integrate it. What is worse that the < operator might even be correct for most cases
 the == operator is essentially always wrong for taxa > 32. In the end it might even turn out that the
@@ -28,20 +30,18 @@ Not that it matters for sorting at all.  just that I am clueless
 Also if the two operators are working properly then so should the (currently inefficient) algorithm
   */
 bool operator == (const PllSplit& p1, const PllSplit& p2) {
-  assert(p1._amount_of_registers == p2._amount_of_registers);
-  for(unsigned i = 0; i < p1._amount_of_registers; ++i) {
+  for(unsigned i = 0; i < PllSplit::split_len; ++i) {
     if(p1._split[i] != p2._split[i]) {
       return false;
     }
   }
   return true;
-  //return p1._split[0] == p2._split[0] && p1._split[1] == p2._split[1]&& p1._split[2] 
-  //== p2._split[2] && p1._split[3] == p2._split[3]; 
+  //return p1._split[0] == p2._split[0] && p1._split[1] == p2._split[1]&& p1._split[2]
+  //== p2._split[2] && p1._split[3] == p2._split[3];
   //The way to fix this would be r[0] == s[0] && r[1]==s[1] && .. &&r[n]==s[n] but the ominous number n is missing
 }
 bool operator < (const PllSplit&p1, const PllSplit& p2) {
-  assert(p1._amount_of_registers == p2._amount_of_registers);
-  for(unsigned i = 0; i < p1._amount_of_registers; ++i) {
+  for(unsigned i = 0; i < PllSplit::split_len; ++i) {
     if(p1._split[i] != p2._split[i]) {
       return (p1._split[i] < p2._split[i]);
     }
@@ -53,30 +53,27 @@ bool operator < (const PllSplit&p1, const PllSplit& p2) {
 }
 
 uint32_t PllSplit::bitExtract(size_t bit_index) const {
+  assert(bit_index < PllSplit::split_len * computSplitBaseSize());
   pll_split_base_t split_part = _split[computeMajorIndex(bit_index)];
   return (split_part & (1u << computeMinorIndex(bit_index))) >> computeMinorIndex(bit_index);
 }
 
 PllSplitList::PllSplitList(const PllTree &tree) {
-  size_t split_len = (tree.getTipCount() / computSplitBaseSize());
-  if ((tree.getTipCount()  % computSplitBaseSize()) > 0) { split_len += 1; }
-  assert(split_len * computSplitBaseSize() >= tree.getTipCount());
+  assert(PllSplit::getSplitLen() == PllSplit::computeSplitLen(tree.getTipCount()));
   pll_split_t* tmp_splits = pllmod_utree_split_create(tree.tree()->vroot, tree.getTipCount(), nullptr);
   //_splits.reserve(tree.tree()->tip_count - 3);
   for (size_t i = 0; i < tree.getTipCount() - 3; ++i) {
-    _splits.emplace_back(PllSplit(tmp_splits[i], split_len));
+    _splits.emplace_back(PllSplit(tmp_splits[i]));
   }
   free(tmp_splits);
 }
 
 PllSplitList::PllSplitList(const std::vector<PllSplit> &splits) {
   if(splits.size() > 0){
-    size_t split_len = splits[0].getAmountOfRegister();
-    assert(split_len > 0);
-    pll_split_t split_pointer = (pll_split_t) calloc(splits.size()* split_len, sizeof(pll_split_base_t));
+    pll_split_t split_pointer = (pll_split_t) calloc(splits.size()* PllSplit::getSplitLen(), sizeof(pll_split_base_t));
     for (size_t i=0; i<splits.size(); ++i) {
-      memcpy(split_pointer + i*split_len, splits[i](), split_len * sizeof(pll_split_base_t));
-      _splits.emplace_back(PllSplit(split_pointer + i*split_len, split_len));
+      memcpy(split_pointer + i*PllSplit::getSplitLen(), splits[i](), PllSplit::getSplitLen() * sizeof(pll_split_base_t));
+      _splits.emplace_back(PllSplit(split_pointer + i*PllSplit::getSplitLen()));
     }
   }
 }
@@ -88,7 +85,6 @@ PllSplitList PllSplitList::symmetricDifference(const PllSplitList& other) const 
   if (_splits.size() == 0) return PllSplitList(other);
   size_t other_split_count = other.getSplitCount();
   if(other_split_count == 0) return PllSplitList(_splits);
-  assert(_splits[0].getAmountOfRegister() == other[0].getAmountOfRegister());
   size_t i = 0;
   size_t j= 0;
   while (i < _splits.size() && j < other_split_count){
@@ -119,7 +115,6 @@ size_t PllSplitList::rfDistance(const PllSplitList& other) const {
   size_t other_split_count = other.getSplitCount();
   if (_splits.size() == 0) return other_split_count;
   if(other_split_count == 0) return _splits.size();
-  assert(_splits[0].getAmountOfRegister() == other[0].getAmountOfRegister());
   size_t i = 0;
   size_t j = 0;
   size_t distance = 0;
