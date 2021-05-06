@@ -2,7 +2,7 @@
 #include "../../../src/RFDistance.hpp"
 #include "../../../src/io/RFDataReader.hpp"
 #include "../../../src/io/RFDataReader.hpp"
-#include "../TestUtil.hpp"
+
 class DistanceTest : public testing::Test {
 protected:
 /*Right now an instanciation of test is needed, if we turn it into a free function this needs
@@ -20,7 +20,7 @@ float epsilon = 0.001;
 */
 void execute_test(std::string test_file) {
     RFData results = test.computeRF(TreeReader::readTreeFile(current_data_dir + test_file));
-    TestUtil::rf_data_eq(results, RAXMLReader::read(current_ref_dir + test_file), epsilon);
+    ASSERT_EQ(results, RAXMLReader::read(current_ref_dir + test_file));
 }
 };
 /*

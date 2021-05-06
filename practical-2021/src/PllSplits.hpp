@@ -111,6 +111,8 @@ public:
     std::swap(_splits, other._splits);
     return *this;
   }
+
+  friend bool operator == (const PllSplitList& p1, const PllSplitList& p2);
   PllSplit operator[](size_t index) const { return _splits[index]; }
 
   std::vector<PllSplit> getSplits() const {return _splits;}

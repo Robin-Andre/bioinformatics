@@ -138,3 +138,12 @@ size_t PllSplitList::rfDistance(const PllSplitList& other) const {
 PllSplitList::~PllSplitList() {
   if (!_splits.empty()) { free(_splits[0]()); }
 }
+
+bool operator == (const PllSplitList& p1, const PllSplitList& p2) {
+  std::vector<PllSplit> splits1 = p1.getSplits();
+  std::vector<PllSplit> splits2 = p2.getSplits();
+  if(splits1.size() != splits2.size()) return false;
+  for(size_t i = 0; i < splits1.size(); ++i){
+    if (!(splits1[i] == splits2[i])) return false;
+  }
+}

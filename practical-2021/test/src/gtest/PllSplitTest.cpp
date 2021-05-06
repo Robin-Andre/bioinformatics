@@ -1,7 +1,6 @@
 #include "gtest/gtest.h"
 #include "../../../src/PllSplits.hpp"
 #include "../../../src/io/TreeReader.hpp"
-#include "../TestUtil.hpp"
 
 
 class PllSplitTest : public testing::Test {
@@ -32,6 +31,13 @@ protected:
     }
     std::sort(splits.begin(), splits.end());
     return PllSplitList(splits);
+  }
+
+  void split_vector_eq(const std::vector<PllSplit>& l1, const std::vector<PllSplit>& l2) {
+    EXPECT_EQ(l1.size(), l2.size());
+    for(size_t i = 0; i < l1.size(); ++i){
+      EXPECT_EQ(l1[i], l2[i]);
+    }
   }
 };
 
@@ -91,7 +97,7 @@ TEST_F(PllSplitTest, test_list_constructor) {
   std::vector<size_t> trd_part1 = {0, 19, 29, 39};
   splits.emplace_back(createSplit(trd_part1));
   PllSplitList split_list = PllSplitList(splits);
-  TestUtil::split_vector_eq(splits, split_list.getSplits());
+  split_vector_eq(splits, split_list.getSplits());
   for(PllSplit split : splits){
     free(split());
   }
@@ -109,7 +115,7 @@ TEST_F(PllSplitTest, test_tree_constructor) {
                 { 0, 1, 2, 3, 4},
   };
   PllSplitList expected_splitlist = createSplitList(expected);
-  TestUtil::split_lists_eq(expected_splitlist, split_list_from_tree);
+  ASSERT_EQ(expected_splitlist, split_list_from_tree);
 
 }
 
@@ -183,14 +189,14 @@ TEST_F(PllSplitTest, test_difference) {
   ASSERT_EQ(snd_splitlist.rfDistance(trd_splitlist), 3);
   ASSERT_EQ(trd_splitlist.rfDistance(snd_splitlist), 3);
 
-  TestUtil::split_lists_eq(fst_splitlist.symmetricDifference(snd_splitlist), delta12_splitlist);
-  TestUtil::split_lists_eq(snd_splitlist.symmetricDifference(fst_splitlist), delta12_splitlist);
+  ASSERT_EQ(fst_splitlist.symmetricDifference(snd_splitlist), delta12_splitlist);
+  ASSERT_EQ(snd_splitlist.symmetricDifference(fst_splitlist), delta12_splitlist);
 
-  TestUtil::split_lists_eq(fst_splitlist.symmetricDifference(trd_splitlist), delta13_splitlist);
-  TestUtil::split_lists_eq(trd_splitlist.symmetricDifference(fst_splitlist), delta13_splitlist);
+  ASSERT_EQ(fst_splitlist.symmetricDifference(trd_splitlist), delta13_splitlist);
+  ASSERT_EQ(trd_splitlist.symmetricDifference(fst_splitlist), delta13_splitlist);
 
-  TestUtil::split_lists_eq(snd_splitlist.symmetricDifference(trd_splitlist), delta23_splitlist);
-  TestUtil::split_lists_eq(trd_splitlist.symmetricDifference(snd_splitlist), delta23_splitlist);
+  ASSERT_EQ(snd_splitlist.symmetricDifference(trd_splitlist), delta23_splitlist);
+  ASSERT_EQ(trd_splitlist.symmetricDifference(snd_splitlist), delta23_splitlist);
 
 
 }

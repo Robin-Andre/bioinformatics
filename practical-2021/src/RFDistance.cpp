@@ -14,7 +14,7 @@ RFData RFDistance::computeRF(const std::vector<PllTree>& trees) {
   }
 
 
-  result.distances = std::vector<size_t>((result.tree_count*(result.tree_count-1))/2);
+  result.distances = std::vector<double>((result.tree_count*(result.tree_count-1))/2);
   //stores for every tree T_i the tree T_j which admits the smallest RF-Distance to T_i for all j < i
   std::vector<size_t> closest_tree(result.tree_count);
   //stores for every tree T the splits in the symmetric difference to closest_tree[T]
@@ -74,13 +74,9 @@ RFData RFDistance::computeRF(const std::vector<PllTree>& trees) {
   }
   assert(result.distances.size() == (result.tree_count * (result.tree_count - 1)) / 2);*/
 
-  result.relative_distances = std::vector<float>();
-  for(size_t i = 0; i < result.distances.size(); ++i){
-    result.relative_distances.emplace_back((float) result.distances[i] / (2*(result.tip_count-3)));
-  }
-  assert(result.distances.size() == result.relative_distances.size());
-  result.average_distance = std::accumulate(result.relative_distances.begin(),
-                                            result.relative_distances.end(), 0.0) / result.relative_distances.size();
+
+  result.average_distance = (std::accumulate(result.distances.begin(),
+                                            result.distances.end(), 0.0) / (2*(result.tip_count-3))) / result.distances.size();
   assert(result.average_distance >= 0 && result.average_distance <= 1);
   return result;
 }
