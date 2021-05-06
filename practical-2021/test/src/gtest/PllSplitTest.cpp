@@ -62,6 +62,7 @@ TEST_F(PllSplitTest, test_bitExtract) {
     for(size_t i = 0; i < 64; i++){
       EXPECT_EQ(split_representation[i], split.bitExtract(i));
     }
+    free(split());
 }
 
 
@@ -71,6 +72,7 @@ TEST_F(PllSplitTest, test_popcount) {
   std::vector<size_t> part1 = {0, 2, 4, 8, 19, 45, 63};
   PllSplit split = createSplit(part1);
   EXPECT_EQ(part1.size(), split.popcount());
+  free(split());
 }
 
 
@@ -88,6 +90,9 @@ TEST_F(PllSplitTest, test_operators) {
   PllSplit trd_split = createSplit(trd_part1);
   ASSERT_TRUE(trd_split == fst_split);
   ASSERT_TRUE(snd_split < fst_split);
+  free(fst_split());
+  free(snd_split());
+  free(trd_split());
 }
 
 TEST_F(PllSplitTest, test_list_constructor) {
@@ -101,6 +106,9 @@ TEST_F(PllSplitTest, test_list_constructor) {
   splits.emplace_back(createSplit(trd_part1));
   PllSplitList split_list = PllSplitList(splits);
   split_vector_eq(splits, split_list.getSplits());
+  for(PllSplit split : splits){
+    free(split());
+  }
 
 }
 
