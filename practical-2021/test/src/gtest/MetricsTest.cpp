@@ -51,7 +51,7 @@ TEST_F(MetricsTest, test_spi) {
   PllSplit split_a = TestUtil::createSplit(part1_a);
   std::vector<size_t> part1_b = {0, 1, 2};
   PllSplit split_b = TestUtil::createSplit(part1_b);
-  EXPECT_DOUBLE_EQ(DistanceUtil::MSI(split_a, split_b), 1.0d/5);
+  EXPECT_DOUBLE_EQ(DistanceUtil::SPI(split_a, split_b), -std::log(1.0d/7) - std::log(3.0d/35) + std::log(1.0d/35));
   free(split_a());
   free(split_b());
 }

@@ -6,7 +6,7 @@ size_t PllSplit::tip_count = 0;
 /*  This is an example function. It is _slow_. You should replace it */
 size_t PllSplit::popcount() {
   size_t popcount = 0;
-  for (size_t index = 0; index < PllSplit::getSplitLen() * splitBitWidth(); ++index) {
+  for (size_t index = 0; index < PllSplit::getTipCount(); ++index) {
     if (bitExtract(index) == 1) { popcount += 1; }
   }
   return popcount;
@@ -60,30 +60,8 @@ uint32_t PllSplit::bitExtract(size_t bit_index) const {
   return (split_part & (1u << computeMinorIndex(bit_index))) >> computeMinorIndex(bit_index);
 }
 
-/*PllSplit intersect(const PllSplit& other) const {
 
-}*/
-
-void PllSplit::invert(PllSplit result) const {
-  size_t split_len = PllSplit::getSplitLen();
-  for (size_t i = 0; i < split_len; ++i){
-    result()[i]  = ~(_split[i]);
-  }
-  result()[0] &= bitmaskForUnusedBits();
-}
-
-/*void PllSplit::intersect(const PllSplit& other, PllSplit result, bool invert_this, bool invert_other) const {
-  size_t split_len = PllSplit::getSplitLen();
-  pll_split_base_t this_mask = invert_this ? ~0 : 0;
-  pll_split_base_t other_mask = invert_other ? ~0 : 0;
-  for (size_t i = 0; i < split_len; ++i){
-    result()[i]  = (_split[i] ^ this_mask) & (other()[i] ^ other_mask);
-  }
-  result()[0] &= bitmaskForUnusedBits();
-}*/
-
-
-size_t PllSplit::intersectcount(const PllSplit& other, bool invert_this, bool invert_other) const {
+size_t PllSplit::intersectionSize(const PllSplit& other, bool invert_this, bool invert_other) const {
   size_t split_len = PllSplit::getSplitLen();
   pll_split_base_t this_mask = invert_this ? ~0 : 0;
   pll_split_base_t other_mask = invert_other ? ~0 : 0;
@@ -99,23 +77,8 @@ size_t PllSplit::intersectcount(const PllSplit& other, bool invert_this, bool in
 }
 
 
-/*size_t PllSplit::unioncount(const PllSplit& other, bool invert_this, bool invert_other) const {
-  size_t split_len = PllSplit::getSplitLen();
-  pll_split_base_t this_mask = invert_this ? ~0 : 0;
-  pll_split_base_t other_mask = invert_other ? ~0 : 0;
-  size_t count = 0;
-  for (size_t i = 0; i < split_len; ++i){
-    if (i == 0){
-      count += basePopcount(((_split[i] ^ this_mask) | (other()[i] ^ other_mask)) & bitmaskForUnusedBits());
-    } else {
-      count += basePopcount((_split[i] ^ this_mask) | (other()[i] ^ other_mask));
-    }
-  }
-  return count;
-}*/
-
 bool PllSplit::compatible(const PllSplit& other) const {
-  return !intersectcount(other, false, false) || !intersectcount(other, true, false) || !intersectcount(other, false, true);
+  return !intersectionSize(other, false, false) || !intersectionSize(other, true, false) || !intersectionSize(other, false, true);
 }
 
 
