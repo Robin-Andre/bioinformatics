@@ -60,7 +60,7 @@ public:
     return split_len;
   }
 
-  //PllSplit intersect(const PllSplit& other) const;
+  void intersect(const PllSplit& other, PllSplit result) const;
   void invert(PllSplit result) const;
 
 

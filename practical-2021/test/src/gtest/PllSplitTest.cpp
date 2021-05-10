@@ -216,3 +216,22 @@ TEST_F(PllSplitTest, test_invert) {
     free(split_inv());
     free(result());
 }
+
+
+TEST_F(PllSplitTest, test_intersect) {
+    PllSplit::setTipCount(10);
+    // tips in the partition 1 (0 needs to be in)
+    std::vector<size_t> part1_a = {0, 2, 4, 9};
+    PllSplit split_a = createSplit(part1_a);
+    std::vector<size_t> part1_b = {1, 2, 7, 9};
+    PllSplit split_b = createSplit(part1_b);
+    std::vector<size_t> part1_intersect = {2, 9};
+    PllSplit split_intersect = createSplit(part1_intersect);
+    PllSplit result = createSplit(std::vector<size_t>());
+    split_a.intersect(split_b, result);
+    EXPECT_EQ(result, split_intersect);
+    free(split_a());
+    free(split_b());
+    free(split_intersect());
+    free(result());
+}

@@ -77,6 +77,13 @@ void PllSplit::invert(PllSplit result) const {
   result()[0] &= bit_mask;
 }
 
+void PllSplit::intersect(const PllSplit& other, PllSplit result) const {
+  size_t split_len = PllSplit::getSplitLen();
+  for (size_t i = 0; i < split_len; ++i){
+    result()[i]  = _split[i] & other()[i];
+  }
+}
+
 PllSplitList::PllSplitList(const PllTree &tree) {
   assert(PllSplit::getTipCount() == tree.getTipCount());
   pll_split_t* tmp_splits = pllmod_utree_split_create(tree.tree()->vroot, tree.getTipCount(), nullptr);
