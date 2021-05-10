@@ -44,26 +44,31 @@ public:
   friend bool operator == (const PllSplit& p1, const PllSplit& p2);
   friend bool operator < (const PllSplit& p1, const PllSplit& p2);
 
-  static void setSplitLen(size_t val) {
-    PllSplit::split_len = val;
+  static void setTipCount(size_t val) {
+    PllSplit::tip_count = val;
+  }
+
+
+  static size_t getTipCount() {
+    return PllSplit::tip_count;
   }
 
   static size_t getSplitLen() {
-    return PllSplit::split_len;
-  }
-
-  static size_t computeSplitLen(size_t tip_count) {
-    size_t split_len = (tip_count / computSplitBaseSize());
+    size_t split_len = (PllSplit::tip_count / computSplitBaseSize());
     if (tip_count % computSplitBaseSize() > 0) { split_len += 1; }
     assert(split_len * computSplitBaseSize() >= tip_count);
     return split_len;
   }
 
+  /*PllSplit intersect(const PllSplit& other) const;
+  PllSplit invert() const;*/
+
 
 
   /*void printSplit() const {
     std::cout << this << ": "<<_split << ": ";
-    for (size_t i = 0; i < _amount_of_registers; ++i){
+    size_t split_len = PllSplit::getSplitLen();
+    for (size_t i = 0; i < split_len; ++i){
       auto str = std::bitset<32>(_split[i]).to_string();
       std::reverse(str.begin(), str.end());
       std::cout << str << "|";
@@ -91,7 +96,7 @@ private:
   }
 
   pll_split_t _split = nullptr;
-  static size_t split_len;
+  static size_t tip_count;
 };
 //bool operator == (const PllSplit & p1, const PllSplit& p2);
 class PllSplitList {

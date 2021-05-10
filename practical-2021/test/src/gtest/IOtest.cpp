@@ -10,7 +10,7 @@ class IOTest : public testing::Test {
 
 TEST_F(IOTest, tree_read) {
   PllTree tree = TreeReader::readTreeFile("../test/res/data/simple_newick")[0];
-  PllSplit::setSplitLen(PllSplit::computeSplitLen(tree.getTipCount()));
+  PllSplit::setTipCount(tree.getTipCount());
   PllSplitList splits = PllSplitList(tree);
   PllSplit split1 = splits[0];
   PllSplit split2 = splits[1];

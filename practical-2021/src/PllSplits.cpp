@@ -1,12 +1,12 @@
 #include "PllSplits.hpp"
 #include "PllTree.hpp"
 
-size_t PllSplit::split_len = 0;
+size_t PllSplit::tip_count = 0;
 
 /*  This is an example function. It is _slow_. You should replace it */
 size_t PllSplit::popcount() {
   size_t popcount = 0;
-  for (size_t index = 0; index < PllSplit::split_len * splitBitWidth(); ++index) {
+  for (size_t index = 0; index < PllSplit::getSplitLen() * splitBitWidth(); ++index) {
     if (bitExtract(index) == 1) { popcount += 1; }
   }
   return popcount;
@@ -30,7 +30,8 @@ Not that it matters for sorting at all.  just that I am clueless
 Also if the two operators are working properly then so should the (currently inefficient) algorithm
   */
 bool operator == (const PllSplit& p1, const PllSplit& p2) {
-  for(unsigned i = 0; i < PllSplit::split_len; ++i) {
+  size_t split_len = PllSplit::getSplitLen();
+  for(unsigned i = 0; i < split_len; ++i) {
     if(p1._split[i] != p2._split[i]) {
       return false;
     }
@@ -41,7 +42,8 @@ bool operator == (const PllSplit& p1, const PllSplit& p2) {
   //The way to fix this would be r[0] == s[0] && r[1]==s[1] && .. &&r[n]==s[n] but the ominous number n is missing
 }
 bool operator < (const PllSplit&p1, const PllSplit& p2) {
-  for(unsigned i = 0; i < PllSplit::split_len; ++i) {
+  size_t split_len = PllSplit::getSplitLen();
+  for(unsigned i = 0; i < split_len; ++i) {
     if(p1._split[i] != p2._split[i]) {
       return (p1._split[i] < p2._split[i]);
     }
@@ -53,13 +55,19 @@ bool operator < (const PllSplit&p1, const PllSplit& p2) {
 }
 
 uint32_t PllSplit::bitExtract(size_t bit_index) const {
-  assert(bit_index < PllSplit::split_len * computSplitBaseSize());
+  assert(bit_index < PllSplit::getTipCount());
   pll_split_base_t split_part = _split[computeMajorIndex(bit_index)];
   return (split_part & (1u << computeMinorIndex(bit_index))) >> computeMinorIndex(bit_index);
 }
 
+/*PllSplit intersect(const PllSplit& other) const {
+
+}
+
+PllSplit invert() const;*/
+
 PllSplitList::PllSplitList(const PllTree &tree) {
-  assert(PllSplit::getSplitLen() == PllSplit::computeSplitLen(tree.getTipCount()));
+  assert(PllSplit::getTipCount() == tree.getTipCount());
   pll_split_t* tmp_splits = pllmod_utree_split_create(tree.tree()->vroot, tree.getTipCount(), nullptr);
   //_splits.reserve(tree.tree()->tip_count - 3);
   for (size_t i = 0; i < tree.getTipCount() - 3; ++i) {
@@ -69,11 +77,12 @@ PllSplitList::PllSplitList(const PllTree &tree) {
 }
 
 PllSplitList::PllSplitList(const std::vector<PllSplit> &splits) {
+  size_t split_len = PllSplit::getSplitLen();
   if(splits.size() > 0){
-    pll_split_t split_pointer = (pll_split_t) calloc(splits.size()* PllSplit::getSplitLen(), sizeof(pll_split_base_t));
+    pll_split_t split_pointer = (pll_split_t) calloc(splits.size()* split_len, sizeof(pll_split_base_t));
     for (size_t i=0; i<splits.size(); ++i) {
-      memcpy(split_pointer + i*PllSplit::getSplitLen(), splits[i](), PllSplit::getSplitLen() * sizeof(pll_split_base_t));
-      _splits.emplace_back(PllSplit(split_pointer + i*PllSplit::getSplitLen()));
+      memcpy(split_pointer + i* split_len, splits[i](), split_len * sizeof(pll_split_base_t));
+      _splits.emplace_back(PllSplit(split_pointer + i*split_len));
     }
   }
 }
