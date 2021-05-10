@@ -99,6 +99,27 @@ size_t PllSplit::intersectcount(const PllSplit& other, bool invert_this, bool in
 }
 
 
+/*size_t PllSplit::unioncount(const PllSplit& other, bool invert_this, bool invert_other) const {
+  size_t split_len = PllSplit::getSplitLen();
+  pll_split_base_t this_mask = invert_this ? ~0 : 0;
+  pll_split_base_t other_mask = invert_other ? ~0 : 0;
+  size_t count = 0;
+  for (size_t i = 0; i < split_len; ++i){
+    if (i == 0){
+      count += basePopcount(((_split[i] ^ this_mask) | (other()[i] ^ other_mask)) & bitmaskForUnusedBits());
+    } else {
+      count += basePopcount((_split[i] ^ this_mask) | (other()[i] ^ other_mask));
+    }
+  }
+  return count;
+}*/
+
+bool PllSplit::compatible(const PllSplit& other) const {
+  return !intersectcount(other, false, false) || !intersectcount(other, true, false) || !intersectcount(other, false, true);
+}
+
+
+
 
 pll_split_base_t PllSplit::bitmaskForUnusedBits() const {
   pll_split_base_t bit_mask = 0;

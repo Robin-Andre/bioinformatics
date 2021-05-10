@@ -65,6 +65,9 @@ public:
 
   //void intersect(const PllSplit& other, PllSplit result, bool invert_this, bool invert_other) const;
   size_t intersectcount(const PllSplit& other, bool invert_this, bool invert_other) const;
+  //size_t unioncount(const PllSplit& other, bool invert_this, bool invert_other) const;
+  //bool overlap(const PllSplit& other, bool invert_this, bool invert_other) const;
+  bool compatible(const PllSplit& other) const;
   void invert(PllSplit result) const;
 
 

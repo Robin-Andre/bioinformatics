@@ -236,3 +236,24 @@ TEST_F(PllSplitTest, test_intersectcount) {
     free(split_a());
     free(split_b());
 }
+
+
+TEST_F(PllSplitTest, test_compatible) {
+    PllSplit::setTipCount(8);
+    std::vector<size_t> part1_a = {0, 1, 2, 3};
+    PllSplit split_a = TestUtil::createSplit(part1_a);
+    std::vector<size_t> part1_b = {2, 3};
+    PllSplit split_b = TestUtil::createSplit(part1_b);
+    std::vector<size_t> part1_c = {2, 3, 4};
+    PllSplit split_c = TestUtil::createSplit(part1_c);
+    EXPECT_TRUE(split_a.compatible(split_b));
+    EXPECT_TRUE(split_b.compatible(split_a));
+    EXPECT_FALSE(split_a.compatible(split_c));
+    EXPECT_FALSE(split_c.compatible(split_a));
+    EXPECT_TRUE(split_c.compatible(split_b));
+    EXPECT_TRUE(split_b.compatible(split_c));
+
+    free(split_a());
+    free(split_b());
+    free(split_c());
+}
