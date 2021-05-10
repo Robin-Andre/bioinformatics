@@ -62,9 +62,20 @@ uint32_t PllSplit::bitExtract(size_t bit_index) const {
 
 /*PllSplit intersect(const PllSplit& other) const {
 
-}
+}*/
 
-PllSplit invert() const;*/
+void PllSplit::invert(PllSplit result) const {
+  size_t split_len = PllSplit::getSplitLen();
+  for (size_t i = 0; i < split_len; ++i){
+    result()[i]  = ~(_split[i]);
+  }
+  pll_split_base_t bit_mask = 0;
+  size_t offset = PllSplit::getTipCount() - ((PllSplit::getSplitLen() - 1) * computSplitBaseSize());
+  for(size_t i = 0; i < offset; ++i){
+    bit_mask |= (1 << i);
+  }
+  result()[0] &= bit_mask;
+}
 
 PllSplitList::PllSplitList(const PllTree &tree) {
   assert(PllSplit::getTipCount() == tree.getTipCount());

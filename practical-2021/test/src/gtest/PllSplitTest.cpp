@@ -6,7 +6,7 @@
 class PllSplitTest : public testing::Test {
 protected:
   PllSplit createSplit(std::vector<size_t> part1) {
-    if (part1[0] != 0) throw "In every split, 0 must be in Partition 1, hence it must hold that part1[0]==0";
+    //if (part1[0] != 0) throw "In every split, 0 must be in Partition 1, hence it must hold that part1[0]==0";
     auto split_bits = (pll_split_t)calloc(PllSplit::getSplitLen(), sizeof(pll_split_base_t));
     setBits(split_bits, part1);
     return PllSplit(split_bits);
@@ -199,5 +199,20 @@ TEST_F(PllSplitTest, test_difference) {
   ASSERT_EQ(snd_splitlist.symmetricDifference(trd_splitlist), delta23_splitlist);
   ASSERT_EQ(trd_splitlist.symmetricDifference(snd_splitlist), delta23_splitlist);
 
+}
 
+
+TEST_F(PllSplitTest, test_invert) {
+    PllSplit::setTipCount(10);
+    // tips in the partition 1 (0 needs to be in)
+    std::vector<size_t> part1 = {0, 2, 4, 8, 9};
+    PllSplit split = createSplit(part1);
+    std::vector<size_t> part1_inv = {1, 3, 5, 6, 7};
+    PllSplit split_inv = createSplit(part1_inv);
+    PllSplit result = createSplit(std::vector<size_t>());
+    split.invert(result);
+    EXPECT_EQ(result, split_inv);
+    free(split());
+    free(split_inv());
+    free(result());
 }

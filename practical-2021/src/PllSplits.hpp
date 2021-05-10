@@ -60,12 +60,12 @@ public:
     return split_len;
   }
 
-  /*PllSplit intersect(const PllSplit& other) const;
-  PllSplit invert() const;*/
+  //PllSplit intersect(const PllSplit& other) const;
+  void invert(PllSplit result) const;
 
 
 
-  /*void printSplit() const {
+  void printSplit() const {
     std::cout << this << ": "<<_split << ": ";
     size_t split_len = PllSplit::getSplitLen();
     for (size_t i = 0; i < split_len; ++i){
@@ -74,7 +74,7 @@ public:
       std::cout << str << "|";
     }
   std::cout << std::endl;
-  }*/
+  }
 
 
 private:
