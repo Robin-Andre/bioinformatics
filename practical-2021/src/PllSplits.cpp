@@ -69,19 +69,48 @@ void PllSplit::invert(PllSplit result) const {
   for (size_t i = 0; i < split_len; ++i){
     result()[i]  = ~(_split[i]);
   }
+  result()[0] &= bitmaskForUnusedBits();
+}
+
+/*void PllSplit::intersect(const PllSplit& other, PllSplit result, bool invert_this, bool invert_other) const {
+  size_t split_len = PllSplit::getSplitLen();
+  pll_split_base_t this_mask = invert_this ? ~0 : 0;
+  pll_split_base_t other_mask = invert_other ? ~0 : 0;
+  for (size_t i = 0; i < split_len; ++i){
+    result()[i]  = (_split[i] ^ this_mask) & (other()[i] ^ other_mask);
+  }
+  result()[0] &= bitmaskForUnusedBits();
+}*/
+
+
+size_t PllSplit::intersectcount(const PllSplit& other, bool invert_this, bool invert_other) const {
+  size_t split_len = PllSplit::getSplitLen();
+  pll_split_base_t this_mask = invert_this ? ~0 : 0;
+  pll_split_base_t other_mask = invert_other ? ~0 : 0;
+  size_t count = 0;
+  for (size_t i = 0; i < split_len; ++i){
+    if (i == 0){
+      count += basePopcount(((_split[i] ^ this_mask) & (other()[i] ^ other_mask)) & bitmaskForUnusedBits());
+    } else {
+      count += basePopcount((_split[i] ^ this_mask) & (other()[i] ^ other_mask));
+    }
+  }
+  return count;
+}
+
+
+
+pll_split_base_t PllSplit::bitmaskForUnusedBits() const {
   pll_split_base_t bit_mask = 0;
   size_t offset = PllSplit::getTipCount() - ((PllSplit::getSplitLen() - 1) * computSplitBaseSize());
   for(size_t i = 0; i < offset; ++i){
     bit_mask |= (1 << i);
   }
-  result()[0] &= bit_mask;
+  return bit_mask;
 }
 
-void PllSplit::intersect(const PllSplit& other, PllSplit result) const {
-  size_t split_len = PllSplit::getSplitLen();
-  for (size_t i = 0; i < split_len; ++i){
-    result()[i]  = _split[i] & other()[i];
-  }
+size_t PllSplit::basePopcount(pll_split_base_t val) const {
+  return std::bitset<32>(val).count();
 }
 
 PllSplitList::PllSplitList(const PllTree &tree) {

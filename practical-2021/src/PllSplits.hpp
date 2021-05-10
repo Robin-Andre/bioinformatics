@@ -35,6 +35,9 @@ class PllTree;
 class PllSplit {
 public:
   PllSplit(pll_split_t s) : _split{s} {}
+  PllSplit() {
+    PllSplit((pll_split_t)calloc(PllSplit::getSplitLen(), sizeof(pll_split_base_t)));
+  }
 
   pll_split_t operator()() const { return _split; }
   size_t   popcount();
@@ -60,7 +63,8 @@ public:
     return split_len;
   }
 
-  void intersect(const PllSplit& other, PllSplit result) const;
+  //void intersect(const PllSplit& other, PllSplit result, bool invert_this, bool invert_other) const;
+  size_t intersectcount(const PllSplit& other, bool invert_this, bool invert_other) const;
   void invert(PllSplit result) const;
 
 
@@ -94,6 +98,9 @@ private:
   static size_t computSplitBaseSize() {
     return sizeof(pll_split_base_t) * 8;
   }
+
+  pll_split_base_t bitmaskForUnusedBits() const;
+  size_t basePopcount(pll_split_base_t count) const;
 
   pll_split_t _split = nullptr;
   static size_t tip_count;
