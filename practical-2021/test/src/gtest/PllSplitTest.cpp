@@ -178,13 +178,13 @@ TEST_F(PllSplitTest, test_intersectcount) {
     PllSplit::setTipCount(10);
     std::vector<size_t> part1_a = {0, 2, 4, 9};
     PllSplit split_a = TestUtil::createSplit(part1_a);
-    std::vector<size_t> part1_b = {1, 2, 7, 9};
+    std::vector<size_t> part1_b = {0, 1, 7, 9};
     PllSplit split_b = TestUtil::createSplit(part1_b);
 
-    EXPECT_EQ(split_a.intersectionSize(split_b, false, false), 2);
-    EXPECT_EQ(split_a.intersectionSize(split_b, true, true), 4);
-    EXPECT_EQ(split_a.intersectionSize(split_b, false, true), 2);
-    EXPECT_EQ(split_a.intersectionSize(split_b, true, false), 2);
+    EXPECT_EQ(split_a.intersectionSize(split_b, 1, 1), 2);
+    EXPECT_EQ(split_a.intersectionSize(split_b, 0, 0), 4);
+    EXPECT_EQ(split_a.intersectionSize(split_b, 1, 0), 2);
+    EXPECT_EQ(split_a.intersectionSize(split_b, 0, 1), 2);
 
     free(split_a());
     free(split_b());
@@ -195,9 +195,9 @@ TEST_F(PllSplitTest, test_compatible) {
     PllSplit::setTipCount(8);
     std::vector<size_t> part1_a = {0, 1, 2, 3};
     PllSplit split_a = TestUtil::createSplit(part1_a);
-    std::vector<size_t> part1_b = {2, 3};
+    std::vector<size_t> part1_b = {0, 3};
     PllSplit split_b = TestUtil::createSplit(part1_b);
-    std::vector<size_t> part1_c = {2, 3, 4};
+    std::vector<size_t> part1_c = {0, 3, 4};
     PllSplit split_c = TestUtil::createSplit(part1_c);
     EXPECT_TRUE(split_a.compatible(split_b));
     EXPECT_TRUE(split_b.compatible(split_a));

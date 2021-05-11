@@ -4,11 +4,16 @@
 size_t PllSplit::tip_count = 0;
 
 /*  This is an example function. It is _slow_. You should replace it */
-size_t PllSplit::popcount() {
+size_t PllSplit::popcount() const{
+  assert(splitValid());
   size_t popcount = 0;
-  for (size_t index = 0; index < PllSplit::getTipCount(); ++index) {
-    if (bitExtract(index) == 1) { popcount += 1; }
+  size_t split_len = PllSplit::getSplitLen();
+  for(size_t i = 0; i < split_len; ++i){
+    popcount+=basePopcount(_split[i]);
   }
+  /*for (size_t index = 0; index < PllSplit::getTipCount(); ++index) {
+    if (bitExtract(index) == 1) { popcount += 1; }
+  }*/
   return popcount;
 }
 /*@Luise This is the stuff I am really not proud of :( The two operators are needed for
@@ -55,16 +60,24 @@ bool operator < (const PllSplit&p1, const PllSplit& p2) {
 }
 
 uint32_t PllSplit::bitExtract(size_t bit_index) const {
+  assert(splitValid());
   assert(bit_index < PllSplit::getTipCount());
   pll_split_base_t split_part = _split[computeMajorIndex(bit_index)];
   return (split_part & (1u << computeMinorIndex(bit_index))) >> computeMinorIndex(bit_index);
 }
 
+size_t PllSplit::partitionSize (partition_t partition) const {
+  assert(splitValid());
+  return partition ? this->popcount() : PllSplit::getTipCount() - this->popcount();
+}
 
-size_t PllSplit::intersectionSize(const PllSplit& other, bool invert_this, bool invert_other) const {
+
+size_t PllSplit::intersectionSize(const PllSplit& other, partition_t partition_this, partition_t partition_other) const {
+  assert(splitValid());
+  assert(other.splitValid());
   size_t split_len = PllSplit::getSplitLen();
-  pll_split_base_t this_mask = invert_this ? ~0 : 0;
-  pll_split_base_t other_mask = invert_other ? ~0 : 0;
+  pll_split_base_t this_mask = partition_this ? 0 : ~0;
+  pll_split_base_t other_mask = partition_other ? 0 : ~0;
   size_t count = 0;
   for (size_t i = 0; i < split_len; ++i){
     if (i == 0){
@@ -78,9 +91,10 @@ size_t PllSplit::intersectionSize(const PllSplit& other, bool invert_this, bool 
 
 
 bool PllSplit::compatible(const PllSplit& other) const {
-  return !intersectionSize(other, false, false) || !intersectionSize(other, true, false) || !intersectionSize(other, false, true);
+  assert(splitValid());
+  assert(other.splitValid());
+  return !intersectionSize(other, 1, 1) || !intersectionSize(other, 0, 1) || !intersectionSize(other, 1, 0);
 }
-
 
 
 
@@ -95,6 +109,13 @@ pll_split_base_t PllSplit::bitmaskForUnusedBits() const {
 
 size_t PllSplit::basePopcount(pll_split_base_t val) const {
   return std::bitset<32>(val).count();
+}
+
+
+bool PllSplit::splitValid() const {
+  //This condition sometimes fails on the splits returned from pll lib, needs to be examined!
+  //return (_split != nullptr) && !(_split[0] & ~bitmaskForUnusedBits()) && _split[0] & 1u;
+  return (_split != nullptr) &&  _split[0] & 1u;
 }
 
 PllSplitList::PllSplitList(const PllTree &tree) {

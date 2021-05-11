@@ -15,6 +15,8 @@ extern "C" {
 
 class PllTree;
 
+typedef bool partition_t;
+
 /*
  * A convenience class for the purposes of doing math on the individual splits.
  * The pll_split_t is a non-owning pointer, so this class does not have a
@@ -34,13 +36,13 @@ class PllTree;
  */
 class PllSplit {
 public:
-  PllSplit(pll_split_t s) : _split{s} {}
+  PllSplit(pll_split_t s) : _split{s} {assert(splitValid());}
   PllSplit() {
     PllSplit((pll_split_t)calloc(PllSplit::getSplitLen(), sizeof(pll_split_base_t)));
   }
 
   pll_split_t operator()() const { return _split; }
-  size_t   popcount();
+  size_t   popcount() const;
   uint32_t bitExtract(size_t bit_index) const;
   //pll_split_t getSplit() {return _split;}
 
@@ -63,9 +65,10 @@ public:
     return split_len;
   }
 
-  size_t intersectionSize(const PllSplit& other, bool invert_this, bool invert_other) const;
+  size_t partitionSize (partition_t partition) const;
+  size_t intersectionSize(const PllSplit& other, partition_t partition_this, partition_t partition_other) const;
   bool compatible(const PllSplit& other) const;
-  void invert(PllSplit result) const;
+  bool splitValid() const;
 
 
 
