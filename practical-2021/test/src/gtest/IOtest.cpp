@@ -29,7 +29,7 @@ TEST_F(IOTest, raxml_read_write) {
 TEST_F(IOTest, json_read_write) {
   std::filesystem::create_directories("./foo");
   RFData input = RAXMLReader::read("../test/res/reference_results/heads/24");
-  JSONWriter::write("foo/results.json" , input);
-  EXPECT_EQ(input, JSONReader::read("foo/results.json"));
+  JSONWriter::write("foo" , input);
+  EXPECT_EQ(input, JSONReader::read("foo"));
   std::filesystem::remove_all("./foo");
 }

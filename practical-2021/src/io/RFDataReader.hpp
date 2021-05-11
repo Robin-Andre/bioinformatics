@@ -103,7 +103,7 @@ public:
   static RFData read(const std::string& path) {
     io::IOData io_data;
     std::fstream res_file;
-    res_file.open(path, std::ios::in);
+    res_file.open(path + "/results.json", std::ios::in);
     if (res_file.is_open()){
       std::string json_str;
       std::string line;
@@ -115,7 +115,7 @@ public:
       io::from_json(jsonIn, io_data);
       return convertToRFData(io_data);
     } else {
-      throw ("Cannot read JSON from " + path);
+      throw ("Cannot read JSON from " + path  + "/results.json");
     }
 
   }
