@@ -181,6 +181,11 @@ TEST_F(PllSplitTest, test_intersectcount) {
     std::vector<size_t> part1_b = {0, 1, 7, 9};
     PllSplit split_b = TestUtil::createSplit(part1_b);
 
+    EXPECT_EQ(split_a.intersectionSize(split_a, 1, 1), 4);
+    EXPECT_EQ(split_a.intersectionSize(split_a, 0, 0), 6);
+    EXPECT_EQ(split_a.intersectionSize(split_a, 1, 0), 0);
+    EXPECT_EQ(split_a.intersectionSize(split_a, 0, 1), 0);
+
     EXPECT_EQ(split_a.intersectionSize(split_b, 1, 1), 2);
     EXPECT_EQ(split_a.intersectionSize(split_b, 0, 0), 4);
     EXPECT_EQ(split_a.intersectionSize(split_b, 1, 0), 2);

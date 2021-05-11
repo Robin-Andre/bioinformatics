@@ -80,3 +80,41 @@ TEST_F(MetricsTest, test_clustering_probability) {
   free(split_a());
   free(split_b());
 }
+
+TEST_F(MetricsTest, test_identity) {
+  PllSplit::setTipCount(6);
+  std::vector<size_t> part1 = {0, 3, 4};
+  PllSplit split = TestUtil::createSplit(part1);
+  EXPECT_DOUBLE_EQ(DistanceUtil::MSI(split, split), -std::log(3.0d/35));
+  EXPECT_DOUBLE_EQ(DistanceUtil::SPI(split, split), -2 * std::log(3.0d/35));
+  EXPECT_DOUBLE_EQ(DistanceUtil::MCI(split, split), std::log(2.0d) + 2 * std::log(4.0d));
+  free(split());
+}
+
+TEST_F(MetricsTest, test_trivial) {
+  PllSplit::setTipCount(6);
+  std::vector<size_t> part1_a = {0};
+  PllSplit split_a = TestUtil::createSplit(part1_a);
+  std::vector<size_t> part1_b = {0, 1, 2, 3, 4, 5};
+  PllSplit split_b = TestUtil::createSplit(part1_b);
+  std::vector<size_t> part1_c = {0, 3, 4};
+  PllSplit split_c = TestUtil::createSplit(part1_c);
+
+  EXPECT_DOUBLE_EQ(DistanceUtil::phylogeneticProbability(split_a.partitionSize(1), split_a.partitionSize(0)), 1.0d);
+  EXPECT_DOUBLE_EQ(DistanceUtil::phylogeneticProbability(split_b.partitionSize(1), split_b.partitionSize(0)), 1.0d);
+  EXPECT_DOUBLE_EQ(DistanceUtil::phylogeneticProbability(split_a.partitionSize(0), split_a.partitionSize(1)), 1.0d);
+  EXPECT_DOUBLE_EQ(DistanceUtil::phylogeneticProbability(split_b.partitionSize(0), split_b.partitionSize(1)), 1.0d);
+
+  EXPECT_DOUBLE_EQ(DistanceUtil::SPI(split_a, split_c), 0);
+  EXPECT_DOUBLE_EQ(DistanceUtil::SPI(split_b, split_c), 0);
+  EXPECT_DOUBLE_EQ(DistanceUtil::SPI(split_c, split_a), 0);
+  EXPECT_DOUBLE_EQ(DistanceUtil::SPI(split_c, split_b), 0);
+
+  EXPECT_DOUBLE_EQ(DistanceUtil::MSI(split_a, split_a), 0);
+  EXPECT_DOUBLE_EQ(DistanceUtil::MSI(split_b, split_b), 0);
+
+
+  free(split_a());
+  free(split_b());
+  free(split_c());
+}

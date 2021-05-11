@@ -11,13 +11,14 @@ public:
     return n * doublefactorial(n - 2);
   }
 
-
   static double h(size_t a, size_t b){
     assert(a + b <= PllSplit::getTipCount());
     return -1 * std::log(phylogeneticProbability(a, b));
   }
 
   static double phylogeneticProbability(size_t a, size_t b){
+    assert(a + b <= PllSplit::getTipCount());
+    if ((a <= 1) || (b <= 1)) return 1; //trivial split
     return (doublefactorial((2 * a) - 3) * doublefactorial((2 * b) - 3) * 1.0d) /
       doublefactorial((2 * (a + b)) - 5);
   }
@@ -34,6 +35,11 @@ public:
 
   static double sharedPhylogeneticProbability(size_t a_1, size_t b_1, size_t a_2, size_t b_2) {
     assert(a_1 + b_1 == PllSplit::getTipCount() && a_2 + b_2 == PllSplit::getTipCount());
+    //edge cases for trivial bipartitions
+    if ((a_1 <= 1) || (b_1 <= 1)) return phylogeneticProbability(a_2, b_2);
+    if ((a_2 <= 1) || (b_2 <= 1)) return phylogeneticProbability(a_1, b_1);
+    //splits identical because of compatibility
+    if (a_1 == a_2) return 1;
     if(a_1 > a_2) {
       return (doublefactorial((2 * a_2) - 3) * doublefactorial((2 * b_1) - 3) * doublefactorial((2 * a_1) - (2 * a_2) - 1) * 1.0d) /
         doublefactorial((2 * (a_1 + b_1)) - 5);
@@ -45,7 +51,7 @@ public:
 
   static double SPI(PllSplit s1, PllSplit s2){
     //because of normalization, the 1-Partitions of s1 and s2 always overlap
-    assert(s1.intersectionSize(s2, false, false) > 0);
+    assert(s1.intersectionSize(s2, 1, 1) > 0);
     if (!s1.compatible(s2)) return 0;
     size_t a_1 = s1.partitionSize(1);
     size_t a_2 = s2.partitionSize(1);
@@ -57,6 +63,7 @@ public:
 
 
   static double clusteringProbability(size_t cnt){
+    assert(PllSplit::getTipCount() > 0);
     return (1.0d * cnt) / PllSplit::getTipCount();
   }
 
@@ -64,22 +71,10 @@ public:
     return clusteringProbability(s.partitionSize(partition));
   }
 
-  /*static double clusteringInformationContent(PllSplit s, partition_t partition) {
-    return -1 * std::log(clusteringProbability(s, partition));
-  }*/
 
   static double clusteringProbability(PllSplit s1, partition_t partition1, PllSplit s2, partition_t partition2) {
     return clusteringProbability(s1.partitionSize(partition1) + s2.partitionSize(partition2) - s1.intersectionSize(s2, partition1, partition2));
   }
-  /*static double clusteringInformationContent(PllSplit s1, partition_t partition1, PllSplit s2, partition_t partition2) {
-    return -1 * std::log(clusteringProbability(s1, partition1, s2, partition2));
-  }
-
-  static double entropy(PllSplit s){
-    double p_a = clusteringProbability(s, false);
-    double p_b = clusteringProbability(s, true);
-    return -p_a * std::log(p_a) - p_b * std::log(p_b);
-  }*/
 
   static double MCI(PllSplit s1, PllSplit s2){
     double mci = 0;
@@ -95,8 +90,6 @@ public:
     } while(partition1);
     return mci;
   }
-
-
 
 
 
