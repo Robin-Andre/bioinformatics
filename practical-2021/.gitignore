@@ -4,3 +4,7 @@ compile_commands.json
 bin/*
 output/*
 googletest/*
+benchmark/*
+CMakeCache.txt
+CMakeFiles/*
+.vscode

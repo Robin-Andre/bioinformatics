@@ -1,0 +1,5 @@
+add_subdirectory(practical-2021)
+add_subdirectory(googletest EXCLUDE_FROM_ALL)
+message(${gtest_SOURCE_DIR})
+include_directories(SYSTEM ${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+include_directories(SYSTEM ${gtest_SOURCE_DIR}/../googlemock/include ${gtest_SOURCE_DIR}/../googlemock/)
