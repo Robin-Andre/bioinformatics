@@ -27,6 +27,7 @@ public:
       }
       res_file.close(); //close the file object.
     } else {
+      std::cout << path +  "/distances not found!";
       throw (path +  "/distances not found!");
     }
 
@@ -52,6 +53,7 @@ public:
       }
       res_file.close();
     } else {
+      std::cout << path +  "/info not found!";
       throw (path +  "/info not found!");
     }
     data.tree_count = std::stoi(prefix_matches[0]);
@@ -115,6 +117,7 @@ public:
       io::from_json(jsonIn, io_data);
       return convertToRFData(io_data);
     } else {
+      std::cout << "Cannot read JSON from " + path  + "/results.json";
       throw ("Cannot read JSON from " + path  + "/results.json");
     }
 

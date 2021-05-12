@@ -13,7 +13,6 @@ public:
   static void write(const std::string& path, const RFData& data);
 
 };
-
 class RAXMLWriter : public RFDataWriter {
 public:
   static void write(const std::string& path, const RFData& data) {
@@ -29,6 +28,7 @@ public:
       }
       out_file.close();
     } else {
+      std::cout << "Cannot write to " + path +  "/distances";
       throw ("Cannot write to " + path + "/distances");
     }
     out_file = std::ofstream(path + "/info");
@@ -38,6 +38,7 @@ public:
       out_file << "Average relative RF in this set: " << data.average_distance << std::endl;
       out_file.close();
     } else {
+      std::cout << "Cannot write to " + path +  "/info";
       throw ("Cannot write to " + path +  "/info");
     }
   }
@@ -56,6 +57,7 @@ public:
         out_stream << j;
         out_stream.close();
     } else {
+      std::cout << "Cannot write JSON to " + path + "/results.json";
       throw ("Cannot write JSON to " + path + "/results.json");
     }
   }
