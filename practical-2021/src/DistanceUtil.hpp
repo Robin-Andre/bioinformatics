@@ -1,6 +1,10 @@
 #pragma once
 #include "PllSplits.hpp"
 #include <tgmath.h>
+#include "TriangleMatrix.hpp"
+#include <vector>
+
+enum Metric{MSI, SPI, MCI};
 
 class DistanceUtil {
 
@@ -89,6 +93,39 @@ public:
       partition1 = !partition1;
     } while(partition1);
     return mci;
+  }
+
+  static std::vector<std::vector<double>> distancesForSplits(PllSplitList first, PllSplitList second, Metric metric){
+    assert(first.getSplits().size() == first.getSplits().size());
+    size_t n = first.getSplits().size();
+    std::vector<std::vector<double>>  result = std::vector<std::vector<double>>(n, std::vector<double>(n));
+    for(size_t i = 0; i < n; ++i){
+      for(size_t j = 0; j < n; ++j){
+        switch (metric) {
+          case Metric::MSI:
+          {
+            result[i][j] = MSI(first[i], second[j]);
+            break;
+          }
+          case Metric::SPI:
+          {
+            result[i][j] = SPI(first[i], second[j]);
+            break;
+          }
+          case Metric::MCI:
+          {
+            result[i][j] = MCI(first[i], second[j]);
+            break;
+          }
+          default:
+          {
+            std::cout << "No proper metric specified" << std::endl;
+            return result;
+          }
+        }
+      }
+    }
+    return result;
   }
 
 

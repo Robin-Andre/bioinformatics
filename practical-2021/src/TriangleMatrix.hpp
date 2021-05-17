@@ -1,12 +1,15 @@
 #pragma once
 #include <vector>
+#include <iostream>
 
 template <typename T>
 class TriangleMatrix {
 public:
-  TriangleMatrix<T>(size_t n) : n(n), elements((n * (n - 1))/2){}
+  TriangleMatrix<T>(size_t n, bool diagonal) : n(n), diagonal(diagonal){
+    elements = diagonal ? std::vector<T> ((n * (n + 1))/2) : std::vector<T> ((n * (n - 1))/2);
+  }
   void set(size_t i, size_t j, T value) {
-    assert(i < n && j < n);
+    assert((i < n || (i == n && diagonal)) && (j < n || (j == n && diagonal)));
     elements[arrayPos(std::min(i,j), std::max(i, j))] = value;
   }
   T get (size_t i, size_t j){
@@ -17,12 +20,13 @@ private:
 
   //determines position in linear array, make sure that i < j
 size_t arrayPos(size_t i, size_t j)  {
-    assert(i < j);
-    size_t pos = ((i*(2*n-i-1))/2) + (j - i - 1);
+    assert(i < j || (j == i && diagonal));
+    size_t pos = diagonal ? (((n*(n+1)) - ((n-i)*(n-i+1)))/2) + (j - i) : ((i*(2*n-i-1))/2) + (j - i - 1);
     assert(pos < elements.size());
     return pos;
   }
 
   size_t n;
   std::vector<T> elements;
+  bool diagonal;
 };
