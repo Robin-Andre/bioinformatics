@@ -196,6 +196,28 @@ TEST_F(PllSplitTest, test_intersectcount) {
 }
 
 
+TEST_F(PllSplitTest, test_unioncount) {
+    PllSplit::setTipCount(6);
+    std::vector<size_t> part1_a = {0, 1, 2, 3};
+    PllSplit split_a = TestUtil::createSplit(part1_a);
+    std::vector<size_t> part1_b = {0, 1, 4, 5};
+    PllSplit split_b = TestUtil::createSplit(part1_b);
+
+    EXPECT_EQ(split_a.unionSize(split_a, 1, 1), 4);
+    EXPECT_EQ(split_a.unionSize(split_a, 0, 0), 2);
+    EXPECT_EQ(split_a.unionSize(split_a, 1, 0), 6);
+    EXPECT_EQ(split_a.unionSize(split_a, 0, 1), 6);
+
+    EXPECT_EQ(split_a.unionSize(split_b, 1, 1), 6);
+    EXPECT_EQ(split_a.unionSize(split_b, 0, 0), 4);
+    EXPECT_EQ(split_a.unionSize(split_b, 1, 0), 4);
+    EXPECT_EQ(split_a.unionSize(split_b, 0, 1), 4);
+
+    free(split_a());
+    free(split_b());
+}
+
+
 TEST_F(PllSplitTest, test_compatible) {
     PllSplit::setTipCount(8);
     std::vector<size_t> part1_a = {0, 1, 2, 3};
@@ -214,4 +236,40 @@ TEST_F(PllSplitTest, test_compatible) {
     free(split_a());
     free(split_b());
     free(split_c());
+}
+
+
+TEST_F(PllSplitTest, test_containsassubset) {
+    PllSplit::setTipCount(6);
+    std::vector<size_t> part1_a = {0, 1, 2, 3};
+    PllSplit split_a = TestUtil::createSplit(part1_a);
+    std::vector<size_t> part1_b = {0, 1};
+    PllSplit split_b = TestUtil::createSplit(part1_b);
+    std::vector<size_t> part1_c = {0, 1, 4, 5};
+    PllSplit split_c = TestUtil::createSplit(part1_c);
+
+    EXPECT_TRUE(split_a.containsAsSubset(split_b, 1, 1));
+    EXPECT_TRUE(split_b.containsAsSubset(split_a, 0, 0));
+    EXPECT_TRUE(split_c.containsAsSubset(split_a, 1, 0));
+    EXPECT_FALSE(split_a.containsAsSubset(split_c, 1, 1));
+
+    free(split_a());
+    free(split_b());
+    free(split_c());
+}
+
+
+TEST_F(PllSplitTest, test_containsassubset2) {
+    PllSplit::setTipCount(24);
+    std::vector<size_t> part1_a = {0, 1, 5, 17, 22};
+    PllSplit split_a = TestUtil::createSplit(part1_a);
+    std::vector<size_t> part1_b = {0, 1, 22};
+    PllSplit split_b = TestUtil::createSplit(part1_b);
+
+    EXPECT_TRUE(split_a.containsAsSubset(split_b, 1, 1));
+    EXPECT_TRUE(split_b.containsAsSubset(split_a, 0, 0));
+    EXPECT_FALSE(split_b.containsAsSubset(split_a, 1, 1));
+
+    free(split_a());
+    free(split_b());
 }

@@ -67,6 +67,8 @@ public:
 
   size_t partitionSize (partition_t partition) const;
   size_t intersectionSize(const PllSplit& other, partition_t partition_this, partition_t partition_other) const;
+  size_t unionSize(const PllSplit& other, partition_t partition_this, partition_t partition_other) const;
+  bool containsAsSubset(const PllSplit& other, partition_t partition_this, partition_t partition_other) const;
   bool compatible(const PllSplit& other) const;
   bool splitValid() const;
 

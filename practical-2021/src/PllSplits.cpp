@@ -9,7 +9,12 @@ size_t PllSplit::popcount() const{
   size_t popcount = 0;
   size_t split_len = PllSplit::getSplitLen();
   for(size_t i = 0; i < split_len; ++i){
-    popcount+=basePopcount(_split[i]);
+    if (i == 0){
+      popcount+=basePopcount(_split[i] & bitmaskForUnusedBits());
+    } else {
+      popcount+=basePopcount(_split[i]);
+    }
+
   }
   /*for (size_t index = 0; index < PllSplit::getTipCount(); ++index) {
     if (bitExtract(index) == 1) { popcount += 1; }
@@ -87,6 +92,44 @@ size_t PllSplit::intersectionSize(const PllSplit& other, partition_t partition_t
     }
   }
   return count;
+}
+
+size_t PllSplit::unionSize(const PllSplit& other, partition_t partition_this, partition_t partition_other) const {
+  assert(splitValid());
+  assert(other.splitValid());
+  size_t split_len = PllSplit::getSplitLen();
+  pll_split_base_t this_mask = partition_this ? 0 : ~0;
+  pll_split_base_t other_mask = partition_other ? 0 : ~0;
+  size_t count = 0;
+  for (size_t i = 0; i < split_len; ++i){
+    if (i == 0){
+      count += basePopcount(((_split[i] ^ this_mask) | (other()[i] ^ other_mask)) & bitmaskForUnusedBits());
+    } else {
+      count += basePopcount((_split[i] ^ this_mask) | (other()[i] ^ other_mask));
+    }
+  }
+  return count;
+}
+
+bool PllSplit::containsAsSubset(const PllSplit& other, partition_t partition_this, partition_t partition_other) const {
+  assert(splitValid());
+  assert(other.splitValid());
+  size_t split_len = PllSplit::getSplitLen();
+  pll_split_base_t this_mask = partition_this ? 0 : ~0;
+  pll_split_base_t other_mask = partition_other ? 0 : ~0;
+  size_t count = 0;
+  for (size_t i = 0; i < split_len; ++i){
+    if (i == 0){
+      if ((((_split[i] ^ this_mask) & bitmaskForUnusedBits())| ((other()[i] ^ other_mask) & bitmaskForUnusedBits())) != ((_split[i] ^ this_mask) & bitmaskForUnusedBits())) {
+        return false;
+      }
+    } else {
+      if ((_split[i] ^ this_mask) | (other()[i] ^ other_mask) != (_split[i] ^ this_mask)) {
+        return false;
+      }
+    }
+  }
+  return true;
 }
 
 

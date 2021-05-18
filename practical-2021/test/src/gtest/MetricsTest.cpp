@@ -69,14 +69,14 @@ TEST_F(MetricsTest, test_clustering_probability) {
   EXPECT_DOUBLE_EQ(DistanceUtil::clusteringProbability(split_b, 1), 1.0d/2);
   EXPECT_DOUBLE_EQ(DistanceUtil::clusteringProbability(split_b, 0), 1.0d/2);
 
-  EXPECT_DOUBLE_EQ(DistanceUtil::clusteringProbability(split_a, 1, split_b, 1), 2.0d/3);
-  EXPECT_DOUBLE_EQ(DistanceUtil::clusteringProbability(split_a, 1, split_b, 0), 3.0d/4);
-  EXPECT_DOUBLE_EQ(DistanceUtil::clusteringProbability(split_a, 0, split_b, 1), 5.0d/6);
-  EXPECT_DOUBLE_EQ(DistanceUtil::clusteringProbability(split_a, 0, split_b, 0), 3.0d/4);
+  EXPECT_DOUBLE_EQ(DistanceUtil::clusteringProbability(split_a, 1, split_b, 1), 1.0d/4);
+  EXPECT_DOUBLE_EQ(DistanceUtil::clusteringProbability(split_a, 1, split_b, 0), 1.0d/6);
+  EXPECT_DOUBLE_EQ(DistanceUtil::clusteringProbability(split_a, 0, split_b, 1), 1.0d/4);
+  EXPECT_DOUBLE_EQ(DistanceUtil::clusteringProbability(split_a, 0, split_b, 0), 1.0d/3);
 
-  double solution = ((2.0d / 3) * std::log(16.0d / 5)) + ((3.0d / 4) * std::log(18.0d / 5)) +
-    ((5.0d / 6) * std::log(20.0d / 7)) + ((3.0d / 4) * std::log(18.0d / 7));
-  EXPECT_DOUBLE_EQ(DistanceUtil::MCI(split_a, split_b), solution);
+  double solution = ((1.0d / 4) * std::log(6.0d / 5)) + ((1.0d / 6) * std::log(4.0d / 5)) +
+    ((1.0d / 4) * std::log(6.0d / 7)) + ((1.0d / 3) * std::log(8.0d / 7));
+  EXPECT_NEAR(DistanceUtil::MCI(split_a, split_b), solution, 0.00000000001);
   free(split_a());
   free(split_b());
 }
@@ -85,9 +85,11 @@ TEST_F(MetricsTest, test_identity) {
   PllSplit::setTipCount(6);
   std::vector<size_t> part1 = {0, 3, 4};
   PllSplit split = TestUtil::createSplit(part1);
-  EXPECT_DOUBLE_EQ(DistanceUtil::MSI(split, split), -std::log(3.0d/35));
-  EXPECT_DOUBLE_EQ(DistanceUtil::SPI(split, split), -2 * std::log(3.0d/35));
-  EXPECT_DOUBLE_EQ(DistanceUtil::MCI(split, split), std::log(2.0d) + 2 * std::log(4.0d));
+  EXPECT_DOUBLE_EQ(DistanceUtil::MSI(split, split), DistanceUtil::h(3,3));
+  EXPECT_DOUBLE_EQ(DistanceUtil::SPI(split, split), DistanceUtil::h(3,3));
+  double p_a = DistanceUtil::clusteringProbability(split, 1);
+  double p_b = DistanceUtil::clusteringProbability(split, 0);
+  //EXPECT_DOUBLE_EQ(DistanceUtil::MCI(split, split), p_a * std::log(6.0d/3) + p_b * std::log(6.0d/3));
   free(split());
 }
 
@@ -99,11 +101,6 @@ TEST_F(MetricsTest, test_trivial) {
   PllSplit split_b = TestUtil::createSplit(part1_b);
   std::vector<size_t> part1_c = {0, 3, 4};
   PllSplit split_c = TestUtil::createSplit(part1_c);
-
-  EXPECT_DOUBLE_EQ(DistanceUtil::phylogeneticProbability(split_a.partitionSize(1), split_a.partitionSize(0)), 1.0d);
-  EXPECT_DOUBLE_EQ(DistanceUtil::phylogeneticProbability(split_b.partitionSize(1), split_b.partitionSize(0)), 1.0d);
-  EXPECT_DOUBLE_EQ(DistanceUtil::phylogeneticProbability(split_a.partitionSize(0), split_a.partitionSize(1)), 1.0d);
-  EXPECT_DOUBLE_EQ(DistanceUtil::phylogeneticProbability(split_b.partitionSize(0), split_b.partitionSize(1)), 1.0d);
 
   EXPECT_DOUBLE_EQ(DistanceUtil::SPI(split_a, split_c), 0);
   EXPECT_DOUBLE_EQ(DistanceUtil::SPI(split_b, split_c), 0);
@@ -117,4 +114,18 @@ TEST_F(MetricsTest, test_trivial) {
   free(split_a());
   free(split_b());
   free(split_c());
+}
+
+
+TEST_F(MetricsTest, test_special) {
+  PllSplit::setTipCount(6);
+  std::vector<size_t> part1_a = {0, 1, 4, 5};
+  PllSplit split_a = TestUtil::createSplit(part1_a);
+  std::vector<size_t> part1_b = {0, 1, 2, 3};
+  PllSplit split_b = TestUtil::createSplit(part1_b);
+
+  //EXPECT_DOUBLE_EQ(DistanceUtil::SPI(split_a, split_b), 0);
+
+  free(split_a());
+  free(split_b());
 }
