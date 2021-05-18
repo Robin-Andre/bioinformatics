@@ -8,7 +8,7 @@ RFData RFDistance::computeRF(const std::vector<PllTree>& trees) {
   result.tip_count = trees[0].getTipCount();
   assert(result.tip_count > 3);
   PllSplit::setTipCount(result.tip_count);
-  std::vector<PllSplitList> tree_splits;
+  std::vector<PllSplitList> tree_splits; //TODO this should be preallocated if possible 
   for(PllTree tree :  trees){
     tree_splits.emplace_back(PllSplitList(tree));
   }
@@ -18,7 +18,7 @@ RFData RFDistance::computeRF(const std::vector<PllTree>& trees) {
   //stores for every tree T_i the tree T_j which admits the smallest RF-Distance to T_i for all j < i
   std::vector<size_t> closest_tree(result.tree_count);
   //stores for every tree T the splits in the symmetric difference to closest_tree[T]
-  std::vector<PllSplitList> D_closest;
+  std::vector<PllSplitList> D_closest; //TODO this should be preallocated if possible
   //stores the smallest distance encountered for the current tree so far
   size_t min_dist;
   //stores the current distance
@@ -29,10 +29,16 @@ RFData RFDistance::computeRF(const std::vector<PllTree>& trees) {
   D_closest.push_back(tree_splits[0]);
   for(size_t i = 1; i < result.tree_count; ++i){
     //D[j] stores the splits in the symmetric difference of T_j and the current tree T_i
-    std::vector<PllSplitList> D;
+
+
+    std::vector<PllSplitList> D; //TODO this gets allocated every loop. 9999 times
+    
+    
+
     D.push_back(tree_splits[i].symmetricDifference(tree_splits[0]));
     //as RF distance is the cardinality of the symmetric difference
-    dist = D[0].getSplitCount();
+    dist = D[0].getSplitCount();  
+    //std::cout << tree_splits[i].symmetricDifferenceNumericOnly(tree_splits[0]) << " " << dist << "\n";
     assert(dist >= 0 && dist <= 2*(result.tip_count - 3));
     result.distances[arrayPos(0, i, result.tree_count)] = dist;
     closest_tree[i] = 0;
@@ -41,14 +47,16 @@ RFData RFDistance::computeRF(const std::vector<PllTree>& trees) {
     min_dist = dist;
     if(dist == 0) --result.unique_count;
     for(size_t j = 1; j < i; ++j){
+      //std::cout << j << " " <<closest_tree[j] << "\n";
       D.push_back(D[closest_tree[j]].symmetricDifference(D_closest[j]));
       assert(D.size() == j+1);
       dist = D[j].getSplitCount();
+      
       assert(dist >= 0 && dist <= 2*(result.tip_count - 3));
       result.distances[arrayPos(j, i, result.tree_count)] = dist;
       if (dist < min_dist){
         closest_tree[i] = j;
-        PllSplitList D2 = D[j];
+        //PllSplitList D2 = D[j];
         D_closest[i] = D[j];
         min_dist = dist;
         if(dist == 0) --result.unique_count;
@@ -56,23 +64,6 @@ RFData RFDistance::computeRF(const std::vector<PllTree>& trees) {
     }
   }
 
-
-  /*result.unique_count = result.tree_count;
-  bool is_unique = true;
-  size_t dist = 0;
-  for(size_t i = 0; i < result.tree_count; i++){
-    is_unique = true;
-    for(size_t j = i+1; j < result.tree_count; j++){
-      dist = tree_splits[i].rfDistance(tree_splits[j]);
-      assert(dist <= 2*(result.tip_count - 3));
-      if (dist==0 && is_unique){
-        is_unique = false;
-        result.unique_count--;
-      }
-      result.distances.emplace_back(dist);
-    }
-  }
-  assert(result.distances.size() == (result.tree_count * (result.tree_count - 1)) / 2);*/
 
 
   result.average_distance = (std::accumulate(result.distances.begin(),

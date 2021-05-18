@@ -147,7 +147,7 @@ PllSplitList PllSplitList::symmetricDifference(const PllSplitList& other) const 
   size_t other_split_count = other.getSplitCount();
   if(other_split_count == 0) return PllSplitList(_splits);
   size_t i = 0;
-  size_t j= 0;
+  size_t j = 0;
   while (i < _splits.size() && j < other_split_count){
     if (_splits[i] == other[j]) {
       ++i;
@@ -171,7 +171,39 @@ PllSplitList PllSplitList::symmetricDifference(const PllSplitList& other) const 
   return PllSplitList(different_splits);
 
 }
-
+/*Robin: The Idea behind this method was to have a quicker symmetric Difference that does
+  not allocate vectors in each call but just returns a number, since we decided to put 
+  default RF on hold I'd also put this on hold*/
+size_t PllSplitList::symmetricDifferenceNumericOnly(const PllSplitList& other) const {
+  size_t other_split_count = other.getSplitCount();
+  size_t counter = 0;
+  if(_splits.size() == 0 || other_split_count == 0) {
+    return 0;
+  }
+  size_t i = 0; 
+  size_t j = 0; 
+  while(i < _splits.size() && j < other_split_count) {
+    if(_splits[i] == other[j]) {
+      ++i;
+      ++j;
+    } else if (_splits[i] < other[j]) {
+      ++i;
+      ++counter;
+    } else {
+      ++counter;
+      ++j;
+    }
+  }
+  while(i < _splits.size()) {
+    ++counter;
+    ++i;
+  }
+  while(j < other_split_count) {
+    ++counter;
+    ++j;
+  }
+  return counter;
+}
 size_t PllSplitList::rfDistance(const PllSplitList& other) const {
   size_t other_split_count = other.getSplitCount();
   if (_splits.size() == 0) return other_split_count;

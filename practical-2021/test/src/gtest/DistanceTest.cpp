@@ -36,7 +36,7 @@ TEST_F(DistanceTest, 125taxa) {
 TEST_F(DistanceTest, 141taxa) {
     execute_test("heads/141");
 }
-/*TEST_F(DistanceTest, 143taxa) {
+TEST_F(DistanceTest, 143taxa) {
     execute_test("heads/143");
 }
 TEST_F(DistanceTest, 148taxa) {
@@ -95,4 +95,4 @@ TEST_F(DistanceTest, 2308taxa) {
 }
 TEST_F(DistanceTest, 2554taxa) {
     execute_test("heads/2554");
-}*/
+}

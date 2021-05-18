@@ -133,6 +133,7 @@ public:
   std::vector<PllSplit> getSplits() const {return _splits;}
   size_t getSplitCount() const {return _splits.size();}
   PllSplitList symmetricDifference(const PllSplitList& other) const;
+  size_t symmetricDifferenceNumericOnly(const PllSplitList& other) const;
   size_t rfDistance(const PllSplitList& other) const;
 
   /* Reenable for print debugging
