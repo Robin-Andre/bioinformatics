@@ -105,9 +105,7 @@ public:
       partition_t partition2 = 0;
       do {
         double pcl = clusteringProbability(s1, partition1, s2, partition2);
-        std::cout << pcl << std::endl;
         mci += pcl * std::log(pcl / (clusteringProbability(s1, partition1) * clusteringProbability(s2, partition2)));
-        std::cout << mci << std::endl;
         partition2 = !partition2;
       } while(partition2);
       partition1 = !partition1;
@@ -127,6 +125,7 @@ public:
           result += h(first[i]);
           result += h(second[i]);
         }
+        break;
       }
       case Metric::MCI:
       {
@@ -134,6 +133,7 @@ public:
           result += entropy(first[i]);
           result += entropy(second[i]);
         }
+        break;
       }
       default:
       {

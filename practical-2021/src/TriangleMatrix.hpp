@@ -16,6 +16,16 @@ public:
     assert(i < n && j < n);
     return elements[arrayPos(std::min(i,j), std::max(i, j))];
   }
+
+  void print() {
+    for(size_t i = 0; i < n; ++i){
+      for(size_t j = i; j < n; ++j){
+        if(i == j && ! diagonal) continue;
+        std::cout << get(i,j) << "; ";
+      }
+      std::cout << std::endl;
+    }
+  }
 private:
 
   //determines position in linear array, make sure that i < j
