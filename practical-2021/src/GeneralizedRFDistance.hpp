@@ -29,7 +29,15 @@ public:
     for(size_t i = 0; i < trees.size(); i++){
       is_unique = true;
       for(size_t j = i+1; j < trees.size(); j++){
-        similarity = MaximumMatcher::match(DistanceUtil::similaritiesForSplits(tree_splits[i], tree_splits[j], metric));
+        std::vector<std::vector<double>> similarities = DistanceUtil::similaritiesForSplits(tree_splits[i], tree_splits[j], metric);
+        /*for (size_t k = 0; k < similarities.size(); ++k){
+          for (size_t l = 0; l < similarities[k].size(); ++l){
+            std::cout << similarities[k][l] << "; ";
+          }
+          std::cout << std::endl;
+        }*/
+        similarity = MaximumMatcher::match(similarities);
+        //std::cout << similarity << std::endl;
         dist = DistanceUtil::distanceFromSimilarity(tree_splits[i], tree_splits[j], metric, similarity);
         if (dist == 0 && is_unique){
           is_unique = false;

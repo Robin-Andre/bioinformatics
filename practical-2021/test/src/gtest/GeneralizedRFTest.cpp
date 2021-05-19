@@ -25,7 +25,7 @@ float epsilon = 0.001;
 void execute_test(std::string test_file) {
     std::vector<PllTree> trees = TreeReader::readTreeFile(current_data_dir + test_file);
     GeneralizedRFDistance distance;
-    distance.computeDistances(trees, SPI).print();
+    distance.computeDistances(trees, MSI).print();
 }
 
 

@@ -16,6 +16,11 @@ TEST_F(MetricsTest, test_double_factorial) {
   EXPECT_EQ(DistanceUtil::doublefactorial(4), 8);
   EXPECT_EQ(DistanceUtil::doublefactorial(5), 15);
   EXPECT_EQ(DistanceUtil::doublefactorial(6), 48);
+
+  EXPECT_EQ(DistanceUtil::doublefactorial(41), 13113070457687988603440625*1.0d);
+  EXPECT_EQ(DistanceUtil::doublefactorial(43), 563862029680583509947946875*1.0d);
+
+  //EXPECT_DOUBLE_EQ(1.0d/43, (13113070457687988603440625*1.0d)/563862029680583509947946875);
 }
 
 TEST_F(MetricsTest, test_phylogenetic_probability) {
@@ -26,6 +31,8 @@ TEST_F(MetricsTest, test_phylogenetic_probability) {
   EXPECT_DOUBLE_EQ(DistanceUtil::phylogeneticProbability(2, 2), 1.0d/3);
   EXPECT_DOUBLE_EQ(DistanceUtil::phylogeneticProbability(3, 3), 3.0d/35);
   EXPECT_DOUBLE_EQ(DistanceUtil::phylogeneticProbability(4, 4), 5.0d/231);
+  PllSplit::setTipCount(24);
+  //EXPECT_DOUBLE_EQ(DistanceUtil::phylogeneticProbability(2, 22), 1.0d/43);
 }
 
 TEST_F(MetricsTest, test_msi) {
