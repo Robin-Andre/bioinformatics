@@ -20,6 +20,10 @@ public:
     return -1 * std::log(phylogeneticProbability(a, b));
   }
 
+  static double h(const PllSplit& s){
+    return h(s.partitionSize(1), s.partitionSize(0));
+  }
+
   static double phylogeneticProbability(size_t a, size_t b){
     assert(a + b <= PllSplit::getTipCount());
     if ((a == 0) || (b == 0)) return 1; //empty split
@@ -88,6 +92,12 @@ public:
     return clusteringProbability(s1.intersectionSize(s2, partition1, partition2));
   }
 
+  static double entropy(const PllSplit& s){
+    double p_a = clusteringProbability(s, 1);
+    double p_b = clusteringProbability(s, 0);
+    return -p_a * std::log(p_a) - p_b * std::log(p_b);
+  }
+
   static double MCI(const PllSplit& s1, const PllSplit& s2){
     double mci = 0;
     partition_t partition1 = 0;
@@ -98,9 +108,6 @@ public:
         std::cout << pcl << std::endl;
         mci += pcl * std::log(pcl / (clusteringProbability(s1, partition1) * clusteringProbability(s2, partition2)));
         std::cout << mci << std::endl;
-        /*if(s1.intersectionSize(s2, partition1, partition2) == 0){
-          assert(pcl / (clusteringProbability(s1, partition1) * clusteringProbability(s2, partition2)) == 0);
-        }*/
         partition2 = !partition2;
       } while(partition2);
       partition1 = !partition1;
@@ -108,7 +115,40 @@ public:
     return mci;
   }
 
-  static std::vector<std::vector<double>> distancesForSplits(const PllSplitList& first, const PllSplitList& second, Metric metric){
+  static double maximumValue(const PllSplitList& first, const PllSplitList& second, Metric metric){
+    assert(first.getSplits().size() == first.getSplits().size());
+    size_t n = first.getSplits().size();
+    double result = 0;
+    switch (metric) {
+      case Metric::MSI:
+      case Metric::SPI:
+      {
+        for(size_t i = 0; i < n; ++i){
+          result += h(first[i]);
+          result += h(second[i]);
+        }
+      }
+      case Metric::MCI:
+      {
+        for(size_t i = 0; i < n; ++i){
+          result += entropy(first[i]);
+          result += entropy(second[i]);
+        }
+      }
+      default:
+      {
+        std::cout << "No proper metric specified" << std::endl;
+        return result;
+      }
+    }
+      return result/2;
+  }
+
+  static double distanceFromSimilarity(const PllSplitList& first, const PllSplitList& second, Metric metric, double similarity){
+    return maximumValue(first, second, metric) - similarity;
+  }
+
+  static std::vector<std::vector<double>> similaritiesForSplits(const PllSplitList& first, const PllSplitList& second, Metric metric){
     assert(first.getSplits().size() == first.getSplits().size());
     size_t n = first.getSplits().size();
     std::vector<std::vector<double>>  result = std::vector<std::vector<double>>(n, std::vector<double>(n));

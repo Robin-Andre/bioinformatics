@@ -23,7 +23,7 @@ void execute_test(std::string test_file) {
     PllSplit::setTipCount(trees[0].getTipCount());
     PllSplitList first = PllSplitList(trees[0]);
     PllSplitList second = PllSplitList(trees[1]);
-    std::vector<std::vector<double>> distances = DistanceUtil::distancesForSplits(first, second, SPI);
+    std::vector<std::vector<double>> distances = DistanceUtil::similaritiesForSplits(first, second, SPI);
     for(size_t i = 0; i < distances.size(); ++i){
       for(size_t j = 0; j < distances[i].size(); ++j){
         std::cout << distances[i][j] << ";";

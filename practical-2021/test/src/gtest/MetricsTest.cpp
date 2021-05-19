@@ -56,6 +56,14 @@ TEST_F(MetricsTest, test_spi) {
   free(split_b());
 }
 
+TEST_F(MetricsTest, test_entropy) {
+  PllSplit::setTipCount(6);
+  std::vector<size_t> part1 = {0, 1, 2};
+  PllSplit split = TestUtil::createSplit(part1);
+  EXPECT_DOUBLE_EQ(DistanceUtil::entropy(split), -std::log(1.0d/2));
+  free(split());
+}
+
 
 TEST_F(MetricsTest, test_clustering_probability) {
   PllSplit::setTipCount(12);
