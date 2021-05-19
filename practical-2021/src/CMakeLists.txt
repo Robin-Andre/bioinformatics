@@ -13,8 +13,8 @@ set_target_properties(inforf PROPERTIES
     CXX_STANDARD_REQUIRED YES
 )
 
-target_link_libraries(inforf ${PLLMODULES_LIBRARIES})
-target_include_directories(inforf PRIVATE ${LOCALDEPS_DIR}/include)
+target_link_libraries(inforf ${PLLMODULES_LIBRARIES} ortools)
+target_include_directories(inforf PRIVATE ${LOCALDEPS_DIR}/include $<BUILD_INTERFACE:${ortools}>)
 
 add_executable(rfdist main.cpp)
 target_link_libraries(rfdist inforf)

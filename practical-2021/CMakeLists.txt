@@ -9,6 +9,15 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address -g")
 
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
+
+set(ORTOOLS_ROOT ${CMAKE_SOURCE_DIR}/libs/ortools)
+
+message(WARNING ${ORTOOLS_ROOT})
+
+set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${ORTOOLS_ROOT})
+
+find_package(ortools REQUIRED)
 
 add_subdirectory(libs)
 add_subdirectory(src)

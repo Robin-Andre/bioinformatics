@@ -4,3 +4,4 @@ compile_commands.json
 bin/*
 output/*
 googletest/*
+libs/ortools/*
