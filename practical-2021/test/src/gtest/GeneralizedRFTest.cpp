@@ -25,7 +25,7 @@ float epsilon = 0.001;
 void execute_test(std::string test_file) {
     std::vector<PllTree> trees = TreeReader::readTreeFile(current_data_dir + test_file);
     GeneralizedRFDistance distance;
-    distance.computeDistances(trees, MSI).print();
+    distance.computeDistances(trees, SPI);//.print();
 }
 
 
@@ -34,6 +34,15 @@ void execute_test(std::string test_file) {
 Yes it would be smart to simply loop over an array of strings and call them instead of this repetitive nonsense
 but I would like to have all tests separate
 */
+
+TEST_F(GeneralizedRFTest, simple_identity) {
+  PllTree tree = TreeReader::readTreeFile(current_data_dir + "heads/24")[0];
+  std::vector<PllTree> trees = {tree, tree};
+  GeneralizedRFDistance distance;
+  //EXPECT_EQ(distance.computeDistances(trees, SPI).get(0, 1), 0);
+  //EXPECT_EQ(distance.computeDistances(trees, MSI).get(0, 1), 0);
+  //EXPECT_EQ(distance.computeDistances(trees, MCI).get(0, 1), 0);
+}
 TEST_F(GeneralizedRFTest, 24taxa) {
     execute_test("heads/24");
 }

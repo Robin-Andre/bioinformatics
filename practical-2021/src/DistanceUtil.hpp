@@ -15,6 +15,26 @@ public:
     return n * doublefactorial(n - 2);
   }
 
+  static size_t truncatedDoublefactorial(size_t offset, size_t n){
+    if (n <= offset) return 1;
+    return n * truncatedDoublefactorial(offset, n - 2);
+  }
+
+  static double factorialQuotient(size_t a, size_t b, size_t x){
+    assert((a % 2 == 1) && (b % 2 == 1) && (x % 2 == 1));
+    size_t M = std::max(a, b);
+    size_t m = std::min(a, b);
+    return doublefactorial(m) * 1.0d / truncatedDoublefactorial(M, x);
+  }
+
+  static double factorialQuotient(size_t a, size_t b, size_t c, size_t x){
+    assert((a % 2 == 1) && (b % 2 == 1) && (x % 2 == 1));
+    size_t M = std::max(std::max(a, b), c);
+    size_t m_1 = (M == a) ? ((M == b) ? c : b) : a;
+    size_t m_2 = (M == b) ? c : b;
+    return doublefactorial(m_1) * doublefactorial(m_2) * 1.0d / truncatedDoublefactorial(M, x);
+  }
+
   static double h(size_t a, size_t b){
     assert(a + b <= PllSplit::getTipCount());
     return -1 * std::log(phylogeneticProbability(a, b));
@@ -28,8 +48,7 @@ public:
     assert(a + b <= PllSplit::getTipCount());
     if ((a == 0) || (b == 0)) return 1; //empty split
     if ((a == 1) || (b == 1)) return 1; //trivial split
-    return (doublefactorial((2 * a) - 3) * doublefactorial((2 * b) - 3) * 1.0d) /
-      doublefactorial((2 * (a + b)) - 5);
+    return factorialQuotient(((2 * a) - 3), ((2 * b) - 3), ((2 * (a + b)) - 5));
   }
 
   static double MSI(const PllSplit& s1, const PllSplit& s2) {
@@ -55,11 +74,9 @@ public:
     if ((a_1 == 0) || (b_1 == 0)) return phylogeneticProbability(a_2, b_2);
     if ((a_2 == 0) || (b_2 == 0)) return phylogeneticProbability(a_1, b_1);
     if(a_1 > a_2) {
-      return (doublefactorial((2 * a_2) - 3) * doublefactorial((2 * b_1) - 3) * doublefactorial((2 * a_1) - (2 * a_2) - 1) * 1.0d) /
-        doublefactorial((2 * (a_1 + b_1)) - 5);
+      return factorialQuotient(((2 * a_2) - 3), ((2 * b_1) - 3), ((2 * a_1) - (2 * a_2) - 1), ((2 * (a_1 + b_1)) - 5));
     } else {
-      return (doublefactorial((2 * a_1) - 3) * doublefactorial((2 * b_2) - 3) * doublefactorial((2 * a_2) - (2 * a_1) - 1) * 1.0d) /
-        doublefactorial((2 * (a_2 + b_2)) - 5);
+      return factorialQuotient(((2 * a_1) - 3), ((2 * b_2) - 3), ((2 * a_2) - (2 * a_1) - 1), ((2 * (a_2 + b_2)) - 5));
     }
   }
 
@@ -122,6 +139,7 @@ public:
       case Metric::SPI:
       {
         for(size_t i = 0; i < n; ++i){
+          assert(h(first[i]) > 0 && h(second[i]) > 0);
           result += h(first[i]);
           result += h(second[i]);
         }
@@ -145,6 +163,8 @@ public:
   }
 
   static double distanceFromSimilarity(const PllSplitList& first, const PllSplitList& second, Metric metric, double similarity){
+    //std::cout << "max: " << maximumValue(first, second, metric) <<std::endl;
+    //std::cout << "sim: " << similarity <<std::endl;
     return maximumValue(first, second, metric) - similarity;
   }
 
