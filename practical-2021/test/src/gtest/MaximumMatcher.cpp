@@ -1,13 +1,36 @@
 #include "gtest/gtest.h"
 #include "../../../src/MaximumMatcher.hpp"
+#include "../../../src/DistanceUtil.hpp"
+#include "../../../src/PllSplits.hpp"
+#include "../../../src/PllTree.hpp"
+#include "../../../src/io/TreeReader.hpp"
 
 #include <random>
 #include <iomanip>
 
 
 class MaximumMatcherTest : public testing::Test {
-
 protected:
+  std::string current_data_dir = "../test/res/data/";
+
+  void checkAllPermutations(std::vector<std::vector<double>> weights, double maximum){
+    double empirical_max = 0;
+    size_t n = weights.size();
+    bool found = false;
+    size_t assignment[n];
+    for(size_t i = 0; i < n; ++i){
+      assignment[i] = i;
+    }
+    size_t len = sizeof(assignment) / sizeof(assignment[0]);
+    do {
+     double current = 0;
+     for (size_t i = 0; i < n; ++i){
+       current += weights[i][assignment[i]];
+     }
+     empirical_max = std::max(empirical_max, current);
+   } while (std::next_permutation(assignment, assignment + len));
+   EXPECT_DOUBLE_EQ(maximum, empirical_max);
+  }
 
 };
 
@@ -29,19 +52,24 @@ TEST_F(MaximumMatcherTest, test_maximum) {
       weights[i][j] = distr(eng);
     }
   }
+  double maximum = MaximumMatcher::match(weights);
+  checkAllPermutations(weights, maximum);
 
-  size_t assignment[weights.size()];
-  for(size_t i = 0; i < weights.size(); ++i){
-    assignment[i] = i;
+}
+
+
+TEST_F(MaximumMatcherTest, test_real){
+  size_t n = 10;
+  PllTree tree = TreeReader::readTreeFile(current_data_dir + "heads/24")[0];
+  PllSplit::setTipCount(tree.getTipCount());
+  PllSplitList split_list = PllSplitList(tree);
+  std::vector<std::vector<double>> similarities = DistanceUtil::similaritiesForSplits(split_list, split_list, SPI);
+  std::vector<std::vector<double>> weights = std::vector<std::vector<double>> (n, std::vector<double>(n));
+  for(size_t i = 0; i < n; ++i){
+    for(size_t j = 0; j < n; ++j){
+      weights[i][j] = similarities[i][j];
+    }
   }
   double maximum = MaximumMatcher::match(weights);
-  size_t len = sizeof(assignment) / sizeof(assignment[0]);
-  do {
-   double current = 0;
-   for (size_t i = 0; i < n; ++i){
-     current += weights[i][assignment[i]];
-   }
-   ASSERT_TRUE(current <= maximum);
- } while (std::next_permutation(assignment, assignment + len));
-
+  checkAllPermutations(weights, maximum);
 }

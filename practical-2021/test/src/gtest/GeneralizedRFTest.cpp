@@ -39,13 +39,13 @@ TEST_F(GeneralizedRFTest, simple_identity) {
   PllTree tree = TreeReader::readTreeFile(current_data_dir + "heads/24")[0];
   std::vector<PllTree> trees = {tree, tree};
   GeneralizedRFDistance distance;
-  //EXPECT_EQ(distance.computeDistances(trees, SPI).get(0, 1), 0);
-  //EXPECT_EQ(distance.computeDistances(trees, MSI).get(0, 1), 0);
-  //EXPECT_EQ(distance.computeDistances(trees, MCI).get(0, 1), 0);
+  EXPECT_NEAR(distance.computeDistances(trees, MSI).get(0, 1), 0, epsilon);
+  //EXPECT_NEAR(distance.computeDistances(trees, SPI).get(0, 1), 0, epsilon);
+  //EXPECT_NEAR(distance.computeDistances(trees, MCI).get(0, 1), 0, epsilon);
 }
-TEST_F(GeneralizedRFTest, 24taxa) {
+/*TEST_F(GeneralizedRFTest, 24taxa) {
     execute_test("heads/24");
-}
+}*/
 /*TEST_F(GeneralizedRFTest, 125taxa) {
     execute_test("heads/125");
 }

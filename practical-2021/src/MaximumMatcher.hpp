@@ -2,15 +2,17 @@
 #include <iostream>
 #include <vector>
 #include "ortools/graph/assignment.h"
+#include <utility>
 
 class MaximumMatcher {
 public:
   static double match(const std::vector<std::vector<double>>& weights) {
     operations_research::SimpleLinearSumAssignment assignment;
-    double max_weight = findMax(weights);
+    std::pair<double,double> max_weight = findMax(weights);
+    double min_diff = max_weight.first - max_weight.second;
     for (size_t i = 0; i < weights.size(); ++i) {
       for(size_t j = 0; j < weights[i].size(); ++j) {
-        assignment.AddArcWithCost(i, j, max_weight - weights[i][j]);
+        assignment.AddArcWithCost(i, j, (max_weight.first - weights[i][j])/min_diff);
       }
     }
     double result = 0;
@@ -22,9 +24,9 @@ public:
         /*printf("left node %d assigned to right node %d with cost %f (%f).\n",
         node,
         assignment.RightMate(node),
-        (max_weight - assignment.AssignmentCost(node)),
+        (max_weight.first - assignment.AssignmentCost(node)),
         assignment.AssignmentCost(node));*/
-        result += (max_weight - assignment.AssignmentCost(node));
+        result += weights[node][assignment.RightMate(node)];
       }
       //printf("Note that it may not be the unique optimal assignment.");
     } else {
@@ -34,14 +36,17 @@ public:
     return result;
   }
 private:
-  static double findMax(const std::vector<std::vector<double>>& weights) {
-    double max_weight = -DBL_MAX;
+  static std::pair<double,double> findMax(const std::vector<std::vector<double>>& weights) {
+    std::pair<double, double> max_weights = std::make_pair(-DBL_MAX, -DBL_MAX);
     for (size_t i = 0; i < weights.size(); ++i) {
       for(size_t j = 0; j < weights[i].size(); ++j) {
-        max_weight = std::max(max_weight, weights[i][j]);
+        if(weights[i][j] > max_weights.first){
+          max_weights.second = max_weights.first;
+          max_weights.first = weights[i][j];
+        }
       }
     }
-    return max_weight;
+    return max_weights;
   }
 
 };
