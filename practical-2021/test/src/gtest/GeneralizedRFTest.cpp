@@ -35,8 +35,16 @@ Yes it would be smart to simply loop over an array of strings and call them inst
 but I would like to have all tests separate
 */
 
-TEST_F(GeneralizedRFTest, simple_identity) {
+/*TEST_F(GeneralizedRFTest, simple_identity) {
   PllTree tree = TreeReader::readTreeFile(current_data_dir + "heads/24")[0];
+  std::vector<PllTree> trees = {tree, tree};
+  GeneralizedRFDistance distance;
+  //EXPECT_NEAR(distance.computeDistances(trees, MSI).get(0, 1), 0, epsilon);
+  EXPECT_NEAR(distance.computeDistances(trees, SPI).get(0, 1), 0, epsilon);
+  //EXPECT_NEAR(distance.computeDistances(trees, MCI).get(0, 1), 0, epsilon);
+}*/
+TEST_F(GeneralizedRFTest, ExampleFromSlideshow) {
+  PllTree tree = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[0];
   std::vector<PllTree> trees = {tree, tree};
   GeneralizedRFDistance distance;
   EXPECT_NEAR(distance.computeDistances(trees, MSI).get(0, 1), 0, epsilon);

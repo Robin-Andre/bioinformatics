@@ -27,9 +27,9 @@ public:
     double checksum = 0;
     size_t unique_count = trees.size();
     bool is_unique = true;
-    for(size_t i = 0; i < trees.size(); i++){
+    for(size_t i = 0; i < trees.size(); ++i){
       is_unique = true;
-      for(size_t j = i+1; j < trees.size(); j++){
+      for(size_t j = i + 1; j < trees.size(); ++j){
         std::vector<std::vector<double>> similarities = DistanceUtil::similaritiesForSplits(tree_splits[i], tree_splits[j], metric);
         for (size_t k = 0; k < similarities.size(); ++k){
           for (size_t l = 0; l < similarities[k].size(); ++l){

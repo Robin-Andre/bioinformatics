@@ -14,6 +14,19 @@ protected:
       EXPECT_EQ(l1[i], l2[i]);
     }
   }
+  void constructor_eq() {
+    PllTree test_tree = PllTree("((a1, a2), (b1,b2), (c, (d1, d2)));");
+    PllSplit::setTipCount(test_tree.getTipCount());
+    PllSplitList split_list_from_tree = PllSplitList(test_tree);
+    std::vector<std::vector<size_t>> expected = {
+                { 0, 1},
+                { 0, 1, 2, 3},
+                { 0, 1, 4, 5, 6},
+                { 0, 1, 2, 3, 4},
+    };
+    PllSplitList expected_splitlist = TestUtil::createSplitList(expected);
+    ASSERT_EQ(expected_splitlist, split_list_from_tree);
+  }
 };
 
 
@@ -79,17 +92,14 @@ TEST_F(PllSplitTest, test_list_constructor) {
 }
 
 TEST_F(PllSplitTest, test_tree_constructor) {
-  PllTree test_tree = PllTree("((a1, a2), (b1,b2), (c, (d1, d2)));");
-  PllSplit::setTipCount(test_tree.getTipCount());
-  PllSplitList split_list_from_tree = PllSplitList(test_tree);
-  std::vector<std::vector<size_t>> expected = {
-                { 0, 1},
-                { 0, 1, 2, 3},
-                { 0, 1, 4, 5, 6},
-                { 0, 1, 2, 3, 4},
-  };
-  PllSplitList expected_splitlist = TestUtil::createSplitList(expected);
-  ASSERT_EQ(expected_splitlist, split_list_from_tree);
+  constructor_eq();
+
+}
+TEST_F(PllSplitTest, test_tree_constructor_iterative) {
+  for(size_t i = 0; i < 100; ++i) {
+    std::cout << "Running test_tree_constructor with iteration: " << i << "\n";
+    constructor_eq();
+  }
 
 }
 

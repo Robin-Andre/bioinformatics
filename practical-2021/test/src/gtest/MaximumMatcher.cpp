@@ -43,14 +43,16 @@ TEST_F(MaximumMatcherTest, test_assignment) {
 
 TEST_F(MaximumMatcherTest, test_maximum) {
   size_t n = 10;
-  std::random_device rd;
+  std::random_device rd; 
   std::default_random_engine eng(rd());
   std::uniform_real_distribution<double> distr(-10, 10);
   std::vector<std::vector<double>> weights = std::vector<std::vector<double>> (n, std::vector<double>(n));
   for(size_t i = 0; i < n; ++i){
     for(size_t j = 0; j < n; ++j){
       weights[i][j] = distr(eng);
+      //std::cout << weights[i][j] << " ";
     }
+    std::cout << "|\n";
   }
   double maximum = MaximumMatcher::match(weights);
   checkAllPermutations(weights, maximum);
