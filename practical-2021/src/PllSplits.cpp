@@ -8,6 +8,7 @@ size_t PllSplit::popcount() const{
   assert(splitValid());
   size_t popcount = 0;
   size_t split_len = PllSplit::getSplitLen();
+  //TODO here we can also move the i = 0 call out of the loop
   for(size_t i = 0; i < split_len; ++i){
     if (i == 0){
       popcount+=basePopcount(_split[i] & bitmaskForUnusedBits());
@@ -21,69 +22,49 @@ size_t PllSplit::popcount() const{
   }*/
   return popcount;
 }
-/*@Luise This is the stuff I am really not proud of :( The two operators are needed for
-sorting and they are far from correct. Right now they only check the first register instead of all
-of them and I have no clue how we are gonna pass the information of how many registers are actually
-required for the corresponding amount of taxa. The information is there
-(for example in the PllSplitlist.computeSplitLen())
-but I lack a good idea to integrate it. What is worse that the < operator might even be correct for most cases
-the == operator is essentially always wrong for taxa > 32. In the end it might even turn out that the
-Split infer from plllib is already sorted and that all of this is void.
 
-Also I have no idea how the taxa are stored. Is it MSB or LSB? Take a 33 taxa tree for example.
-Would the first taxa X be either located :
-          Register[0]                  |            Register[1]
-00000000000000000000000000000000       | 0000000000000000000000000000000X <- here
-0000000000000000000000000000000X <-here| 00000000000000000000000000000000
-Not that it matters for sorting at all.  just that I am clueless
-
-Also if the two operators are working properly then so should the (currently inefficient) algorithm
-  */
 bool operator == (const PllSplit& p1, const PllSplit& p2) {
   size_t split_len = PllSplit::getSplitLen();
+  //TODO this NEEDS the check for unused Bit mask
   for(unsigned i = 0; i < split_len; ++i) {
     if(p1._split[i] != p2._split[i]) {
       return false;
     }
   }
   return true;
-  //return p1._split[0] == p2._split[0] && p1._split[1] == p2._split[1]&& p1._split[2]
-  //== p2._split[2] && p1._split[3] == p2._split[3];
-  //The way to fix this would be r[0] == s[0] && r[1]==s[1] && .. &&r[n]==s[n] but the ominous number n is missing
 }
 bool operator < (const PllSplit&p1, const PllSplit& p2) {
   size_t split_len = PllSplit::getSplitLen();
   for(unsigned i = 0; i < split_len; ++i) {
+    //TODO this needs the unused Bit mask IF we use it
     if(p1._split[i] != p2._split[i]) {
       return (p1._split[i] < p2._split[i]);
     }
   }
   return false;
-  //return !(p1._split[0] >= p2._split[0] && p1._split[1] >= p2._split[1]
-  //&& p1._split[2] >= p2._split[2] && p1._split[3] >= p2._split[3]); /
-  // Similar to above, some cool way to fix it if the info of registers is known
 }
-
+//TODO, we should kill this once we are certain that we don't need it
 uint32_t PllSplit::bitExtract(size_t bit_index) const {
   assert(splitValid());
   assert(bit_index < PllSplit::getTipCount());
   pll_split_base_t split_part = _split[computeMajorIndex(bit_index)];
   return (split_part & (1u << computeMinorIndex(bit_index))) >> computeMinorIndex(bit_index);
 }
-
+//TODO inline and move to header
 size_t PllSplit::partitionSize (partition_t partition) const {
   assert(splitValid());
   return partition ? this->popcount() : PllSplit::getTipCount() - this->popcount();
 }
 
-
+//TODO think about rewriting this/other to A/B? 
 size_t PllSplit::intersectionSize(const PllSplit& other, partition_t partition_this, partition_t partition_other) const {
   assert(splitValid());
   assert(other.splitValid());
   size_t split_len = PllSplit::getSplitLen();
-  pll_split_base_t this_mask = partition_this ? 0 : ~0;
+  pll_split_base_t this_mask = partition_this ? 0 : ~0; //TODO explanatory text
   pll_split_base_t other_mask = partition_other ? 0 : ~0;
   size_t count = 0;
+  //TODO Put i == 0 here; and let the loop start from 1 
   for (size_t i = 0; i < split_len; ++i){
     if (i == 0){
       count += basePopcount(((_split[i] ^ this_mask) & (other()[i] ^ other_mask)) & bitmaskForUnusedBits());
@@ -93,7 +74,7 @@ size_t PllSplit::intersectionSize(const PllSplit& other, partition_t partition_t
   }
   return count;
 }
-
+//TODO @Luise this can be removed but we are going to leave it for SPI
 size_t PllSplit::unionSize(const PllSplit& other, partition_t partition_this, partition_t partition_other) const {
   assert(splitValid());
   assert(other.splitValid());
@@ -101,8 +82,9 @@ size_t PllSplit::unionSize(const PllSplit& other, partition_t partition_this, pa
   pll_split_base_t this_mask = partition_this ? 0 : ~0;
   pll_split_base_t other_mask = partition_other ? 0 : ~0;
   size_t count = 0;
+ 
   for (size_t i = 0; i < split_len; ++i){
-    if (i == 0){
+    if (i == 0){ 
       count += basePopcount(((_split[i] ^ this_mask) | (other()[i] ^ other_mask)) & bitmaskForUnusedBits());
     } else {
       count += basePopcount((_split[i] ^ this_mask) | (other()[i] ^ other_mask));
@@ -110,7 +92,7 @@ size_t PllSplit::unionSize(const PllSplit& other, partition_t partition_this, pa
   }
   return count;
 }
-
+//TODO @Luise can be removed...... aaaaah maybe we need it
 bool PllSplit::containsAsSubset(const PllSplit& other, partition_t partition_this, partition_t partition_other) const {
   assert(splitValid());
   assert(other.splitValid());
@@ -132,7 +114,8 @@ bool PllSplit::containsAsSubset(const PllSplit& other, partition_t partition_thi
   return true;
 }
 
-
+//TODO We have an example that requires the 4th intersection 
+//TODO @Robin, check reference implementation for the same mistake
 bool PllSplit::compatible(const PllSplit& other) const {
   assert(splitValid());
   assert(other.splitValid());
@@ -144,23 +127,26 @@ bool PllSplit::compatible(const PllSplit& other) const {
 pll_split_base_t PllSplit::bitmaskForUnusedBits() const {
   pll_split_base_t bit_mask = 0;
   size_t offset = PllSplit::getTipCount() - ((PllSplit::getSplitLen() - 1) * computSplitBaseSize());
+  //TODO@ Robin, do one shift instead of a loop
   for(size_t i = 0; i < offset; ++i){
     bit_mask |= (1 << i);
   }
   return bit_mask;
 }
-
+//TODO @Robin might wanna do a speedtest, or find another implementation with registers
 size_t PllSplit::basePopcount(pll_split_base_t val) const {
   return std::bitset<32>(val).count();
 }
 
-
+//TODO find out why this is needed / why plllib does fail 
 bool PllSplit::splitValid() const {
   //This condition sometimes fails on the splits returned from pll lib, needs to be examined!
   //return (_split != nullptr) && !(_split[0] & ~bitmaskForUnusedBits()) && _split[0] & 1u;
   return (_split != nullptr) &&  _split[0] & 1u;
 }
 
+
+//TODO find out if preallocation can be done.
 PllSplitList::PllSplitList(const PllTree &tree) {
   assert(PllSplit::getTipCount() == tree.getTipCount());
   pll_split_t* tmp_splits = pllmod_utree_split_create(tree.tree()->vroot, tree.getTipCount(), nullptr);
@@ -170,7 +156,7 @@ PllSplitList::PllSplitList(const PllTree &tree) {
   }
   free(tmp_splits);
 }
-
+//TODO find out if preallocation can be done
 PllSplitList::PllSplitList(const std::vector<PllSplit> &splits) {
   size_t split_len = PllSplit::getSplitLen();
   if(splits.size() > 0){
@@ -183,7 +169,7 @@ PllSplitList::PllSplitList(const std::vector<PllSplit> &splits) {
 }
 
 
-
+//TODO this can be removed if we don't use the other implementation
 PllSplitList PllSplitList::symmetricDifference(const PllSplitList& other) const {
   std::vector<PllSplit> different_splits;
   if (_splits.size() == 0) return PllSplitList(other);
@@ -242,12 +228,13 @@ size_t PllSplitList::rfDistance(const PllSplitList& other) const {
 PllSplitList::~PllSplitList() {
   if (!_splits.empty()) { free(_splits[0]()); }
 }
-
+//TODO maybe remove copy and compare references only and access splits directly
 bool operator == (const PllSplitList& p1, const PllSplitList& p2) {
-  std::vector<PllSplit> splits1 = p1.getSplits();
-  std::vector<PllSplit> splits2 = p2.getSplits();
+  const std::vector<PllSplit>& splits1 = p1.getSplits();
+  const std::vector<PllSplit>& splits2 = p2.getSplits();
   if(splits1.size() != splits2.size()) return false;
   for(size_t i = 0; i < splits1.size(); ++i){
     if (!(splits1[i] == splits2[i])) return false;
   }
+  return true; 
 }

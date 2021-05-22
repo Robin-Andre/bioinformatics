@@ -10,7 +10,7 @@ extern "C" {
 #include <vector>
 #include <iostream>
 
-
+//TODO without attributes it might not need to be a class
 class GeneralizedRFDistance {
 public:
 
@@ -45,7 +45,7 @@ public:
         dist = DistanceUtil::distanceFromSimilarity(tree_splits[i], tree_splits[j], metric, similarity);
         if (dist == 0 && is_unique){
           is_unique = false;
-          unique_count--;
+          --unique_count;
         }
         result.set(i, j, dist);
       }

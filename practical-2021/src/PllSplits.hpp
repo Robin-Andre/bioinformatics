@@ -57,7 +57,7 @@ public:
   static size_t getTipCount() {
     return PllSplit::tip_count;
   }
-
+  //This returns the amount of registers needed to store a split 
   static size_t getSplitLen() {
     size_t split_len = (PllSplit::tip_count / computSplitBaseSize());
     if (tip_count % computSplitBaseSize() > 0) { split_len += 1; }
@@ -132,7 +132,7 @@ public:
   friend bool operator == (const PllSplitList& p1, const PllSplitList& p2);
   PllSplit operator[](size_t index) const { return _splits[index]; }
 
-  std::vector<PllSplit> getSplits() const {return _splits;}
+  const std::vector<PllSplit>& getSplits() const {return _splits;}
   size_t getSplitCount() const {return _splits.size();}
   PllSplitList symmetricDifference(const PllSplitList& other) const;
   size_t rfDistance(const PllSplitList& other) const;
