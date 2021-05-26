@@ -3,12 +3,12 @@ extern "C" {
 #include "libpll/pll.h"
 #include "libpll/pll_tree.h"
 }
-#include "PllSplits.hpp"
+#include "datastructures/PllSplits.hpp"
 #include "DistanceUtil.hpp"
 #include "PhylogeneticMathUtils.hpp"
 #include "MaximumMatcher.hpp"
-#include "TriangleMatrix.hpp"
-#include "Metric.hpp"
+#include "datastructures/TriangleMatrix.hpp"
+#include "metrics/Metric.hpp"
 #include <vector>
 #include <iostream>
 

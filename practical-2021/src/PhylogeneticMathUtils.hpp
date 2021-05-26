@@ -3,7 +3,7 @@
 #include <cassert>
 #include <algorithm>
 #include <vector>
-#include "PllSplits.hpp"
+#include "datastructures/PllSplits.hpp"
 namespace phylomath {
     
   //TODO if gmp can do double factorial, we should use it. 

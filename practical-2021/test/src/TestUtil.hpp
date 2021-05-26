@@ -1,6 +1,6 @@
 #pragma once
 #include<vector>
-#include "../../../src/PllSplits.hpp"
+#include "../../../src/datastructures/PllSplits.hpp"
 class TestUtil {
 
 public:

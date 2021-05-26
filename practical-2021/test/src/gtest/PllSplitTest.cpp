@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "../../../src/PllSplits.hpp"
+#include "../../../src/datastructures/PllSplits.hpp"
 #include "../../../src/io/TreeReader.hpp"
 #include "../TestUtil.hpp"
 

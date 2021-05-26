@@ -1,10 +1,10 @@
 #include "gtest/gtest.h"
 #include "../../../src/MaximumMatcher.hpp"
 #include "../../../src/DistanceUtil.hpp"
-#include "../../../src/PllSplits.hpp"
-#include "../../../src/PllTree.hpp"
+#include "../../../src/datastructures/PllSplits.hpp"
+#include "../../../src/datastructures/PllTree.hpp"
 #include "../../../src/io/TreeReader.hpp"
-#include "../../../src/SPI.hpp"
+#include "../../../src/metrics/SPI.hpp"
 
 #include <random>
 #include <iomanip>

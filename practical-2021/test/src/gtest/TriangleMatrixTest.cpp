@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "../../../src/TriangleMatrix.hpp"
+#include "../../../src/datastructures/TriangleMatrix.hpp"
 #include <stdlib.h>
 class TraingleMatrixTest : public testing::Test {
 

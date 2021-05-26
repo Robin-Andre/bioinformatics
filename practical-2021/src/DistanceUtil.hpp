@@ -1,7 +1,7 @@
 #pragma once
-#include "PllSplits.hpp"
+#include "datastructures/PllSplits.hpp"
 #include "PhylogeneticMathUtils.hpp"
-#include "Metric.hpp"
+#include "metrics/Metric.hpp"
 #include <vector>
 
 //enum Metric{MSI, SPI, MCI}; //TODO: Maybe move this into its own class, like an enum collection class with proper OOP 

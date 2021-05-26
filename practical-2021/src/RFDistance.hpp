@@ -3,8 +3,8 @@ extern "C" {
 #include "libpll/pll.h"
 #include "libpll/pll_tree.h"
 }
-#include "PllSplits.hpp"
-#include "PllTree.hpp"
+#include "datastructures/PllSplits.hpp"
+#include "datastructures/PllTree.hpp"
 #include "io/TreeReader.hpp"
 #include <cstddef>
 #include <stdexcept>

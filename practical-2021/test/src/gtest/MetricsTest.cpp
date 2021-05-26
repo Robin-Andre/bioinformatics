@@ -1,11 +1,11 @@
 #include "gtest/gtest.h"
-#include "../../../src/PllSplits.hpp"
+#include "../../../src/datastructures/PllSplits.hpp"
 #include "../../../src/DistanceUtil.hpp"
 #include "../../../src/PhylogeneticMathUtils.hpp"
 #include "../TestUtil.hpp"
-#include "../../../src/MCI.hpp"
-#include "../../../src/SPI.hpp"
-#include "../../../src/MSI.hpp"
+#include "../../../src/metrics/MCI.hpp"
+#include "../../../src/metrics/SPI.hpp"
+#include "../../../src/metrics/MSI.hpp"
 
 
 class MetricsTest : public testing::Test {};

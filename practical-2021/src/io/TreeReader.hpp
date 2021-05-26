@@ -2,7 +2,7 @@
 //#include<vector>
 #include <fstream>
 //#include <iostream>
-#include "../PllTree.hpp"
+#include "../datastructures/PllTree.hpp"
 //#include "../RFDistance.hpp"
 //#include "CommandLineOptions.hpp"
 class TreeReader {
