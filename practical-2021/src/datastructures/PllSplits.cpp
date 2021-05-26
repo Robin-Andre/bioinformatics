@@ -46,7 +46,7 @@ bool operator < (const PllSplit&p1, const PllSplit& p2) {
 //TODO, we should kill this once we are certain that we don't need it
 uint32_t PllSplit::bitExtract(size_t bit_index) const {
   assert(splitValid());
-  assert(bit_index < PllSplit::getTipCount());
+  //assert(bit_index < PllSplit::getTipCount());
   pll_split_base_t split_part = _split[computeMajorIndex(bit_index)];
   return (split_part & (1u << computeMinorIndex(bit_index))) >> computeMinorIndex(bit_index);
 }
@@ -138,7 +138,11 @@ size_t PllSplit::basePopcount(pll_split_base_t val) const {
   return std::bitset<32>(val).count();
 }
 
-//TODO find out why this is needed / why plllib does fail 
+//DONE find out why this is needed / why plllib does fail 
+/* Robin: It seems that the second condition is failing when the PllSplitList Object is destroyed 
+   but a copy of the underlying splits i.e. a vector of splits has been made and it worked on.
+   One theory is pointer management. (or the lack thereof)
+*/
 bool PllSplit::splitValid() const {
   //This condition sometimes fails on the splits returned from pll lib, needs to be examined!
   //return (_split != nullptr) && !(_split[0] & ~bitmaskForUnusedBits()) && _split[0] & 1u;

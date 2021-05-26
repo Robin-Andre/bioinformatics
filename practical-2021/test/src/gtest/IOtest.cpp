@@ -33,3 +33,13 @@ TEST_F(IOTest, json_read_write) {
   EXPECT_EQ(input, JSONReader::read("foo"));
   std::filesystem::remove_all("./foo");
 }
+/*TEST_F(IOTest, proper_print) {
+  PllTree tree = TreeReader::readTreeFile("../test/res/data/heads/125")[0];
+  PllSplit::setTipCount(tree.getTipCount());
+  PllSplitList splits = PllSplitList(tree);
+  splits.printSplits();
+}*/
+TEST_F(IOTest, is_the_number_of_tips_accurate) {
+  PllTree tree = TreeReader::readTreeFile("../test/res/data/heads/125")[0];
+  ASSERT_EQ(tree.getTipCount(), 125);
+}

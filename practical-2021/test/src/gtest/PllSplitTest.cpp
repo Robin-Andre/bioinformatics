@@ -97,7 +97,7 @@ TEST_F(PllSplitTest, test_tree_constructor) {
 }
 TEST_F(PllSplitTest, test_tree_constructor_iterative) {
   for(size_t i = 0; i < 100; ++i) {
-    std::cout << "Running test_tree_constructor with iteration: " << i << "\n";
+    //std::cout << "Running test_tree_constructor with iteration: " << i << "\n";
     constructor_eq();
   }
 

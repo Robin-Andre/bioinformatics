@@ -138,7 +138,7 @@ public:
   PllSplitList symmetricDifference(const PllSplitList& other) const;
   size_t rfDistance(const PllSplitList& other) const;
 
-  /* Reenable for print debugging
+  // Reenable for print debugging
   void printSplits() const {
     std::cout << "-------------------------"<< std::endl;
     for(size_t i = 0; i < _splits.size(); ++i){
@@ -146,7 +146,7 @@ public:
     }
     std::cout << "-------------------------"<< std::endl;
   }
-  */
+  //*/
 
 
 private:
