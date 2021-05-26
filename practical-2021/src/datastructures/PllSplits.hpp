@@ -11,6 +11,7 @@ extern "C" {
 #include <immintrin.h>
 #include <bitset>
 #include <algorithm>
+#include "../enums.hpp"
 
 
 class PllTree;
@@ -65,7 +66,7 @@ public:
     return split_len;
   }
 
-  size_t partitionSize (partition_t partition) const;
+  size_t partitionSizeOf (Partition block) const;
   size_t intersectionSize(const PllSplit& other, partition_t partition_this, partition_t partition_other) const;
   size_t unionSize(const PllSplit& other, partition_t partition_this, partition_t partition_other) const;
   bool containsAsSubset(const PllSplit& other, partition_t partition_this, partition_t partition_other) const;

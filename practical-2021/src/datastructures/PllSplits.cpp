@@ -51,9 +51,9 @@ uint32_t PllSplit::bitExtract(size_t bit_index) const {
   return (split_part & (1u << computeMinorIndex(bit_index))) >> computeMinorIndex(bit_index);
 }
 //TODO inline and move to header
-size_t PllSplit::partitionSize (partition_t partition) const {
+size_t PllSplit::partitionSizeOf (Partition block) const {
   assert(splitValid());
-  return partition ? this->popcount() : PllSplit::getTipCount() - this->popcount();
+  return (block == Block_A) ? this->popcount() : PllSplit::getTipCount() - this->popcount();
 }
 
 //TODO think about rewriting this/other to A/B? 

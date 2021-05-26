@@ -6,10 +6,10 @@ class SPI : public Metrics {
     //because of normalization, the 1-Partitions of s1 and s2 always overlap
     assert(s1.intersectionSize(s2, 1, 1) > 0);
     if (!s1.compatible(s2)) return 0;
-    size_t a_1 = s1.partitionSize(1);
-    size_t a_2 = s2.partitionSize(1);
-    size_t b_1 = s1.partitionSize(0);
-    size_t b_2 = s2.partitionSize(0);
+    size_t a_1 = s1.partitionSizeOf(Block_A);
+    size_t a_2 = s2.partitionSizeOf(Block_A);
+    size_t b_1 = s1.partitionSizeOf(Block_B);
+    size_t b_2 = s2.partitionSizeOf(Block_B);
     if (s1 == s2) return phylomath::h(a_2, b_2);
     return phylomath::h(a_1, b_1) + phylomath::h(a_2, b_2) - phylomath::h(a_1, b_1, a_2, b_2);
 

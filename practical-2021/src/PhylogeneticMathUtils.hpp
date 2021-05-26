@@ -55,7 +55,7 @@ namespace phylomath {
   }
   //TODO don't forget the inline
   inline double h(const PllSplit& s) {
-    return h(s.partitionSize(1), s.partitionSize(0));
+    return h(s.partitionSizeOf(Block_A), s.partitionSizeOf(Block_B));
   }
 
   inline double sharedPhylogeneticProbability(size_t a_1, size_t b_1, size_t a_2, size_t b_2) {
@@ -85,16 +85,16 @@ namespace phylomath {
     //assert(PllSplit.count > 0);
     return (1.0d * count) / PllSplit::getTipCount();
   }
-  inline double clusteringProbability(const PllSplit& s, partition_t partition) {
-      return clusteringProbability(s.partitionSize(partition));
+  inline double clusteringProbability(const PllSplit& s, Partition block) {
+      return clusteringProbability(s.partitionSizeOf(block));
   }
-  inline double clusteringProbability(const PllSplit& s1, partition_t partition1, const PllSplit& s2, partition_t partition2) {
+  inline double clusteringProbability(const PllSplit& s1, Partition block_1, const PllSplit& s2, Partition block_2) {
     //return clusteringProbability(s1.partitionSize(partition1) + s2.partitionSize(partition2) - s1.intersectionSize(s2, partition1, partition2));
-    return clusteringProbability(s1.intersectionSize(s2, partition1, partition2));
+    return clusteringProbability(s1.intersectionSize(s2, block_1, block_2));
   }
   inline double entropy(const PllSplit& split) {
-    double p_a = clusteringProbability(split, 1);
-    double p_b = clusteringProbability(split, 0);
+    double p_a = clusteringProbability(split, Block_A);
+    double p_b = clusteringProbability(split, Block_B);
     return -p_a * std::log(p_a) - p_b * std::log(p_b);
   }
   

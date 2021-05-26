@@ -1,5 +1,6 @@
 #include "Metric.hpp"
 #include "../enums.hpp"
+#include "../PhylogeneticMathUtils.hpp"
 class MCI : public Metrics {
     public:
     double evaluate(const PllSplit& s1, const PllSplit& s2) const override {
