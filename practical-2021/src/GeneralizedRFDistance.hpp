@@ -5,8 +5,10 @@ extern "C" {
 }
 #include "PllSplits.hpp"
 #include "DistanceUtil.hpp"
+#include "PhylogeneticMathUtils.hpp"
 #include "MaximumMatcher.hpp"
 #include "TriangleMatrix.hpp"
+#include "Metric.hpp"
 #include <vector>
 #include <iostream>
 
@@ -14,7 +16,7 @@ extern "C" {
 class GeneralizedRFDistance {
 public:
 
-  TriangleMatrix<double> computeDistances(const std::vector<PllTree>& trees, Metric metric) {
+  TriangleMatrix<double> computeDistances(const std::vector<PllTree>& trees, const Metrics& metric) {
     PllSplit::setTipCount(trees[0].getTipCount());
     std::vector<PllSplitList> tree_splits;
     for(PllTree tree :  trees){
@@ -24,7 +26,7 @@ public:
     TriangleMatrix<double> result = TriangleMatrix<double>(trees.size(), false);
     double similarity = 0;
     double dist = 0;
-    double checksum = 0;
+    double checksum = 0; //TODO remove, it is ominous
     size_t unique_count = trees.size();
     bool is_unique = true;
     for(size_t i = 0; i < trees.size(); ++i){
@@ -35,8 +37,8 @@ public:
           for (size_t l = 0; l < similarities[k].size(); ++l){
             std::cout << similarities[k][l] << "; ";
           }
-          std::cout << "|" << DistanceUtil::h(tree_splits[i][k]);
-          checksum += DistanceUtil::h(tree_splits[i][k]);
+          std::cout << "|" << phylomath::h(tree_splits[i][k]);
+          checksum += phylomath::h(tree_splits[i][k]);
           std::cout << std::endl;
         }
         similarity = MaximumMatcher::match(similarities);

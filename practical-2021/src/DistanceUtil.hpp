@@ -1,204 +1,34 @@
 #pragma once
 #include "PllSplits.hpp"
+#include "PhylogeneticMathUtils.hpp"
+#include "Metric.hpp"
 #include <vector>
 
-enum Metric{MSI, SPI, MCI}; //TODO: Maybe move this into its own class, like an enum collection class with proper OOP 
+//enum Metric{MSI, SPI, MCI}; //TODO: Maybe move this into its own class, like an enum collection class with proper OOP 
 
-class DistanceUtil { //TODO remove the class and put it into a namespace (needs good suggestion)
+class DistanceUtil { //TODO remove the class and put it into a namespace (needs good suggestion) phylogenetic_
 
 public:
-  //TODO if gmp can do double factorial, we should use it. 
-  static size_t doublefactorial(size_t n) {
-    if (n == 0 || n == 1) return 1;
-    return n * doublefactorial(n - 2);
-  }
-  
-  static size_t truncatedDoublefactorial(size_t offset, size_t n){
-    if (n <= offset) return 1;
-    return n * truncatedDoublefactorial(offset, n - 2);
-  }
-  //This calculates (a!!*b!! ) / x!!
-  static double factorialQuotient(size_t a, size_t b, size_t x){
-    assert((a % 2 == 1) && (b % 2 == 1) && (x % 2 == 1));
-    size_t M = std::max(a, b);
-    size_t m = std::min(a, b);
-    return doublefactorial(m) * 1.0d / truncatedDoublefactorial(M, x);
-  }
-  //This calculates (a!!*b!!*c!!) / x!!
-  static double factorialQuotient(size_t a, size_t b, size_t c, size_t x){
-    assert((a % 2 == 1) && (b % 2 == 1) && (x % 2 == 1));
-    size_t M = std::max({a, b, c});
-    // TODO replace with sort and maybe merge this method with the one above
-    size_t m_1 = (M == a) ? ((M == b) ? c : b) : a;
-    size_t m_2 = (M == b) ? c : b;
-    return doublefactorial(m_1) * doublefactorial(m_2) * 1.0d / truncatedDoublefactorial(M, x); //TODO cast or multiplication
-  }
-  //TODO always inline 
-  static double h(size_t a, size_t b){
-    assert(a + b <= PllSplit::getTipCount());
-    return -1 * std::log(phylogeneticProbability(a, b));
-  }
-  //TODO don't forget the inline
-  static double h(const PllSplit& s){
-    return h(s.partitionSize(1), s.partitionSize(0));
-  }
-
-  static double h(size_t a_1, size_t b_1, size_t a_2, size_t b_2){
-    assert(a_1 + b_1 == PllSplit::getTipCount() && a_2 + b_2 == PllSplit::getTipCount());
-    return -1 * std::log(sharedPhylogeneticProbability(a_1, b_1, a_2, b_2));
-  }
-  //TODO also an inline
-  static double phylogeneticProbability(size_t a, size_t b){
-    assert(a + b <= PllSplit::getTipCount());
-    if ((a == 0) || (b == 0)) return 1; //empty split TODO is this really 1 or 0? obviously a log(0) is really stupid but 0 feels right
-    if ((a == 1) || (b == 1)) return 1; //trivial split
-    return factorialQuotient(((2 * a) - 3), ((2 * b) - 3), ((2 * (a + b)) - 5));
-  }
-
-  static double MSI(const PllSplit& s1, const PllSplit& s2) {
-    if (s1 == s2) return h(s1); // At this spot we would check for h(A_1, A_2), h(A_1, B_2) and one of these should be 0: Rethink whether dangerous
-    return std::max(h(s1.intersectionSize(s2, 1, 1), s1.intersectionSize(s2, 0, 0)),
-                    h(s1.intersectionSize(s2, 0, 1), s1.intersectionSize(s2, 1, 0)));
-  }
-
-  //TODO reconsider, which part of A2|B2 is a subpart of either A1|B1. One of them will be a subpart but 
-  //figuring it out is the hard part
-  static double sharedPhylogeneticProbability(size_t a_1, size_t b_1, size_t a_2, size_t b_2) {
-    //assert(a_1 > 0 && b_1 > 0 && a_2 > 0 && b_2 > 0);
-    assert(a_1 + b_1 == PllSplit::getTipCount() && a_2 + b_2 == PllSplit::getTipCount());
-    //in this case either identical or incompatible
-    assert(a_1 != a_2); //TODO TAKE A LOOK AT THE DEFINITION AND REASSERT THAT THIS CANNOT OCCUR
-    //edge cases for trivial bipartitions
-    if ((a_1 == 1) || (b_1 == 1)) return phylogeneticProbability(a_2, b_2);
-    if ((a_2 == 1) || (b_2 == 1)) return phylogeneticProbability(a_1, b_1);
-    //edge case empty split
-    //TODO this should not occur, debug why it did
-    if ((a_1 == 0) || (b_1 == 0)) return phylogeneticProbability(a_2, b_2);
-    if ((a_2 == 0) || (b_2 == 0)) return phylogeneticProbability(a_1, b_1);
-    if(a_1 > a_2) {
-      return factorialQuotient(((2 * a_2) - 3), ((2 * b_1) - 3), ((2 * a_1) - (2 * a_2) - 1), ((2 * (a_1 + b_1)) - 5));
-    } else {
-      return factorialQuotient(((2 * a_1) - 3), ((2 * b_2) - 3), ((2 * a_2) - (2 * a_1) - 1), ((2 * (a_2 + b_2)) - 5));
-    }
-  }
-  //TODO this has to be reworked to work properly
-  static double SPI(const PllSplit& s1, const PllSplit& s2){
-    //because of normalization, the 1-Partitions of s1 and s2 always overlap
-    assert(s1.intersectionSize(s2, 1, 1) > 0);
-    if (!s1.compatible(s2)) return 0;
-    size_t a_1 = s1.partitionSize(1);
-    size_t a_2 = s2.partitionSize(1);
-    size_t b_1 = s1.partitionSize(0);
-    size_t b_2 = s2.partitionSize(0);
-    if (s1 == s2) return h(a_2, b_2);
-    return h(a_1, b_1) + h(a_2, b_2) - h(a_1, b_1, a_2, b_2);
-
-  }
-
-  //TODO inline maybe private 
-  static double clusteringProbability(size_t cnt){
-    assert(PllSplit::getTipCount() > 0);
-    return (1.0d * cnt) / PllSplit::getTipCount();
-  }
-  //TODO rework partition_t to remove ambiguity between position and value
-  static double clusteringProbability(const PllSplit& s, partition_t partition){
-    return clusteringProbability(s.partitionSize(partition));
-  }
-
-  //TODO inline, what a surprise
-  static double clusteringProbability(const PllSplit& s1, partition_t partition1, const PllSplit& s2, partition_t partition2) {
-    //return clusteringProbability(s1.partitionSize(partition1) + s2.partitionSize(partition2) - s1.intersectionSize(s2, partition1, partition2));
-    return clusteringProbability(s1.intersectionSize(s2, partition1, partition2));
-  }
-
-  static double entropy(const PllSplit& s){
-    double p_a = clusteringProbability(s, 1);
-    double p_b = clusteringProbability(s, 0);
-    return -p_a * std::log(p_a) - p_b * std::log(p_b);
-  }
-  //TODO @Robin second look and introduce a helper function for readability
-  static double MCI(const PllSplit& s1, const PllSplit& s2){
-    double mci = 0;
-    partition_t partition1 = 0;
-    do {
-      partition_t partition2 = 0;
-      do {
-        double pcl = clusteringProbability(s1, partition1, s2, partition2);
-        mci += pcl * std::log(pcl / (clusteringProbability(s1, partition1) * clusteringProbability(s2, partition2)));
-        partition2 = !partition2;
-      } while(partition2);
-      partition1 = !partition1;
-    } while(partition1);
-    return mci;
-  }
+ 
   //TODO Put Metric into its own class and put all the corresponding methods to the Metrics
-  static double maximumValue(const PllSplitList& first, const PllSplitList& second, Metric metric){
-    assert(first.getSplits().size() == first.getSplits().size());
-    size_t n = first.getSplits().size();
-    double result = 0;
-    switch (metric) {
-      case Metric::MSI:
-      case Metric::SPI:
-      {
-        for(size_t i = 0; i < n; ++i){
-          assert(h(first[i]) > 0 && h(second[i]) > 0);
-          result += h(first[i]);
-          result += h(second[i]);
-        }
-        break;
-      }
-      case Metric::MCI:
-      {
-        for(size_t i = 0; i < n; ++i){
-          result += entropy(first[i]);
-          result += entropy(second[i]);
-        }
-        break;
-      }
-      default:
-      {
-        std::cout << "No proper metric specified" << std::endl;
-        return result;
-      }
-    }
-      return result/2;
+  static double maximumValue(const PllSplitList& first, const PllSplitList& second, const Metrics& metric) {
+    //assert(first.getSplits().size() == first.getSplits().size());
+    return (metric.maximum(first, second) / 2);
   }
 
-  static double distanceFromSimilarity(const PllSplitList& first, const PllSplitList& second, Metric metric, double similarity){
+  static double distanceFromSimilarity(const PllSplitList& first, const PllSplitList& second, const Metrics& metric, double similarity){
     //std::cout << "max: " << maximumValue(first, second, metric) <<std::endl;
     //std::cout << "sim: " << similarity <<std::endl;
     return maximumValue(first, second, metric) - similarity;
   }
 
-  static std::vector<std::vector<double>> similaritiesForSplits(const PllSplitList& first, const PllSplitList& second, Metric metric){
+  static std::vector<std::vector<double>> similaritiesForSplits(const PllSplitList& first, const PllSplitList& second, const Metrics& metric){
     assert(first.getSplits().size() == first.getSplits().size());
     size_t n = first.getSplits().size();
     std::vector<std::vector<double>>  result = std::vector<std::vector<double>>(n, std::vector<double>(n));
     for(size_t i = 0; i < n; ++i){
       for(size_t j = 0; j < n; ++j){
-        switch (metric) {
-          case Metric::MSI:
-          {
-            result[i][j] = MSI(first[i], second[j]);
-            break;
-          }
-          case Metric::SPI:
-          {
-            result[i][j] = SPI(first[i], second[j]);
-            assert(SPI(first[i], second[j]) != 0 || !first[i].compatible(second[j]));
-            break;
-          }
-          case Metric::MCI:
-          {
-            result[i][j] = MCI(first[i], second[j]);
-            break;
-          }
-          default:
-          {
-            std::cout << "No proper metric specified" << std::endl;
-            return result;
-          }
-        }
+        result[i][j] = metric.evaluate(first[i], second[j]);
       }
     }
     return result;

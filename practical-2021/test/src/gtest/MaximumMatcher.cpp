@@ -4,6 +4,7 @@
 #include "../../../src/PllSplits.hpp"
 #include "../../../src/PllTree.hpp"
 #include "../../../src/io/TreeReader.hpp"
+#include "../../../src/SPI.hpp"
 
 #include <random>
 #include <iomanip>
@@ -65,7 +66,8 @@ TEST_F(MaximumMatcherTest, test_real){
   PllTree tree = TreeReader::readTreeFile(current_data_dir + "heads/24")[0];
   PllSplit::setTipCount(tree.getTipCount());
   PllSplitList split_list = PllSplitList(tree);
-  std::vector<std::vector<double>> similarities = DistanceUtil::similaritiesForSplits(split_list, split_list, SPI);
+  SPI spi_metric;
+  std::vector<std::vector<double>> similarities = DistanceUtil::similaritiesForSplits(split_list, split_list, spi_metric);
   std::vector<std::vector<double>> weights = std::vector<std::vector<double>> (n, std::vector<double>(n));
   for(size_t i = 0; i < n; ++i){
     for(size_t j = 0; j < n; ++j){
