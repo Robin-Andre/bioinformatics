@@ -32,7 +32,10 @@ class MetricsTest : public testing::Test {
     EXPECT_EQ(mpz_cmp(test_variable, result_variable), 0);
   }
   void evaluate_phylogenetic_probability(size_t a, size_t b, const std::string& fraction) {
-    //phylomath::phylogeneticProbability();
+    phylomath::phylogeneticProbability(test_variable_rational, a, b);
+    mpq_set_str(result_variable_rational, fraction.c_str(), 10); //Base 10
+    EXPECT_EQ(mpq_cmp(result_variable_rational, test_variable_rational), 0);
+    
   }
   
 };
@@ -74,18 +77,17 @@ TEST_F(MetricsTest, test_factorial_quotient2) {
 
 
 
-/*TEST_F(MetricsTest, test_phylogenetic_probability) {
-  mpq_t result;
-  mpq_init(result);
+TEST_F(MetricsTest, test_phylogenetic_probability) {
+
   PllSplit::setTipCount(8);
-  EXPECT_DOUBLE_EQ(phylomath::phylogeneticProbability(2, 3), 1.0d/5);
-  EXPECT_DOUBLE_EQ(phylomath::phylogeneticProbability(2, 4), 1.0d/7);
-  EXPECT_DOUBLE_EQ(phylomath::phylogeneticProbability(3, 4), 1.0d/21);
-  EXPECT_DOUBLE_EQ(phylomath::phylogeneticProbability(2, 2), 1.0d/3);
-  EXPECT_DOUBLE_EQ(phylomath::phylogeneticProbability(3, 3), 3.0d/35);
-  EXPECT_DOUBLE_EQ(phylomath::phylogeneticProbability(4, 4), 5.0d/231);
+  evaluate_phylogenetic_probability(2, 3, "1/5");
+  evaluate_phylogenetic_probability(2, 4, "1/7");
+  evaluate_phylogenetic_probability(3, 4, "1/21");
+  evaluate_phylogenetic_probability(2, 2, "1/3");
+  evaluate_phylogenetic_probability(3, 3, "3/35");
+  evaluate_phylogenetic_probability(4, 4, "5/231");
   PllSplit::setTipCount(24);
-  EXPECT_DOUBLE_EQ(phylomath::phylogeneticProbability(2, 22), 1.0d/43);
+  evaluate_phylogenetic_probability(2,22, "1/43");
 }
 
 
