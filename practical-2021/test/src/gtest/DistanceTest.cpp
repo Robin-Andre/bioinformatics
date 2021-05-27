@@ -29,6 +29,7 @@ void run_test(const std::string& test_file) {
 /*I am still convinced that the bitmask of the PllSplits is weird so I checked that no PllSplit 
    requires that mask. 
   The original implementation was bitmask on register 0. Should have been register n. 
+  Ok turns out that the PllSplitList object needs to be held to have a reasonable splitlist.
 */ 
 void ensure_no_bitmask_needed(const std::string& test_file) {
 
