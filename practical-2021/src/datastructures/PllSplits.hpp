@@ -71,6 +71,7 @@ public:
   size_t unionSize(const PllSplit& other, partition_t partition_this, partition_t partition_other) const;
   bool containsAsSubset(const PllSplit& other, partition_t partition_this, partition_t partition_other) const;
   bool compatible(const PllSplit& other) const;
+  int compatiblePREMIUM(const PllSplit& other) const; 
   bool splitValid() const;
 
 

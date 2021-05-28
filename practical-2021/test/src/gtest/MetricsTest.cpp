@@ -89,24 +89,12 @@ TEST_F(MetricsTest, test_phylogenetic_probability) {
   PllSplit::setTipCount(24);
   evaluate_phylogenetic_probability(2,22, "1/43");
 }
-
-
-
-
-TEST_F(MetricsTest, test_shared_phylogenetic_probability) {
-  PllSplit::setTipCount(6);
-
-  phylomath::sharedPhylogeneticProbability(test_variable_rational, 2, 4, 3, 3);
-  mpq_set_str(result_variable_rational, "1/35", 10);  //, 1.0d/35;
-  EXPECT_EQ(mpq_cmp(result_variable_rational, test_variable_rational), 0);
-}
-/*
 //The probability of a trivial split is 1, the value of h should be 0 as in -log(1) == 0 
 TEST_F(MetricsTest, h_function_trivial_split) {
   PllSplit::setTipCount(4);
   PllSplit test_split = TestUtil::createSplit({0, 1, 3});
   EXPECT_EQ(phylomath::h(test_split), 0);
-  //TODO free????
+  free(test_split());
 }
 
 TEST_F(MetricsTest, test_entropy) {
@@ -114,7 +102,7 @@ TEST_F(MetricsTest, test_entropy) {
   std::vector<size_t> part1 = {0, 1, 2};
   PllSplit split = TestUtil::createSplit(part1);
   EXPECT_DOUBLE_EQ(phylomath::entropy(split), -std::log(1.0d/2));
-  free(split()); // Why free here? Testutils is using a calloc but still... seems weird to do mem management in test cases
+  free(split());
 }
 
 TEST_F(MetricsTest, test_clustering_probability) {
@@ -136,7 +124,7 @@ TEST_F(MetricsTest, test_clustering_probability) {
 
   free(split_a());
   free(split_b());
-}*/
+}
 
 
 

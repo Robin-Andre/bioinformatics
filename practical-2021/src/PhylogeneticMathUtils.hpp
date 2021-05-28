@@ -72,10 +72,9 @@ namespace phylomath {
       } 
     factorialQuotient(result, ((2 * a) - 3), ((2 * b) - 3), ((2 * (a + b)) - 5));
   }
-  //TODO make this private maybe?
   //TODO to get this to work with gmp we need extra tools https://github.com/linas/anant
   //right now it is a conversion to double which will cause side effects when converting really small numbers
-  //MEMO aaactually since we calculate on really small numbers we could uses the inverse 
+  //MEMO aaactually since we calculate on really small numbers we could theoretically use the inverse 
   inline double h(size_t a, size_t b){
     assert(a + b <= PllSplit::getTipCount());
     mpq_t temp_result;
@@ -86,53 +85,39 @@ namespace phylomath {
     return -1 * std::log(conversion);
   }
   inline double h(const PllSplit& s) {
+    assert(s.partitionSizeOf(Block_A) > 0 && s.partitionSizeOf(Block_B) > 0); //There should never be a partition where one block is empty
     return h(s.partitionSizeOf(Block_A), s.partitionSizeOf(Block_B));
   }
-  //TODO this method needs a beauty session, too many ifs.
-  inline void sharedPhylogeneticProbability(mpq_t result, size_t a_1, size_t b_1, size_t a_2, size_t b_2) {
-    //assert(a_1 > 0 && b_1 > 0 && a_2 > 0 && b_2 > 0);
-    assert(a_1 + b_1 == PllSplit::getTipCount() && a_2 + b_2 == PllSplit::getTipCount());
-    //in this case either identical or incompatible
-    assert(a_1 != a_2); //TODO TAKE A LOOK AT THE DEFINITION AND REASSERT THAT THIS CANNOT OCCUR
-    //edge cases for trivial bipartitions
-    if ((a_1 == 1) || (b_1 == 1)) {
-      phylogeneticProbability(result, a_2, b_2);
-      return;
-      }
-    if ((a_2 == 1) || (b_2 == 1)) {
-      phylogeneticProbability(result, a_1, b_1);
-      return;
-    }
-    //edge case empty split
-    //TODO neither of these two should not occur, debug why it did
-    if ((a_1 == 0) || (b_1 == 0)) {
-      phylogeneticProbability(result, a_2, b_2);
-      return;
-      }
-    if ((a_2 == 0) || (b_2 == 0)) {
-      phylogeneticProbability(result, a_1, b_1);
-      return;
-      }
-    if(a_1 > a_2) {
-      factorialQuotient(result, ((2 * a_2) - 3), ((2 * b_1) - 3), ((2 * a_1) - (2 * a_2) - 1), ((2 * (a_1 + b_1)) - 5));
-      return;
-    } else {
-      factorialQuotient(result, ((2 * a_1) - 3), ((2 * b_2) - 3), ((2 * a_2) - (2 * a_1) - 1), ((2 * (a_2 + b_2)) - 5));
-      return;
-    }
-  }
-  //TODO either move the temporary mpq as class parameter or make sure that h is capable of dealing with mpX numbers
-  inline double h(size_t a_1, size_t b_1, size_t a_2, size_t b_2){
-    assert(a_1 + b_1 == PllSplit::getTipCount() && a_2 + b_2 == PllSplit::getTipCount());
+  //This method is a mockup of the calculation of phylogenetic probability of two splits
+  //Requires the size of the two partitions (A or B) which are compatible in the first place
+  inline double h(size_t taxa_partition1, size_t taxa_partition2, size_t alltaxa) {
+    assert(taxa_partition1 >= 2 && taxa_partition2 >= 2);
+    assert(taxa_partition1 + taxa_partition2 < alltaxa); /* If both partitions take up all the taxa and they are of two
+    compatible splits then the splits must be equal and the method is redundant. */
     mpq_t temporary_result;
     mpq_init(temporary_result);
-    sharedPhylogeneticProbability(temporary_result, a_1, b_1, a_2, b_2);
+    size_t a, b, c, x;
+    a = 2 * taxa_partition1 - 3;
+    b = 2 * taxa_partition2 - 3;
+    c = 2 * (alltaxa - taxa_partition1 - taxa_partition2) - 1; //This calculates the remaining tree (which should be not empty)
+    x = 2 * alltaxa - 5;
+    assert(a > 0 && b > 0 && c > 0 && x > 0);
+    factorialQuotient(temporary_result, a, b, c, x);
     double temporary_double_holder = mpq_get_d(temporary_result);
+    mpq_clear(temporary_result);
     return -1 * std::log(temporary_double_holder);
+
   }
+  //UNTESTED QUICK HACK, IDEA WILL BE EXPLAINED IN ANOTHER CASTLE
+  //TODO quick hack not operational, needs to know the actual compatible splits
+  inline double h(size_t a_1, size_t b_1, size_t a_2, size_t b_2) {
+    assert(a_1 + b_1 == a_2 + b_2);
+    return h(std::min(a_1, b_1), std::min(a_2, b_2), a_1 + b_1);
+  }
+ 
   inline double clusteringProbability(size_t count) {
     //assert(PllSplit.count > 0);
-    return (1.0d * count) / PllSplit::getTipCount();
+    return (1.0 * count) / PllSplit::getTipCount();
   }
   inline double clusteringProbability(const PllSplit& s, Partition block) {
       return clusteringProbability(s.partitionSizeOf(block));

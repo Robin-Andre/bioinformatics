@@ -247,6 +247,33 @@ TEST_F(PllSplitTest, test_compatible) {
     free(split_b());
     free(split_c());
 }
+//This test is based on Luises 8 taxa tree which brings compatibility to its limit
+//Since all the splits have been extracted from one tree they should all be compatible
+TEST_F(PllSplitTest, test_compatible_8taxa) {
+  PllSplit::setTipCount(8);
+  PllSplit s1 = TestUtil::createSplit({0, 1}); // AB
+  PllSplit s2 = TestUtil::createSplit({0, 1, 4, 5, 6, 7}); //ABEFGH
+  PllSplit s3 = TestUtil::createSplit({0, 1, 2, 3, 6, 7}); //ABCDGH
+  PllSplit s4 = TestUtil::createSplit({0, 1, 2, 3, 4, 5}); //ABCDEF
+  PllSplit s5 = TestUtil::createSplit({0, 1, 2, 3});  //ABCD
+  EXPECT_TRUE(s1.compatible(s2));
+  EXPECT_TRUE(s1.compatible(s3));
+  EXPECT_TRUE(s1.compatible(s4));
+  EXPECT_TRUE(s1.compatible(s5));
+  EXPECT_TRUE(s2.compatible(s3));
+  EXPECT_TRUE(s2.compatible(s4));
+  EXPECT_TRUE(s2.compatible(s5));
+  EXPECT_TRUE(s3.compatible(s4));
+  EXPECT_TRUE(s3.compatible(s5));
+  EXPECT_TRUE(s4.compatible(s5));
+
+  free(s1());
+  free(s2());
+  free(s3());
+  free(s4());
+  free(s5());
+
+}
 
 
 TEST_F(PllSplitTest, test_containsassubset) {

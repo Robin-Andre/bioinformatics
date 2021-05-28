@@ -114,14 +114,21 @@ bool PllSplit::containsAsSubset(const PllSplit& other, partition_t partition_thi
   return true;
 }
 
-//TODO We have an example that requires the 4th intersection 
-//TODO @Robin, check reference implementation for the same mistake
+//TODO would be premium if we actually get which configuration is the compatible one
 bool PllSplit::compatible(const PllSplit& other) const {
   assert(splitValid());
   assert(other.splitValid());
-  return !intersectionSize(other, 1, 1) || !intersectionSize(other, 0, 1) || !intersectionSize(other, 1, 0);
+  return !intersectionSize(other, 0, 1) 
+      || !intersectionSize(other, 1, 0) || !intersectionSize(other, 0, 0);
 }
-
+//This wonderful monstrosity of an abomination is a quick hack to get which intersection is actually the
+//compatible one. 1 for B_1 + A_2; 2 for A_1 + B_2; 3 for B_1 + B_2; 0 for incompatible
+int PllSplit::compatiblePREMIUM(const PllSplit& other) const {
+  if(!intersectionSize(other, 0, 1)) {return 1;}
+  if(!intersectionSize(other, 1, 0)) {return 2;}
+  if(!intersectionSize(other, 0, 0)) {return 3;}
+  return 0;
+}
 
 //TODO ths mask is correct as balls but it should be invoked on the last register only
 pll_split_base_t PllSplit::bitmaskForUnusedBits() const {

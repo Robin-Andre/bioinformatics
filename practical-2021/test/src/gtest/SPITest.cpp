@@ -48,6 +48,13 @@ TEST_F(SPITest, test_incompatible_splits) {
   free(split_b());
 
 }
+
+
+/*Edit -> These splits are compatible: The following values are expected
+  P(part_a) = 15/105
+  P(part_b) = 
+  P(part_a & part_b) = 3 / 105
+  */
 TEST_F(SPITest, test_special) {
   PllSplit::setTipCount(6);
   std::vector<size_t> part1_a = {0, 1, 4, 5};
@@ -55,8 +62,10 @@ TEST_F(SPITest, test_special) {
   std::vector<size_t> part1_b = {0, 1, 2, 3};
   PllSplit split_b = TestUtil::createSplit(part1_b);
   SPI metric_spi;
-  EXPECT_DOUBLE_EQ(metric_spi.evaluate(split_a, split_b), 0);
-
+  double h_a = -std::log(15.0/105);
+  double h_b = -std::log(15.0/105);
+  double h_a_intersect_b = -std::log(3.0/105);
+  EXPECT_DOUBLE_EQ(metric_spi.evaluate(split_a, split_b),h_a + h_b - h_a_intersect_b);
   free(split_a());
   free(split_b());
 }

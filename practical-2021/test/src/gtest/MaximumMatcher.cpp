@@ -41,7 +41,7 @@ TEST_F(MaximumMatcherTest, test_assignment) {
     EXPECT_DOUBLE_EQ(MaximumMatcher::match(weights), 0.8d);
 }
 
-
+//TODO move randomness out of here
 TEST_F(MaximumMatcherTest, test_maximum) {
   size_t n = 10;
   std::random_device rd; 
@@ -53,7 +53,7 @@ TEST_F(MaximumMatcherTest, test_maximum) {
       weights[i][j] = distr(eng);
       //std::cout << weights[i][j] << " ";
     }
-    std::cout << "|\n";
+    //std::cout << "|\n";
   }
   double maximum = MaximumMatcher::match(weights);
   checkAllPermutations(weights, maximum);
