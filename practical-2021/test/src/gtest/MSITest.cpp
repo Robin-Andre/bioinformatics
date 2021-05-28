@@ -13,7 +13,8 @@ TEST_F(MSITest, test_identity) {
   EXPECT_DOUBLE_EQ(metric_msi.evaluate(split, split), phylomath::h(3,3));
   free(split());
 }
-
+/*TODO Same as SPITest, split_b is all taxa in one partition. Is the probability of that occurence 
+  1 or 0. I don't know but as long as there is no definitive answer this test will stay disabled
 TEST_F(MSITest, test_trivial) {
   PllSplit::setTipCount(6);
   std::vector<size_t> part1_a = {0};
@@ -30,7 +31,7 @@ TEST_F(MSITest, test_trivial) {
   free(split_a());
   free(split_b());
   free(split_c());
-}
+}*/
 TEST_F(MSITest, test_msi) {
   PllSplit::setTipCount(12);
   std::vector<size_t> part1_a = {0, 1, 2, 3, 4};
