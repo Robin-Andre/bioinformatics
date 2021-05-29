@@ -77,6 +77,9 @@ namespace phylomath {
   //MEMO aaactually since we calculate on really small numbers we could theoretically use the inverse 
   inline double h(size_t a, size_t b){
     assert(a + b <= PllSplit::getTipCount());
+    if(a == 0 || b == 0) {
+      return 0;
+    }
     mpq_t temp_result;
     mpq_init(temp_result);
     phylogeneticProbability(temp_result, a, b);

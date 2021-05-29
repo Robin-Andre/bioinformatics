@@ -43,3 +43,22 @@ TEST_F(MSITest, test_msi) {
   free(split_a());
   free(split_b());
 }
+TEST_F(MSITest, test_luise_graph) {
+  PllSplit::setTipCount(8);
+  PllSplit split_1 = TestUtil::createSplit({0, 1});
+  PllSplit split_2 = TestUtil::createSplit({0, 1, 4, 5, 6, 7});
+  PllSplit split_3 = TestUtil::createSplit({0, 1, 2, 3, 6, 7});
+  PllSplit split_4 = TestUtil::createSplit({0, 1, 2, 3, 4, 5});
+  MSI metric_msi;
+  double result = std::log(3);
+  EXPECT_DOUBLE_EQ(metric_msi.evaluate(split_1, split_2), result);
+  EXPECT_DOUBLE_EQ(metric_msi.evaluate(split_1, split_3), result);
+  EXPECT_DOUBLE_EQ(metric_msi.evaluate(split_1, split_4), result);
+  EXPECT_DOUBLE_EQ(metric_msi.evaluate(split_2, split_3), result);
+  EXPECT_DOUBLE_EQ(metric_msi.evaluate(split_2, split_4), result);
+  EXPECT_DOUBLE_EQ(metric_msi.evaluate(split_3, split_4), result);
+  free(split_1());
+  free(split_2());
+  free(split_3());
+  free(split_4());
+}

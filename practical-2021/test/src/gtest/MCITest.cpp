@@ -31,4 +31,23 @@ TEST_F(MCITest, test_identity) {
   EXPECT_DOUBLE_EQ(metric_mci.evaluate(split, split), p_a * std::log(6.0d/3) + p_b * std::log(6.0d/3));
   free(split());
 }
+TEST_F(MCITest, test_luise_graph) {
+    PllSplit::setTipCount(8);
+  PllSplit split_1 = TestUtil::createSplit({0, 1});
+  PllSplit split_2 = TestUtil::createSplit({0, 1, 4, 5, 6, 7});
+  PllSplit split_3 = TestUtil::createSplit({0, 1, 2, 3, 6, 7});
+  PllSplit split_4 = TestUtil::createSplit({0, 1, 2, 3, 4, 5});
+  MCI metric_mci;
+  double result = 1.0 / 2 * std::log(4.0/3) + 1.0 / 2 * std::log(8.0 / 9); // Yeah that one was calculated by hand
+  EXPECT_DOUBLE_EQ(metric_mci.evaluate(split_1, split_2), result);
+  EXPECT_DOUBLE_EQ(metric_mci.evaluate(split_1, split_3), result);
+  EXPECT_DOUBLE_EQ(metric_mci.evaluate(split_1, split_4), result);
+  EXPECT_DOUBLE_EQ(metric_mci.evaluate(split_2, split_3), result);
+  EXPECT_DOUBLE_EQ(metric_mci.evaluate(split_2, split_4), result);
+  EXPECT_DOUBLE_EQ(metric_mci.evaluate(split_3, split_4), result);
+  free(split_1());
+  free(split_2());
+  free(split_3());
+  free(split_4());
+}
 

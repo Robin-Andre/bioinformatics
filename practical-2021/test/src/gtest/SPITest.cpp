@@ -81,3 +81,29 @@ TEST_F(SPITest, test_spi) {
   free(split_a());
   free(split_b());
 }
+/*
+  The following probabilities are expected: 
+  P(part_a) == P(part_b) = 1/11
+  P(intersect) = 1/99
+*/
+TEST_F(SPITest, test_luise_graph) {
+  PllSplit::setTipCount(8);
+  PllSplit split_1 = TestUtil::createSplit({0, 1});
+  PllSplit split_2 = TestUtil::createSplit({0, 1, 4, 5, 6, 7});
+  PllSplit split_3 = TestUtil::createSplit({0, 1, 2, 3, 6, 7});
+  PllSplit split_4 = TestUtil::createSplit({0, 1, 2, 3, 4, 5});
+  SPI metric_spi;
+  double expected_probability_single = 1.0 / 11;
+  double expected_probability_intersect = 1.0 / 99;
+  double result = -2 * std::log(expected_probability_single) + std::log(expected_probability_intersect);
+  EXPECT_DOUBLE_EQ(metric_spi.evaluate(split_1, split_2), result);
+  EXPECT_DOUBLE_EQ(metric_spi.evaluate(split_1, split_3), result);
+  EXPECT_DOUBLE_EQ(metric_spi.evaluate(split_1, split_4), result);
+  EXPECT_DOUBLE_EQ(metric_spi.evaluate(split_2, split_3), result);
+  EXPECT_DOUBLE_EQ(metric_spi.evaluate(split_2, split_4), result);
+  EXPECT_DOUBLE_EQ(metric_spi.evaluate(split_3, split_4), result);
+  free(split_1());
+  free(split_2());
+  free(split_3());
+  free(split_4());
+}
