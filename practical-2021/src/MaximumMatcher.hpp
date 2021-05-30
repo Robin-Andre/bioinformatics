@@ -10,10 +10,12 @@ public:
     operations_research::SimpleLinearSumAssignment assignment;
     std::pair<double,double> max_weight = findMax(weights);
     double min_diff = max_weight.first - max_weight.second;
+    int larger_than_max_weight_int = (int) 2 * max_weight.first;
     for (size_t i = 0; i < weights.size(); ++i) {
       for(size_t j = 0; j < weights[i].size(); ++j) {
         //TODO the transformation between probabilities and whole numbers recheck. Also is this the integer rounding?
-        assignment.AddArcWithCost(i, j, (max_weight.first - weights[i][j])/min_diff);
+        //assignment.AddArcWithCost(i, j, (max_weight.first - weights[i][j])/min_diff);
+        assignment.AddArcWithCost(i, j, (larger_than_max_weight_int - weights[i][j]));
       }
     }
     double result = 0;
@@ -22,11 +24,11 @@ public:
       //printf("The best possible cost is %d.\n", assignment.OptimalCost());
       //printf("An optimal assignment is:\n");
       for (int node = 0; node < assignment.NumNodes(); ++node) {
-        /*printf("left node %d assigned to right node %d with cost %f (%f).\n",
+        printf("left node %d assigned to right node %d with cost %f (%f).\n",
         node,
         assignment.RightMate(node),
         (max_weight.first - assignment.AssignmentCost(node)),
-        assignment.AssignmentCost(node));*/
+        assignment.AssignmentCost(node));
         result += weights[node][assignment.RightMate(node)];
       }
       //printf("Note that it may not be the unique optimal assignment.");

@@ -35,15 +35,15 @@ public:
         std::vector<std::vector<double>> similarities = DistanceUtil::similaritiesForSplits(tree_splits[i], tree_splits[j], metric);
         for (size_t k = 0; k < similarities.size(); ++k){
           for (size_t l = 0; l < similarities[k].size(); ++l){
-            std::cout << similarities[k][l] << "; ";
+            //std::cout << similarities[k][l] << "; ";
           }
-          std::cout << "|" << phylomath::h(tree_splits[i][k]);
+          //std::cout << "|" << phylomath::h(tree_splits[i][k]);
           checksum += phylomath::h(tree_splits[i][k]);
-          std::cout << std::endl;
+          //std::cout << std::endl;
         }
         similarity = MaximumMatcher::match(similarities);
-        std::cout << "SIM: " << similarity << std::endl;
-        std::cout << "CHECKSUM: " << checksum << std::endl;
+        //std::cout << "SIM: " << similarity << std::endl;
+        //std::cout << "CHECKSUM: " << checksum << std::endl;
         dist = DistanceUtil::distanceFromSimilarity(tree_splits[i], tree_splits[j], metric, similarity);
         if (dist == 0 && is_unique){
           is_unique = false;

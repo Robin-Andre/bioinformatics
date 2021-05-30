@@ -58,7 +58,8 @@ size_t PllSplit::intersectionSize(const PllSplit& other, partition_t partition_t
   for (size_t i = 0; i < split_len - 1; ++i){
     count += basePopcount((_split[i] ^ this_mask) & (other()[i] ^ other_mask));  
   }
-  count += basePopcount((_split[split_len - 1] ^ this_mask) & (other()[split_len - 1] ^ other_mask) & bitmaskForUnusedBits());  
+  count += basePopcount((_split[split_len - 1] ^ this_mask) & (other()[split_len - 1] ^ other_mask) 
+                        & bitmaskForUnusedBits());  
   return count;
 }
 
@@ -235,8 +236,6 @@ bool operator == (const PllSplitList& p1, const PllSplitList& p2) {
   }
   return true;
 }*/
-
-// seems like mask is no longer needed?
 pll_split_base_t PllSplit::bitmaskForUnusedBits() const {
   pll_split_base_t bit_mask = 0;
   size_t offset = PllSplit::getTipCount() - ((PllSplit::getSplitLen() - 1) * computSplitBaseSize());
@@ -244,5 +243,9 @@ pll_split_base_t PllSplit::bitmaskForUnusedBits() const {
   for(size_t i = 0; i < offset; ++i){
     bit_mask |= (1 << i);
   }
+  //bit_mask = (pll_split_base_t) (std::pow(2, offset) - 1); //This is hacky but might work
   return bit_mask;
 }
+
+
+

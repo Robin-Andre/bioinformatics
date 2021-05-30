@@ -10,7 +10,7 @@ class DistanceUtil { //TODO remove the class and put it into a namespace (needs 
 
 public:
  
-  //TODO Put Metric into its own class and put all the corresponding methods to the Metrics
+  
   static double maximumValue(const PllSplitList& first, const PllSplitList& second, const Metrics& metric) {
     //assert(first.getSplits().size() == first.getSplits().size());
     return (metric.maximum(first, second) / 2);

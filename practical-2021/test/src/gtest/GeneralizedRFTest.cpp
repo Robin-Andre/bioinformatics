@@ -3,6 +3,9 @@
 #include "../../../src/io/RFDataReader.hpp"
 #include "../../../src/io/RFDataReader.hpp"
 #include "../../../src/GeneralizedRFDistance.hpp"
+#include "../../../src/metrics/MCI.hpp"
+#include "../../../src/metrics/SPI.hpp"
+#include "../../../src/metrics/MSI.hpp"
 
 #include <ortools/linear_solver/linear_solver.h>
 
@@ -47,9 +50,27 @@ TEST_F(GeneralizedRFTest, ExampleFromSlideshow) {
   PllTree tree = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[0];
   std::vector<PllTree> trees = {tree, tree};
   GeneralizedRFDistance distance;
-  //EXPECT_NEAR(distance.computeDistances(trees, MSI).get(0, 1), 0, epsilon);
-  //EXPECT_NEAR(distance.computeDistances(trees, SPI).get(0, 1), 0, epsilon);
-  //EXPECT_NEAR(distance.computeDistances(trees, MCI).get(0, 1), 0, epsilon);
+  SPI metric_spi;
+  MCI metric_mci;
+  MSI metric_msi;
+  EXPECT_NEAR(distance.computeDistances(trees, metric_msi).get(0, 1), 0, epsilon);
+  EXPECT_NEAR(distance.computeDistances(trees, metric_mci).get(0, 1), 0, epsilon);
+  EXPECT_NEAR(distance.computeDistances(trees, metric_spi).get(0, 1), 0, epsilon);
+}
+TEST_F(GeneralizedRFTest, ComparisionTree0_2taxa24) {
+  PllTree tree1 = TreeReader::readTreeFile(current_data_dir + "heads/24")[0];
+  PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "heads/24")[1];
+  std::vector<PllTree> trees = {tree1, tree2};
+  GeneralizedRFDistance distance;
+  SPI metric_spi;
+  MCI metric_mci;
+  MSI metric_msi;
+  std::cout << "SPI: " << distance.computeDistances(trees, metric_spi).get(0, 1) << "\n";
+  std::cout << "MCI: " << distance.computeDistances(trees, metric_mci).get(0, 1) << "\n";
+  std::cout << "MSI: " << distance.computeDistances(trees, metric_msi).get(0, 1) << "\n";
+  EXPECT_NEAR(distance.computeDistances(trees, metric_msi).get(0, 1), 0, epsilon);
+  EXPECT_NEAR(distance.computeDistances(trees, metric_mci).get(0, 1), 0, epsilon);
+  EXPECT_NEAR(distance.computeDistances(trees, metric_spi).get(0, 1), 0, epsilon);
 }
 /*TEST_F(GeneralizedRFTest, 24taxa) {
     execute_test("heads/24");
