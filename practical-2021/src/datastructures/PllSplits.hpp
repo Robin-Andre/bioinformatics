@@ -68,8 +68,6 @@ public:
 
   size_t partitionSizeOf (Partition block) const;
   size_t intersectionSize(const PllSplit& other, partition_t partition_this, partition_t partition_other) const;
-  size_t unionSize(const PllSplit& other, partition_t partition_this, partition_t partition_other) const;
-  bool containsAsSubset(const PllSplit& other, partition_t partition_this, partition_t partition_other) const;
   bool compatible(const PllSplit& other) const;
   int compatiblePREMIUM(const PllSplit& other) const; 
   bool splitValid() const;
@@ -81,7 +79,7 @@ public:
     size_t split_len = PllSplit::getSplitLen();
     for (size_t i = 0; i < split_len; ++i){
       auto str = std::bitset<32>(_split[i]).to_string();
-      std::reverse(str.begin(), str.end());
+      std::reverse(str.begin(), str.end()); //Robin: I don't like the reversal
       std::cout << str << "|";
     }
   std::cout << std::endl;

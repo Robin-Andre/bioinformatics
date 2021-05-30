@@ -1,5 +1,6 @@
 #include "PllSplits.hpp"
 #include "PllTree.hpp"
+#include "../enums.hpp"
 
 size_t PllSplit::tip_count = 0;
 
@@ -8,18 +9,9 @@ size_t PllSplit::popcount() const{
   assert(splitValid());
   size_t popcount = 0;
   size_t split_len = PllSplit::getSplitLen();
-  //TODO here we can also move the i = 0 call out of the loop
   for(size_t i = 0; i < split_len; ++i){
-    if (i == 0){
-      popcount+=basePopcount(_split[i] & bitmaskForUnusedBits());
-    } else {
-      popcount+=basePopcount(_split[i]);
-    }
-
+    popcount+=basePopcount(_split[i]);
   }
-  /*for (size_t index = 0; index < PllSplit::getTipCount(); ++index) {
-    if (bitExtract(index) == 1) { popcount += 1; }
-  }*/
   return popcount;
 }
 
@@ -44,7 +36,7 @@ bool operator < (const PllSplit&p1, const PllSplit& p2) {
 //TODO, we should kill this once we are certain that we don't need it
 uint32_t PllSplit::bitExtract(size_t bit_index) const {
   assert(splitValid());
-  //assert(bit_index < PllSplit::getTipCount());
+  //assert(bit_index < PllSplit::getTipCount()); //TODO reenable this assertion if the test for validity is deprecated
   pll_split_base_t split_part = _split[computeMajorIndex(bit_index)];
   return (split_part & (1u << computeMinorIndex(bit_index))) >> computeMinorIndex(bit_index);
 }
@@ -62,56 +54,14 @@ size_t PllSplit::intersectionSize(const PllSplit& other, partition_t partition_t
   pll_split_base_t this_mask = partition_this ? 0 : ~0; //TODO explanatory text
   pll_split_base_t other_mask = partition_other ? 0 : ~0;
   size_t count = 0;
-  //TODO Put i == 0 here; and let the loop start from 1 
-  for (size_t i = 0; i < split_len; ++i){
-    if (i == 0){
-      count += basePopcount(((_split[i] ^ this_mask) & (other()[i] ^ other_mask)) & bitmaskForUnusedBits());
-    } else {
-      count += basePopcount((_split[i] ^ this_mask) & (other()[i] ^ other_mask));
-    }
+  
+  for (size_t i = 0; i < split_len - 1; ++i){
+    count += basePopcount((_split[i] ^ this_mask) & (other()[i] ^ other_mask));  
   }
+  count += basePopcount((_split[split_len - 1] ^ this_mask) & (other()[split_len - 1] ^ other_mask) & bitmaskForUnusedBits());  
   return count;
 }
-//TODO @Luise this can be removed but we are going to leave it for SPI
-//Annotation: SPI seems to work fine without this
-size_t PllSplit::unionSize(const PllSplit& other, partition_t partition_this, partition_t partition_other) const {
-  assert(splitValid());
-  assert(other.splitValid());
-  size_t split_len = PllSplit::getSplitLen();
-  pll_split_base_t this_mask = partition_this ? 0 : ~0;
-  pll_split_base_t other_mask = partition_other ? 0 : ~0;
-  size_t count = 0;
- 
-  for (size_t i = 0; i < split_len; ++i){
-    if (i == 0){ 
-      count += basePopcount(((_split[i] ^ this_mask) | (other()[i] ^ other_mask)) & bitmaskForUnusedBits());
-    } else {
-      count += basePopcount((_split[i] ^ this_mask) | (other()[i] ^ other_mask));
-    }
-  }
-  return count;
-}
-//TODO @Luise can be removed...... aaaaah maybe we need it
-bool PllSplit::containsAsSubset(const PllSplit& other, partition_t partition_this, partition_t partition_other) const {
-  assert(splitValid());
-  assert(other.splitValid());
-  size_t split_len = PllSplit::getSplitLen();
-  pll_split_base_t this_mask = partition_this ? 0 : ~0;
-  pll_split_base_t other_mask = partition_other ? 0 : ~0;
-  size_t count = 0;
-  for (size_t i = 0; i < split_len; ++i){
-    if (i == 0){
-      if ((((_split[i] ^ this_mask) & bitmaskForUnusedBits())| ((other()[i] ^ other_mask) & bitmaskForUnusedBits())) != ((_split[i] ^ this_mask) & bitmaskForUnusedBits())) {
-        return false;
-      }
-    } else {
-      if ((_split[i] ^ this_mask) | (other()[i] ^ other_mask) != (_split[i] ^ this_mask)) {
-        return false;
-      }
-    }
-  }
-  return true;
-}
+
 
 //TODO would be premium if we actually get which configuration is the compatible one
 bool PllSplit::compatible(const PllSplit& other) const {
@@ -130,17 +80,8 @@ int PllSplit::compatiblePREMIUM(const PllSplit& other) const {
   return 0;
 }
 
-//TODO ths mask is correct as balls but it should be invoked on the last register only
-//TODO seems like mask is no longer needed?
-pll_split_base_t PllSplit::bitmaskForUnusedBits() const {
-  pll_split_base_t bit_mask = 0;
-  size_t offset = PllSplit::getTipCount() - ((PllSplit::getSplitLen() - 1) * computSplitBaseSize());
-  //TODO@ Robin, do one shift instead of a loop
-  for(size_t i = 0; i < offset; ++i){
-    bit_mask |= (1 << i);
-  }
-  return bit_mask;
-}
+
+
 //TODO @Robin might wanna do a speedtest, or find another implementation with registers
 size_t PllSplit::basePopcount(pll_split_base_t val) const {
   return std::bitset<32>(val).count();
@@ -240,7 +181,6 @@ size_t PllSplitList::rfDistance(const PllSplitList& other) const {
 PllSplitList::~PllSplitList() {
   if (!_splits.empty()) { free(_splits[0]()); }
 }
-//TODO maybe remove copy and compare references only and access splits directly
 bool operator == (const PllSplitList& p1, const PllSplitList& p2) {
   const std::vector<PllSplit>& splits1 = p1.getSplits();
   const std::vector<PllSplit>& splits2 = p2.getSplits();
@@ -249,4 +189,60 @@ bool operator == (const PllSplitList& p1, const PllSplitList& p2) {
     if (!(splits1[i] == splits2[i])) return false;
   }
   return true; 
+}
+
+
+// ---------------------------DEPRECATED?-------------------------
+
+
+//TODO @Luise this can be removed but we are going to leave it for SPI
+//Annotation: SPI seems to work fine without this
+/*size_t PllSplit::unionSize(const PllSplit& other, partition_t partition_this, partition_t partition_other) const {
+  assert(splitValid());
+  assert(other.splitValid());
+  size_t split_len = PllSplit::getSplitLen();
+  pll_split_base_t this_mask = partition_this ? 0 : ~0;
+  pll_split_base_t other_mask = partition_other ? 0 : ~0;
+  size_t count = 0;
+ 
+  for (size_t i = 0; i < split_len; ++i){
+    if (i == 0){ 
+      count += basePopcount(((_split[i] ^ this_mask) | (other()[i] ^ other_mask)) & bitmaskForUnusedBits());
+    } else {
+      count += basePopcount((_split[i] ^ this_mask) | (other()[i] ^ other_mask));
+    }
+  }
+  return count;
+}*/
+//TODO @Luise can be removed...... aaaaah maybe we need it
+/*bool PllSplit::containsAsSubset(const PllSplit& other, partition_t partition_this, partition_t partition_other) const {
+  assert(splitValid());
+  assert(other.splitValid());
+  size_t split_len = PllSplit::getSplitLen();
+  pll_split_base_t this_mask = partition_this ? 0 : ~0;
+  pll_split_base_t other_mask = partition_other ? 0 : ~0;
+  size_t count = 0;
+  for (size_t i = 0; i < split_len; ++i){
+    if (i == 0){
+      if ((((_split[i] ^ this_mask) & bitmaskForUnusedBits())| ((other()[i] ^ other_mask) & bitmaskForUnusedBits())) != ((_split[i] ^ this_mask) & bitmaskForUnusedBits())) {
+        return false;
+      }
+    } else {
+      if ((_split[i] ^ this_mask) | (other()[i] ^ other_mask) != (_split[i] ^ this_mask)) {
+        return false;
+      }
+    }
+  }
+  return true;
+}*/
+
+// seems like mask is no longer needed?
+pll_split_base_t PllSplit::bitmaskForUnusedBits() const {
+  pll_split_base_t bit_mask = 0;
+  size_t offset = PllSplit::getTipCount() - ((PllSplit::getSplitLen() - 1) * computSplitBaseSize());
+  //TODO@ Robin, do one shift instead of a loop
+  for(size_t i = 0; i < offset; ++i){
+    bit_mask |= (1 << i);
+  }
+  return bit_mask;
 }

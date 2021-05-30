@@ -10,7 +10,7 @@ if(ENABLE_TESTS)
      "*.cpp"
   )
   #Compile Google Executable
-  add_executable(${TEST_EXE_NAME} ${test_src})
+  add_executable(Google_Test_run ${test_src})
   #googletest requires gtest as library. gtest is not linked as system library which causes a lot of
   #-Wundef errors in softwipe which are 
   target_link_libraries(${TEST_EXE_NAME} gtest_main)
@@ -24,7 +24,7 @@ if(ENABLE_TESTS)
   #This tells Cmake that this executable is meant as a test (I have not yet understood what it does)
   add_test(Random_Name ${TEST_EXE_NAME})
 
- 
+  #add_executable(t )
   #And this ensures that the tests do run from make
   set(target ${TEST_EXE_NAME})
   add_custom_command(TARGET ${target}

@@ -69,7 +69,7 @@ namespace phylomath {
   //TODO to get this to work with gmp we need extra tools https://github.com/linas/anant
   //right now it is a conversion to double which will cause side effects when converting really small numbers
   //MEMO aaactually since we calculate on really small numbers we could theoretically use the inverse 
-  inline double h(size_t a, size_t b){
+  inline double h(size_t a, size_t b) {
     assert(a + b <= PllSplit::getTipCount());
     if(a == 0 || b == 0) {
       return 0;

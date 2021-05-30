@@ -32,7 +32,7 @@ TEST_F(MCITest, test_identity) {
   free(split());
 }
 TEST_F(MCITest, test_luise_graph) {
-    PllSplit::setTipCount(8);
+  PllSplit::setTipCount(8);
   PllSplit split_1 = TestUtil::createSplit({0, 1});
   PllSplit split_2 = TestUtil::createSplit({0, 1, 4, 5, 6, 7});
   PllSplit split_3 = TestUtil::createSplit({0, 1, 2, 3, 6, 7});
