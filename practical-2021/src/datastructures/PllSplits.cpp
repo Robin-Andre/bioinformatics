@@ -25,7 +25,6 @@ size_t PllSplit::popcount() const{
 
 bool operator == (const PllSplit& p1, const PllSplit& p2) {
   size_t split_len = PllSplit::getSplitLen();
-  //TODO this NEEDS the check for unused Bit mask
   for(unsigned i = 0; i < split_len; ++i) {
     if(p1._split[i] != p2._split[i]) {
       return false;
@@ -36,7 +35,6 @@ bool operator == (const PllSplit& p1, const PllSplit& p2) {
 bool operator < (const PllSplit&p1, const PllSplit& p2) {
   size_t split_len = PllSplit::getSplitLen();
   for(unsigned i = 0; i < split_len; ++i) {
-    //TODO this needs the unused Bit mask IF we use it
     if(p1._split[i] != p2._split[i]) {
       return (p1._split[i] < p2._split[i]);
     }
@@ -75,6 +73,7 @@ size_t PllSplit::intersectionSize(const PllSplit& other, partition_t partition_t
   return count;
 }
 //TODO @Luise this can be removed but we are going to leave it for SPI
+//Annotation: SPI seems to work fine without this
 size_t PllSplit::unionSize(const PllSplit& other, partition_t partition_this, partition_t partition_other) const {
   assert(splitValid());
   assert(other.splitValid());
@@ -123,6 +122,7 @@ bool PllSplit::compatible(const PllSplit& other) const {
 }
 //This wonderful monstrosity of an abomination is a quick hack to get which intersection is actually the
 //compatible one. 1 for B_1 + A_2; 2 for A_1 + B_2; 3 for B_1 + B_2; 0 for incompatible
+//Basically it does what the union and contains method originally intended to do. Just in compressed ugliness
 int PllSplit::compatiblePREMIUM(const PllSplit& other) const {
   if(!intersectionSize(other, 0, 1)) {return 1;}
   if(!intersectionSize(other, 1, 0)) {return 2;}
@@ -131,6 +131,7 @@ int PllSplit::compatiblePREMIUM(const PllSplit& other) const {
 }
 
 //TODO ths mask is correct as balls but it should be invoked on the last register only
+//TODO seems like mask is no longer needed?
 pll_split_base_t PllSplit::bitmaskForUnusedBits() const {
   pll_split_base_t bit_mask = 0;
   size_t offset = PllSplit::getTipCount() - ((PllSplit::getSplitLen() - 1) * computSplitBaseSize());

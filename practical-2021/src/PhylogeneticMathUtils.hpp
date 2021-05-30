@@ -13,13 +13,7 @@ namespace phylomath {
   inline void doublefactorial(mpz_t result, size_t n) {
     mpz_2fac_ui(result, n);
   }
-  //this is an optimization which we can deploy later with mpz
-  /*inline size_t truncatedDoublefactorial(size_t offset, size_t n){
-    if (n <= offset) return 1;
-    return n * truncatedDoublefactorial(offset, n - 2);
-  }*/
-
-
+ 
   //This calculates (a!!*b!!*c!!) / x!!
   //TODO this method needs a beauty session
   inline void factorialQuotient(mpq_t result, size_t a, size_t b, size_t c, size_t x){
@@ -92,11 +86,12 @@ namespace phylomath {
     return h(s.partitionSizeOf(Block_A), s.partitionSizeOf(Block_B));
   }
   //This method is a mockup of the calculation of phylogenetic probability of two splits
-  //Requires the size of the two partitions (A or B) which are compatible in the first place
+  //Requires the size of the two partitions (A or B) which need to be compatible in the first place
+  //The calculation will work even if they are not compatible but the result is entirely useless
   inline double h(size_t taxa_partition1, size_t taxa_partition2, size_t alltaxa) {
     assert(taxa_partition1 >= 2 && taxa_partition2 >= 2);
-    assert(taxa_partition1 + taxa_partition2 < alltaxa); /* If both partitions take up all the taxa and they are of two
-    compatible splits then the splits must be equal and the method is redundant. */
+    assert(taxa_partition1 + taxa_partition2 < alltaxa); /* If the partitions are compatible and the splits nonequal then
+    there has to be at least one taxa which is in neither partition */
     mpq_t temporary_result;
     mpq_init(temporary_result);
     size_t a, b, c, x;
@@ -113,7 +108,8 @@ namespace phylomath {
   }
   //UNTESTED QUICK HACK, IDEA WILL BE EXPLAINED IN ANOTHER CASTLE
   //TODO quick hack not operational, needs to know the actual compatible splits
-  inline double h(size_t a_1, size_t b_1, size_t a_2, size_t b_2) {
+  //TODO deprecated remove this 
+  inline double h_old(size_t a_1, size_t b_1, size_t a_2, size_t b_2) {
     assert(a_1 + b_1 == a_2 + b_2);
     return h(std::min(a_1, b_1), std::min(a_2, b_2), a_1 + b_1);
   }

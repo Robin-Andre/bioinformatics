@@ -2,6 +2,8 @@
 #include "../PhylogeneticMathUtils.hpp"
 class SPI : public Metrics {
   public:
+  //This is the old implementation but until I see definite proof that we use the new one it will stay as 
+  // copy paste tool
   /*double evaluate(const PllSplit& s1, const PllSplit& s2) const override {
     //because of normalization, the 1-Partitions of s1 and s2 always overlap
     assert(s1.intersectionSize(s2, 1, 1) > 0);

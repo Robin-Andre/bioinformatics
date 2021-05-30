@@ -310,3 +310,38 @@ TEST_F(PllSplitTest, test_containsassubset2) {
     free(split_a());
     free(split_b());
 }
+//These test cases were added because of the deprecated method of bitmask
+TEST_F(PllSplitTest, popcount_2registers_nonfull) {
+  PllSplit::setTipCount(36);
+  PllSplit test_split = TestUtil::createSplit({0, 31, 33, 35});
+  EXPECT_EQ(test_split.popcount(), 4);
+  free(test_split());
+}
+TEST_F(PllSplitTest, intersectionsize_2registers_nonfull) {
+  PllSplit::setTipCount(36);
+  PllSplit test_split = TestUtil::createSplit({0, 31, 33, 35});
+  EXPECT_EQ(test_split.intersectionSize(test_split, 1, 1), 4);
+  free(test_split());
+}
+//Remember that the splits are sorted by LSB, but our print method is reverting the order
+TEST_F(PllSplitTest, lessthanoperator_2registers_nonfull) {
+  PllSplit::setTipCount(36);
+  PllSplit test_split1 = TestUtil::createSplit({0, 31, 33, 35});
+  // 1000 0000 0000 0000 0000 0000 0000 0001 | 1010
+  PllSplit test_split2 = TestUtil::createSplit({0, 30, 33, 35});
+  // 0100 0000 0000 0000 0000 0000 0000 0001 | 1010
+  PllSplit test_split3 = TestUtil::createSplit({0, 31, 34, 35});
+  // 1000 0000 0000 0000 0000 0000 0000 0001 | 1100
+  EXPECT_TRUE(test_split2 < test_split1);
+  EXPECT_TRUE(test_split1 < test_split3);
+  EXPECT_TRUE(test_split2 < test_split3);
+  free(test_split1());
+  free(test_split2());
+  free(test_split3());
+}
+TEST_F(PllSplitTest, equaloperator_2registers_nonfull) {
+  PllSplit::setTipCount(36);
+  PllSplit test_split = TestUtil::createSplit({0, 31, 33, 35});
+  EXPECT_TRUE(test_split == test_split);
+  free(test_split());
+}
