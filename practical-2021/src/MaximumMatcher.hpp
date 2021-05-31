@@ -3,6 +3,7 @@
 #include <vector>
 #include "ortools/graph/assignment.h"
 #include <utility>
+#include "WeightScaler.hpp"
 
 class MaximumMatcher {
 public:
@@ -25,7 +26,7 @@ public:
       //printf("The best possible cost is %d.\n", assignment.OptimalCost());
       //printf("An optimal assignment is:\n");
       for (int node = 0; node < assignment.NumNodes(); ++node) {
-        
+
         /*printf("left node %d assigned to right node %d with cost %i (%i).\n",
         node,
         assignment.RightMate(node),
@@ -35,7 +36,7 @@ public:
         //std::cout << "Result(Node): " << node << "->" << assignment.RightMate(node) << " = " << result << "\n";
       }
       //printf("Note that it may not be the unique optimal assignment.");
-    } 
+    }
     return matching_vector;
   }
   static double match(const std::vector<std::vector<double>>& weights) {
