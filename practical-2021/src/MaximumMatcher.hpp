@@ -3,6 +3,7 @@
 #include <vector>
 #include "ortools/graph/assignment.h"
 #include <utility>
+#include "WeightScaler.hpp"
 
 class MaximumMatcher {
 public:
@@ -11,11 +12,12 @@ public:
     std::pair<double,double> max_weight = findMax(weights);
     double min_diff = max_weight.first - max_weight.second;
     int larger_than_max_weight_int = (int) 2 * max_weight.first;
+    std::vector<std::vector<int64_t>> scaled_weights = WeightScaler::scale(weights);
     for (size_t i = 0; i < weights.size(); ++i) {
       for(size_t j = 0; j < weights[i].size(); ++j) {
         //TODO the transformation between probabilities and whole numbers recheck. Also is this the integer rounding?
         //assignment.AddArcWithCost(i, j, (max_weight.first - weights[i][j])/min_diff);
-        assignment.AddArcWithCost(i, j, (larger_than_max_weight_int - weights[i][j]));
+        assignment.AddArcWithCost(i, j, scaled_weights[i][j]);
       }
     }
     double result = 0;
