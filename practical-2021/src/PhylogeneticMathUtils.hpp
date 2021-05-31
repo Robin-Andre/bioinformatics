@@ -128,6 +128,7 @@ namespace phylomath {
   inline double entropy(const PllSplit& split) {
     double p_a = clusteringProbability(split, Block_A);
     double p_b = clusteringProbability(split, Block_B);
+    assert(p_a != 0 && p_b != 0);
     return -p_a * std::log(p_a) - p_b * std::log(p_b);
   }
   

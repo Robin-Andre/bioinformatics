@@ -47,6 +47,7 @@ but I would like to have all tests separate
   //EXPECT_NEAR(distance.computeDistances(trees, MCI).get(0, 1), 0, epsilon);
 }*/
 TEST_F(GeneralizedRFTest, ExampleFromSlideshow) {
+  PllSplit::setTipCount(6);
   PllTree tree = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[0];
   std::vector<PllTree> trees = {tree, tree};
   GeneralizedRFDistance distance;
@@ -58,20 +59,41 @@ TEST_F(GeneralizedRFTest, ExampleFromSlideshow) {
   EXPECT_NEAR(distance.computeDistances(trees, metric_spi).get(0, 1), 0, epsilon);
 }
 TEST_F(GeneralizedRFTest, ComparisionTree0_2taxa24) {
+  PllSplit::setTipCount(24);
   PllTree tree1 = TreeReader::readTreeFile(current_data_dir + "heads/24")[0];
   PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "heads/24")[1];
   std::vector<PllTree> trees = {tree1, tree2};
   GeneralizedRFDistance distance;
   SPI metric_spi;
   MCI metric_mci;
+
+  EXPECT_NEAR(distance.computeDistances(trees, metric_mci).get(0, 1), 0, epsilon);
+  EXPECT_NEAR(distance.computeDistances(trees, metric_spi).get(0, 1), 0, epsilon);
+}
+TEST_F(GeneralizedRFTest, example_24_msi) {
+  PllSplit::setTipCount(24);
+  PllTree tree1 = TreeReader::readTreeFile(current_data_dir + "heads/24")[0];
+  PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "heads/24")[1];
+  std::vector<PllTree> trees = {tree1, tree2};
+  GeneralizedRFDistance distance;
+  MSI metric_msi;    
+  EXPECT_NEAR(distance.computeDistances(trees, metric_msi).get(0, 1), 0, epsilon);
+}
+
+TEST_F(GeneralizedRFTest, example_from_slideshow) {
+  PllSplit::setTipCount(6);
+  PllTree tree1 = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[0];
+  PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[0];
+  std::vector<PllTree> trees = {tree1, tree2};
+  GeneralizedRFDistance distance;
+  SPI metric_spi;
+  MCI metric_mci;
   MSI metric_msi;
-  std::cout << "SPI: " << distance.computeDistances(trees, metric_spi).get(0, 1) << "\n";
-  std::cout << "MCI: " << distance.computeDistances(trees, metric_mci).get(0, 1) << "\n";
-  std::cout << "MSI: " << distance.computeDistances(trees, metric_msi).get(0, 1) << "\n";
   EXPECT_NEAR(distance.computeDistances(trees, metric_msi).get(0, 1), 0, epsilon);
   EXPECT_NEAR(distance.computeDistances(trees, metric_mci).get(0, 1), 0, epsilon);
   EXPECT_NEAR(distance.computeDistances(trees, metric_spi).get(0, 1), 0, epsilon);
 }
+
 /*TEST_F(GeneralizedRFTest, 24taxa) {
     execute_test("heads/24");
 }*/
