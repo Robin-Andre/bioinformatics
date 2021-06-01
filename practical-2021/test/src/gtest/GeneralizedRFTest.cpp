@@ -93,7 +93,6 @@ TEST_F(GeneralizedRFTest, example_from_slideshow) {
   EXPECT_NEAR(distance.computeDistances(trees, metric_mci).get(0, 1), 0, epsilon);
   EXPECT_NEAR(distance.computeDistances(trees, metric_spi).get(0, 1), 0, epsilon);
 }
-
 /*TEST_F(GeneralizedRFTest, 24taxa) {
     execute_test("heads/24");
 }*/
