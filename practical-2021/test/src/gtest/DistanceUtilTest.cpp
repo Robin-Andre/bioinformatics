@@ -51,9 +51,9 @@ TEST_F(DistanceUtilTest, distance_from_slideshow_msi) {
   tree2.alignNodeIndices(tree1);
   MSI metric_msi;
   std::vector<std::vector<double>> result = DistanceUtil::similaritiesForSplits(splits1, splits2, metric_msi);
-  double alpha = std::log(7);
-  double beta = std::log(5);
-  double gamma = std::log(3);
+  double alpha = std::log2(7);
+  double beta = std::log2(5);
+  double gamma = std::log2(3);
   double delta = 0;
   EXPECT_DOUBLE_EQ(result[0][0], gamma);
   EXPECT_DOUBLE_EQ(result[0][1], alpha);

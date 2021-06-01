@@ -57,7 +57,6 @@ TEST_F(MetricsTest, test_double_factorial) {
 //double factorial is tested also this test will fail if normalization is remeoved in factorial quotient
 TEST_F(MetricsTest, test_factorial_quotient) {
   phylomath::factorialQuotient(test_variable_rational, 1001, 1, 1003);
-  gmp_printf("the rational is: %Qd\n", test_variable_rational);
   mpq_set_str(result_variable_rational, "1/1003", 10);
   int comp = mpq_cmp(test_variable_rational, result_variable_rational);
   EXPECT_EQ(comp, 0);
@@ -67,7 +66,6 @@ TEST_F(MetricsTest, test_factorial_quotient2) {
   mpq_t quotientresult;
   mpq_init(quotientresult);
   phylomath::factorialQuotient(quotientresult, 3, 3, 3, 9);
-  gmp_printf("the rational is: %Qd\n",quotientresult);
   mpz_t thirtyfive;
   mpz_init(thirtyfive);
   mpz_set_ui(thirtyfive, 35);
@@ -101,7 +99,7 @@ TEST_F(MetricsTest, test_entropy) {
   PllSplit::setTipCount(6);
   std::vector<size_t> part1 = {0, 1, 2};
   PllSplit split = TestUtil::createSplit(part1);
-  EXPECT_DOUBLE_EQ(phylomath::entropy(split), -std::log(1.0d/2));
+  EXPECT_DOUBLE_EQ(phylomath::entropy(split), -std::log2(1.0d/2));
   free(split());
 }
 

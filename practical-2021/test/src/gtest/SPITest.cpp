@@ -62,9 +62,9 @@ TEST_F(SPITest, test_special) {
   std::vector<size_t> part1_b = {0, 1, 2, 3};
   PllSplit split_b = TestUtil::createSplit(part1_b);
   SPI metric_spi;
-  double h_a = -std::log(15.0/105);
-  double h_b = -std::log(15.0/105);
-  double h_a_intersect_b = -std::log(3.0/105);
+  double h_a = -std::log2(15.0/105);
+  double h_b = -std::log2(15.0/105);
+  double h_a_intersect_b = -std::log2(3.0/105);
   EXPECT_DOUBLE_EQ(metric_spi.evaluate(split_a, split_b),h_a + h_b - h_a_intersect_b);
   free(split_a());
   free(split_b());
@@ -77,7 +77,7 @@ TEST_F(SPITest, test_spi) {
   std::vector<size_t> part1_b = {0, 1, 2};
   PllSplit split_b = TestUtil::createSplit(part1_b);
   SPI metric_spi;
-  EXPECT_DOUBLE_EQ(metric_spi.evaluate(split_a, split_b), -std::log(1.0d/7) - std::log(3.0d/35) + std::log(1.0d/35));
+  EXPECT_DOUBLE_EQ(metric_spi.evaluate(split_a, split_b), -std::log2(1.0d/7) - std::log2(3.0d/35) + std::log2(1.0d/35));
   free(split_a());
   free(split_b());
 }
@@ -95,7 +95,7 @@ TEST_F(SPITest, test_luise_graph) {
   SPI metric_spi;
   double expected_probability_single = 1.0 / 11;
   double expected_probability_intersect = 1.0 / 99;
-  double result = -2 * std::log(expected_probability_single) + std::log(expected_probability_intersect);
+  double result = -2 * std::log2(expected_probability_single) + std::log2(expected_probability_intersect);
   EXPECT_DOUBLE_EQ(metric_spi.evaluate(split_1, split_2), result);
   EXPECT_DOUBLE_EQ(metric_spi.evaluate(split_1, split_3), result);
   EXPECT_DOUBLE_EQ(metric_spi.evaluate(split_1, split_4), result);

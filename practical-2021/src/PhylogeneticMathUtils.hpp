@@ -79,7 +79,7 @@ namespace phylomath {
     phylogeneticProbability(temp_result, a, b);
     double conversion = mpq_get_d(temp_result);
     mpq_clear(temp_result);
-    return -1 * std::log(conversion);
+    return -1 * std::log2(conversion);
   }
   inline double h(const PllSplit& s) {
     assert(s.partitionSizeOf(Block_A) > 0 && s.partitionSizeOf(Block_B) > 0); //There should never be a partition where one block is empty
@@ -103,7 +103,7 @@ namespace phylomath {
     factorialQuotient(temporary_result, a, b, c, x);
     double temporary_double_holder = mpq_get_d(temporary_result);
     mpq_clear(temporary_result);
-    return -1 * std::log(temporary_double_holder);
+    return -1 * std::log2(temporary_double_holder);
 
   }
   //UNTESTED QUICK HACK, IDEA WILL BE EXPLAINED IN ANOTHER CASTLE
@@ -129,7 +129,7 @@ namespace phylomath {
     double p_a = clusteringProbability(split, Block_A);
     double p_b = clusteringProbability(split, Block_B);
     assert(p_a != 0 && p_b != 0);
-    return -p_a * std::log(p_a) - p_b * std::log(p_b);
+    return -p_a * std::log2(p_a) - p_b * std::log2(p_b);
   }
   
 }

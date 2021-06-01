@@ -25,6 +25,6 @@ class MCI : public Metrics {
         }
         double p_1 = phylomath::clusteringProbability(s1, block_s1);
         double p_2 = phylomath::clusteringProbability(s2, block_s2);
-        return pcl * std::log(pcl / (p_1 * p_2));
+        return pcl * std::log2(pcl / (p_1 * p_2));
     }
 };
