@@ -53,9 +53,9 @@ TEST_F(GeneralizedRFTest, ExampleFromSlideshow) {
   SPI metric_spi;
   MCI metric_mci;
   MSI metric_msi;
-  EXPECT_NEAR(distance.computeDistances(trees, metric_msi).get(0, 1), 0, epsilon);
-  EXPECT_NEAR(distance.computeDistances(trees, metric_mci).get(0, 1), 0, epsilon);
-  EXPECT_NEAR(distance.computeDistances(trees, metric_spi).get(0, 1), 0, epsilon);
+  EXPECT_NEAR(distance.computeDistances(trees, metric_msi).distances[0], 0, epsilon);
+  EXPECT_NEAR(distance.computeDistances(trees, metric_mci).distances[0], 0, epsilon);
+  EXPECT_NEAR(distance.computeDistances(trees, metric_spi).distances[0], 0, epsilon);
 }
 TEST_F(GeneralizedRFTest, ComparisionTree0_2taxa24) {
   PllTree tree1 = TreeReader::readTreeFile(current_data_dir + "heads/24")[0];
@@ -65,12 +65,12 @@ TEST_F(GeneralizedRFTest, ComparisionTree0_2taxa24) {
   SPI metric_spi;
   MCI metric_mci;
   MSI metric_msi;
-  std::cout << "SPI: " << distance.computeDistances(trees, metric_spi).get(0, 1) << "\n";
-  std::cout << "MCI: " << distance.computeDistances(trees, metric_mci).get(0, 1) << "\n";
-  std::cout << "MSI: " << distance.computeDistances(trees, metric_msi).get(0, 1) << "\n";
-  EXPECT_NEAR(distance.computeDistances(trees, metric_msi).get(0, 1), 0, epsilon);
-  EXPECT_NEAR(distance.computeDistances(trees, metric_mci).get(0, 1), 0, epsilon);
-  EXPECT_NEAR(distance.computeDistances(trees, metric_spi).get(0, 1), 0, epsilon);
+  std::cout << "SPI: " << distance.computeDistances(trees, metric_spi).distances[0] << "\n";
+  std::cout << "MCI: " << distance.computeDistances(trees, metric_mci).distances[0] << "\n";
+  std::cout << "MSI: " << distance.computeDistances(trees, metric_msi).distances[0] << "\n";
+  EXPECT_NEAR(distance.computeDistances(trees, metric_msi).distances[0], 0, epsilon);
+  EXPECT_NEAR(distance.computeDistances(trees, metric_mci).distances[0], 0, epsilon);
+  EXPECT_NEAR(distance.computeDistances(trees, metric_spi).distances[0], 0, epsilon);
 }
 /*TEST_F(GeneralizedRFTest, 24taxa) {
     execute_test("heads/24");
