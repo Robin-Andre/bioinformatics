@@ -2,10 +2,8 @@
 
 
 RFData RFDistance::computeRF(const std::vector<PllTree>& trees) {
-  RFData result;
-  result.tree_count = trees.size();
+  RFData result(trees.size(), trees[0].getTipCount());
   assert(result.tree_count > 0);
-  result.tip_count = trees[0].getTipCount();
   assert(result.tip_count > 3);
   PllSplit::setTipCount(result.tip_count);
   std::vector<PllSplitList> tree_splits;

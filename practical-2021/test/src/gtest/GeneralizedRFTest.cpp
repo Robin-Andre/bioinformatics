@@ -54,9 +54,9 @@ TEST_F(GeneralizedRFTest, ExampleFromSlideshow) {
   SPI metric_spi;
   MCI metric_mci;
   MSI metric_msi;
-  EXPECT_NEAR(distance.computeDistances(trees, metric_msi).get(0, 1), 0, epsilon);
-  EXPECT_NEAR(distance.computeDistances(trees, metric_mci).get(0, 1), 0, epsilon);
-  EXPECT_NEAR(distance.computeDistances(trees, metric_spi).get(0, 1), 0, epsilon);
+  EXPECT_NEAR(distance.computeDistances(trees, metric_msi).distances[0], 0, epsilon);
+  EXPECT_NEAR(distance.computeDistances(trees, metric_mci).distances[0], 0, epsilon);
+  EXPECT_NEAR(distance.computeDistances(trees, metric_spi).distances[0], 0, epsilon);
 }
 TEST_F(GeneralizedRFTest, ComparisionTree0_2taxa24) {
   PllSplit::setTipCount(24);
