@@ -49,7 +49,7 @@ public:
   }
 private:
   static size_t scale(double weight){
-    double multiplicator = 100;
+    double multiplicator = 10000000;
     return std::round(-multiplicator*weight);
   }
 
