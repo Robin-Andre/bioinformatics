@@ -139,3 +139,52 @@ private:
     return result;
   }
 };
+
+
+class MatrixReader : RFDataReader {
+public:
+  static RFData read(const std::string& path) {
+    RFData data;
+    std::fstream res_file;
+    res_file.open(path + "/distances"  ,std::ios::in);
+    if (res_file.is_open()){
+      std::vector<std::vector<double>> matrix;
+      std::string line;
+      while(std::getline(res_file, line)){
+        std::vector<double> row;
+        std::string token;
+        size_t pos = 0;
+        while ((pos = line.find(" ")) != std::string::npos) {
+            row.push_back(std::stold(line.substr(0, pos)));
+            line.erase(0, pos + 1);
+        }
+        row.push_back(std::stof(line));
+        matrix.push_back(row);
+      }
+      res_file.close(); //close the file object.
+      //set some values, as information not in file
+      data.tree_count = matrix.size();
+      data.tip_count = -1;
+      data.unique_count = -1;
+      data.average_distance = 0;
+      data.distances = matrixToVector(matrix);
+      return data;
+    } else {
+      throw (path +  "/distances not found!");
+    }
+
+  }
+
+private:
+  static std::vector<double> matrixToVector(std::vector<std::vector<double>> matrix) {
+    std::vector<double> result;
+    for(size_t i = 0; i < matrix.size(); ++i){
+      assert(matrix[i].size() ==  matrix.size());
+      for(size_t j = i+1; j < matrix.size(); ++j){
+        result.emplace_back(matrix[i][j]);
+      }
+    }
+    return result;
+  }
+
+};

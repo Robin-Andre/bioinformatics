@@ -92,3 +92,39 @@ private:
   }
 
 };
+
+
+class MatrixWriter : public RFDataWriter {
+public:
+  static void write(const std::string& path, const RFData& data) {
+    std::ofstream out_file(path + "/distances");
+    if (out_file.is_open()) {
+      std::vector<std::vector<double>> matrix = vectorToMatrix(data.distances, data.tree_count);
+      unsigned k = 0;
+      for(unsigned i = 0; i < data.tree_count; ++i) {
+        for(unsigned j = 0; j < data.tree_count - 1; ++j) {
+          out_file << matrix[i][j]  << " ";
+          ++k;
+        }
+        out_file << matrix[i][data.tree_count-1] << std::endl;
+      }
+      out_file.close();
+    } else {
+      throw ("Cannot write to " + path + "/distances");
+    }
+  }
+private:
+  static std::vector<std::vector<double>> vectorToMatrix(std::vector<double> v, size_t n) {
+    std::vector<std::vector<double>> matrix = std::vector<std::vector<double>>(n, std::vector<double>(n, 0));
+    size_t k  = 0;
+    for(size_t i = 0; i < n; ++i){
+      for(size_t j = i+1; j < n; ++j){
+        matrix[i][j] = v[k];
+        matrix[j][i] = v[k];
+        ++k;
+      }
+    }
+    return matrix;
+  }
+
+};
