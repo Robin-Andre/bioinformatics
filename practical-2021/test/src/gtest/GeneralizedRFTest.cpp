@@ -81,14 +81,14 @@ TEST_F(GeneralizedRFTest, ComparisionTree0_2taxa24) {
   EXPECT_NEAR(distance.computeDistances(trees, metric_mci).distances[0], 0, epsilon);
   EXPECT_NEAR(distance.computeDistances(trees, metric_spi).distances[0], 0, epsilon);
 }
-/*TEST_F(GeneralizedRFTest, 24taxa) {
-    execute_test("heads/24");
-}*/
-TEST_F(GeneralizedRFTest, 125taxa) {
-    MCI metric_mci;
-    execute_test("heads/125", metric_mci);
+TEST_F(GeneralizedRFTest, 24taxa) {
+  MCI metric_mci;
+  execute_test("heads/24", metric_mci);
 }
-/*TEST_F(GeneralizedRFTest, 141taxa) {
+/*TEST_F(GeneralizedRFTest, 125taxa) {
+    execute_test("heads/125");
+}
+TEST_F(GeneralizedRFTest, 141taxa) {
     execute_test("heads/141");
 }
 TEST_F(DistanceTest, 143taxa) {

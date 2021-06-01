@@ -5,6 +5,7 @@
 #include "../../../src/datastructures/PllTree.hpp"
 #include "../../../src/io/TreeReader.hpp"
 #include "../../../src/metrics/SPI.hpp"
+#include "../../../src/metrics/MSI.hpp"
 
 #include <random>
 #include <iomanip>
@@ -44,7 +45,7 @@ TEST_F(MaximumMatcherTest, test_assignment) {
 //TODO move randomness out of here
 TEST_F(MaximumMatcherTest, test_maximum) {
   size_t n = 10;
-  std::random_device rd; 
+  std::random_device rd;
   std::default_random_engine eng(rd());
   std::uniform_real_distribution<double> distr(-10, 10);
   std::vector<std::vector<double>> weights = std::vector<std::vector<double>> (n, std::vector<double>(n));
@@ -76,4 +77,25 @@ TEST_F(MaximumMatcherTest, test_real){
   }
   double maximum = MaximumMatcher::match(weights);
   checkAllPermutations(weights, maximum);
+}
+
+TEST_F(MaximumMatcherTest, test_against_sequence){
+  std::vector<size_t> reference_permutation = {0, 1, 2, 3, 11, 12, 13, 14, 15, 16, 17, 18, 4,  5,  6,  7,  8, 9, 10, 19, 20};
+  std::vector<PllTree> trees = TreeReader::readTreeFile(current_data_dir + "heads/24");
+  PllTree tree = trees[0];
+  PllTree tree2 = trees[2];
+  PllSplit::setTipCount(tree.getTipCount());
+  PllSplitList split_list = PllSplitList(tree);
+  PllSplitList split_list2 = PllSplitList(tree2);
+  MSI msi_metric;
+  std::vector<std::vector<double>> weights = DistanceUtil::similaritiesForSplits(split_list, split_list2, msi_metric);
+  std::vector<size_t> permutation = MaximumMatcher::matchingPermutation(weights);
+  double maximum = MaximumMatcher::match(weights);
+  double reference_weight = 0;
+  for (size_t i = 0; i < weights.size(); ++i){
+    reference_weight += weights[i][reference_permutation[i]];
+  }
+  EXPECT_EQ(reference_weight, maximum);
+  EXPECT_EQ(permutation, reference_permutation);
+
 }
