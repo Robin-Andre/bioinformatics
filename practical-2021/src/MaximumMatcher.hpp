@@ -19,10 +19,10 @@ public:
       //printf("The best possible cost is %d.\n", assignment.OptimalCost());
       //printf("An optimal assignment is:\n");
       for (int node = 0; node < assignment.NumNodes(); ++node) {
-        printf("left node %d assigned to right node %d with cost %f.\n",
+        /*printf("left node %d assigned to right node %d with cost %f.\n",
         node,
         assignment.RightMate(node),
-        assignment.AssignmentCost(node));
+        assignment.AssignmentCost(node));*/
         result += weights[node][assignment.RightMate(node)];
       }
       //printf("Note that it may not be the unique optimal assignment.");

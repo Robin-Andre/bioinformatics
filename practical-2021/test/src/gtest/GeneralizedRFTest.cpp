@@ -1,7 +1,7 @@
 #include "gtest/gtest.h"
 #include "../../../src/DistanceUtil.hpp"
 #include "../../../src/io/RFDataReader.hpp"
-#include "../../../src/io/RFDataReader.hpp"
+#include "../../../src/io/RFDataWriter.hpp"
 #include "../../../src/GeneralizedRFDistance.hpp"
 #include "../../../src/metrics/MCI.hpp"
 #include "../../../src/metrics/SPI.hpp"
@@ -20,15 +20,24 @@ to be adjusted.
 */
 //std::string current_test_dir = "../test/res/data/heads/BS/";
 std::string current_data_dir = "../test/res/data/";
-std::string current_ref_dir = "../test/res/reference_results/";
+std::string current_ref_dir = "../test/res/R_results/MCI/";
 float epsilon = 0.001;
 
 /*Method to reduce code complexity :)
 */
-void execute_test(std::string test_file) {
+void execute_test(std::string test_file, const Metrics& metric) {
     std::vector<PllTree> trees = TreeReader::readTreeFile(current_data_dir + test_file);
     GeneralizedRFDistance distance;
-    //distance.computeDistances(trees, SPI);//.print();
+    RFData computed = distance.computeDistances(trees, metric);
+    std::filesystem::create_directories("./huhuhu");
+    MatrixWriter::write("huhuhu" , computed);
+    RFData reference = MatrixReader::read(current_ref_dir + test_file);
+    //as information not in reference result file
+    reference.unique_count = computed.unique_count;
+    reference.average_distance = computed.average_distance;
+    reference.tip_count = computed.tip_count;
+    EXPECT_EQ(computed, reference);
+
 }
 
 
@@ -75,10 +84,11 @@ TEST_F(GeneralizedRFTest, ComparisionTree0_2taxa24) {
 /*TEST_F(GeneralizedRFTest, 24taxa) {
     execute_test("heads/24");
 }*/
-/*TEST_F(GeneralizedRFTest, 125taxa) {
-    execute_test("heads/125");
+TEST_F(GeneralizedRFTest, 125taxa) {
+    MSI metric_mci;
+    execute_test("heads/125", metric_mci);
 }
-TEST_F(GeneralizedRFTest, 141taxa) {
+/*TEST_F(GeneralizedRFTest, 141taxa) {
     execute_test("heads/141");
 }
 TEST_F(DistanceTest, 143taxa) {
