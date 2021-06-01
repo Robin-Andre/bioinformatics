@@ -85,7 +85,7 @@ TEST_F(GeneralizedRFTest, ComparisionTree0_2taxa24) {
     execute_test("heads/24");
 }*/
 TEST_F(GeneralizedRFTest, 125taxa) {
-    MSI metric_mci;
+    MCI metric_mci;
     execute_test("heads/125", metric_mci);
 }
 /*TEST_F(GeneralizedRFTest, 141taxa) {
