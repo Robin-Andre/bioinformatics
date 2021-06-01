@@ -3,7 +3,6 @@
 #include <vector>
 #include "ortools/graph/assignment.h"
 #include <utility>
-#include "WeightScaler.hpp"
 
 class MaximumMatcher {
 public:
@@ -49,17 +48,9 @@ public:
     return result;
   }
 private:
-  static std::pair<double,double> findMax(const std::vector<std::vector<double>>& weights) {
-    std::pair<double, double> max_weights = std::make_pair(-DBL_MAX, -DBL_MAX);
-    for (size_t i = 0; i < weights.size(); ++i) {
-      for(size_t j = 0; j < weights[i].size(); ++j) {
-        if(weights[i][j] > max_weights.first){
-          max_weights.second = max_weights.first;
-          max_weights.first = weights[i][j];
-        }
-      }
-    }
-    return max_weights;
+  static size_t scale(double weight){
+    double multiplicator = 100;
+    return std::round(-multiplicator*weight);
   }
 
 };
