@@ -114,7 +114,7 @@ public:
     }
   }
 private:
-  static std::vector<std::vector<double>> vectorToMatrix(std::vector<double> v, size_t n) {
+  static std::vector<std::vector<double>> vectorToMatrix(const std::vector<double>& v, size_t n) {
     std::vector<std::vector<double>> matrix = std::vector<std::vector<double>>(n, std::vector<double>(n, 0));
     size_t k  = 0;
     for(size_t i = 0; i < n; ++i){

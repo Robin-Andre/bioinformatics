@@ -176,7 +176,7 @@ public:
   }
 
 private:
-  static std::vector<double> matrixToVector(std::vector<std::vector<double>> matrix) {
+  static std::vector<double> matrixToVector(const std::vector<std::vector<double>>& matrix) {
     std::vector<double> result;
     for(size_t i = 0; i < matrix.size(); ++i){
       assert(matrix[i].size() ==  matrix.size());
