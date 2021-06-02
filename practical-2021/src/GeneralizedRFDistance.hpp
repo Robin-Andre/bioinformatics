@@ -8,7 +8,7 @@ extern "C" {
 #include "PhylogeneticMathUtils.hpp"
 #include "MaximumMatcher.hpp"
 #include "datastructures/TriangleMatrix.hpp"
-#include "metrics/Metric.hpp"
+#include "Metric.hpp"
 #include <vector>
 #include <iostream>
 
@@ -16,7 +16,7 @@ extern "C" {
 class GeneralizedRFDistance {
 public:
 
-  RFData computeDistances(const std::vector<PllTree>& trees, const Metrics& metric) {
+  RFData computeDistances(const std::vector<PllTree>& trees, const Metric& metric) {
     RFData result(trees.size(), trees[0].getTipCount());
     assert(result.tree_count > 0);
     assert(result.tip_count > 3);

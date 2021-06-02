@@ -6,9 +6,6 @@
 
 class MaximumMatcher {
 public:
-  static int convert_weight(double weight) {
-    return (int) (-256 * (weight + 0.5));
-  }
   static std::vector<size_t> match_vector(const std::vector<std::vector<double>>& weights) {
     std::vector<size_t> matching_vector(weights.size());
     operations_research::SimpleLinearSumAssignment assignment;
@@ -47,37 +44,9 @@ public:
     }
     return result;
   }
-
-  static std::vector<size_t> matchingPermutation(const std::vector<std::vector<double>>& weights) {
-    operations_research::SimpleLinearSumAssignment assignment;
-    for (size_t i = 0; i < weights.size(); ++i) {
-      for(size_t j = 0; j < weights[i].size(); ++j) {
-        assignment.AddArcWithCost(i, j, scale(weights[i][j]));
-      }
-    }
-    std::vector<size_t> result = std::vector<size_t>(weights.size());
-    if (assignment.Solve() == operations_research::SimpleLinearSumAssignment::OPTIMAL) {
-      //printf("A perfect matching exists.\n");
-      //printf("The best possible cost is %d.\n", assignment.OptimalCost());
-      //printf("An optimal assignment is:\n");
-      for (int node = 0; node < assignment.NumNodes(); ++node) {
-        /*printf("left node %d assigned to right node %d with cost %f.\n",
-        node,
-        assignment.RightMate(node),
-        assignment.AssignmentCost(node));*/
-        result[node] = assignment.RightMate(node);
-      }
-      //printf("Note that it may not be the unique optimal assignment.");
-    } else {
-      //printf("There is an issue with the input or no perfect matching exists.");
-      return result;
-    }
-    return result;
-  }
 private:
-  static size_t scale(double weight){
-    double multiplicator = 10000000;
-    return std::round(-multiplicator*weight);
+  static int convert_weight(double weight) {
+    return (int) (-1024 * (weight + 0.5));
   }
 
 

@@ -4,12 +4,7 @@
 #include "../../../src/datastructures/PllSplits.hpp"
 #include "../../../src/datastructures/PllTree.hpp"
 #include "../../../src/io/TreeReader.hpp"
-#include "../../../src/metrics/SPI.hpp"
-<<<<<<< 245ada67f63b151582ee3e3808f98342d200bc47
-#include "../../../src/metrics/MCI.hpp"
-=======
->>>>>>> Add permutation test
-#include "../../../src/metrics/MSI.hpp"
+#include "../../../src/Metric.hpp"
 
 #include <random>
 #include <iomanip>
@@ -82,7 +77,6 @@ TEST_F(MaximumMatcherTest, test_real){
   double maximum = MaximumMatcher::match(weights);
   checkAllPermutations(weights, maximum);
 }
-<<<<<<< 245ada67f63b151582ee3e3808f98342d200bc47
 TEST_F(MaximumMatcherTest, test_unequal_mci) {
 
   PllTree tree1 = TreeReader::readTreeFile(current_data_dir + "heads/24")[0];
@@ -128,26 +122,4 @@ TEST_F(MaximumMatcherTest, test_unequal_msi) {
   std::cout << "Fraction: " << match / maximum << "\n";
   std::cout << "Normalized(x2): " << 2*(maximum - match) << "\n";
   std::cout << "Double normalized(x2) " <<  2*(maximum - match) / (2*maximum) << "\n";
-=======
-
-TEST_F(MaximumMatcherTest, test_against_sequence){
-  std::vector<size_t> reference_permutation = {0, 1, 2, 3, 11, 12, 13, 14, 15, 16, 17, 18, 4,  5,  6,  7,  8, 9, 10, 19, 20};
-  std::vector<PllTree> trees = TreeReader::readTreeFile(current_data_dir + "heads/24");
-  PllTree tree = trees[0];
-  PllTree tree2 = trees[2];
-  PllSplit::setTipCount(tree.getTipCount());
-  PllSplitList split_list = PllSplitList(tree);
-  PllSplitList split_list2 = PllSplitList(tree2);
-  MSI msi_metric;
-  std::vector<std::vector<double>> weights = DistanceUtil::similaritiesForSplits(split_list, split_list2, msi_metric);
-  std::vector<size_t> permutation = MaximumMatcher::matchingPermutation(weights);
-  double maximum = MaximumMatcher::match(weights);
-  double reference_weight = 0;
-  for (size_t i = 0; i < weights.size(); ++i){
-    reference_weight += weights[i][reference_permutation[i]];
-  }
-  EXPECT_EQ(reference_weight, maximum);
-  EXPECT_EQ(permutation, reference_permutation);
-
->>>>>>> Add permutation test
 }

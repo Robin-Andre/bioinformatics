@@ -1,28 +1,28 @@
 #pragma once
 #include "datastructures/PllSplits.hpp"
 #include "PhylogeneticMathUtils.hpp"
-#include "metrics/Metric.hpp"
+#include "Metric.hpp"
 #include <vector>
 
-//enum Metric{MSI, SPI, MCI}; //TODO: Maybe move this into its own class, like an enum collection class with proper OOP 
+//enum Metric{MSI, SPI, MCI}; //TODO: Maybe move this into its own class, like an enum collection class with proper OOP
 
 class DistanceUtil { //TODO remove the class and put it into a namespace (needs good suggestion) phylogenetic_
 
 public:
- 
-  
-  static double maximumValue(const PllSplitList& first, const PllSplitList& second, const Metrics& metric) {
+
+
+  static double maximumValue(const PllSplitList& first, const PllSplitList& second, const Metric& metric) {
     //assert(first.getSplits().size() == first.getSplits().size());
     return (metric.maximum(first, second) / 2);
   }
 
-  static double distanceFromSimilarity(const PllSplitList& first, const PllSplitList& second, const Metrics& metric, double similarity){
+  static double distanceFromSimilarity(const PllSplitList& first, const PllSplitList& second, const Metric& metric, double similarity){
     //std::cout << "max: " << maximumValue(first, second, metric) <<std::endl;
     //std::cout << "sim: " << similarity <<std::endl;
     return maximumValue(first, second, metric) - similarity;
   }
 
-  static std::vector<std::vector<double>> similaritiesForSplits(const PllSplitList& first, const PllSplitList& second, const Metrics& metric){
+  static std::vector<std::vector<double>> similaritiesForSplits(const PllSplitList& first, const PllSplitList& second, const Metric& metric){
     assert(first.getSplits().size() == first.getSplits().size());
     size_t n = first.getSplits().size();
     std::vector<std::vector<double>>  result = std::vector<std::vector<double>>(n, std::vector<double>(n));

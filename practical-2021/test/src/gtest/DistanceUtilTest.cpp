@@ -1,8 +1,6 @@
 #include "gtest/gtest.h"
 #include "../../../src/DistanceUtil.hpp"
-#include "../../../src/metrics/SPI.hpp"
-#include "../../../src/metrics/MSI.hpp"
-#include "../../../src/metrics/MCI.hpp"
+#include "../../../src/Metric.hpp"
 #include "../../../src/io/TreeReader.hpp"
 class DistanceUtilTest : public testing::Test {
   protected: //std::string current_test_dir = "../test/res/data/heads/BS/";
