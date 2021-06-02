@@ -19,7 +19,7 @@ set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${ORTOOLS_ROOT})
 
 find_package(ortools REQUIRED)
 
-#Begin Hacky internet locate GMP 
+#Begin Hacky internet locate GMP
 include(FeatureSummary)
 set_package_properties(GMP PROPERTIES
   DESCRIPTION "GNU multi-precision library"

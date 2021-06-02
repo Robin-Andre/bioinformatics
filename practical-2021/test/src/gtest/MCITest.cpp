@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 #include "../../../src/datastructures/PllSplits.hpp"
-#include "../../../src/metrics/MCI.hpp"
+#include "../../../src/Metric.hpp"
 #include "../../../src/PhylogeneticMathUtils.hpp"
 #include "../TestUtil.hpp"
 class MCITest : public testing::Test {};

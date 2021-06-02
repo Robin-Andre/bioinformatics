@@ -26,6 +26,8 @@ public:
       std::cout << std::endl;
     }
   }
+
+  std::vector<T> getAsVector() const {return elements;}
 private:
 
   //determines position in linear array, make sure that i < j

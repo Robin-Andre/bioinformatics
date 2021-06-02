@@ -33,6 +33,14 @@ TEST_F(IOTest, json_read_write) {
   EXPECT_EQ(input, JSONReader::read("foo"));
   std::filesystem::remove_all("./foo");
 }
+
+TEST_F(IOTest, matrix_read_write) {
+  std::filesystem::create_directories("./foo");
+  RFData input = MatrixReader::read("../test/res/R_results/MCI/heads/125");
+  MatrixWriter::write("foo" , input);
+  EXPECT_EQ(input, MatrixReader::read("foo"));
+  std::filesystem::remove_all("./foo");
+}
 /*TEST_F(IOTest, proper_print) {
   PllTree tree = TreeReader::readTreeFile("../test/res/data/heads/125")[0];
   PllSplit::setTipCount(tree.getTipCount());

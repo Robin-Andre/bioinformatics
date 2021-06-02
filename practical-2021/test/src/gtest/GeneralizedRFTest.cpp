@@ -1,11 +1,9 @@
 #include "gtest/gtest.h"
 #include "../../../src/DistanceUtil.hpp"
 #include "../../../src/io/RFDataReader.hpp"
-#include "../../../src/io/RFDataReader.hpp"
+#include "../../../src/io/RFDataWriter.hpp"
 #include "../../../src/GeneralizedRFDistance.hpp"
-#include "../../../src/metrics/MCI.hpp"
-#include "../../../src/metrics/SPI.hpp"
-#include "../../../src/metrics/MSI.hpp"
+#include "../../../src/Metric.hpp"
 
 #include <ortools/linear_solver/linear_solver.h>
 
@@ -20,15 +18,24 @@ to be adjusted.
 */
 //std::string current_test_dir = "../test/res/data/heads/BS/";
 std::string current_data_dir = "../test/res/data/";
-std::string current_ref_dir = "../test/res/reference_results/";
+std::string current_ref_dir = "../test/res/R_results/MCI/";
 float epsilon = 0.001;
 
 /*Method to reduce code complexity :)
 */
-void execute_test(std::string test_file) {
+void execute_test(std::string test_file, const Metric& metric) {
     std::vector<PllTree> trees = TreeReader::readTreeFile(current_data_dir + test_file);
     GeneralizedRFDistance distance;
-    //distance.computeDistances(trees, SPI);//.print();
+    RFData computed = distance.computeDistances(trees, metric);
+    std::filesystem::create_directories("./huhuhu");
+    MatrixWriter::write("huhuhu" , computed);
+    RFData reference = MatrixReader::read(current_ref_dir + test_file);
+    //as information not in reference result file
+    reference.unique_count = computed.unique_count;
+    reference.average_distance = computed.average_distance;
+    reference.tip_count = computed.tip_count;
+    EXPECT_EQ(computed, reference);
+
 }
 
 
@@ -54,9 +61,9 @@ TEST_F(GeneralizedRFTest, ExampleFromSlideshow) {
   SPI metric_spi;
   MCI metric_mci;
   MSI metric_msi;
-  EXPECT_NEAR(distance.computeDistances(trees, metric_msi).get(0, 1), 0, epsilon);
-  EXPECT_NEAR(distance.computeDistances(trees, metric_mci).get(0, 1), 0, epsilon);
-  EXPECT_NEAR(distance.computeDistances(trees, metric_spi).get(0, 1), 0, epsilon);
+  EXPECT_NEAR(distance.computeDistances(trees, metric_msi).distances[0], 0, epsilon);
+  EXPECT_NEAR(distance.computeDistances(trees, metric_mci).distances[0], 0, epsilon);
+  EXPECT_NEAR(distance.computeDistances(trees, metric_spi).distances[0], 0, epsilon);
 }
 TEST_F(GeneralizedRFTest, ComparisionTree0_2taxa24) {
   PllSplit::setTipCount(24);
@@ -67,8 +74,8 @@ TEST_F(GeneralizedRFTest, ComparisionTree0_2taxa24) {
   SPI metric_spi;
   MCI metric_mci;
 
-  EXPECT_NEAR(distance.computeDistances(trees, metric_mci).get(0, 1), 0, epsilon);
-  EXPECT_NEAR(distance.computeDistances(trees, metric_spi).get(0, 1), 0, epsilon);
+  EXPECT_NEAR(distance.computeDistances(trees, metric_mci).distances[0], 0, epsilon);
+  EXPECT_NEAR(distance.computeDistances(trees, metric_spi).distances[0], 0, epsilon);
 }
 TEST_F(GeneralizedRFTest, example_24_msi) {
   PllSplit::setTipCount(24);
@@ -76,8 +83,8 @@ TEST_F(GeneralizedRFTest, example_24_msi) {
   PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "heads/24")[1];
   std::vector<PllTree> trees = {tree1, tree2};
   GeneralizedRFDistance distance;
-  MSI metric_msi;    
-  EXPECT_NEAR(distance.computeDistances(trees, metric_msi).get(0, 1), 0, epsilon);
+  MSI metric_msi;
+  EXPECT_NEAR(distance.computeDistances(trees, metric_msi).distances[0], 0, epsilon);
 }
 
 TEST_F(GeneralizedRFTest, example_from_slideshow) {
@@ -89,13 +96,14 @@ TEST_F(GeneralizedRFTest, example_from_slideshow) {
   SPI metric_spi;
   MCI metric_mci;
   MSI metric_msi;
-  EXPECT_NEAR(distance.computeDistances(trees, metric_msi).get(0, 1), 0, epsilon);
-  EXPECT_NEAR(distance.computeDistances(trees, metric_mci).get(0, 1), 0, epsilon);
-  EXPECT_NEAR(distance.computeDistances(trees, metric_spi).get(0, 1), 0, epsilon);
+  EXPECT_NEAR(distance.computeDistances(trees, metric_msi).distances[0], 0, epsilon);
+  EXPECT_NEAR(distance.computeDistances(trees, metric_mci).distances[0], 0, epsilon);
+  EXPECT_NEAR(distance.computeDistances(trees, metric_spi).distances[0], 0, epsilon);
 }
-/*TEST_F(GeneralizedRFTest, 24taxa) {
-    execute_test("heads/24");
-}*/
+TEST_F(GeneralizedRFTest, 24taxa) {
+  MCI metric_mci;
+  execute_test("heads/24", metric_mci);
+}
 /*TEST_F(GeneralizedRFTest, 125taxa) {
     execute_test("heads/125");
 }
