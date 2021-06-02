@@ -3,7 +3,6 @@ add_library(inforf STATIC
     datastructures/PllTree.hpp
     datastructures/PllSplits.cpp
     datastructures/PllSplits.hpp
-    RFDistance.cpp
     RFDistance.hpp
 )
 

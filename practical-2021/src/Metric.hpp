@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 #include "datastructures/PllSplits.hpp"
 //#include "DistanceUtil.hpp"
 #include "PhylogeneticMathUtils.hpp"
@@ -7,6 +8,7 @@ class Metric {
     public:
     virtual double evaluate(const PllSplit& s1, const PllSplit& s2) const = 0;
     virtual double maximum(const PllSplitList& plist1, const PllSplitList& plist2) const = 0;
+    virtual std::string name() const = 0;
 };
 
 class MSI : public Metric {
@@ -25,6 +27,10 @@ class MSI : public Metric {
       result += phylomath::h(plist2[i]);
     }
     return result;
+  }
+
+  std::string name() const override {
+    return "MSI";
   }
 };
 
@@ -82,6 +88,10 @@ class SPI : public Metric {
     }
     return result;
   }
+
+  std::string name() const override {
+    return "SPI";
+  }
 };
 
 
@@ -101,6 +111,11 @@ class MCI : public Metric {
       }
       return result;
     }
+
+    std::string name() const override {
+      return "MCI";
+    }
+
     private:
     double helper(const PllSplit&s1, const Partition block_s1, const PllSplit& s2, const Partition block_s2) const {
         double pcl = phylomath::clusteringProbability(s1, block_s1, s2, block_s2);

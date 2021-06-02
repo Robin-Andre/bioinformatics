@@ -4,12 +4,9 @@
 #include "Metric.hpp"
 #include <vector>
 
-//enum Metric{MSI, SPI, MCI}; //TODO: Maybe move this into its own class, like an enum collection class with proper OOP
-
 class DistanceUtil { //TODO remove the class and put it into a namespace (needs good suggestion) phylogenetic_
 
 public:
-
 
   static double maximumValue(const PllSplitList& first, const PllSplitList& second, const Metric& metric) {
     //assert(first.getSplits().size() == first.getSplits().size());
@@ -17,8 +14,6 @@ public:
   }
 
   static double distanceFromSimilarity(const PllSplitList& first, const PllSplitList& second, const Metric& metric, double similarity){
-    //std::cout << "max: " << maximumValue(first, second, metric) <<std::endl;
-    //std::cout << "sim: " << similarity <<std::endl;
     return maximumValue(first, second, metric) - similarity;
   }
 

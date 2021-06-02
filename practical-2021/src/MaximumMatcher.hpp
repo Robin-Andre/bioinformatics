@@ -6,6 +6,9 @@
 
 class MaximumMatcher {
 public:
+  static int convert_weight(double weight) {
+    return (int) (-256 * (weight + 0.5));
+  }
   static std::vector<size_t> match_vector(const std::vector<std::vector<double>>& weights) {
     std::vector<size_t> matching_vector(weights.size());
     operations_research::SimpleLinearSumAssignment assignment;
@@ -40,14 +43,21 @@ public:
     double result = 0;
     for(size_t i = 0; i < matching.size(); ++i) {
       result += weights[i][matching[i]];
-      std::cout << "Result: " << result << "\n";
     }
     return result;
   }
 private:
-  static int convert_weight(double weight) {
-    return (int) (-1024 * (weight + 0.5));
+  static std::pair<double,double> findMax(const std::vector<std::vector<double>>& weights) {
+    std::pair<double, double> max_weights = std::make_pair(-DBL_MAX, -DBL_MAX);
+    for (size_t i = 0; i < weights.size(); ++i) {
+      for(size_t j = 0; j < weights[i].size(); ++j) {
+        if(weights[i][j] > max_weights.first){
+          max_weights.second = max_weights.first;
+          max_weights.first = weights[i][j];
+        }
+      }
+    }
+    return max_weights;
   }
-
 
 };

@@ -5,9 +5,6 @@
 
 class DistanceTest : public testing::Test {
 protected:
-/*Right now an instanciation of test is needed, if we turn it into a free function this needs
-to be adapted*/
-RFDistance test;
 /*This is a hardcoded link to the test dir. IF changes to the project structure are made this needs
 to be adjusted.
 */
@@ -23,7 +20,7 @@ void execute_test(const std::string& test_file) {
     ensure_no_bitmask_needed(test_file);
 }
 void run_test(const std::string& test_file) {
-    RFData results = test.computeRF(TreeReader::readTreeFile(current_data_dir + test_file));
+    RFData results = RFDistance::computeRF(TreeReader::readTreeFile(current_data_dir + test_file));
     ASSERT_EQ(results, RAXMLReader::read(current_ref_dir + test_file));
 }
 /*I am still convinced that the bitmask of the PllSplits is weird so I checked that no PllSplit 
