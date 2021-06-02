@@ -16,13 +16,13 @@ public:
 class RAXMLReader : public RFDataReader {
 public:
   static RFData read(const std::string& path) {
-    RFData data;
+    std::vector<double> distances;
     std::fstream res_file;
     res_file.open(path + "/distances"  ,std::ios::in);
     if (res_file.is_open()){
       std::string line;
       while(std::getline(res_file, line)){
-        data.distances.push_back(getAbsoluteDistanceFromString(line));
+        distances.push_back(getAbsoluteDistanceFromString(line));
         //data.relative_distances.push_back(getRelativeDistanceFromString(line));
       }
       res_file.close(); //close the file object.
@@ -54,10 +54,7 @@ public:
     } else {
       throw (path +  "/info not found!");
     }
-    data.tree_count = std::stoi(prefix_matches[0]);
-    data.unique_count = std::stoi(prefix_matches[1]);
-    data.average_distance = std::stof(prefix_matches[2]);
-    return data;
+    return RFData(std::stoi(prefix_matches[0]), std::stoi(prefix_matches[1]), std::stod(prefix_matches[2]), distances);
   }
 
 private:
@@ -113,40 +110,21 @@ public:
       }
       nlohmann::json jsonIn = nlohmann::json::parse(json_str);
       io::from_json(jsonIn, io_data);
-      return convertToRFData(io_data);
+      return RFData(io_data);
     } else {
       throw ("Cannot read JSON from " + path  + "/results.json");
     }
 
   }
-private:
-  static RFData convertToRFData(const io::IOData& io_data){
-    RFData rf_data;
-    rf_data.average_distance = io_data.mean_rf_dst;
-    rf_data.tree_count = io_data.pairwise_distance_mtx.size() + 1;
-    rf_data.unique_count = io_data.number_of_unique_trees;
-    rf_data.distances = toVector(io_data.pairwise_distance_mtx);
-    return rf_data;
-  }
 
-  static std::vector<double> toVector(const std::vector<std::vector<double>> matrix) {
-    std::vector<double> result;
-    for(std::vector<double> row : matrix)  {
-      for(double el : row){
-        result.emplace_back(el);
-      }
-    }
-    return result;
-  }
 };
 
 
 class MatrixReader : RFDataReader {
 public:
   static RFData read(const std::string& path) {
-    RFData data;
     std::fstream res_file;
-    res_file.open(path + "/distances"  ,std::ios::in);
+    res_file.open(path, std::ios::in);
     if (res_file.is_open()){
       std::vector<std::vector<double>> matrix;
       std::string line;
@@ -161,30 +139,12 @@ public:
         row.push_back(std::stof(line));
         matrix.push_back(row);
       }
-      res_file.close(); //close the file object.
-      //set some values, as information not in file
-      data.tree_count = matrix.size();
-      data.tip_count = -1;
-      data.unique_count = -1;
-      data.average_distance = 0;
-      data.distances = matrixToVector(matrix);
-      return data;
+      res_file.close();
+      return RFData(matrix);
     } else {
-      throw (path +  "/distances not found!");
+      throw (path +  " not found!");
     }
 
-  }
-
-private:
-  static std::vector<double> matrixToVector(const std::vector<std::vector<double>>& matrix) {
-    std::vector<double> result;
-    for(size_t i = 0; i < matrix.size(); ++i){
-      assert(matrix[i].size() ==  matrix.size());
-      for(size_t j = i+1; j < matrix.size(); ++j){
-        result.emplace_back(matrix[i][j]);
-      }
-    }
-    return result;
   }
 
 };

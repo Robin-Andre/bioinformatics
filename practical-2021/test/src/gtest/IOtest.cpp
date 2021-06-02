@@ -21,6 +21,7 @@ TEST_F(IOTest, tree_read) {
 TEST_F(IOTest, raxml_read_write) {
   std::filesystem::create_directories("./foo");
   RFData input = RAXMLReader::read("../test/res/reference_results/heads/24");
+  std::cout << "In test " << input.getAverageDistance() << std::endl;
   RAXMLWriter::write("foo" , input);
   EXPECT_EQ(input, RAXMLReader::read("foo"));
   std::filesystem::remove_all("./foo");
@@ -36,9 +37,9 @@ TEST_F(IOTest, json_read_write) {
 
 TEST_F(IOTest, matrix_read_write) {
   std::filesystem::create_directories("./foo");
-  RFData input = MatrixReader::read("../test/res/R_results/MCI/heads/125");
-  MatrixWriter::write("foo" , input);
-  EXPECT_EQ(input, MatrixReader::read("foo"));
+  RFData input = MatrixReader::read("../test/res/R_results/MCI/heads/24");
+  MatrixWriter::write("foo/24" , input);
+  EXPECT_EQ(input, MatrixReader::read("foo/24"));
   std::filesystem::remove_all("./foo");
 }
 /*TEST_F(IOTest, proper_print) {
