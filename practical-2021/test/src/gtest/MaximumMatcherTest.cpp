@@ -100,10 +100,10 @@ TEST_F(MaximumMatcherTest, test_unequal_mci) {
 TEST_F(MaximumMatcherTest, test_unequal_msi) {
 
   PllTree tree1 = TreeReader::readTreeFile(current_data_dir + "heads/24")[0];
-  PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "heads/24")[2];
+  PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "heads/24")[3];
   PllSplitList s1 = PllSplitList(tree1);
   PllSplitList s2 = PllSplitList(tree2);
-  MSI metric_msi;
+  MSI metric_msi; 
   PllSplit::setTipCount(tree1.getTipCount());
   std::vector<std::vector<double>> similarities = DistanceUtil::similaritiesForSplits(s1, s2, metric_msi);
   for(unsigned i = 0; i < similarities.size(); ++i) {
@@ -121,7 +121,7 @@ TEST_F(MaximumMatcherTest, test_unequal_msi) {
   double maximum = DistanceUtil::maximumValue(s1, s2, metric_msi);
   std::cout << "\nValue: " << match << "\n";
   std::cout << "Maximum: " << maximum << "\n";
-  std::cout << "Fraction: " << match / maximum << "\n"
+  std::cout << "Fraction: " << match / maximum << "\n";
   std::cout << "Normalized(x2): " << 2*(maximum - match) << "\n";
   std::cout << "Double normalized(x2) " <<  2*(maximum - match) / (2*maximum) << "\n";
 }
