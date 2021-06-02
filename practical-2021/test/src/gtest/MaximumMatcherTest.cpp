@@ -46,7 +46,7 @@ TEST_F(MaximumMatcherTest, test_assignment) {
 //TODO move randomness out of here
 TEST_F(MaximumMatcherTest, test_maximum) {
   size_t n = 10;
-  std::random_device rd; 
+  std::random_device rd;
   std::default_random_engine eng(rd());
   std::uniform_real_distribution<double> distr(-10, 10);
   std::vector<std::vector<double>> weights = std::vector<std::vector<double>> (n, std::vector<double>(n));
@@ -121,7 +121,7 @@ TEST_F(MaximumMatcherTest, test_unequal_msi) {
   double maximum = DistanceUtil::maximumValue(s1, s2, metric_msi);
   std::cout << "\nValue: " << match << "\n";
   std::cout << "Maximum: " << maximum << "\n";
-  std::cout << "Fraction: " << match / maximum << "\n"
+  std::cout << "Fraction: " << match / maximum << "\n";
   std::cout << "Normalized(x2): " << 2*(maximum - match) << "\n";
   std::cout << "Double normalized(x2) " <<  2*(maximum - match) / (2*maximum) << "\n";
 }

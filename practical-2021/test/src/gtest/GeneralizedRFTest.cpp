@@ -76,7 +76,7 @@ TEST_F(GeneralizedRFTest, example_24_msi) {
   PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "heads/24")[1];
   std::vector<PllTree> trees = {tree1, tree2};
   GeneralizedRFDistance distance;
-  MSI metric_msi;    
+  MSI metric_msi;
   EXPECT_NEAR(distance.computeDistances(trees, metric_msi).get(0, 1), 0, epsilon);
 }
 
