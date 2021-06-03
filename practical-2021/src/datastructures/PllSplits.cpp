@@ -74,12 +74,13 @@ size_t PllSplit::basePopcount(pll_split_base_t val) const {
    but a copy of the underlying splits i.e. a vector of splits has been made and it worked on.
    One theory is pointer management. (or the lack thereof)
 */
+//TODO: Apply bitmask to last register
 bool PllSplit::splitValid() const {
   //This condition sometimes fails on the splits returned from pll lib, needs to be examined!
   //return (_split != nullptr) && !(_split[0] & ~bitmaskForUnusedBits()) && _split[0] & 1u;
   return (_split != nullptr) &&  _split[0] & 1u;
 }
-
+//TODO: Save as field, set together with tipcount
 pll_split_base_t PllSplit::bitmaskForUnusedBits() const {
   pll_split_base_t bit_mask = 0;
   size_t offset = PllSplit::getTipCount() - ((PllSplit::getSplitLen() - 1) * computSplitBaseSize());

@@ -19,14 +19,6 @@ public:
   double distanceOf(const PllSplitList& first, const PllSplitList& second, bool normalize) const {
     std::vector<std::vector<double>> similarities = similaritiesForSplits(first, second);
     double similarity = MaximumMatcher::match(similarities);
-    /*for (size_t k = 0; k < similarities.size(); ++k){
-      for (size_t l = 0; l < similarities[k].size(); ++l){
-        std::cout << similarities[k][l] << "; ";
-      }
-      std::cout << "|" << phylomath::h(tree_splits[i][k]);
-      std::cout << std::endl;
-    }
-    std::cout << "SIM: " << similarity << std::endl;*/
     return normalize ? distanceFromSimilarity(first, second, similarity) : similarity;
   }
 
@@ -76,21 +68,6 @@ class MSI : public GeneralizedMetric {
 
 class SPI : public GeneralizedMetric {
   public:
-  //This is the old implementation but until I see definite proof that we use the new one it will stay as
-  // copy paste tool
-  /*double evaluate(const PllSplit& s1, const PllSplit& s2) const override {
-    //because of normalization, the 1-Partitions of s1 and s2 always overlap
-    assert(s1.intersectionSize(s2, 1, 1) > 0);
-    if (!s1.compatible(s2)) return 0;
-    size_t a_1 = s1.partitionSizeOf(Block_A);
-    size_t a_2 = s2.partitionSizeOf(Block_A);
-    size_t b_1 = s1.partitionSizeOf(Block_B);
-    size_t b_2 = s2.partitionSizeOf(Block_B);
-    if (s1 == s2) return phylomath::h(a_2, b_2);
-    return phylomath::h(a_1, b_1) + phylomath::h(a_2, b_2) - phylomath::h(a_1, b_1, a_2, b_2);
-
-
-  }*/
   double evaluate(const PllSplit& s1, const PllSplit& s2) const override {
     //because of normalization, the 1-Partitions of s1 and s2 always overlap
     assert(s1.intersectionSize(s2, 1, 1) > 0);
