@@ -4,10 +4,7 @@ extern "C" {
 #include "libpll/pll_tree.h"
 }
 #include "datastructures/PllSplits.hpp"
-#include "DistanceUtil.hpp"
-#include "PhylogeneticMathUtils.hpp"
-#include "MaximumMatcher.hpp"
-#include "datastructures/TriangleMatrix.hpp"
+#include "RFData.hpp"
 #include "Metric.hpp"
 #include <vector>
 #include <iostream>
@@ -27,7 +24,7 @@ public:
       assert(tree.getTipCount() == PllSplit::getTipCount());
       tree_splits.emplace_back(PllSplitList(tree));
     }
-    TriangleMatrix<double> distances = TriangleMatrix<double>(tree_count, false);
+    std::vector<double> distances;
     double similarity = 0;
     double dist = 0;
     size_t unique_count = trees.size();
@@ -35,26 +32,15 @@ public:
     for(size_t i = 0; i < trees.size(); ++i){
       is_unique = true;
       for(size_t j = i + 1; j < trees.size(); ++j){
-        std::vector<std::vector<double>> similarities = DistanceUtil::similaritiesForSplits(tree_splits[i], tree_splits[j], metric);
-        for (size_t k = 0; k < similarities.size(); ++k){
-          for (size_t l = 0; l < similarities[k].size(); ++l){
-            //std::cout << similarities[k][l] << "; ";
-          }
-          //std::cout << "|" << phylomath::h(tree_splits[i][k]);
-          //std::cout << std::endl;
-        }
-        similarity = MaximumMatcher::match(similarities);
-        //std::cout << "SIM: " << similarity << std::endl;
-
-        dist = normalize ? DistanceUtil::distanceFromSimilarity(tree_splits[i], tree_splits[j], metric, similarity) : similarity;
+        dist = metric.distanceOf(tree_splits[i], tree_splits[j], normalize);
         if (dist == 0 && is_unique){
           is_unique = false;
           --unique_count;
         }
-        distances.set(i, j, dist);
+        distances.emplace_back(dist);
       }
     }
-    return RFData(tree_count, tip_count, unique_count, distances.getAsVector(), false);
+    return RFData(tree_count, tip_count, unique_count, distances, metric.name() == "RF");
   }
 
 };

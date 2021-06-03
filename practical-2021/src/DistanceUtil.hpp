@@ -2,18 +2,20 @@
 #include "datastructures/PllSplits.hpp"
 #include "PhylogeneticMathUtils.hpp"
 #include "Metric.hpp"
+#include "MaximumMatcher.hpp"
 #include <vector>
 
-class DistanceUtil { //TODO remove the class and put it into a namespace (needs good suggestion) phylogenetic_
+class DistanceUtil {
 
-public:
 
-  static double maximumValue(const PllSplitList& first, const PllSplitList& second, const Metric& metric) {
+/*public:
+
+  static double maximumValue(const PllSplitList& first, const PllSplitList& second, const Metric& metric){
     //assert(first.getSplits().size() == first.getSplits().size());
     return (metric.maximum(first, second) / 2);
   }
 
-  static double distanceFromSimilarity(const PllSplitList& first, const PllSplitList& second, const Metric& metric, double similarity){
+  static double distanceFromSimilarity(const PllSplitList& first, const PllSplitList& second, double similarity, const Metric& metric){
     return maximumValue(first, second, metric) - similarity;
   }
 
@@ -29,6 +31,19 @@ public:
     return result;
   }
 
+  static double distanceOf(const PllSplitList& first, const PllSplitList& second, const Metric& metric, bool normalize) {
+    std::vector<std::vector<double>> similarities = similaritiesForSplits(first, second, metric);
+    double similarity = MaximumMatcher::match(similarities);
+    /*for (size_t k = 0; k < similarities.size(); ++k){
+      for (size_t l = 0; l < similarities[k].size(); ++l){
+        std::cout << similarities[k][l] << "; ";
+      }
+      std::cout << "|" << phylomath::h(tree_splits[i][k]);
+      std::cout << std::endl;
+    }
+    std::cout << "SIM: " << similarity << std::endl;
+    return normalize ? distanceFromSimilarity(first, second, similarity, metric) : similarity;
+  }*/
 
 
 

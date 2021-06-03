@@ -1,7 +1,8 @@
 #include "gtest/gtest.h"
-#include "../../../src/RFDistance.hpp"
+#include "../../../src/GeneralizedRFDistance.hpp"
 #include "../../../src/io/RFDataReader.hpp"
 #include "../../../src/io/RFDataReader.hpp"
+#include "../../../src/io/TreeReader.hpp"
 
 class DistanceTest : public testing::Test {
 protected:
@@ -20,14 +21,15 @@ void execute_test(const std::string& test_file) {
     ensure_no_bitmask_needed(test_file);
 }
 void run_test(const std::string& test_file) {
-    RFData results = RFDistance::computeRF(TreeReader::readTreeFile(current_data_dir + test_file));
+    RF rf;
+    RFData results = GeneralizedRFDistance::computeDistances(TreeReader::readTreeFile(current_data_dir + test_file), rf, false);
     ASSERT_EQ(results, RAXMLReader::read(current_ref_dir + test_file));
 }
-/*I am still convinced that the bitmask of the PllSplits is weird so I checked that no PllSplit 
-   requires that mask. 
-  The original implementation was bitmask on register 0. Should have been register n. 
+/*I am still convinced that the bitmask of the PllSplits is weird so I checked that no PllSplit
+   requires that mask.
+  The original implementation was bitmask on register 0. Should have been register n.
   Ok turns out that the PllSplitList object needs to be held to have a reasonable splitlist.
-*/ 
+*/
 void ensure_no_bitmask_needed(const std::string& test_file) {
 
     PllTree test_tree = TreeReader::readTreeFile(current_data_dir + test_file)[0];

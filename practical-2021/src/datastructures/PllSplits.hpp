@@ -54,11 +54,10 @@ public:
     PllSplit::tip_count = val;
   }
 
-
   static size_t getTipCount() {
     return PllSplit::tip_count;
   }
-  //This returns the amount of registers needed to store a split 
+  //This returns the amount of registers needed to store a split
   static size_t getSplitLen() {
     size_t split_len = (PllSplit::tip_count / computSplitBaseSize());
     if (tip_count % computSplitBaseSize() > 0) { split_len += 1; }
@@ -69,7 +68,7 @@ public:
   size_t partitionSizeOf (Partition block) const;
   size_t intersectionSize(const PllSplit& other, partition_t partition_this, partition_t partition_other) const;
   bool compatible(const PllSplit& other) const;
-  int compatiblePREMIUM(const PllSplit& other) const; 
+  int compatiblePREMIUM(const PllSplit& other) const;
   bool splitValid() const;
 
 
@@ -134,8 +133,6 @@ public:
 
   const std::vector<PllSplit>& getSplits() const {return _splits;}
   size_t getSplitCount() const {return _splits.size();}
-  PllSplitList symmetricDifference(const PllSplitList& other) const;
-  size_t rfDistance(const PllSplitList& other) const;
 
   // Reenable for print debugging
   void printSplits() const {

@@ -2,6 +2,7 @@
 #include "../../../src/DistanceUtil.hpp"
 #include "../../../src/io/RFDataReader.hpp"
 #include "../../../src/io/RFDataWriter.hpp"
+#include "../../../src/io/TreeReader.hpp"
 #include "../../../src/GeneralizedRFDistance.hpp"
 #include "../../../src/Metric.hpp"
 

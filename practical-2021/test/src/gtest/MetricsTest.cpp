@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 #include "../../../src/datastructures/PllSplits.hpp"
-#include "../../../src/DistanceUtil.hpp"
+#include "../../../src/Metric.hpp"
 #include "../../../src/PhylogeneticMathUtils.hpp"
 #include "../TestUtil.hpp"
 #include <gmp.h>
@@ -23,7 +23,7 @@ class MetricsTest : public testing::Test {
     mpq_clear(test_variable_rational);
     mpq_clear(result_variable_rational);
   }
-  //Evaluates the double factorial and compares it to a string of base 10 
+  //Evaluates the double factorial and compares it to a string of base 10
   void evaluate_double_factorial(size_t x, const std::string& result_string) {
     phylomath::doublefactorial(test_variable, x);
     //gmp_printf("test: %Zd \n", test_variable);
@@ -35,9 +35,9 @@ class MetricsTest : public testing::Test {
     phylomath::phylogeneticProbability(test_variable_rational, a, b);
     mpq_set_str(result_variable_rational, fraction.c_str(), 10); //Base 10
     EXPECT_EQ(mpq_cmp(result_variable_rational, test_variable_rational), 0);
-    
+
   }
-  
+
 };
 
 
@@ -61,7 +61,7 @@ TEST_F(MetricsTest, test_factorial_quotient) {
   int comp = mpq_cmp(test_variable_rational, result_variable_rational);
   EXPECT_EQ(comp, 0);
 }
-//9 <- (this eats 2nominators) * 7 * 5 * 3 <- this eats the last so result should be 1/35 
+//9 <- (this eats 2nominators) * 7 * 5 * 3 <- this eats the last so result should be 1/35
 TEST_F(MetricsTest, test_factorial_quotient2) {
   mpq_t quotientresult;
   mpq_init(quotientresult);
@@ -87,7 +87,7 @@ TEST_F(MetricsTest, test_phylogenetic_probability) {
   PllSplit::setTipCount(24);
   evaluate_phylogenetic_probability(2,22, "1/43");
 }
-//The probability of a trivial split is 1, the value of h should be 0 as in -log(1) == 0 
+//The probability of a trivial split is 1, the value of h should be 0 as in -log(1) == 0
 TEST_F(MetricsTest, h_function_trivial_split) {
   PllSplit::setTipCount(4);
   PllSplit test_split = TestUtil::createSplit({0, 1, 3});
@@ -125,8 +125,42 @@ TEST_F(MetricsTest, test_clustering_probability) {
 }
 
 
+TEST_F(MetricsTest, rf_test) {
+  PllSplit::setTipCount(64);
+  std::vector<std::vector<size_t>> fst_part1s = {
+                { 0, 1, 2, 3, 4, 5, 6, 7},
+                { 0, 1, 2, 3, 4, 5, 6},
+                { 0, 1, 2, 3, 4, 5},
+                { 0, 1, 2, 3, 4},
+                { 0, 1, 2, 3}
+            };
+  PllSplitList fst_splitlist = TestUtil::createSplitList(fst_part1s);
 
+  std::vector<std::vector<size_t>> snd_part1s = {
+                { 0, 1, 2, 3, 4, 5, 6, 7},
+                { 0, 1, 2, 3, 4, 5, 6},
+                { 0, 2, 3, 4, 5, 6},
+                { 0, 2, 3, 4, 6},
+                { 0, 2, 3, 6}
+            };
+  PllSplitList snd_splitlist = TestUtil::createSplitList(snd_part1s);
 
+  std::vector<std::vector<size_t>> trd_part1s = {
+                { 0, 2, 3, 4, 5, 6, 7},
+                { 0, 2, 3, 4, 5, 6},
+                { 0, 2, 3, 4, 6},
+                { 0, 2, 3, 6}
+            };
+  PllSplitList trd_splitlist = TestUtil::createSplitList(trd_part1s);
 
+  RF rf;
+  ASSERT_EQ(rf.distanceOf(fst_splitlist, snd_splitlist, false), 6);
+  ASSERT_EQ(rf.distanceOf(snd_splitlist, fst_splitlist, false), 6);
 
+  ASSERT_EQ(rf.distanceOf(fst_splitlist, trd_splitlist, false), 9);
+  ASSERT_EQ(rf.distanceOf(trd_splitlist, fst_splitlist, false), 9);
 
+  ASSERT_EQ(rf.distanceOf(snd_splitlist, trd_splitlist, false), 3);
+  ASSERT_EQ(rf.distanceOf(trd_splitlist, snd_splitlist, false), 3);
+
+}
