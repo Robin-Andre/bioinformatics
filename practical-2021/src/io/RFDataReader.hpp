@@ -3,9 +3,9 @@
 #include <fstream>
 #include <iostream>
 #include "../datastructures/PllTree.hpp"
-#include "../RFDistance.hpp"
 #include "CommandLineOptions.hpp"
 #include "IOData.h"
+#include "../RFData.hpp"
 
 class RFDataReader {
 public:

@@ -1,10 +1,12 @@
 #include "gtest/gtest.h"
-#include "../../../src/DistanceUtil.hpp"
 #include "../../../src/Metric.hpp"
 #include "../../../src/io/TreeReader.hpp"
 class DistanceUtilTest : public testing::Test {
   protected: //std::string current_test_dir = "../test/res/data/heads/BS/";
   std::string current_data_dir = "../test/res/data/";
+  MSI msi;
+  SPI spi;
+  MCI mci;
   virtual void SetUp() {
 
   }
@@ -22,8 +24,7 @@ TEST_F(DistanceUtilTest, distances_example_from_slideshow_spi) {
     PllSplitList splits1 = PllSplitList(tree1);
     PllSplitList splits2 = PllSplitList(tree2);
     tree2.alignNodeIndices(tree1);
-  SPI metric_spi;
-  std::vector<std::vector<double>> result = DistanceUtil::similaritiesForSplits(splits1, splits2, metric_spi);
+  std::vector<std::vector<double>> result = spi.similaritiesForSplits(splits1, splits2);
   double h_standard = phylomath::h(2, 4);
   double h_i1 = phylomath::h(3, 3);
   double h_shared_beta = phylomath::h(3, 2, 6);
@@ -31,7 +32,7 @@ TEST_F(DistanceUtilTest, distances_example_from_slideshow_spi) {
   EXPECT_EQ(result[0][0], evaluation(h_standard, h_standard, h_shared_gamma));
   EXPECT_EQ(result[0][1], h_standard);
   EXPECT_EQ(result[0][2], evaluation(h_standard, h_standard, h_shared_gamma));
- 
+
   EXPECT_EQ(result[1][0], 0);
   EXPECT_EQ(result[1][1], evaluation(h_i1, h_standard, h_shared_beta));
   EXPECT_EQ(result[1][2], evaluation(h_i1, h_standard, h_shared_beta));
@@ -47,8 +48,7 @@ TEST_F(DistanceUtilTest, distance_from_slideshow_msi) {
   PllSplitList splits1 = PllSplitList(tree1);
   PllSplitList splits2 = PllSplitList(tree2);
   tree2.alignNodeIndices(tree1);
-  MSI metric_msi;
-  std::vector<std::vector<double>> result = DistanceUtil::similaritiesForSplits(splits1, splits2, metric_msi);
+  std::vector<std::vector<double>> result = msi.similaritiesForSplits(splits1, splits2);
   double alpha = std::log2(7);
   double beta = std::log2(5);
   double gamma = std::log2(3);
@@ -56,7 +56,7 @@ TEST_F(DistanceUtilTest, distance_from_slideshow_msi) {
   EXPECT_DOUBLE_EQ(result[0][0], gamma);
   EXPECT_DOUBLE_EQ(result[0][1], alpha);
   EXPECT_DOUBLE_EQ(result[0][2], gamma);
- 
+
   EXPECT_DOUBLE_EQ(result[1][0], delta);
   EXPECT_DOUBLE_EQ(result[1][1], beta);
   EXPECT_DOUBLE_EQ(result[1][2], beta);
@@ -72,17 +72,12 @@ TEST_F(DistanceUtilTest, maximumtest) {
   PllSplitList splits1 = PllSplitList(tree1);
   PllSplitList splits2 = PllSplitList(tree2);
   tree2.alignNodeIndices(tree1);
-  MSI metric_msi;
-  double result = DistanceUtil::maximumValue(splits1, splits2, metric_msi);
+  double result = msi.maximumValue(splits1, splits2);
   std::cout << "maximumMSI: " << result << "\n";
-
-  SPI metric_spi;
-  result = DistanceUtil::maximumValue(splits1, splits2, metric_spi);
+  result = spi.maximumValue(splits1, splits2);
   std::cout << "maximumSPI: " << result << "\n";
-
-  MCI metric_mci;
-  result = DistanceUtil::maximumValue(splits1, splits2, metric_mci);
+  result = mci.maximumValue(splits1, splits2);
   std::cout << "maximumMCI: " << result << "\n";
 
-  
+
 }

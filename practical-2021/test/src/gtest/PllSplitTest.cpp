@@ -104,86 +104,6 @@ TEST_F(PllSplitTest, test_tree_constructor_iterative) {
 }
 
 
-TEST_F(PllSplitTest, test_difference) {
-  PllSplit::setTipCount(64);
-  std::vector<std::vector<size_t>> fst_part1s = {
-                { 0, 1, 2, 3, 4, 5, 6, 7},
-                { 0, 1, 2, 3, 4, 5, 6},
-                { 0, 1, 2, 3, 4, 5},
-                { 0, 1, 2, 3, 4},
-                { 0, 1, 2, 3}
-            };
-  PllSplitList fst_splitlist = TestUtil::createSplitList(fst_part1s);
-
-  std::vector<std::vector<size_t>> snd_part1s = {
-                { 0, 1, 2, 3, 4, 5, 6, 7},
-                { 0, 1, 2, 3, 4, 5, 6},
-                { 0, 2, 3, 4, 5, 6},
-                { 0, 2, 3, 4, 6},
-                { 0, 2, 3, 6}
-            };
-  PllSplitList snd_splitlist = TestUtil::createSplitList(snd_part1s);
-
-  std::vector<std::vector<size_t>> trd_part1s = {
-                { 0, 2, 3, 4, 5, 6, 7},
-                { 0, 2, 3, 4, 5, 6},
-                { 0, 2, 3, 4, 6},
-                { 0, 2, 3, 6}
-            };
-  PllSplitList trd_splitlist = TestUtil::createSplitList(trd_part1s);
-
-  std::vector<std::vector<size_t>> delta12 = {
-                { 0, 1, 2, 3, 4, 5},
-                { 0, 2, 3, 4, 5, 6},
-                { 0, 2, 3, 4, 6},
-                { 0, 1, 2, 3, 4},
-                { 0, 1, 2, 3},
-                { 0, 2, 3, 6}
-            };
-  PllSplitList delta12_splitlist = TestUtil::createSplitList(delta12);
-
-  std::vector<std::vector<size_t>> delta13 = {
-                { 0, 1, 2, 3, 4, 5, 6, 7},
-                { 0, 1, 2, 3, 4, 5, 6},
-                { 0, 1, 2, 3, 4, 5},
-                { 0, 1, 2, 3, 4},
-                { 0, 1, 2, 3},
-                { 0, 2, 3, 4, 5, 6, 7},
-                { 0, 2, 3, 4, 5, 6},
-                { 0, 2, 3, 4, 6},
-                { 0, 2, 3, 6}
-            };
-  PllSplitList delta13_splitlist = TestUtil::createSplitList(delta13);
-
-  std::vector<std::vector<size_t>> delta23 = {
-                { 0, 1, 2, 3, 4, 5, 6, 7},
-                { 0, 1, 2, 3, 4, 5, 6},
-                { 0, 2, 3, 4, 5, 6, 7},
-  };
-  PllSplitList delta23_splitlist = TestUtil::createSplitList(delta23);
-
-  ASSERT_EQ(fst_splitlist.rfDistance(snd_splitlist), 6);
-  ASSERT_EQ(snd_splitlist.rfDistance(fst_splitlist), 6);
-
-  ASSERT_EQ(fst_splitlist.rfDistance(trd_splitlist), 9);
-  ASSERT_EQ(trd_splitlist.rfDistance(fst_splitlist), 9);
-
-  ASSERT_EQ(snd_splitlist.rfDistance(trd_splitlist), 3);
-  ASSERT_EQ(trd_splitlist.rfDistance(snd_splitlist), 3);
-
-  ASSERT_EQ(fst_splitlist.symmetricDifference(snd_splitlist), delta12_splitlist);
-  ASSERT_EQ(snd_splitlist.symmetricDifference(fst_splitlist), delta12_splitlist);
-
-  ASSERT_EQ(fst_splitlist.symmetricDifference(trd_splitlist), delta13_splitlist);
-  ASSERT_EQ(trd_splitlist.symmetricDifference(fst_splitlist), delta13_splitlist);
-
-  ASSERT_EQ(snd_splitlist.symmetricDifference(trd_splitlist), delta23_splitlist);
-  ASSERT_EQ(trd_splitlist.symmetricDifference(snd_splitlist), delta23_splitlist);
-
-}
-
-
-
 TEST_F(PllSplitTest, test_intersectcount) {
     PllSplit::setTipCount(10);
     std::vector<size_t> part1_a = {0, 2, 4, 9};
@@ -209,7 +129,7 @@ TEST_F(PllSplitTest, test_intersectcount) {
 
 
 
-TEST_F(PllSplitTest, test_compatible) {
+/*TEST_F(PllSplitTest, test_compatible) {
     PllSplit::setTipCount(8);
     std::vector<size_t> part1_a = {0, 1, 2, 3};
     PllSplit split_a = TestUtil::createSplit(part1_a);
@@ -254,7 +174,7 @@ TEST_F(PllSplitTest, test_compatible_8taxa) {
   free(s4());
   free(s5());
 
-}
+}*/
 
 
 

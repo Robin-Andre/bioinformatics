@@ -1,6 +1,5 @@
 #include "gtest/gtest.h"
 #include "../../../src/MaximumMatcher.hpp"
-#include "../../../src/DistanceUtil.hpp"
 #include "../../../src/datastructures/PllSplits.hpp"
 #include "../../../src/datastructures/PllTree.hpp"
 #include "../../../src/io/TreeReader.hpp"
@@ -13,6 +12,9 @@
 class MaximumMatcherTest : public testing::Test {
 protected:
   std::string current_data_dir = "../test/res/data/";
+  MSI msi;
+  SPI spi;
+  MCI mci;
 
   void checkAllPermutations(std::vector<std::vector<double>> weights, double maximum){
     double empirical_max = 0;
@@ -66,8 +68,7 @@ TEST_F(MaximumMatcherTest, test_real){
   PllTree tree = TreeReader::readTreeFile(current_data_dir + "heads/24")[0];
   PllSplit::setTipCount(tree.getTipCount());
   PllSplitList split_list = PllSplitList(tree);
-  SPI spi_metric;
-  std::vector<std::vector<double>> similarities = DistanceUtil::similaritiesForSplits(split_list, split_list, spi_metric);
+  std::vector<std::vector<double>> similarities = spi.similaritiesForSplits(split_list, split_list);
   std::vector<std::vector<double>> weights = std::vector<std::vector<double>> (n, std::vector<double>(n));
   for(size_t i = 0; i < n; ++i){
     for(size_t j = 0; j < n; ++j){
@@ -83,9 +84,8 @@ TEST_F(MaximumMatcherTest, test_unequal_mci) {
   PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "heads/24")[2];
   PllSplitList s1 = PllSplitList(tree1);
   PllSplitList s2 = PllSplitList(tree2);
-  MCI metric_mci;
   PllSplit::setTipCount(tree1.getTipCount());
-  std::vector<std::vector<double>> similarities = DistanceUtil::similaritiesForSplits(s1, s2, metric_mci);
+  std::vector<std::vector<double>> similarities = mci.similaritiesForSplits(s1, s2);
 
   std::vector<size_t> match_results = MaximumMatcher::match_vector(similarities);
   double match = MaximumMatcher::match(similarities);
@@ -103,7 +103,7 @@ TEST_F(MaximumMatcherTest, test_unequal_msi) {
   PllSplitList s2 = PllSplitList(tree2);
   MSI metric_msi; 
   PllSplit::setTipCount(tree1.getTipCount());
-  std::vector<std::vector<double>> similarities = DistanceUtil::similaritiesForSplits(s1, s2, metric_msi);
+  std::vector<std::vector<double>> similarities = msi.similaritiesForSplits(s1, s2);
   for(unsigned i = 0; i < similarities.size(); ++i) {
     for(unsigned j = 0; j < similarities.size(); ++j) {
       std::cout << similarities[i][j] << " ";
@@ -116,7 +116,7 @@ TEST_F(MaximumMatcherTest, test_unequal_msi) {
     std::cout << match_results[i] << " ";
     //std::cout << "Node: " << i << " -> " << match_results[i] << "\n";
   }
-  double maximum = DistanceUtil::maximumValue(s1, s2, metric_msi);
+  double maximum = msi.maximumValue(s1, s2);
   std::cout << "\nValue: " << match << "\n";
   std::cout << "Maximum: " << maximum << "\n";
   std::cout << "Fraction: " << match / maximum << "\n";
