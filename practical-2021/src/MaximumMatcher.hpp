@@ -14,8 +14,6 @@ public:
     operations_research::SimpleLinearSumAssignment assignment;
     for (size_t i = 0; i < weights.size(); ++i) {
       for(size_t j = 0; j < weights[i].size(); ++j) {
-        //TODO the transformation between probabilities and whole numbers recheck. Also is this the integer rounding?
-        //assignment.AddArcWithCost(i, j, (max_weight.first - weights[i][j])/min_diff);
         assignment.AddArcWithCost(i, j,  convert_weight(weights[i][j]));
       }
     }
@@ -45,19 +43,6 @@ public:
       result += weights[i][matching[i]];
     }
     return result;
-  }
-private:
-  static std::pair<double,double> findMax(const std::vector<std::vector<double>>& weights) {
-    std::pair<double, double> max_weights = std::make_pair(-DBL_MAX, -DBL_MAX);
-    for (size_t i = 0; i < weights.size(); ++i) {
-      for(size_t j = 0; j < weights[i].size(); ++j) {
-        if(weights[i][j] > max_weights.first){
-          max_weights.second = max_weights.first;
-          max_weights.first = weights[i][j];
-        }
-      }
-    }
-    return max_weights;
   }
 
 };

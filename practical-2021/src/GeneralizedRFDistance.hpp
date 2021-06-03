@@ -25,7 +25,6 @@ public:
       tree_splits.emplace_back(PllSplitList(tree));
     }
     std::vector<double> distances;
-    double similarity = 0;
     double dist = 0;
     size_t unique_count = trees.size();
     bool is_unique = true;
@@ -33,6 +32,7 @@ public:
       is_unique = true;
       for(size_t j = i + 1; j < trees.size(); ++j){
         dist = metric.distanceOf(tree_splits[i], tree_splits[j], normalize);
+        //TODO: Check near 0 because of numerical issues
         if (dist == 0 && is_unique){
           is_unique = false;
           --unique_count;

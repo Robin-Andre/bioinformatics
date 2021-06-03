@@ -6,20 +6,20 @@
 #include <gmp.h>
 #include "datastructures/PllSplits.hpp"
 namespace phylomath {
-    
+
   /* This is the "apparent" GMP double factorial function I dislike the style of void functions changing the
      value of their parameters but in this case it is inevitable due to the implementation of gmp.*/
 
   inline void doublefactorial(mpz_t result, size_t n) {
     mpz_2fac_ui(result, n);
   }
- 
+
   //This calculates (a!!*b!!*c!!) / x!!
   //TODO this method needs a beauty session
   inline void factorialQuotient(mpq_t result, size_t a, size_t b, size_t c, size_t x){
     assert((a % 2 == 1) && (b % 2 == 1) && (x % 2 == 1));
     /*TODO optimization, move this allocation out of this method, maybe make it a class
-      because setting a mpz to 0 could be better than to reinitialize every single time 
+      because setting a mpz to 0 could be better than to reinitialize every single time
       a factorialQuotient is calculated. (Which might be often)
     */
     mpz_t fac_a, fac_b, fac_c, fac_x;
@@ -59,16 +59,16 @@ namespace phylomath {
     if ((a == 0) || (b == 0)) {
       mpq_set_ui(result, 0, 1); //TODO is 0/1 a proper result?? THis is the edge case we discussed but found no solution
       return;
-    } 
+    }
     if ((a == 1) || (b == 1)) {
-      mpq_set_ui(result, 1, 1); //Set result to 1/1. 
+      mpq_set_ui(result, 1, 1); //Set result to 1/1.
       return;
-      } 
+      }
     factorialQuotient(result, ((2 * a) - 3), ((2 * b) - 3), ((2 * (a + b)) - 5));
   }
   //TODO to get this to work with gmp we need extra tools https://github.com/linas/anant
   //right now it is a conversion to double which will cause side effects when converting really small numbers
-  //MEMO aaactually since we calculate on really small numbers we could theoretically use the inverse 
+  //MEMO aaactually since we calculate on really small numbers we could theoretically use the inverse
   inline double h(size_t a, size_t b) {
     assert(a + b <= PllSplit::getTipCount());
     if(a == 0 || b == 0) {
@@ -106,14 +106,7 @@ namespace phylomath {
     return -1 * std::log2(temporary_double_holder);
 
   }
-  //UNTESTED QUICK HACK, IDEA WILL BE EXPLAINED IN ANOTHER CASTLE
-  //TODO quick hack not operational, needs to know the actual compatible splits
-  //TODO deprecated remove this 
-  inline double h_old(size_t a_1, size_t b_1, size_t a_2, size_t b_2) {
-    assert(a_1 + b_1 == a_2 + b_2);
-    return h(std::min(a_1, b_1), std::min(a_2, b_2), a_1 + b_1);
-  }
- 
+   
   inline double clusteringProbability(size_t count) {
     //assert(PllSplit.count > 0);
     return (1.0 * count) / PllSplit::getTipCount();
@@ -131,5 +124,5 @@ namespace phylomath {
     assert(p_a != 0 && p_b != 0);
     return -p_a * std::log2(p_a) - p_b * std::log2(p_b);
   }
-  
+
 }
