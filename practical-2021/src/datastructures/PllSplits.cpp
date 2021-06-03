@@ -64,25 +64,6 @@ size_t PllSplit::intersectionSize(const PllSplit& other, partition_t partition_t
 }
 
 
-//TODO would be premium if we actually get which configuration is the compatible one
-bool PllSplit::compatible(const PllSplit& other) const {
-  assert(splitValid());
-  assert(other.splitValid());
-  return !intersectionSize(other, 0, 1)
-      || !intersectionSize(other, 1, 0) || !intersectionSize(other, 0, 0);
-}
-//This wonderful monstrosity of an abomination is a quick hack to get which intersection is actually the
-//compatible one. 1 for B_1 + A_2; 2 for A_1 + B_2; 3 for B_1 + B_2; 0 for incompatible
-//Basically it does what the union and contains method originally intended to do. Just in compressed ugliness
-int PllSplit::compatiblePREMIUM(const PllSplit& other) const {
-  if(!intersectionSize(other, 0, 1)) {return 1;}
-  if(!intersectionSize(other, 1, 0)) {return 2;}
-  if(!intersectionSize(other, 0, 0)) {return 3;}
-  return 0;
-}
-
-
-
 //TODO @Robin might wanna do a speedtest, or find another implementation with registers
 size_t PllSplit::basePopcount(pll_split_base_t val) const {
   return std::bitset<32>(val).count();
@@ -97,6 +78,17 @@ bool PllSplit::splitValid() const {
   //This condition sometimes fails on the splits returned from pll lib, needs to be examined!
   //return (_split != nullptr) && !(_split[0] & ~bitmaskForUnusedBits()) && _split[0] & 1u;
   return (_split != nullptr) &&  _split[0] & 1u;
+}
+
+pll_split_base_t PllSplit::bitmaskForUnusedBits() const {
+  pll_split_base_t bit_mask = 0;
+  size_t offset = PllSplit::getTipCount() - ((PllSplit::getSplitLen() - 1) * computSplitBaseSize());
+  //TODO@ Robin, do one shift instead of a loop
+  for(size_t i = 0; i < offset; ++i){
+    bit_mask |= (1 << i);
+  }
+  //bit_mask = (pll_split_base_t) (std::pow(2, offset) - 1); //This is hacky but might work
+  return bit_mask;
 }
 
 
@@ -122,8 +114,6 @@ PllSplitList::PllSplitList(const std::vector<PllSplit> &splits) {
   }
 }
 
-
-
 PllSplitList::~PllSplitList() {
   if (!_splits.empty()) { free(_splits[0]()); }
 }
@@ -135,15 +125,4 @@ bool operator == (const PllSplitList& p1, const PllSplitList& p2) {
     if (!(splits1[i] == splits2[i])) return false;
   }
   return true;
-}
-
-pll_split_base_t PllSplit::bitmaskForUnusedBits() const {
-  pll_split_base_t bit_mask = 0;
-  size_t offset = PllSplit::getTipCount() - ((PllSplit::getSplitLen() - 1) * computSplitBaseSize());
-  //TODO@ Robin, do one shift instead of a loop
-  for(size_t i = 0; i < offset; ++i){
-    bit_mask |= (1 << i);
-  }
-  //bit_mask = (pll_split_base_t) (std::pow(2, offset) - 1); //This is hacky but might work
-  return bit_mask;
 }

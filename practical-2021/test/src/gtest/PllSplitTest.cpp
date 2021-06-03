@@ -129,7 +129,7 @@ TEST_F(PllSplitTest, test_intersectcount) {
 
 
 
-TEST_F(PllSplitTest, test_compatible) {
+/*TEST_F(PllSplitTest, test_compatible) {
     PllSplit::setTipCount(8);
     std::vector<size_t> part1_a = {0, 1, 2, 3};
     PllSplit split_a = TestUtil::createSplit(part1_a);
@@ -174,7 +174,7 @@ TEST_F(PllSplitTest, test_compatible_8taxa) {
   free(s4());
   free(s5());
 
-}
+}*/
 
 
 
