@@ -6,6 +6,7 @@
 #include <cfloat>
 #include <regex>
 #include <fstream>
+#include <sstream>
 #include <iostream>
 #include "../enums.hpp"
 
@@ -58,20 +59,20 @@ struct IOData {
 
 
 	std::string toString() const{
-		std::string s;
-		s += "mean_dst " + std::to_string(mean_dst);
-		s += "\nmetric " + metric;
-		s += "\nnumber_of_unique_trees " + std::to_string(number_of_unique_trees);
-		s += "\ngit_revision " + git_revision;
-		s += "\ngit_revision " + git_revision;
-		s += "\ndistances\n ";
+		std::stringstream ss;
+		ss << "mean_dst: " << mean_dst << std::endl;
+		ss << "metric: " << metric << std::endl;
+		ss << "number_of_unique_trees: " << number_of_unique_trees << std::endl;
+		ss << "git_revision: " << git_revision << std::endl;
+		ss << "git_revision: " << git_revision << std::endl;
+		ss << "distances: " << std::endl;
 		for(size_t i = 0; i < pairwise_distance_mtx.size(); ++i){
 			for(size_t j = 0; j < pairwise_distance_mtx[i].size(); ++j){
-				s += std::to_string(pairwise_distance_mtx[i][j]) + " ";
+				ss << std::to_string(pairwise_distance_mtx[i][j]) << " ";
 			}
-			s+="\n";
+			ss << std::endl;
 		}
-		return s;
+		return ss.str();
 	}
 
   private:
