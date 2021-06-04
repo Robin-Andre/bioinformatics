@@ -8,7 +8,6 @@ class Metric {
     public:
     virtual double distanceOf(const PllSplitList& plist1, const PllSplitList& plist2, bool normalize) const = 0;
     virtual std::string name() const = 0;
-    virtual MetricSpec specifier() const = 0;
 };
 
 
@@ -66,9 +65,6 @@ class MSIMetric : public GeneralizedMetric {
     return "MSI";
   }
 
-  MetricSpec specifier() const override {
-    return MSI;
-  }
 };
 
 class SPIMetric : public GeneralizedMetric {
@@ -111,9 +107,6 @@ class SPIMetric : public GeneralizedMetric {
     return "SPI";
   }
 
-  MetricSpec specifier() const override {
-    return SPI;
-  }
 };
 
 
@@ -138,9 +131,6 @@ class MCIMetric : public GeneralizedMetric {
       return "MCI";
     }
 
-    MetricSpec specifier() const override {
-      return MCI;
-    }
 
     private:
     double helper(const PllSplit&s1, const Partition block_s1, const PllSplit& s2, const Partition block_s2) const {
@@ -188,7 +178,4 @@ public:
     return "RF";
   }
 
-  MetricSpec specifier() const override {
-    return RF;
-  }
 };

@@ -12,7 +12,7 @@
 namespace io {
 struct IOData {
 	double mean_dst = 0.;
-	enum MetricSpec split_score_calc;
+	std::string metric;
 	std::vector<std::string> taxa_names;
 	// Invariant: numEntries = numTaxa - rowID
 	std::vector<std::vector<double>> pairwise_distance_mtx;
@@ -25,14 +25,11 @@ struct IOData {
 
 		bool is_eq = comparePairwiseDistances(rhs);
 		is_eq &= nearly_eq_floating(mean_dst, rhs.mean_dst);
-		//is_eq &= split_score_calc == rhs.split_score_calc;
+		is_eq &= metric == rhs.metric;
 		is_eq &= taxa_names == rhs.taxa_names;
 		is_eq &= git_revision == rhs.git_revision;
 		is_eq &= cpuInformation == rhs.cpuInformation;
 		is_eq &= number_of_unique_trees == rhs.number_of_unique_trees;
-		if(!is_eq){
-			std::cout << this->toString() << rhs.toString();
-		}
 		return is_eq;
 	}
 	bool operator!=(const IOData &rhs) const {
@@ -63,7 +60,7 @@ struct IOData {
 	std::string toString() const{
 		std::string s;
 		s += "mean_dst " + std::to_string(mean_dst);
-		//s += "\nsplit_score_calc " + split_score_calc;
+		s += "\nmetric " + metric;
 		s += "\nnumber_of_unique_trees " + std::to_string(number_of_unique_trees);
 		s += "\ngit_revision " + git_revision;
 		s += "\ngit_revision " + git_revision;
@@ -138,12 +135,9 @@ struct IOData {
 
 
 };
-NLOHMANN_JSON_SERIALIZE_ENUM(
-    MetricSpec,
-    {{MCI, "MCI"}, {MSI, "MSI"}, {SPI, "SPI"}, {RF, "RF"}});
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IOData,
                                    mean_dst,
-                                   split_score_calc,
+                                   metric,
                                    taxa_names,
                                    pairwise_distance_mtx,
                                    git_revision,

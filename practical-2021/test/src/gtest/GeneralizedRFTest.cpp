@@ -32,6 +32,7 @@ void execute_test(std::string test_file, const Metric& metric) {
     std::vector<PllTree> trees = TreeReader::readTreeFile(current_data_dir + test_file);
     io::IOData result = GeneralizedRFDistance::computeDistances(trees, metric, false);
     io::IOData reference = MatrixReader::read(current_ref_dir + metric.name() + "/" + test_file);
+    reference.metric = metric.name();
     EXPECT_EQ(result, reference);
 
 }

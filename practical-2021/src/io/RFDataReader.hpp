@@ -56,7 +56,7 @@ public:
     }
     io::IOData data;
     data.mean_dst = std::stod(prefix_matches[2]);
-    data.split_score_calc = RF;
+    data.metric = "RF";
     data.number_of_unique_trees = std::stoi(prefix_matches[1]);
     data.pairwise_distance_mtx = IOUtil::vectorToHalfMatrix(distances, std::stoi(prefix_matches[0]));
     return data;

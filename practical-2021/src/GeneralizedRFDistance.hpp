@@ -26,7 +26,7 @@ public:
       tree_splits.emplace_back(PllSplitList(tree));
     }
     io::IOData result;
-    result.split_score_calc = metric.specifier();
+    result.metric= metric.name();
     result.mean_dst = 0;
     result.number_of_unique_trees = tree_count;
     result.pairwise_distance_mtx = std::vector<std::vector<double>>(tree_count, std::vector<double>());
@@ -51,7 +51,8 @@ public:
 
     }
     result.mean_dst = result.mean_dst  / ((tree_count * (tree_count - 1))/2);
-    if (metric.specifier() == RF) {
+    //TODO: Das ist nicht gut! Wird sich aber wahrscheinlich noch ändern, evtl. bekommt io data bool relative
+    if (metric.name() == "RF") {
       result.mean_dst = result.mean_dst  / (2*(tip_count-3));
     }
     return result;
