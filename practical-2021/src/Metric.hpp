@@ -8,6 +8,7 @@ class Metric {
     public:
     virtual double distanceOf(const PllSplitList& plist1, const PllSplitList& plist2, bool normalize) const = 0;
     virtual std::string name() const = 0;
+    virtual MetricSpec specifier() const = 0;
 };
 
 
@@ -43,7 +44,7 @@ public:
     }
 };
 
-class MSI : public GeneralizedMetric {
+class MSIMetric : public GeneralizedMetric {
   public:
   double evaluate(const PllSplit& s1, const PllSplit& s2) const override {
     if (s1 == s2) return phylomath::h(s1); // At this spot we would check for h(A_1, A_2), h(A_1, B_2) and one of these should be 0: Rethink whether dangerous
@@ -64,9 +65,13 @@ class MSI : public GeneralizedMetric {
   std::string name() const override {
     return "MSI";
   }
+
+  MetricSpec specifier() const override {
+    return MSI;
+  }
 };
 
-class SPI : public GeneralizedMetric {
+class SPIMetric : public GeneralizedMetric {
   public:
   double evaluate(const PllSplit& s1, const PllSplit& s2) const override {
     //because of normalization, the 1-Partitions of s1 and s2 always overlap
@@ -105,11 +110,15 @@ class SPI : public GeneralizedMetric {
   std::string name() const override {
     return "SPI";
   }
+
+  MetricSpec specifier() const override {
+    return SPI;
+  }
 };
 
 
 
-class MCI : public GeneralizedMetric {
+class MCIMetric : public GeneralizedMetric {
     public:
     double evaluate(const PllSplit& s1, const PllSplit& s2) const override {
         return helper(s1, Block_A, s2, Block_A) + helper(s1, Block_B, s2, Block_A)
@@ -129,6 +138,10 @@ class MCI : public GeneralizedMetric {
       return "MCI";
     }
 
+    MetricSpec specifier() const override {
+      return MCI;
+    }
+
     private:
     double helper(const PllSplit&s1, const Partition block_s1, const PllSplit& s2, const Partition block_s2) const {
         double pcl = phylomath::clusteringProbability(s1, block_s1, s2, block_s2);
@@ -143,7 +156,7 @@ class MCI : public GeneralizedMetric {
 };
 
 
-class RF : public Metric {
+class RFMetric : public Metric {
 public:
   virtual double distanceOf(const PllSplitList& plist1, const PllSplitList& plist2, bool normalize) const override {
     size_t split_count1 = plist1.getSplitCount();
@@ -173,5 +186,9 @@ public:
 
   virtual std::string name() const override {
     return "RF";
+  }
+
+  MetricSpec specifier() const override {
+    return RF;
   }
 };

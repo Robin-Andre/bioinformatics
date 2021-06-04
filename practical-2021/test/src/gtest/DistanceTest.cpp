@@ -3,6 +3,7 @@
 #include "../../../src/io/RFDataReader.hpp"
 #include "../../../src/io/RFDataReader.hpp"
 #include "../../../src/io/TreeReader.hpp"
+#include "../../../src/io/IOData.hpp"
 
 class DistanceTest : public testing::Test {
 protected:
@@ -13,6 +14,7 @@ to be adjusted.
 std::string current_data_dir = "../test/res/data/";
 std::string current_ref_dir = "../test/res/reference_results/";
 float epsilon = 0.001;
+RFMetric rf;
 
 /*Method to reduce code complexity :)
 */
@@ -21,9 +23,9 @@ void execute_test(const std::string& test_file) {
     ensure_no_bitmask_needed(test_file);
 }
 void run_test(const std::string& test_file) {
-    RF rf;
-    RFData results = GeneralizedRFDistance::computeDistances(TreeReader::readTreeFile(current_data_dir + test_file), rf, false);
-    ASSERT_EQ(results, RAXMLReader::read(current_ref_dir + test_file));
+  io::IOData result = GeneralizedRFDistance::computeDistances(TreeReader::readTreeFile(current_data_dir + test_file), rf, false);
+  io::IOData reference = RAXMLReader::read(current_ref_dir + test_file);
+    ASSERT_EQ(result, reference);
 }
 /*I am still convinced that the bitmask of the PllSplits is weird so I checked that no PllSplit
    requires that mask.

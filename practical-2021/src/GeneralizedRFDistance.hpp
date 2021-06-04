@@ -4,7 +4,8 @@ extern "C" {
 #include "libpll/pll_tree.h"
 }
 #include "datastructures/PllSplits.hpp"
-#include "RFData.hpp"
+#include "datastructures/PllTree.hpp"
+#include "io/IOData.hpp"
 #include "Metric.hpp"
 #include <vector>
 #include <iostream>
@@ -13,7 +14,7 @@ extern "C" {
 class GeneralizedRFDistance {
 public:
 
-  static RFData computeDistances(const std::vector<PllTree>& trees, const Metric& metric, bool normalize) {
+  static io::IOData computeDistances(const std::vector<PllTree>& trees, const Metric& metric, bool normalize) {
     size_t tree_count = trees.size();
     assert(tree_count > 0);
     size_t tip_count = trees[0].getTipCount();
@@ -24,23 +25,36 @@ public:
       assert(tree.getTipCount() == PllSplit::getTipCount());
       tree_splits.emplace_back(PllSplitList(tree));
     }
-    std::vector<double> distances;
+    io::IOData result;
+    result.split_score_calc = metric.specifier();
+    result.mean_dst = 0;
+    result.number_of_unique_trees = tree_count;
+    result.pairwise_distance_mtx = std::vector<std::vector<double>>(tree_count, std::vector<double>());
+    //result.tree_count = tree_count;
     double dist = 0;
-    size_t unique_count = trees.size();
     bool is_unique = true;
-    for(size_t i = 0; i < trees.size(); ++i){
+    for(size_t i = 0; i < tree_count; ++i){
       is_unique = true;
-      for(size_t j = i + 1; j < trees.size(); ++j){
+      std::vector<double> distances;
+      for(size_t j = i; j < tree_count; ++j){
         dist = metric.distanceOf(tree_splits[i], tree_splits[j], normalize);
         //TODO: Check near 0 because of numerical issues
-        if (dist == 0 && is_unique){
+        if (i != j && dist == 0 && is_unique){
           is_unique = false;
-          --unique_count;
+          --result.number_of_unique_trees;
         }
-        distances.emplace_back(dist);
+        result.pairwise_distance_mtx[j].emplace_back(dist);
+        if(i != j){
+          result.mean_dst += dist;
+        }
       }
+
     }
-    return RFData(tree_count, tip_count, unique_count, distances, metric.name() == "RF");
+    result.mean_dst = result.mean_dst  / ((tree_count * (tree_count - 1))/2);
+    if (metric.specifier() == RF) {
+      result.mean_dst = result.mean_dst  / (2*(tip_count-3));
+    }
+    return result;
   }
 
 };
