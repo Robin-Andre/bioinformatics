@@ -12,9 +12,9 @@
 class MaximumMatcherTest : public testing::Test {
 protected:
   std::string current_data_dir = "../test/res/data/";
-  MSI msi;
-  SPI spi;
-  MCI mci;
+  MSIMetric msi;
+  SPIMetric spi;
+  MCIMetric mci;
 
   void checkAllPermutations(std::vector<std::vector<double>> weights, double maximum){
     double empirical_max = 0;
@@ -101,7 +101,10 @@ TEST_F(MaximumMatcherTest, test_unequal_msi) {
   PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "heads/24")[3];
   PllSplitList s1 = PllSplitList(tree1);
   PllSplitList s2 = PllSplitList(tree2);
+<<<<<<< HEAD
   MSI metric_msi; 
+=======
+>>>>>>> b451e76d51435b777f45f9a80c66f3c42bba920d
   PllSplit::setTipCount(tree1.getTipCount());
   std::vector<std::vector<double>> similarities = msi.similaritiesForSplits(s1, s2);
   for(unsigned i = 0; i < similarities.size(); ++i) {

@@ -4,9 +4,9 @@
 class DistanceUtilTest : public testing::Test {
   protected: //std::string current_test_dir = "../test/res/data/heads/BS/";
   std::string current_data_dir = "../test/res/data/";
-  MSI msi;
-  SPI spi;
-  MCI mci;
+  MSIMetric msi;
+  SPIMetric spi;
+  MCIMetric mci;
   virtual void SetUp() {
 
   }

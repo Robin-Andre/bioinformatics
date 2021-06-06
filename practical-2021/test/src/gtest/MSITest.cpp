@@ -9,7 +9,7 @@ TEST_F(MSITest, test_identity) {
   PllSplit::setTipCount(6);
   std::vector<size_t> part1 = {0, 3, 4};
   PllSplit split = TestUtil::createSplit(part1);
-  MSI metric_msi;
+  MSIMetric metric_msi;
   EXPECT_DOUBLE_EQ(metric_msi.evaluate(split, split), phylomath::h(3,3));
   free(split());
 }
@@ -38,7 +38,7 @@ TEST_F(MSITest, test_msi) {
   PllSplit split_a = TestUtil::createSplit(part1_a);
   std::vector<size_t> part1_b = {0, 3, 4, 5, 6, 7};
   PllSplit split_b = TestUtil::createSplit(part1_b);
-  MSI metric_msi;
+  MSIMetric metric_msi;
   EXPECT_DOUBLE_EQ(metric_msi.evaluate(split_a, split_b), -std::log2(1.0d/21));
   free(split_a());
   free(split_b());
@@ -49,7 +49,7 @@ TEST_F(MSITest, test_luise_graph) {
   PllSplit split_2 = TestUtil::createSplit({0, 1, 4, 5, 6, 7});
   PllSplit split_3 = TestUtil::createSplit({0, 1, 2, 3, 6, 7});
   PllSplit split_4 = TestUtil::createSplit({0, 1, 2, 3, 4, 5});
-  MSI metric_msi;
+  MSIMetric metric_msi;
   double result = std::log2(3);
   EXPECT_DOUBLE_EQ(metric_msi.evaluate(split_1, split_2), result);
   EXPECT_DOUBLE_EQ(metric_msi.evaluate(split_1, split_3), result);

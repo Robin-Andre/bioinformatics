@@ -3,8 +3,8 @@
 #include "../enums.hpp"
 
 size_t PllSplit::tip_count = 0;
+pll_split_base_t PllSplit::bitmask_for_unused_bits = 0;
 
-/*  This is an example function. It is _slow_. You should replace it */
 size_t PllSplit::popcount() const{
   assert(splitValid());
   size_t popcount = 0;
@@ -41,9 +41,9 @@ uint32_t PllSplit::bitExtract(size_t bit_index) const {
   return (split_part & (1u << computeMinorIndex(bit_index))) >> computeMinorIndex(bit_index);
 }
 //TODO inline and move to header
-size_t PllSplit::partitionSizeOf (Partition block) const {
+size_t PllSplit::partitionSizeOf (partition_t block) const {
   assert(splitValid());
-  return (block == Block_A) ? this->popcount() : PllSplit::getTipCount() - this->popcount();
+  return block ? this->popcount() : PllSplit::getTipCount() - this->popcount();
 }
 
 //TODO think about rewriting this/other to A/B?
@@ -59,7 +59,7 @@ size_t PllSplit::intersectionSize(const PllSplit& other, partition_t partition_t
     count += basePopcount((_split[i] ^ this_mask) & (other()[i] ^ other_mask));
   }
   count += basePopcount((_split[split_len - 1] ^ this_mask) & (other()[split_len - 1] ^ other_mask)
-                        & bitmaskForUnusedBits());
+                        & PllSplit::bitmask_for_unused_bits);
   return count;
 }
 
@@ -69,27 +69,8 @@ size_t PllSplit::basePopcount(pll_split_base_t val) const {
   return std::bitset<32>(val).count();
 }
 
-//DONE find out why this is needed / why plllib does fail
-/* Robin: It seems that the second condition is failing when the PllSplitList Object is destroyed
-   but a copy of the underlying splits i.e. a vector of splits has been made and it worked on.
-   One theory is pointer management. (or the lack thereof)
-*/
-//TODO: Apply bitmask to last register
 bool PllSplit::splitValid() const {
-  //This condition sometimes fails on the splits returned from pll lib, needs to be examined!
-  //return (_split != nullptr) && !(_split[0] & ~bitmaskForUnusedBits()) && _split[0] & 1u;
-  return (_split != nullptr) &&  _split[0] & 1u;
-}
-//TODO: Save as field, set together with tipcount
-pll_split_base_t PllSplit::bitmaskForUnusedBits() const {
-  pll_split_base_t bit_mask = 0;
-  size_t offset = PllSplit::getTipCount() - ((PllSplit::getSplitLen() - 1) * computSplitBaseSize());
-  //TODO@ Robin, do one shift instead of a loop
-  for(size_t i = 0; i < offset; ++i){
-    bit_mask |= (1 << i);
-  }
-  //bit_mask = (pll_split_base_t) (std::pow(2, offset) - 1); //This is hacky but might work
-  return bit_mask;
+  return (_split != nullptr) && !(_split[PllSplit::getSplitLen() - 1] & ~PllSplit::bitmask_for_unused_bits) && _split[0] & 1u;
 }
 
 

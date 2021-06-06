@@ -9,7 +9,7 @@ TEST_F(SPITest, test_identity) {
   PllSplit::setTipCount(6);
   std::vector<size_t> part1 = {0, 3, 4};
   PllSplit split = TestUtil::createSplit(part1);
-  SPI metric_spi;
+  SPIMetric metric_spi;
   EXPECT_DOUBLE_EQ(metric_spi.evaluate(split, split), phylomath::h(3,3));
   free(split());
 }
@@ -42,7 +42,7 @@ TEST_F(SPITest, test_incompatible_splits) {
   PllSplit split_a = TestUtil::createSplit(part1_a);
   std::vector<size_t> part1_b = {0, 2};
   PllSplit split_b = TestUtil::createSplit(part1_b);
-  SPI metric_spi;
+  SPIMetric metric_spi;
   EXPECT_DOUBLE_EQ(metric_spi.evaluate(split_a, split_b), 0);
   free(split_a());
   free(split_b());
@@ -61,7 +61,7 @@ TEST_F(SPITest, test_special) {
   PllSplit split_a = TestUtil::createSplit(part1_a);
   std::vector<size_t> part1_b = {0, 1, 2, 3};
   PllSplit split_b = TestUtil::createSplit(part1_b);
-  SPI metric_spi;
+  SPIMetric metric_spi;
   double h_a = -std::log2(15.0/105);
   double h_b = -std::log2(15.0/105);
   double h_a_intersect_b = -std::log2(3.0/105);
@@ -76,7 +76,7 @@ TEST_F(SPITest, test_spi) {
   PllSplit split_a = TestUtil::createSplit(part1_a);
   std::vector<size_t> part1_b = {0, 1, 2};
   PllSplit split_b = TestUtil::createSplit(part1_b);
-  SPI metric_spi;
+  SPIMetric metric_spi;
   EXPECT_DOUBLE_EQ(metric_spi.evaluate(split_a, split_b), -std::log2(1.0d/7) - std::log2(3.0d/35) + std::log2(1.0d/35));
   free(split_a());
   free(split_b());
@@ -92,7 +92,7 @@ TEST_F(SPITest, test_luise_graph) {
   PllSplit split_2 = TestUtil::createSplit({0, 1, 4, 5, 6, 7});
   PllSplit split_3 = TestUtil::createSplit({0, 1, 2, 3, 6, 7});
   PllSplit split_4 = TestUtil::createSplit({0, 1, 2, 3, 4, 5});
-  SPI metric_spi;
+  SPIMetric metric_spi;
   double expected_probability_single = 1.0 / 11;
   double expected_probability_intersect = 1.0 / 99;
   double result = -2 * std::log2(expected_probability_single) + std::log2(expected_probability_intersect);

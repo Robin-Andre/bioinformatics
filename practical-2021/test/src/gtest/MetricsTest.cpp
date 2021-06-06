@@ -153,7 +153,7 @@ TEST_F(MetricsTest, rf_test) {
             };
   PllSplitList trd_splitlist = TestUtil::createSplitList(trd_part1s);
 
-  RF rf;
+  RFMetric rf;
   ASSERT_EQ(rf.distanceOf(fst_splitlist, snd_splitlist, false), 6);
   ASSERT_EQ(rf.distanceOf(snd_splitlist, fst_splitlist, false), 6);
 

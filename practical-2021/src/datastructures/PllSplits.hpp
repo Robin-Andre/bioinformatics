@@ -11,6 +11,8 @@ extern "C" {
 #include <immintrin.h>
 #include <bitset>
 #include <algorithm>
+#include <sstream>
+#include <string>
 #include "../enums.hpp"
 
 
@@ -52,6 +54,12 @@ public:
 
   static void setTipCount(size_t val) {
     PllSplit::tip_count = val;
+    pll_split_base_t bit_mask = 0;
+    size_t offset = val - ((PllSplit::getSplitLen() - 1) * computSplitBaseSize());
+    for(size_t i = 0; i < offset; ++i){
+      bit_mask |= (1 << i);
+    }
+    PllSplit::bitmask_for_unused_bits = bit_mask;
   }
 
   static size_t getTipCount() {
@@ -65,21 +73,23 @@ public:
     return split_len;
   }
 
-  size_t partitionSizeOf (Partition block) const;
+  size_t partitionSizeOf (partition_t block) const;
   size_t intersectionSize(const PllSplit& other, partition_t partition_this, partition_t partition_other) const;
   bool splitValid() const;
 
 
   //TODO maybe toString or move to I/O
-  void printSplit() const {
-    std::cout << this << ": "<<_split << ": ";
+  std::string toString() const {
+    std::stringstream ss;
+    ss << this << ": " << _split << ": ";
     size_t split_len = PllSplit::getSplitLen();
     for (size_t i = 0; i < split_len; ++i){
       auto str = std::bitset<32>(_split[i]).to_string();
       std::reverse(str.begin(), str.end()); //Robin: I don't like the
-      std::cout << str << "|";
+      ss << str << "|";
     }
-  std::cout << std::endl;
+    ss << std::endl;
+    return ss.str();
   }
 
 
@@ -105,7 +115,9 @@ private:
   size_t basePopcount(pll_split_base_t count) const;
 
   pll_split_t _split = nullptr;
+
   static size_t tip_count;
+  static pll_split_base_t bitmask_for_unused_bits;
 };
 //bool operator == (const PllSplit & p1, const PllSplit& p2);
 class PllSplitList {
@@ -132,13 +144,14 @@ public:
   const std::vector<PllSplit>& getSplits() const {return _splits;}
   size_t getSplitCount() const {return _splits.size();}
 
-  // Reenable for print debugging
-  void printSplits() const {
-    std::cout << "-------------------------"<< std::endl;
+  std::string toString() const {
+    std::stringstream ss;
+    ss <<  "-------------------------" << std::endl;;
     for(size_t i = 0; i < _splits.size(); ++i){
-      _splits[i].printSplit();
+      ss << _splits[i].toString();
     }
-    std::cout << "-------------------------"<< std::endl;
+    ss << "-------------------------" << std::endl;
+    return ss.str();
   }
 
 

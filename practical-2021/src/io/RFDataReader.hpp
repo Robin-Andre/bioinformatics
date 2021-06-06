@@ -4,18 +4,18 @@
 #include <iostream>
 #include "../datastructures/PllTree.hpp"
 #include "CommandLineOptions.hpp"
-#include "IOData.h"
-#include "../RFData.hpp"
+#include "IOData.hpp"
+#include "IOUtil.hpp"
 
 class RFDataReader {
 public:
-  static RFData read(const std::string& path);
+  static io::IOData read(const std::string& path);
 
 };
 
 class RAXMLReader : public RFDataReader {
 public:
-  static RFData read(const std::string& path) {
+  static io::IOData read(const std::string& path) {
     std::vector<double> distances;
     std::fstream res_file;
     res_file.open(path + "/distances"  ,std::ios::in);
@@ -54,7 +54,13 @@ public:
     } else {
       throw (path +  "/info not found!");
     }
-    return RFData(std::stoi(prefix_matches[0]), std::stoi(prefix_matches[1]), std::stod(prefix_matches[2]), distances);
+    io::IOData data;
+    data.mean_dst = std::stod(prefix_matches[2]);
+    data.metric = "RF";
+    data.number_of_unique_trees = std::stoi(prefix_matches[1]);
+    data.pairwise_distance_mtx = IOUtil::vectorToHalfMatrix(distances, std::stoi(prefix_matches[0]));
+    return data;
+
   }
 
 private:
@@ -97,7 +103,7 @@ private:
 
 class JSONReader : public RFDataReader {
 public:
-  static RFData read(const std::string& path) {
+  static io::IOData read(const std::string& path) {
     io::IOData io_data;
     std::fstream res_file;
     res_file.open(path + "/results.json", std::ios::in);
@@ -110,7 +116,7 @@ public:
       }
       nlohmann::json jsonIn = nlohmann::json::parse(json_str);
       io::from_json(jsonIn, io_data);
-      return RFData(io_data);
+      return io_data;
     } else {
       throw ("Cannot read JSON from " + path  + "/results.json");
     }
@@ -122,7 +128,7 @@ public:
 
 class MatrixReader : RFDataReader {
 public:
-  static RFData read(const std::string& path) {
+  static io::IOData read(const std::string& path) {
     std::fstream res_file;
     res_file.open(path, std::ios::in);
     if (res_file.is_open()){
@@ -140,7 +146,12 @@ public:
         matrix.push_back(row);
       }
       res_file.close();
-      return RFData(matrix);
+      io::IOData data;
+      //data.split_score_calc = RF;
+      data.number_of_unique_trees = IOUtil::calculateUniqueCount(matrix);
+      data.pairwise_distance_mtx = IOUtil::fullMatrixToHalfMatrix(matrix);
+      data.mean_dst = IOUtil::calculateAverageDistance(data.pairwise_distance_mtx);
+      return data;
     } else {
       throw (path +  " not found!");
     }

@@ -3,7 +3,7 @@ target_include_directories(json_lib INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_
 
 add_library(rf_io_lib
         IOData.cpp
-        IOData.h
+        IOData.hpp
         CommandLineOptions.hpp
         RFDataReader.hpp
         RFDataWriter.hpp
