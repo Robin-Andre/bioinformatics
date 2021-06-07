@@ -9,9 +9,9 @@ struct Config {
   std::string input_file_path;
   std::string output_file_path;
   Metric* metric;
-
+  //As long as there is a raw pointer this remove is necessary when config runs out of scope
   void remove() {
-    free(metric);
+    delete metric;
   }
 };
 

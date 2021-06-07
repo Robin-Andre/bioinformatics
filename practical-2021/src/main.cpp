@@ -13,7 +13,7 @@ int main(int argc, char* argv[]) {
     io::IOData result = GeneralizedRFDistance::computeDistances(TreeReader::readTreeFile(config.input_file_path), *(config.metric), false);
     std::cout << result.toString();
     if(config.output_file_path.size() <= 1) {
-      std::cout << "The Output was not properly specified.. no file will be written\n";
+      std::cout << "The Output was not properly specified. no output file will be written\n";
       config.remove();
       exit(0);
     }
