@@ -85,11 +85,11 @@ TEST_F(GeneralizedRFTest, 24taxa) {
   execute_test("heads/24", metric_spi);
   execute_test("heads/24", metric_mci);
 }
-/*TEST_F(GeneralizedRFTest, 125taxa) {
+TEST_F(GeneralizedRFTest, 125taxa) {
   execute_test("heads/125", metric_msi);
   execute_test("heads/125", metric_spi);
   execute_test("heads/125", metric_mci);
-}
+}/*
 TEST_F(GeneralizedRFTest, 141taxa) {
   execute_test("heads/141", metric_msi);
   execute_test("heads/141", metric_spi);

@@ -18,12 +18,12 @@ class DistanceUtilTest : public testing::Test {
   }
 };
 TEST_F(DistanceUtilTest, distances_example_from_slideshow_spi) {
-        PllSplit::setTipCount(6);
-    PllTree tree1 = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[0];
-    PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[1];
-    PllSplitList splits1 = PllSplitList(tree1);
-    PllSplitList splits2 = PllSplitList(tree2);
-    tree2.alignNodeIndices(tree1);
+  PllSplit::setTipCount(6);
+  PllTree tree1 = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[0];
+  PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[1];
+  PllSplitList splits1 = PllSplitList(tree1);
+  PllSplitList splits2 = PllSplitList(tree2);
+  tree2.alignNodeIndices(tree1);
   std::vector<std::vector<double>> result = spi.similaritiesForSplits(splits1, splits2);
   double h_standard = phylomath::h(2, 4);
   double h_i1 = phylomath::h(3, 3);
@@ -73,11 +73,11 @@ TEST_F(DistanceUtilTest, maximumtest) {
   PllSplitList splits2 = PllSplitList(tree2);
   tree2.alignNodeIndices(tree1);
   double result = msi.maximumValue(splits1, splits2);
-  std::cout << "maximumMSI: " << result << "\n";
+  double expected_info_content = 2 * std::log2(7) + std::log2(35.0 / 3);
+  EXPECT_DOUBLE_EQ(result, expected_info_content);
   result = spi.maximumValue(splits1, splits2);
-  std::cout << "maximumSPI: " << result << "\n";
+  EXPECT_DOUBLE_EQ(result, expected_info_content);
   result = mci.maximumValue(splits1, splits2);
-  std::cout << "maximumMCI: " << result << "\n";
-
-
+  double expected_entropy = 2 * (std::log2(3.0) / 3 + (2.0 / 3) * std::log2(3.0 / 2)) + 1;
+  EXPECT_DOUBLE_EQ(result, expected_entropy);
 }

@@ -89,13 +89,13 @@ TEST_F(MaximumMatcherTest, test_unequal_mci) {
 
   std::vector<size_t> match_results = MaximumMatcher::match_vector(similarities);
   double match = MaximumMatcher::match(similarities);
-  for(unsigned i = 0; i < match_results.size(); ++i) {
-    std::cout << match_results[i] << " ";
-    //std::cout << "Node: " << i << " -> " << match_results[i] << "\n";
-  }
-  std::cout << "\nValue: " << match << "\n";
+  EXPECT_NEAR(match, 10.6288, 0.0001);
 }
-TEST_F(MaximumMatcherTest, test_unequal_msi) {
+
+
+//This test was for debugging the normalization values, we can first reenable it as soon as alexis speaks
+//How to do the normalization.
+/*TEST_F(MaximumMatcherTest, test_unequal_msi) {
 
   PllTree tree1 = TreeReader::readTreeFile(current_data_dir + "heads/24")[0];
   PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "heads/24")[3];
@@ -121,4 +121,4 @@ TEST_F(MaximumMatcherTest, test_unequal_msi) {
   std::cout << "Fraction: " << match / maximum << "\n";
   std::cout << "Normalized(x2): " << 2*(maximum - match) << "\n";
   std::cout << "Double normalized(x2) " <<  2*(maximum - match) / (2*maximum) << "\n";
-}
+}*/

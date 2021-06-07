@@ -12,11 +12,15 @@ int main(int argc, char* argv[]) {
     std::cout << "Metric Used: " << config.metric->name() <<"\n";
     io::IOData result = GeneralizedRFDistance::computeDistances(TreeReader::readTreeFile(config.input_file_path), *(config.metric), false);
     std::cout << result.toString();
+
+
     if(config.output_file_path.size() <= 1) {
       std::cout << "The Output was not properly specified. no output file will be written\n";
       config.remove();
       exit(0);
     }
+
+
     RAXMLWriter::write(config.output_file_path, result);
     config.remove();
 }
