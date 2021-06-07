@@ -7,7 +7,7 @@
 class MaximumMatcher {
 public:
   static int convert_weight(double weight) {
-    return (int) (-256 * (weight + 0.5));
+    return (int) ((-256 * weight) + 0.5);
   }
   static std::vector<size_t> match_vector(const std::vector<std::vector<double>>& weights) {
     std::vector<size_t> matching_vector(weights.size());
