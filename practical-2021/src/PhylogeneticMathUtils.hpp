@@ -82,7 +82,8 @@ namespace phylomath {
     return -1 * std::log2(conversion);
   }
   inline double h(const PllSplit& s) {
-    assert(s.partitionSizeOf(Block_A) > 0 && s.partitionSizeOf(Block_B) > 0); //There should never be a partition where one block is empty
+    //There should never be a partition where one block is empty
+    assert(s.partitionSizeOf(Block_A) > 0 && s.partitionSizeOf(Block_B) > 0); 
     return h(s.partitionSizeOf(Block_A), s.partitionSizeOf(Block_B));
   }
   //This method is a mockup of the calculation of phylogenetic probability of two splits
@@ -90,14 +91,17 @@ namespace phylomath {
   //The calculation will work even if they are not compatible but the result is entirely useless
   inline double h(size_t taxa_partition1, size_t taxa_partition2, size_t alltaxa) {
     assert(taxa_partition1 >= 2 && taxa_partition2 >= 2);
-    assert(taxa_partition1 + taxa_partition2 < alltaxa); /* If the partitions are compatible and the splits nonequal then
+    assert(taxa_partition1 + taxa_partition2 < alltaxa); 
+    /* If the partitions are compatible and the splits nonequal then
     there has to be at least one taxa which is in neither partition */
     mpq_t temporary_result;
     mpq_init(temporary_result);
     size_t a, b, c, x;
     a = 2 * taxa_partition1 - 3;
     b = 2 * taxa_partition2 - 3;
-    c = 2 * (alltaxa - taxa_partition1 - taxa_partition2) - 1; //This calculates the remaining tree (which should be not empty)
+    //(c) calculates the remaining tree (which should NOT be empty)
+    c = 2 * (alltaxa - taxa_partition1 - taxa_partition2) - 1; 
+    
     x = 2 * alltaxa - 5;
     assert(a > 0 && b > 0 && c > 0 && x > 0);
     factorialQuotient(temporary_result, a, b, c, x);
@@ -115,7 +119,6 @@ namespace phylomath {
       return clusteringProbability(s.partitionSizeOf(block));
   }
   inline double clusteringProbability(const PllSplit& s1, Partition block_1, const PllSplit& s2, Partition block_2) {
-    //return clusteringProbability(s1.partitionSize(partition1) + s2.partitionSize(partition2) - s1.intersectionSize(s2, partition1, partition2));
     return clusteringProbability(s1.intersectionSize(s2, block_1, block_2));
   }
   inline double entropy(const PllSplit& split) {

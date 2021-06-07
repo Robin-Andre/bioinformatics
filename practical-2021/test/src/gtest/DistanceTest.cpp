@@ -23,7 +23,8 @@ void execute_test(const std::string& test_file) {
     ensure_no_bitmask_needed(test_file);
 }
 void run_test(const std::string& test_file) {
-  io::IOData result = GeneralizedRFDistance::computeDistances(TreeReader::readTreeFile(current_data_dir + test_file), rf, false);
+  io::IOData result = GeneralizedRFDistance::computeDistances(
+                      TreeReader::readTreeFile(current_data_dir + test_file), rf, false);
   io::IOData reference = RAXMLReader::read(current_ref_dir + test_file);
     ASSERT_EQ(result, reference);
 }
@@ -42,12 +43,9 @@ void ensure_no_bitmask_needed(const std::string& test_file) {
     //this shit is broken
     //std::vector<PllSplit> splits = PllSplitList(test_tree).getSplits();
 
-    //splits[0].printSplit();
     PllSplit::setTipCount(test_tree.getTipCount());
     for(size_t i = 0; i < splits.size(); ++i) {
       ASSERT_EQ(splits[i].bitExtract(0), 1); //First bit is always 1
-      //std::cout << PllSplit::getTipCount() << " " << PllSplit::getSplitLen() << " " << sizeof(pll_split_base_t) * 8 << "\n";
-      //splits[i].printSplit();
       for(size_t j = test_tree.getTipCount(); j < PllSplit::getSplitLen() * sizeof(pll_split_base_t) * 8; ++j) {
         ASSERT_EQ(splits[i].bitExtract(j), 0);
       }

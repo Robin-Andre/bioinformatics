@@ -5,7 +5,7 @@ class TestUtil {
 
 public:
   //I am not happy with this construction at all, why can't we have this simply in PLLsplit for starters
-  static PllSplit createSplit(std::vector<size_t> part1) {
+  static PllSplit createSplit(const std::vector<size_t>& part1) {
     //if (part1[0] != 0) throw "In every split, 0 must be in Partition 1, hence it must hold that part1[0]==0"; 
     auto split_bits = (pll_split_t)calloc(PllSplit::getSplitLen(), sizeof(pll_split_base_t));
     setBits(split_bits, part1);

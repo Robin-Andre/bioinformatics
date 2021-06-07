@@ -16,7 +16,8 @@ public:
     assert(i < n && j < n);
     return elements[arrayPos(std::min(i,j), std::max(i, j))];
   }
-
+  //@Softwipe unused function, uncomment for printing
+  /*
   void print() {
     for(size_t i = 0; i < n; ++i){
       for(size_t j = i; j < n; ++j){
@@ -25,9 +26,9 @@ public:
       }
       std::cout << std::endl;
     }
-  }
-
-  std::vector<T> getAsVector() const {return elements;}
+  }*/
+  // @Softwipe unused function
+  //std::vector<T> getAsVector() const {return elements;}
 private:
 
   //determines position in linear array, make sure that i < j

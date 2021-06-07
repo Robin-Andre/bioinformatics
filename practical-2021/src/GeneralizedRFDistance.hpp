@@ -31,11 +31,11 @@ public:
     result.number_of_unique_trees = tree_count;
     result.pairwise_distance_mtx = std::vector<std::vector<double>>(tree_count, std::vector<double>());
     //result.tree_count = tree_count;
-    double dist = 0;
-    bool is_unique = true;
+    double dist; // @Softwipe complained that the value was unused if another error comes be annoyed
+    bool is_unique; // @Softwipe same thing
     for(size_t i = 0; i < tree_count; ++i){
       is_unique = true;
-      std::vector<double> distances;
+      //std::vector<double> distances; @Softwipe not used but might be important for you so still here
       for(size_t j = i; j < tree_count; ++j){
         dist = metric.distanceOf(tree_splits[i], tree_splits[j], normalize);
         //TODO: Check near 0 because of numerical issues

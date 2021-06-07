@@ -73,7 +73,7 @@ private:
       }
       return std::stoi(item);
   }
-
+  /* @Softwipe unused function 
   static float getRelativeDistanceFromString(const std::string &line) {
       std::istringstream iss (line);
       std::string item;
@@ -82,7 +82,7 @@ private:
           i++;
       }
       return std::stof(item);
-  }
+  } */
 
 
   static std::string parseAfterPrefix(const std::string& line, const std::string& prefix){

@@ -10,7 +10,8 @@ int main(int argc, char* argv[]) {
     io::Config config = io::parseCommandLineOptions(argc, argv);
     std::cout << "Input File Path: " << config.input_file_path  << std::endl;
     std::cout << "Metric Used: " << config.metric->name() <<"\n";
-    io::IOData result = GeneralizedRFDistance::computeDistances(TreeReader::readTreeFile(config.input_file_path), *(config.metric), false);
+    io::IOData result = GeneralizedRFDistance::computeDistances(
+                        TreeReader::readTreeFile(config.input_file_path), *(config.metric), false);
     std::cout << result.toString();
 
 

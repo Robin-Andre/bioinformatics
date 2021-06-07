@@ -10,7 +10,7 @@ size_t PllSplit::popcount() const{
   size_t popcount = 0;
   size_t split_len = PllSplit::getSplitLen();
   for(size_t i = 0; i < split_len; ++i){
-    popcount+=basePopcount(_split[i]);
+    popcount += basePopcount(_split[i]);
   }
   return popcount;
 }
@@ -47,12 +47,13 @@ size_t PllSplit::partitionSizeOf (partition_t block) const {
 }
 
 //TODO think about rewriting this/other to A/B?
-size_t PllSplit::intersectionSize(const PllSplit& other, partition_t partition_this, partition_t partition_other) const {
+size_t PllSplit::intersectionSize(const PllSplit& other, 
+                                  partition_t partition_this, partition_t partition_other) const {
   assert(splitValid());
   assert(other.splitValid());
   size_t split_len = PllSplit::getSplitLen();
-  pll_split_base_t this_mask = partition_this ? 0 : ~0; //TODO explanatory text
-  pll_split_base_t other_mask = partition_other ? 0 : ~0;
+  pll_split_base_t this_mask = partition_this ? 0 : ~0u; //TODO explanatory text
+  pll_split_base_t other_mask = partition_other ? 0 : ~0u;
   size_t count = 0;
 
   for (size_t i = 0; i < split_len - 1; ++i){
@@ -70,7 +71,8 @@ size_t PllSplit::basePopcount(pll_split_base_t val) const {
 }
 
 bool PllSplit::splitValid() const {
-  return (_split != nullptr) && !(_split[PllSplit::getSplitLen() - 1] & ~PllSplit::bitmask_for_unused_bits) && _split[0] & 1u;
+  return (_split != nullptr) && !(_split[PllSplit::getSplitLen() - 1] 
+                                  & ~PllSplit::bitmask_for_unused_bits) && _split[0] & 1u;
 }
 
 

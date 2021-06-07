@@ -14,7 +14,7 @@ public:
 static std::vector<std::vector<double>> fullMatrixToHalfMatrix(const std::vector<std::vector<double>>& full) {
   std::vector<std::vector<double>> half(full.size(), std::vector<double>());
   for(size_t i = 0; i < full.size(); ++i){
-    assert(full[i].size() ==  full.size());
+    assert(full[i].size() == full.size());
     for(size_t j = i; j < full.size(); ++j){
       //assert(near(matrix[i][j], matrix[j][i]));
       half[j].emplace_back(full[j][i]);

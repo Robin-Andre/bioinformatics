@@ -99,8 +99,8 @@ struct IOData {
 		return false;
 	}
 
-
-
+    //This method is private and not referenced. For @Softwipe it is commented
+    /*
 	bool parse_pairwise_file(const std::string &distances_path,
 	                                 size_t num_taxa,
 	                                 std::vector<std::vector<double>> &res) {
@@ -124,7 +124,7 @@ struct IOData {
 			}
 		}
 		return true;
-	}
+	}*/
 
 	bool nearly_eq_floating(double a, double b) const {
 		auto absA = std::abs(a);

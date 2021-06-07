@@ -39,7 +39,7 @@ typedef bool partition_t;
  */
 class PllSplit {
 public:
-  PllSplit(pll_split_t s) : _split{s} {assert(splitValid());}
+  explicit PllSplit(pll_split_t s) : _split{s} {assert(splitValid());}
   PllSplit() {
     PllSplit((pll_split_t)calloc(PllSplit::getSplitLen(), sizeof(pll_split_base_t)));
   }
@@ -146,7 +146,7 @@ public:
 
   std::string toString() const {
     std::stringstream ss;
-    ss <<  "-------------------------" << std::endl;;
+    ss <<  "-------------------------" << std::endl;
     for(size_t i = 0; i < _splits.size(); ++i){
       ss << _splits[i].toString();
     }

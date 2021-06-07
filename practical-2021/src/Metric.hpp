@@ -8,6 +8,9 @@ class Metric {
     public:
     virtual double distanceOf(const PllSplitList& plist1, const PllSplitList& plist2, bool normalize) const = 0;
     virtual std::string name() const = 0;
+    virtual ~Metric() {
+
+    }
 };
 
 
@@ -15,8 +18,11 @@ class GeneralizedMetric : public Metric{
 public:
   virtual double evaluate(const PllSplit& s1, const PllSplit& s2) const = 0;
   virtual double maximum(const PllSplitList& plist1, const PllSplitList& plist2) const = 0;
+  virtual ~GeneralizedMetric() {
 
-  double distanceOf(const PllSplitList& first, const PllSplitList& second, bool normalize) const {
+    }
+
+  double distanceOf(const PllSplitList& first, const PllSplitList& second, bool normalize) const override {
     std::vector<std::vector<double>> similarities = similaritiesForSplits(first, second);
     double similarity = MaximumMatcher::match(similarities);
     return normalize ? distanceFromSimilarity(first, second, similarity) : similarity;
@@ -64,7 +70,9 @@ class MSIMetric : public GeneralizedMetric {
   std::string name() const override {
     return "MSI";
   }
+  ~MSIMetric() {
 
+  }
 };
 
 class SPIMetric : public GeneralizedMetric {
@@ -95,7 +103,7 @@ class SPIMetric : public GeneralizedMetric {
 
   }
   double maximum(const PllSplitList& plist1, const PllSplitList& plist2) const override {
-    double result = 0;
+    double result = 0.0;
     for(unsigned i = 0; i < plist1.getSplitCount(); ++i) {
       result += phylomath::h(plist1[i]);
       result += phylomath::h(plist2[i]);
@@ -105,6 +113,9 @@ class SPIMetric : public GeneralizedMetric {
 
   std::string name() const override {
     return "SPI";
+  }
+  ~SPIMetric() {
+
   }
 
 };
@@ -118,7 +129,7 @@ class MCIMetric : public GeneralizedMetric {
              + helper(s1, Block_A, s2, Block_B) + helper(s1, Block_B, s2, Block_B);
     }
     double maximum(const PllSplitList& plist1, const PllSplitList& plist2) const override {
-      double result;
+      double result = 0.0;
       //TODO it feels weird to A) Recalculate this every time. B) not being able to call it on a single splitlist
       for(size_t i = 0; i < plist1.getSplitCount(); ++i){
         result += phylomath::entropy(plist1[i]);
@@ -129,6 +140,10 @@ class MCIMetric : public GeneralizedMetric {
 
     std::string name() const override {
       return "MCI";
+    }
+    
+    ~MCIMetric() {
+
     }
 
 

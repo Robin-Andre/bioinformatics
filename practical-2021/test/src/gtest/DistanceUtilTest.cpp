@@ -7,12 +7,13 @@ class DistanceUtilTest : public testing::Test {
   MSIMetric msi;
   SPIMetric spi;
   MCIMetric mci;
-  virtual void SetUp() {
+  //@Softwipe, not used so not enabled
+  /*virtual void SetUp() {
 
   }
   virtual void TearDown() {
 
-  }
+  }*/
   double evaluation(double h1, double h2, double h_shared) {
       return h1 + h2 - h_shared;
   }

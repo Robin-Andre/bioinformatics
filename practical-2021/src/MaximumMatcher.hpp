@@ -14,15 +14,15 @@ public:
     operations_research::SimpleLinearSumAssignment assignment;
     for (size_t i = 0; i < weights.size(); ++i) {
       for(size_t j = 0; j < weights[i].size(); ++j) {
-        assignment.AddArcWithCost(i, j,  convert_weight(weights[i][j]));
+        assignment.AddArcWithCost((int)i, (int)j,  convert_weight(weights[i][j])); //@Softwipe, added explicit conversion
+        //Might not be the solution
       }
     }
-    double result = 0;
     if (assignment.Solve() == operations_research::SimpleLinearSumAssignment::OPTIMAL) {
       //printf("A perfect matching exists.\n");
       //printf("The best possible cost is %d.\n", assignment.OptimalCost());
       //printf("An optimal assignment is:\n");
-      for (int node = 0; node < assignment.NumNodes(); ++node) {
+      for (size_t node = 0; node < assignment.NumNodes(); ++node) {
 
         /*printf("left node %d assigned to right node %d with cost %i (%i).\n",
         node,

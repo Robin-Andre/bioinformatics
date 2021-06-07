@@ -19,7 +19,6 @@ protected:
   void checkAllPermutations(std::vector<std::vector<double>> weights, double maximum){
     double empirical_max = 0;
     size_t n = weights.size();
-    bool found = false;
     size_t assignment[n];
     for(size_t i = 0; i < n; ++i){
       assignment[i] = i;
@@ -87,7 +86,7 @@ TEST_F(MaximumMatcherTest, test_unequal_mci) {
   PllSplit::setTipCount(tree1.getTipCount());
   std::vector<std::vector<double>> similarities = mci.similaritiesForSplits(s1, s2);
 
-  std::vector<size_t> match_results = MaximumMatcher::match_vector(similarities);
+  //std::vector<size_t> match_results = MaximumMatcher::match_vector(similarities); We cannot trivially test matchings
   double match = MaximumMatcher::match(similarities);
   EXPECT_NEAR(match, 10.6288, 0.0001);
 }
