@@ -28,7 +28,7 @@ static Metric* metricFromString(const std::string& s) {
   else if(s == "MSI") {
     return new MSIMetric();
   }
-  std::cerr << "Metric misspelled: exiting\n";
+  std::cerr << "Metric misspelled: " << s <<  " exiting...\n";
   exit(1);
 }
 
@@ -39,18 +39,16 @@ static Config parseCommandLineOptions(int argc, char* argv[]){
     while((opt = getopt(argc, argv, "i:o:m:" )) != -1) {
       switch(opt) {
           case 'i':
-            printf("parameter 'i' specified with the value %s\n", optarg);
             config.input_file_path = optarg;
             break;
           case 'o':
-            printf("parameter 'o' specified with the value %s\n", optarg);
             config.output_file_path = optarg;
             break;
           case 'm': 
             metric_name = optarg;
             break;
           case '?':
-            std::cout << "Unknown Parameter\n";
+            std::cout << "Unknown Parameter exiting ...\n";
             exit(1);
 
       }   
