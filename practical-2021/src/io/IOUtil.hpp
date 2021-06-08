@@ -16,7 +16,8 @@ static std::vector<std::vector<double>> fullMatrixToHalfMatrix(const std::vector
   for(size_t i = 0; i < full.size(); ++i){
     assert(full[i].size() == full.size());
     for(size_t j = i; j < full.size(); ++j){
-      //assert(near(matrix[i][j], matrix[j][i]));
+      //seems as if there is not more precision in input :o
+      assert(std::abs(full[i][j] - full[j][i]) < 0.001);
       half[j].emplace_back(full[j][i]);
     }
   }
@@ -50,6 +51,7 @@ static size_t calculateUniqueCount(const std::vector<std::vector<double>>& matri
       }
     }
   }
+  assert(unique_count >= 1);
   return unique_count;
 }
 
@@ -62,6 +64,7 @@ static std::vector<std::vector<double>> vectorToHalfMatrix(const std::vector<dou
       ++k;
     }
   }
+  //fill diagonal
   for(size_t i = 0; i < tree_count; ++i){
     half[i].emplace_back(0);
   }

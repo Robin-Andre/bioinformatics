@@ -5,15 +5,6 @@
 size_t PllSplit::tip_count = 0;
 pll_split_base_t PllSplit::bitmask_for_unused_bits = 0;
 
-size_t PllSplit::popcount() const{
-  assert(splitValid());
-  size_t popcount = 0;
-  size_t split_len = PllSplit::getSplitLen();
-  for(size_t i = 0; i < split_len; ++i){
-    popcount += basePopcount(_split[i]);
-  }
-  return popcount;
-}
 
 bool operator == (const PllSplit& p1, const PllSplit& p2) {
   size_t split_len = PllSplit::getSplitLen();
@@ -33,21 +24,26 @@ bool operator < (const PllSplit&p1, const PllSplit& p2) {
   }
   return false;
 }
+
+size_t PllSplit::popcount() const{
+  assert(splitValid());
+  size_t popcount = 0;
+  size_t split_len = PllSplit::getSplitLen();
+  for(size_t i = 0; i < split_len; ++i){
+    popcount += basePopcount(_split[i]);
+  }
+  return popcount;
+}
 //TODO, we should kill this once we are certain that we don't need it
 uint32_t PllSplit::bitExtract(size_t bit_index) const {
   assert(splitValid());
-  //assert(bit_index < PllSplit::getTipCount()); //TODO reenable this assertion if the test for validity is deprecated
+  assert(bit_index < PllSplit::getTipCount());
   pll_split_base_t split_part = _split[computeMajorIndex(bit_index)];
   return (split_part & (1u << computeMinorIndex(bit_index))) >> computeMinorIndex(bit_index);
 }
-//TODO inline and move to header
-size_t PllSplit::partitionSizeOf (partition_t block) const {
-  assert(splitValid());
-  return block ? this->popcount() : PllSplit::getTipCount() - this->popcount();
-}
 
 //TODO think about rewriting this/other to A/B?
-size_t PllSplit::intersectionSize(const PllSplit& other, 
+size_t PllSplit::intersectionSize(const PllSplit& other,
                                   partition_t partition_this, partition_t partition_other) const {
   assert(splitValid());
   assert(other.splitValid());
@@ -64,6 +60,19 @@ size_t PllSplit::intersectionSize(const PllSplit& other,
   return count;
 }
 
+std::string PllSplit::toString() const {
+  std::stringstream ss;
+  ss << this << ": " << _split << ": ";
+  size_t split_len = PllSplit::getSplitLen();
+  for (size_t i = 0; i < split_len; ++i){
+    auto str = std::bitset<32>(_split[i]).to_string();
+    std::reverse(str.begin(), str.end()); //Robin: I don't like the
+    ss << str << "|";
+  }
+  ss << std::endl;
+  return ss.str();
+}
+
 
 //TODO @Robin might wanna do a speedtest, or find another implementation with registers
 size_t PllSplit::basePopcount(pll_split_base_t val) const {
@@ -71,7 +80,7 @@ size_t PllSplit::basePopcount(pll_split_base_t val) const {
 }
 
 bool PllSplit::splitValid() const {
-  return (_split != nullptr) && !(_split[PllSplit::getSplitLen() - 1] 
+  return (_split != nullptr) && !(_split[PllSplit::getSplitLen() - 1]
                                   & ~PllSplit::bitmask_for_unused_bits) && _split[0] & 1u;
 }
 
@@ -109,4 +118,14 @@ bool operator == (const PllSplitList& p1, const PllSplitList& p2) {
     if (!(splits1[i] == splits2[i])) return false;
   }
   return true;
+}
+
+std::string PllSplitList::toString() const {
+  std::stringstream ss;
+  ss <<  "-------------------------" << std::endl;
+  for(size_t i = 0; i < _splits.size(); ++i){
+    ss << _splits[i].toString();
+  }
+  ss << "-------------------------" << std::endl;
+  return ss.str();
 }

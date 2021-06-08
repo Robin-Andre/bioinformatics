@@ -73,7 +73,7 @@ private:
       }
       return std::stoi(item);
   }
-  /* @Softwipe unused function
+  /* @Softwipe unused function, needed if we want to test relative distances
   static float getRelativeDistanceFromString(const std::string &line) {
       std::istringstream iss (line);
       std::string item;
@@ -81,7 +81,7 @@ private:
       while (std::getline(iss, item, ' ') && i < 3) {
           i++;
       }
-      return std::stof(item);
+      return std::stod(item);
   } */
 
 
@@ -136,7 +136,6 @@ public:
       std::string line;
       while(std::getline(res_file, line)){
         std::vector<double> row;
-        std::string token;
         size_t pos = 0;
         while ((pos = line.find(" ")) != std::string::npos) {
             row.push_back(std::stold(line.substr(0, pos)));
@@ -147,7 +146,6 @@ public:
       }
       res_file.close();
       io::IOData data;
-      //data.split_score_calc = RF;
       data.number_of_unique_trees = IOUtil::calculateUniqueCount(matrix);
       data.pairwise_distance_mtx = IOUtil::fullMatrixToHalfMatrix(matrix);
       data.mean_dst = IOUtil::calculateAverageDistance(data.pairwise_distance_mtx);

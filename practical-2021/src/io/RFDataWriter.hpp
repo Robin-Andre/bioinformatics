@@ -23,6 +23,7 @@ public:
     if (out_file.is_open()) {
       for(size_t i = 0; i < tree_count; ++i) {
         for(size_t j = i+1; j < tree_count; ++j) {
+          assert(data.pairwise_distance_mtx[j].size() > i);
           out_file << i << " " << j << " " << data.pairwise_distance_mtx[j][i] << std::endl;
         }
       }
@@ -70,6 +71,7 @@ public:
     if (out_file.is_open()) {
       std::vector<std::vector<double>> matrix = IOUtil::halfMatrixToFullMatrix(data.pairwise_distance_mtx);
       for(size_t i = 0; i < tree_count; ++i) {
+        assert(matrix[i].size() == tree_count);
         for(size_t j = 0; j < tree_count - 1; ++j) {
           out_file << matrix[i][j]  << " ";
         }

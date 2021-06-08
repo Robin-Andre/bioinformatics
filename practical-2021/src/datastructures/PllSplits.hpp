@@ -45,12 +45,20 @@ public:
   }
 
   pll_split_t operator()() const { return _split; }
-  size_t   popcount() const;
-  uint32_t bitExtract(size_t bit_index) const;
-  //pll_split_t getSplit() {return _split;}
-
   friend bool operator == (const PllSplit& p1, const PllSplit& p2);
   friend bool operator < (const PllSplit& p1, const PllSplit& p2);
+
+  size_t   popcount() const;
+  uint32_t bitExtract(size_t bit_index) const;
+  size_t partitionSizeOf (partition_t block) const {
+    assert(splitValid());
+    return block ? this->popcount() : PllSplit::getTipCount() - this->popcount();
+  }
+  size_t intersectionSize(const PllSplit& other, partition_t partition_this, partition_t partition_other) const;
+
+
+  std::string toString() const;
+
 
   static void setTipCount(size_t val) {
     PllSplit::tip_count = val;
@@ -61,7 +69,6 @@ public:
     }
     PllSplit::bitmask_for_unused_bits = bit_mask;
   }
-
   static size_t getTipCount() {
     return PllSplit::tip_count;
   }
@@ -72,26 +79,6 @@ public:
     assert(split_len * computSplitBaseSize() >= tip_count);
     return split_len;
   }
-
-  size_t partitionSizeOf (partition_t block) const;
-  size_t intersectionSize(const PllSplit& other, partition_t partition_this, partition_t partition_other) const;
-  bool splitValid() const;
-
-
-  //TODO maybe toString or move to I/O
-  std::string toString() const {
-    std::stringstream ss;
-    ss << this << ": " << _split << ": ";
-    size_t split_len = PllSplit::getSplitLen();
-    for (size_t i = 0; i < split_len; ++i){
-      auto str = std::bitset<32>(_split[i]).to_string();
-      std::reverse(str.begin(), str.end()); //Robin: I don't like the
-      ss << str << "|";
-    }
-    ss << std::endl;
-    return ss.str();
-  }
-
 
 private:
   constexpr size_t splitBitWidth() const {
@@ -111,7 +98,7 @@ private:
     return sizeof(pll_split_base_t) * 8;
   }
 
-  pll_split_base_t bitmaskForUnusedBits() const;
+  bool splitValid() const;
   size_t basePopcount(pll_split_base_t count) const;
 
   pll_split_t _split = nullptr;
@@ -144,15 +131,7 @@ public:
   const std::vector<PllSplit>& getSplits() const {return _splits;}
   size_t getSplitCount() const {return _splits.size();}
 
-  std::string toString() const {
-    std::stringstream ss;
-    ss <<  "-------------------------" << std::endl;
-    for(size_t i = 0; i < _splits.size(); ++i){
-      ss << _splits[i].toString();
-    }
-    ss << "-------------------------" << std::endl;
-    return ss.str();
-  }
+  std::string toString() const;
 
 
 private:

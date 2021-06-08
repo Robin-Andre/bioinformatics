@@ -9,6 +9,7 @@ enum Mode{SIMILARITY, ABSOLUTE, RELATIVE};
 class Metric {
     public:
     virtual double distanceOf(const PllSplitList& plist1, const PllSplitList& plist2, Mode mode) const = 0;
+    virtual double maximum(const PllSplitList& plist1, const PllSplitList& plist2) const = 0;
     virtual std::string name() const = 0;
     virtual ~Metric() {
 
@@ -19,21 +20,23 @@ class Metric {
 class GeneralizedMetric : public Metric{
 public:
   virtual double evaluate(const PllSplit& s1, const PllSplit& s2) const = 0;
-  virtual double maximum(const PllSplitList& plist1, const PllSplitList& plist2) const = 0;
   virtual ~GeneralizedMetric() {
 
     }
 
   double distanceOf(const PllSplitList& first, const PllSplitList& second, Mode mode) const override {
     std::vector<std::vector<double>> similarities = similaritiesForSplits(first, second);
+    assert(similarities.size() == first.getSplits().size());
     double similarity = MaximumMatcher::match(similarities);
+    assert(similarity >= 0);
     return (mode == SIMILARITY) ? similarity : distanceFromSimilarity(first, second, similarity, mode);
   }
 
 
     double distanceFromSimilarity(const PllSplitList& first, const PllSplitList& second, double similarity, Mode mode) const{
       double max_value = maximum(first, second);
-      double dist = max_value - 2 * similarity;
+      assert(std::abs(max_value - 2 * similarity) < 0.000001);
+      double dist = std::max(0.0, max_value - 2 * similarity);
       return (mode == RELATIVE) ? dist : (dist / max_value);
     }
 
@@ -58,11 +61,11 @@ class MSIMetric : public GeneralizedMetric {
                     phylomath::h(s1.intersectionSize(s2, 0, 1), s1.intersectionSize(s2, 1, 0)));
   }
   double maximum(const PllSplitList& plist1, const PllSplitList& plist2) const override {
-    //TODO can we really expect both lists to be equally long...seems weird
-    //TODO assert what the line above critiques (if we decide that splitlists are equally long)
     double result = 0;
     for(unsigned i = 0; i < plist1.getSplitCount(); ++i) {
       result += phylomath::h(plist1[i]);
+    }
+    for(unsigned i = 0; i < plist2.getSplitCount(); ++i) {
       result += phylomath::h(plist2[i]);
     }
     return result;
@@ -70,9 +73,6 @@ class MSIMetric : public GeneralizedMetric {
 
   std::string name() const override {
     return "MSI";
-  }
-  ~MSIMetric() {
-
   }
 };
 
@@ -97,16 +97,18 @@ class SPIMetric : public GeneralizedMetric {
     } else if(!s1.intersectionSize(s2, 0, 0)) {
       phylo_shared = phylomath::h(b_1, b_2, a_1 + b_1);
     } else {
-      return 0;
+      //partitions incompatible
+      return 0.0;
     }
     return phylomath::h(a_1, b_1) + phylomath::h(a_2, b_2) - phylo_shared;
-
-
   }
+
   double maximum(const PllSplitList& plist1, const PllSplitList& plist2) const override {
     double result = 0.0;
     for(unsigned i = 0; i < plist1.getSplitCount(); ++i) {
       result += phylomath::h(plist1[i]);
+    }
+    for(unsigned i = 0; i < plist2.getSplitCount(); ++i) {
       result += phylomath::h(plist2[i]);
     }
     return result;
@@ -114,9 +116,6 @@ class SPIMetric : public GeneralizedMetric {
 
   std::string name() const override {
     return "SPI";
-  }
-  ~SPIMetric() {
-
   }
 
 };
@@ -126,14 +125,16 @@ class SPIMetric : public GeneralizedMetric {
 class MCIMetric : public GeneralizedMetric {
     public:
     double evaluate(const PllSplit& s1, const PllSplit& s2) const override {
-        return helper(s1, Block_A, s2, Block_A) + helper(s1, Block_B, s2, Block_A)
-             + helper(s1, Block_A, s2, Block_B) + helper(s1, Block_B, s2, Block_B);
+        return mutualInformation(s1, Block_A, s2, Block_A) + mutualInformation(s1, Block_B, s2, Block_A)
+             + mutualInformation(s1, Block_A, s2, Block_B) + mutualInformation(s1, Block_B, s2, Block_B);
     }
     double maximum(const PllSplitList& plist1, const PllSplitList& plist2) const override {
       double result = 0.0;
       //TODO it feels weird to A) Recalculate this every time. B) not being able to call it on a single splitlist
       for(size_t i = 0; i < plist1.getSplitCount(); ++i){
         result += phylomath::entropy(plist1[i]);
+      }
+      for(size_t i = 0; i < plist2.getSplitCount(); ++i){
         result += phylomath::entropy(plist2[i]);
       }
       return result;
@@ -143,20 +144,19 @@ class MCIMetric : public GeneralizedMetric {
       return "MCI";
     }
 
-    ~MCIMetric() {
-
-    }
 
 
     private:
-    double helper(const PllSplit&s1, const Partition block_s1, const PllSplit& s2, const Partition block_s2) const {
+    double mutualInformation(const PllSplit&s1, const Partition block_s1, const PllSplit& s2, const Partition block_s2) const {
         double pcl = phylomath::clusteringProbability(s1, block_s1, s2, block_s2);
+        assert(pcl >= 0);
         //This is a hardcoded statement. The math agrees that x log(x) -> 0 but c++ refuses
         if(pcl == 0) {
-            return 0;
+            return 0.0;
         }
         double p_1 = phylomath::clusteringProbability(s1, block_s1);
         double p_2 = phylomath::clusteringProbability(s2, block_s2);
+        assert(p_1 > 0 && p_2 > 0);
         return pcl * std::log2(pcl / (p_1 * p_2));
     }
 };
@@ -186,7 +186,12 @@ public:
     }
     distance += (split_count1 - i);
     distance += (split_count2 - j);
-    return (mode == RELATIVE) ? (distance / (2 * (PllSplit::getTipCount() - 3))) : distance;
+    return (mode == RELATIVE) ? (distance / maximum(plist1, plist2)) : distance;
+  }
+
+  double maximum(const PllSplitList& plist1, const PllSplitList& plist2) const override {
+    assert(PllSplit::getTipCount() > 3);
+    return (2 * (PllSplit::getTipCount() - 3));
   }
 
 

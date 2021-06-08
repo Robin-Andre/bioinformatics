@@ -56,10 +56,7 @@ namespace phylomath {
 
   inline void phylogeneticProbability(mpq_t result, size_t a, size_t b){
     assert(a + b <= PllSplit::getTipCount());
-    if ((a == 0) || (b == 0)) {
-      mpq_set_ui(result, 0, 1); //TODO is 0/1 a proper result?? THis is the edge case we discussed but found no solution
-      return;
-    }
+    assert(a > 0 && b > 0);
     if ((a == 1) || (b == 1)) {
       mpq_set_ui(result, 1, 1); //Set result to 1/1.
       return;
@@ -68,7 +65,7 @@ namespace phylomath {
   }
   //TODO to get this to work with gmp we need extra tools https://github.com/linas/anant
   //right now it is a conversion to double which will cause side effects when converting really small numbers
-  //MEMO aaactually since we calculate on really small numbers we could theoretically use the inverse
+  //MEMO actually since we calculate on really small numbers we could theoretically use the inverse
   inline double h(size_t a, size_t b) {
     assert(a + b <= PllSplit::getTipCount());
     if(a == 0 || b == 0) {
@@ -83,7 +80,7 @@ namespace phylomath {
   }
   inline double h(const PllSplit& s) {
     //There should never be a partition where one block is empty
-    assert(s.partitionSizeOf(Block_A) > 0 && s.partitionSizeOf(Block_B) > 0); 
+    assert(s.partitionSizeOf(Block_A) > 0 && s.partitionSizeOf(Block_B) > 0);
     return h(s.partitionSizeOf(Block_A), s.partitionSizeOf(Block_B));
   }
   //This method is a mockup of the calculation of phylogenetic probability of two splits
@@ -91,7 +88,7 @@ namespace phylomath {
   //The calculation will work even if they are not compatible but the result is entirely useless
   inline double h(size_t taxa_partition1, size_t taxa_partition2, size_t alltaxa) {
     assert(taxa_partition1 >= 2 && taxa_partition2 >= 2);
-    assert(taxa_partition1 + taxa_partition2 < alltaxa); 
+    assert(taxa_partition1 + taxa_partition2 < alltaxa);
     /* If the partitions are compatible and the splits nonequal then
     there has to be at least one taxa which is in neither partition */
     mpq_t temporary_result;
@@ -100,8 +97,8 @@ namespace phylomath {
     a = 2 * taxa_partition1 - 3;
     b = 2 * taxa_partition2 - 3;
     //(c) calculates the remaining tree (which should NOT be empty)
-    c = 2 * (alltaxa - taxa_partition1 - taxa_partition2) - 1; 
-    
+    c = 2 * (alltaxa - taxa_partition1 - taxa_partition2) - 1;
+
     x = 2 * alltaxa - 5;
     assert(a > 0 && b > 0 && c > 0 && x > 0);
     factorialQuotient(temporary_result, a, b, c, x);
@@ -110,10 +107,9 @@ namespace phylomath {
     return -1 * std::log2(temporary_double_holder);
 
   }
-   
+
   inline double clusteringProbability(size_t count) {
-    //assert(PllSplit.count > 0);
-    return (1.0 * count) / PllSplit::getTipCount();
+    return static_cast<double>(count) / static_cast<double>(PllSplit::getTipCount());
   }
   inline double clusteringProbability(const PllSplit& s, Partition block) {
       return clusteringProbability(s.partitionSizeOf(block));

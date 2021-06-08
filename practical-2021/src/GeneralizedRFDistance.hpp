@@ -31,14 +31,12 @@ public:
     result.mean_dst = 0;
     result.number_of_unique_trees = tree_count;
     result.pairwise_distance_mtx = std::vector<std::vector<double>>(tree_count, std::vector<double>());
-    //result.tree_count = tree_count;
-    double dist; // @Softwipe complained that the value was unused if another error comes be annoyed
-    bool is_unique; // @Softwipe same thing
     size_t dist_count = 0;
     for(size_t i = 0; i < tree_count; ++i){
-      is_unique = true;
+      bool is_unique = true;
       for(size_t j = i; j < tree_count; ++j){
-        dist = metric.distanceOf(tree_splits[i], tree_splits[j], mode);
+        double dist = metric.distanceOf(tree_splits[i], tree_splits[j], mode);
+        assert(dist >= 0.0);
         //TODO: Check near 0 because of numerical issues
         if (i != j && dist == 0 && is_unique){
           is_unique = false;
@@ -50,9 +48,9 @@ public:
           ++dist_count;
         }
       }
-
     }
-    result.mean_dst = result.mean_dst  / dist_count;
+    result.mean_dst = (dist_count == 0) ? 0 : result.mean_dst  / dist_count;
+    assert(result.number_of_unique_trees >= 1);
     return result;
   }
 
