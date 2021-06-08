@@ -73,7 +73,7 @@ private:
       }
       return std::stoi(item);
   }
-  /* @Softwipe unused function 
+  /* @Softwipe unused function
   static float getRelativeDistanceFromString(const std::string &line) {
       std::istringstream iss (line);
       std::string item;

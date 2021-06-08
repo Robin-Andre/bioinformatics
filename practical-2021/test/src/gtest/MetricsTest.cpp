@@ -74,13 +74,13 @@ TEST_F(MetricsTest, maximumtest) {
   PllSplitList splits1 = PllSplitList(tree1);
   PllSplitList splits2 = PllSplitList(tree2);
   tree2.alignNodeIndices(tree1);
-  double result = msi.maximumValue(splits1, splits2);
-  double expected_info_content = 2 * std::log2(7) + std::log2(35.0 / 3);
+  double result = msi.maximum(splits1, splits2);
+  double expected_info_content = 2 * (2 * std::log2(7) + std::log2(35.0 / 3));
   EXPECT_DOUBLE_EQ(result, expected_info_content);
-  result = spi.maximumValue(splits1, splits2);
+  result = spi.maximum(splits1, splits2);
   EXPECT_DOUBLE_EQ(result, expected_info_content);
-  result = mci.maximumValue(splits1, splits2);
-  double expected_entropy = 2 * (std::log2(3.0) / 3 + (2.0 / 3) * std::log2(3.0 / 2)) + 1;
+  result = mci.maximum(splits1, splits2);
+  double expected_entropy = 2 * (2 * (std::log2(3.0) / 3 + (2.0 / 3) * std::log2(3.0 / 2)) + 1);
   EXPECT_DOUBLE_EQ(result, expected_entropy);
 }
 
@@ -114,13 +114,13 @@ TEST_F(MetricsTest, rf_test) {
   PllSplitList trd_splitlist = TestUtil::createSplitList(trd_part1s);
 
   RFMetric rf;
-  ASSERT_EQ(rf.distanceOf(fst_splitlist, snd_splitlist, false), 6);
-  ASSERT_EQ(rf.distanceOf(snd_splitlist, fst_splitlist, false), 6);
+  ASSERT_EQ(rf.distanceOf(fst_splitlist, snd_splitlist, ABSOLUTE), 6);
+  ASSERT_EQ(rf.distanceOf(snd_splitlist, fst_splitlist, ABSOLUTE), 6);
 
-  ASSERT_EQ(rf.distanceOf(fst_splitlist, trd_splitlist, false), 9);
-  ASSERT_EQ(rf.distanceOf(trd_splitlist, fst_splitlist, false), 9);
+  ASSERT_EQ(rf.distanceOf(fst_splitlist, trd_splitlist, ABSOLUTE), 9);
+  ASSERT_EQ(rf.distanceOf(trd_splitlist, fst_splitlist, ABSOLUTE), 9);
 
-  ASSERT_EQ(rf.distanceOf(snd_splitlist, trd_splitlist, false), 3);
-  ASSERT_EQ(rf.distanceOf(trd_splitlist, snd_splitlist, false), 3);
+  ASSERT_EQ(rf.distanceOf(snd_splitlist, trd_splitlist, ABSOLUTE), 3);
+  ASSERT_EQ(rf.distanceOf(trd_splitlist, snd_splitlist, ABSOLUTE), 3);
 
 }

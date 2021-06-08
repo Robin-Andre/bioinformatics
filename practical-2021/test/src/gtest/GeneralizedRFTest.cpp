@@ -28,11 +28,13 @@ MSIMetric metric_msi;
 
 /*Method to reduce code complexity :)
 */
-void execute_test(std::string test_file, const Metric& metric) {
+void execute_test(std::string test_file, const Metric& metric, Mode mode) {
     std::vector<PllTree> trees = TreeReader::readTreeFile(current_data_dir + test_file);
-    io::IOData result = GeneralizedRFDistance::computeDistances(trees, metric, false);
+    io::IOData result = GeneralizedRFDistance::computeDistances(trees, metric, mode);
     io::IOData reference = MatrixReader::read(current_ref_dir + metric.name() + "/" + test_file);
+    //infos cannot be read from file
     reference.metric = metric.name();
+    reference.mode = mode;
     EXPECT_EQ(result, reference);
 
 }
@@ -51,24 +53,24 @@ TEST_F(GeneralizedRFTest, ExampleFromSlideshow) {
   PllSplit::setTipCount(6);
   PllTree tree = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[0];
   std::vector<PllTree> trees = {tree, tree};
-  EXPECT_NEAR(GeneralizedRFDistance::computeDistances(trees, metric_msi, true).pairwise_distance_mtx[0][0], 0, epsilon);
-  EXPECT_NEAR(GeneralizedRFDistance::computeDistances(trees, metric_mci, true).pairwise_distance_mtx[0][0], 0, epsilon);
-  EXPECT_NEAR(GeneralizedRFDistance::computeDistances(trees, metric_spi, true).pairwise_distance_mtx[0][0], 0, epsilon);
+  EXPECT_NEAR(GeneralizedRFDistance::computeDistances(trees, metric_msi, ABSOLUTE).pairwise_distance_mtx[0][0], 0, epsilon);
+  EXPECT_NEAR(GeneralizedRFDistance::computeDistances(trees, metric_mci, ABSOLUTE).pairwise_distance_mtx[0][0], 0, epsilon);
+  EXPECT_NEAR(GeneralizedRFDistance::computeDistances(trees, metric_spi, ABSOLUTE).pairwise_distance_mtx[0][0], 0, epsilon);
 }
 TEST_F(GeneralizedRFTest, ComparisionTree0_2taxa24) {
   PllSplit::setTipCount(24);
   PllTree tree1 = TreeReader::readTreeFile(current_data_dir + "heads/24")[0];
   PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "heads/24")[1];
   std::vector<PllTree> trees = {tree1, tree2};
-  EXPECT_NEAR(GeneralizedRFDistance::computeDistances(trees, metric_mci, true).pairwise_distance_mtx[0][0], 0, epsilon);
-  EXPECT_NEAR(GeneralizedRFDistance::computeDistances(trees, metric_spi, true).pairwise_distance_mtx[0][0], 0, epsilon);
+  EXPECT_NEAR(GeneralizedRFDistance::computeDistances(trees, metric_mci, ABSOLUTE).pairwise_distance_mtx[0][0], 0, epsilon);
+  EXPECT_NEAR(GeneralizedRFDistance::computeDistances(trees, metric_spi, ABSOLUTE).pairwise_distance_mtx[0][0], 0, epsilon);
 }
 TEST_F(GeneralizedRFTest, example_24_msi) {
   PllSplit::setTipCount(24);
   PllTree tree1 = TreeReader::readTreeFile(current_data_dir + "heads/24")[0];
   PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "heads/24")[1];
   std::vector<PllTree> trees = {tree1, tree2};
-  EXPECT_NEAR(GeneralizedRFDistance::computeDistances(trees, metric_msi, true).pairwise_distance_mtx[0][0], 0, epsilon);
+  EXPECT_NEAR(GeneralizedRFDistance::computeDistances(trees, metric_msi, ABSOLUTE).pairwise_distance_mtx[0][0], 0, epsilon);
 }
 
 TEST_F(GeneralizedRFTest, example_from_slideshow) {
@@ -76,98 +78,103 @@ TEST_F(GeneralizedRFTest, example_from_slideshow) {
   PllTree tree1 = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[0];
   PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[0];
   std::vector<PllTree> trees = {tree1, tree2};
-  EXPECT_NEAR(GeneralizedRFDistance::computeDistances(trees, metric_msi, true).pairwise_distance_mtx[0][0], 0, epsilon);
-  EXPECT_NEAR(GeneralizedRFDistance::computeDistances(trees, metric_mci, true).pairwise_distance_mtx[0][0], 0, epsilon);
-  EXPECT_NEAR(GeneralizedRFDistance::computeDistances(trees, metric_spi, true).pairwise_distance_mtx[0][0], 0, epsilon);
+  EXPECT_NEAR(GeneralizedRFDistance::computeDistances(trees, metric_msi, ABSOLUTE).pairwise_distance_mtx[0][0], 0, epsilon);
+  EXPECT_NEAR(GeneralizedRFDistance::computeDistances(trees, metric_mci, ABSOLUTE).pairwise_distance_mtx[0][0], 0, epsilon);
+  EXPECT_NEAR(GeneralizedRFDistance::computeDistances(trees, metric_spi, ABSOLUTE).pairwise_distance_mtx[0][0], 0, epsilon);
 }
 TEST_F(GeneralizedRFTest, 24taxa) {
-  execute_test("heads/24", metric_msi);
-  execute_test("heads/24", metric_spi);
-  execute_test("heads/24", metric_mci);
+  execute_test("heads/24", metric_msi, SIMILARITY);
+  execute_test("heads/24", metric_spi, SIMILARITY);
+  execute_test("heads/24", metric_mci, SIMILARITY);
 }
 TEST_F(GeneralizedRFTest, 125taxa) {
-  execute_test("heads/125", metric_msi);
-  execute_test("heads/125", metric_spi);
-  execute_test("heads/125", metric_mci);
+  execute_test("heads/125", metric_msi, SIMILARITY);
+  execute_test("heads/125", metric_spi, SIMILARITY);
+  execute_test("heads/125", metric_mci, SIMILARITY);
 }/*
 TEST_F(GeneralizedRFTest, 141taxa) {
-  execute_test("heads/141", metric_msi);
-  execute_test("heads/141", metric_spi);
-  execute_test("heads/141", metric_mci);
+  execute_test("heads/141", metric_msi, SIMILARITY);
+  execute_test("heads/141", metric_spi, SIMILARITY);
+  execute_test("heads/141", metric_mci, SIMILARITY);
 }
 TEST_F(GeneralizedRFTest, 143taxa) {
-  execute_test("heads/143", metric_msi);
-  execute_test("heads/143", metric_spi);
-  execute_test("heads/143", metric_mci);
+  execute_test("heads/143", metric_msi, SIMILARITY);
+  execute_test("heads/143", metric_spi, SIMILARITY);
+  execute_test("heads/143", metric_mci, SIMILARITY);
 }
 TEST_F(GeneralizedRFTest, 148taxa) {
-  execute_test("heads/148", metric_msi);
-  execute_test("heads/148", metric_spi);
-  execute_test("heads/148", metric_mci);
+  execute_test("heads/148", metric_msi, SIMILARITY);
+  execute_test("heads/148", metric_spi, SIMILARITY);
+  execute_test("heads/148", metric_mci, SIMILARITY);
 }
 TEST_F(GeneralizedRFTest, 150taxa) {
-  execute_test("heads/150", metric_msi);
-  execute_test("heads/150", metric_spi);
-  execute_test("heads/150", metric_mci);
+  execute_test("heads/150", metric_msi, SIMILARITY);
+  execute_test("heads/150", metric_spi, SIMILARITY);
+  execute_test("heads/150", metric_mci, SIMILARITY);
 }
 TEST_F(GeneralizedRFTest, 218taxa) {
-  execute_test("heads/218", metric_msi);
-  execute_test("heads/218", metric_spi);
-  execute_test("heads/218", metric_mci);
+  execute_test("heads/218", metric_msi, SIMILARITY);
+  execute_test("heads/218", metric_spi, SIMILARITY);
+  execute_test("heads/218", metric_mci, SIMILARITY);
 }
 TEST_F(GeneralizedRFTest, 350taxa) {
-  execute_test("heads/350", metric_msi);
-  execute_test("heads/350", metric_spi);
-  execute_test("heads/350", metric_mci);
+  execute_test("heads/350", metric_msi, SIMILARITY);
+  execute_test("heads/350", metric_spi, SIMILARITY);
+  execute_test("heads/350", metric_mci, SIMILARITY);
 }
 TEST_F(GeneralizedRFTest, 354taxa) {
-  execute_test("heads/354", metric_msi);
-  execute_test("heads/354", metric_spi);
-  execute_test("heads/354", metric_mci);
+  execute_test("heads/354", metric_msi, SIMILARITY);
+  execute_test("heads/354", metric_spi, SIMILARITY);
+  execute_test("heads/354", metric_mci, SIMILARITY);
 }
 TEST_F(GeneralizedRFTest, 404taxa) {
-  execute_test("heads/404", metric_msi);
-  execute_test("heads/404", metric_spi);
-  execute_test("heads/404", metric_mci);
+  execute_test("heads/404", metric_msi, SIMILARITY);
+  execute_test("heads/404", metric_spi, SIMILARITY);
+  execute_test("heads/404", metric_mci, SIMILARITY);
 }
-TEST_F(GeneralizedRFTest, 500taxa) {.
+TEST_F(GeneralizedRFTest, 500taxa) {
+  execute_test("heads/500", metric_msi, SIMILARITY);
+  execute_test("heads/500", metric_spi, SIMILARITY);
+  execute_test("heads/500", metric_mci, SIMILARITY);
+}
+
 TEST_F(GeneralizedRFTest, 885taxa) {
-  execute_test("heads/885", metric_msi);
-  execute_test("heads/885", metric_spi);
-  execute_test("heads/885", metric_mci);
+  execute_test("heads/885", metric_msi, SIMILARITY);
+  execute_test("heads/885", metric_spi, SIMILARITY);
+  execute_test("heads/885", metric_mci, SIMILARITY);
 }
 TEST_F(GeneralizedRFTest, 994taxa) {
-  execute_test("heads/994", metric_msi);
-  execute_test("heads/994", metric_spi);
-  execute_test("heads/994", metric_mci);
+  execute_test("heads/994", metric_msi, SIMILARITY);
+  execute_test("heads/994", metric_spi, SIMILARITY);
+  execute_test("heads/994", metric_mci, SIMILARITY);
 }
 TEST_F(GeneralizedRFTest, 1288taxa) {
-  execute_test("heads/1288", metric_msi);
-  execute_test("heads/1288", metric_spi);
-  execute_test("heads/1288", metric_mci);
+  execute_test("heads/1288", metric_msi, SIMILARITY);
+  execute_test("heads/1288", metric_spi, SIMILARITY);
+  execute_test("heads/1288", metric_mci, SIMILARITY);
 }
 TEST_F(GeneralizedRFTest, 1481taxa) {
-  execute_test("heads/1481", metric_msi);
-  execute_test("heads/1481", metric_spi);
-  execute_test("heads/1481", metric_mci);
+  execute_test("heads/1481", metric_msi, SIMILARITY);
+  execute_test("heads/1481", metric_spi, SIMILARITY);
+  execute_test("heads/1481", metric_mci, SIMILARITY);
 }
 TEST_F(GeneralizedRFTest, 1512taxa) {
-  execute_test("heads/1512", metric_msi);
-  execute_test("heads/1512", metric_spi);
-  execute_test("heads/1512", metric_mci);
+  execute_test("heads/1512", metric_msi, SIMILARITY);
+  execute_test("heads/1512", metric_spi, SIMILARITY);
+  execute_test("heads/1512", metric_mci, SIMILARITY);
 }
 TEST_F(GeneralizedRFTest, 1604taxa) {
-  execute_test("heads/1604", metric_msi);
-  execute_test("heads/1604", metric_spi);
-  execute_test("heads/1604", metric_mci);
+  execute_test("heads/1604", metric_msi, SIMILARITY);
+  execute_test("heads/1604", metric_spi, SIMILARITY);
+  execute_test("heads/1604", metric_mci, SIMILARITY);
 }
 TEST_F(GeneralizedRFTest, 1908taxa) {
-  execute_test("heads/1908", metric_msi);
-  execute_test("heads/1908", metric_spi);
-  execute_test("heads/1908", metric_mci);
+  execute_test("heads/1908", metric_msi, SIMILARITY);
+  execute_test("heads/1908", metric_spi, SIMILARITY);
+  execute_test("heads/1908", metric_mci, SIMILARITY);
 }
 TEST_F(GeneralizedRFTest, 2000taxa) {
-  execute_test("heads/2000", metric_msi);
-  execute_test("heads/2000", metric_spi);
-  execute_test("heads/2000", metric_mci);
+  execute_test("heads/2000", metric_msi, SIMILARITY);
+  execute_test("heads/2000", metric_spi, SIMILARITY);
+  execute_test("heads/2000", metric_mci, SIMILARITY);
 }*/

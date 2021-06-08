@@ -23,8 +23,10 @@ void execute_test(const std::string& test_file) {
 }
 void run_test(const std::string& test_file) {
   io::IOData result = GeneralizedRFDistance::computeDistances(
-                      TreeReader::readTreeFile(current_data_dir + test_file), rf, false);
+                      TreeReader::readTreeFile(current_data_dir + test_file), rf, ABSOLUTE);
   io::IOData reference = RAXMLReader::read(current_ref_dir + test_file);
+  //TODO: Return of Reader is inconstistent - Tip count needs to be set and conversion done in reader
+  reference.mean_dst *= (2*(PllSplit::getTipCount()-3));
     ASSERT_EQ(result, reference);
 }
 };

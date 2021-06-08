@@ -4,9 +4,11 @@
 #include "PhylogeneticMathUtils.hpp"
 #include "MaximumMatcher.hpp"
 
+enum Mode{SIMILARITY, ABSOLUTE, RELATIVE};
+
 class Metric {
     public:
-    virtual double distanceOf(const PllSplitList& plist1, const PllSplitList& plist2, bool normalize) const = 0;
+    virtual double distanceOf(const PllSplitList& plist1, const PllSplitList& plist2, Mode mode) const = 0;
     virtual std::string name() const = 0;
     virtual ~Metric() {
 
@@ -22,18 +24,17 @@ public:
 
     }
 
-  double distanceOf(const PllSplitList& first, const PllSplitList& second, bool normalize) const override {
+  double distanceOf(const PllSplitList& first, const PllSplitList& second, Mode mode) const override {
     std::vector<std::vector<double>> similarities = similaritiesForSplits(first, second);
     double similarity = MaximumMatcher::match(similarities);
-    return normalize ? distanceFromSimilarity(first, second, similarity) : similarity;
+    return (mode == SIMILARITY) ? similarity : distanceFromSimilarity(first, second, similarity, mode);
   }
 
-    double maximumValue(const PllSplitList& first, const PllSplitList& second) const{
-      return (maximum(first, second) / 2);
-    }
 
-    double distanceFromSimilarity(const PllSplitList& first, const PllSplitList& second, double similarity) const{
-      return maximumValue(first, second) - similarity;
+    double distanceFromSimilarity(const PllSplitList& first, const PllSplitList& second, double similarity, Mode mode) const{
+      double max_value = maximum(first, second);
+      double dist = max_value - 2 * similarity;
+      return (mode == RELATIVE) ? dist : (dist / max_value);
     }
 
     std::vector<std::vector<double>> similaritiesForSplits(const PllSplitList& first, const PllSplitList& second) const{
@@ -141,7 +142,7 @@ class MCIMetric : public GeneralizedMetric {
     std::string name() const override {
       return "MCI";
     }
-    
+
     ~MCIMetric() {
 
     }
@@ -163,7 +164,7 @@ class MCIMetric : public GeneralizedMetric {
 
 class RFMetric : public Metric {
 public:
-  virtual double distanceOf(const PllSplitList& plist1, const PllSplitList& plist2, bool normalize) const override {
+  virtual double distanceOf(const PllSplitList& plist1, const PllSplitList& plist2, Mode mode) const override {
     size_t split_count1 = plist1.getSplitCount();
     size_t split_count2 = plist2.getSplitCount();
     if (split_count1 == 0) return split_count2;
@@ -185,7 +186,7 @@ public:
     }
     distance += (split_count1 - i);
     distance += (split_count2 - j);
-    return distance;
+    return (mode == RELATIVE) ? (distance / (2 * (PllSplit::getTipCount() - 3))) : distance;
   }
 
 

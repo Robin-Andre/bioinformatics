@@ -8,7 +8,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
-#include "../enums.hpp"
+#include "../Metric.hpp"
 
 namespace io {
 struct IOData {
@@ -20,6 +20,7 @@ struct IOData {
 	std::string git_revision;
 	std::string cpuInformation;
 	size_t number_of_unique_trees = 0;
+	Mode mode = ABSOLUTE;
 
 	bool operator==(const IOData &rhs) const {
 		// compare floating points manually with relative distance measure
@@ -31,6 +32,7 @@ struct IOData {
 		is_eq &= git_revision == rhs.git_revision;
 		is_eq &= cpuInformation == rhs.cpuInformation;
 		is_eq &= number_of_unique_trees == rhs.number_of_unique_trees;
+		is_eq &= mode == rhs.mode;
 		return is_eq;
 	}
 	bool operator!=(const IOData &rhs) const {
