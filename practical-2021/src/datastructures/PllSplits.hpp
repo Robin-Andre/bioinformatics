@@ -54,7 +54,7 @@ public:
     assert(splitValid());
     return block ? this->popcount() : PllSplit::getTipCount() - this->popcount();
   }
-  size_t intersectionSize(const PllSplit& other, partition_t partition_this, partition_t partition_other) const;
+  size_t intersectionSize(const PllSplit& other, Partition partition_this, Partition partition_other) const;
 
 
   std::string toString() const;

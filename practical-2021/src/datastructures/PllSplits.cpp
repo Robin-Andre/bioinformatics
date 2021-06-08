@@ -42,14 +42,14 @@ uint32_t PllSplit::bitExtract(size_t bit_index) const {
   return (split_part & (1u << computeMinorIndex(bit_index))) >> computeMinorIndex(bit_index);
 }
 
-//TODO think about rewriting this/other to A/B?
+
 size_t PllSplit::intersectionSize(const PllSplit& other,
-                                  partition_t partition_this, partition_t partition_other) const {
+                                  Partition partition_this, Partition partition_other) const {
   assert(splitValid());
   assert(other.splitValid());
   size_t split_len = PllSplit::getSplitLen();
-  pll_split_base_t this_mask = partition_this ? 0 : ~0u; //TODO explanatory text
-  pll_split_base_t other_mask = partition_other ? 0 : ~0u;
+  pll_split_base_t this_mask = (partition_this == Block_A) ? 0 : ~0u; //This is a xor mask so it is flipped for A/B
+  pll_split_base_t other_mask = (partition_other == Block_A) ? 0 : ~0u;
   size_t count = 0;
 
   for (size_t i = 0; i < split_len - 1; ++i){
@@ -66,7 +66,7 @@ std::string PllSplit::toString() const {
   size_t split_len = PllSplit::getSplitLen();
   for (size_t i = 0; i < split_len; ++i){
     auto str = std::bitset<32>(_split[i]).to_string();
-    std::reverse(str.begin(), str.end()); //Robin: I don't like the
+    std::reverse(str.begin(), str.end()); 
     ss << str << "|";
   }
   ss << std::endl;
