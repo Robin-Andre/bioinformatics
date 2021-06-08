@@ -79,6 +79,7 @@ struct IOData {
 
   private:
 	// parsing helpers
+	/* @Softwipe not used so commented 
 	bool handle_pairwise_dst(size_t major,
 	                                 size_t minor,
 	                                 std::ifstream &stream,
@@ -100,7 +101,7 @@ struct IOData {
 		}
 		return false;
 	}
-
+    */
     //This method is private and not referenced. For @Softwipe it is commented
     /*
 	bool parse_pairwise_file(const std::string &distances_path,

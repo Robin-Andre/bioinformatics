@@ -16,6 +16,7 @@ target_include_directories(inforf PRIVATE ${LOCALDEPS_DIR}/include $<BUILD_INTER
 
 add_executable(rfdist main.cpp)
 target_link_libraries(rfdist inforf)
+#target_link_libraries(rfdist json_lib)
 target_link_libraries(rfdist gmp :libgmp.a)
 target_include_directories(rfdist SYSTEM PUBLIC $<BUILD_INTERFACE:${LOCALDEPS_DIR}/include>)
 

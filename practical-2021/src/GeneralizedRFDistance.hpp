@@ -49,7 +49,7 @@ public:
         }
       }
     }
-    result.mean_dst = (dist_count == 0) ? 0 : result.mean_dst  / dist_count;
+    result.mean_dst = (dist_count == 0) ? 0 : result.mean_dst  / static_cast<double>(dist_count);
     assert(result.number_of_unique_trees >= 1);
     return result;
   }

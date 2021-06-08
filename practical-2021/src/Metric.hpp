@@ -20,7 +20,7 @@ class Metric {
 class GeneralizedMetric : public Metric{
 public:
   virtual double evaluate(const PllSplit& s1, const PllSplit& s2) const = 0;
-  virtual ~GeneralizedMetric() {
+  virtual ~GeneralizedMetric() override {
 
     }
 
@@ -169,8 +169,8 @@ public:
   virtual double distanceOf(const PllSplitList& plist1, const PllSplitList& plist2, Mode mode) const override {
     size_t split_count1 = plist1.getSplitCount();
     size_t split_count2 = plist2.getSplitCount();
-    if (split_count1 == 0) return split_count2;
-    if (split_count2 == 0) return split_count1;
+    if (split_count1 == 0) return static_cast<double> (split_count2);
+    if (split_count2 == 0) return static_cast<double> (split_count1);
     size_t i = 0;
     size_t j = 0;
     size_t distance = 0;
@@ -188,12 +188,14 @@ public:
     }
     distance += (split_count1 - i);
     distance += (split_count2 - j);
-    return (mode == RELATIVE) ? (distance / maximum(plist1, plist2)) : distance;
+    return (mode == RELATIVE) ? (static_cast<double>(distance) / maximum(plist1, plist2)) 
+                              : static_cast<double>(distance);
   }
-
-  double maximum(const PllSplitList& plist1, const PllSplitList& plist2) const override {
+  /*OK this is a @Softwipe hack, in order to remove the unused parameter warning I had to remove the name
+  but since the signature is still the same its still an override */
+  double maximum(const PllSplitList&, const PllSplitList&) const override {
     assert(PllSplit::getTipCount() > 3);
-    return (2 * (PllSplit::getTipCount() - 3));
+    return static_cast<double> (2 * (PllSplit::getTipCount() - 3));
   }
 
 

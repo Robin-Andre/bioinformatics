@@ -99,7 +99,7 @@ PllSplitList::PllSplitList(const PllTree &tree) {
 PllSplitList::PllSplitList(const std::vector<PllSplit> &splits) {
   size_t split_len = PllSplit::getSplitLen();
   if(splits.size() > 0){
-    pll_split_t split_pointer = (pll_split_t) calloc(splits.size()* split_len, sizeof(pll_split_base_t));
+    pll_split_t split_pointer = static_cast<pll_split_t> (calloc(splits.size()* split_len, sizeof(pll_split_base_t)));
     for (size_t i=0; i<splits.size(); ++i) {
       memcpy(split_pointer + i* split_len, splits[i](), split_len * sizeof(pll_split_base_t));
       _splits.emplace_back(PllSplit(split_pointer + i*split_len));

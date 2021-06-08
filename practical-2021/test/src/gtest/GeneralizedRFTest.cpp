@@ -8,12 +8,19 @@
 
 #include <ortools/linear_solver/linear_solver.h>
 
-
-class GeneralizedRFTest : public testing::Test {
 using GRFDist = GeneralizedRFDistance;
+class GeneralizedRFTest : public testing::Test {
+
 protected:
 /*Right now an instanciation of test is needed, if we turn it into a free function this needs
 to be adapted*/
+std::vector<PllTree> load_24taxa() {
+   PllSplit::setTipCount(24);
+  PllTree tree1 = TreeReader::readTreeFile(current_data_dir + "heads/24")[0];
+  PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "heads/24")[1];
+  std::vector<PllTree> trees = {tree1, tree2};
+  return trees;
+}
 //GeneralizedRFTest test;
 /*This is a hardcoded link to the test dir. IF changes to the project structure are made this needs
 to be adjusted.
@@ -29,7 +36,7 @@ MSIMetric metric_msi;
 
 /*Method to reduce code complexity :)
 */
-void execute_test(std::string test_file, const Metric& metric, Mode mode) {
+void execute_test(const std::string& test_file, const Metric& metric, Mode mode) {
     std::vector<PllTree> trees = TreeReader::readTreeFile(current_data_dir + test_file);
     io::IOData result = GeneralizedRFDistance::computeDistances(trees, metric, mode);
     io::IOData reference = MatrixReader::read(current_ref_dir + metric.name() + "/" + test_file);
@@ -62,18 +69,12 @@ TEST_F(GeneralizedRFTest, ExampleFromSlideshow) {
   EXPECT_NEAR(GRFDist::computeDistances(trees, metric_spi, ABSOLUTE).pairwise_distance_mtx[0][0], 0, epsilon);
 }
 TEST_F(GeneralizedRFTest, ComparisionTree0_2taxa24) {
-  PllSplit::setTipCount(24);
-  PllTree tree1 = TreeReader::readTreeFile(current_data_dir + "heads/24")[0];
-  PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "heads/24")[1];
-  std::vector<PllTree> trees = {tree1, tree2};
+  std::vector<PllTree> trees = load_24taxa();
   EXPECT_NEAR(GRFDist::computeDistances(trees, metric_mci, ABSOLUTE).pairwise_distance_mtx[0][0], 0, epsilon);
   EXPECT_NEAR(GRFDist::computeDistances(trees, metric_spi, ABSOLUTE).pairwise_distance_mtx[0][0], 0, epsilon);
 }
 TEST_F(GeneralizedRFTest, example_24_msi) {
-  PllSplit::setTipCount(24);
-  PllTree tree1 = TreeReader::readTreeFile(current_data_dir + "heads/24")[0];
-  PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "heads/24")[1];
-  std::vector<PllTree> trees = {tree1, tree2};
+  std::vector<PllTree> trees = load_24taxa();
   EXPECT_NEAR(GRFDist::computeDistances(trees, metric_msi, ABSOLUTE).pairwise_distance_mtx[0][0], 0, epsilon);
 }
 

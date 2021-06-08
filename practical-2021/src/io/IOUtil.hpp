@@ -80,7 +80,7 @@ static double calculateAverageDistance(const std::vector<std::vector<double>>& h
       ++k;
     }
   }
-  return result / k;
+  return result / static_cast<double>(k);
 }
 
 

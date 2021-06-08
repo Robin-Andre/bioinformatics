@@ -39,7 +39,7 @@ class PllSplit {
 public:
   explicit PllSplit(pll_split_t s) : _split{s} {assert(splitValid());}
   PllSplit() {
-    PllSplit((pll_split_t)calloc(PllSplit::getSplitLen(), sizeof(pll_split_base_t)));
+    PllSplit(static_cast<pll_split_t> (calloc(PllSplit::getSplitLen(), sizeof(pll_split_base_t))));
   }
 
   pll_split_t operator()() const { return _split; }
