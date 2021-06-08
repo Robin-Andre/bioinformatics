@@ -38,7 +38,7 @@ public:
   }
   static double match(const std::vector<std::vector<double>>& weights) {
     std::vector<size_t> matching = match_vector(weights);
-    assert(matching.size() ==  weights.size());
+    assert(matching.size() == weights.size());
     double result = 0;
     for(size_t i = 0; i < matching.size(); ++i) {
       result += weights[i][matching[i]];

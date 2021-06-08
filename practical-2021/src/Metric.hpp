@@ -33,7 +33,8 @@ public:
   }
 
 
-    double distanceFromSimilarity(const PllSplitList& first, const PllSplitList& second, double similarity, Mode mode) const{
+    double distanceFromSimilarity(const PllSplitList& first,
+                                  const PllSplitList& second, double similarity, Mode mode) const{
       double max_value = maximum(first, second);
       assert(std::abs(max_value - 2 * similarity) < 0.000001);
       double dist = std::max(0.0, max_value - 2 * similarity);
@@ -147,7 +148,8 @@ class MCIMetric : public GeneralizedMetric {
 
 
     private:
-    double mutualInformation(const PllSplit&s1, const Partition block_s1, const PllSplit& s2, const Partition block_s2) const {
+    double mutualInformation(const PllSplit&s1, 
+                             const Partition block_s1, const PllSplit& s2, const Partition block_s2) const {
         double pcl = phylomath::clusteringProbability(s1, block_s1, s2, block_s2);
         assert(pcl >= 0);
         //This is a hardcoded statement. The math agrees that x log(x) -> 0 but c++ refuses
