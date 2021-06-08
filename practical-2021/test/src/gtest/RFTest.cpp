@@ -5,7 +5,7 @@
 #include "../../../src/io/TreeReader.hpp"
 #include "../../../src/io/IOData.hpp"
 
-class DistanceTest : public testing::Test {
+class RFTest : public testing::Test {
 protected:
 /*This is a hardcoded link to the test dir. IF changes to the project structure are made this needs
 to be adjusted.
@@ -20,7 +20,6 @@ RFMetric rf;
 */
 void execute_test(const std::string& test_file) {
     run_test(test_file);
-    ensure_no_bitmask_needed(test_file);
 }
 void run_test(const std::string& test_file) {
   io::IOData result = GeneralizedRFDistance::computeDistances(
@@ -28,102 +27,78 @@ void run_test(const std::string& test_file) {
   io::IOData reference = RAXMLReader::read(current_ref_dir + test_file);
     ASSERT_EQ(result, reference);
 }
-/*I am still convinced that the bitmask of the PllSplits is weird so I checked that no PllSplit
-   requires that mask.
-  The original implementation was bitmask on register 0. Should have been register n.
-  Ok turns out that the PllSplitList object needs to be held to have a reasonable splitlist.
-*/
-void ensure_no_bitmask_needed(const std::string& test_file) {
-
-    PllTree test_tree = TreeReader::readTreeFile(current_data_dir + test_file)[0];
-    //this shit works
-    PllSplitList object = PllSplitList(test_tree);
-    std::vector<PllSplit> splits = object.getSplits();
-
-    //this shit is broken
-    //std::vector<PllSplit> splits = PllSplitList(test_tree).getSplits();
-
-    PllSplit::setTipCount(test_tree.getTipCount());
-    for(size_t i = 0; i < splits.size(); ++i) {
-      ASSERT_EQ(splits[i].bitExtract(0), 1); //First bit is always 1
-      for(size_t j = test_tree.getTipCount(); j < PllSplit::getSplitLen() * sizeof(pll_split_base_t) * 8; ++j) {
-        ASSERT_EQ(splits[i].bitExtract(j), 0);
-      }
-    }
-
-
-}
 };
+
 /*
 Yes it would be smart to simply loop over an array of strings and call them instead of this repetitive nonsense
 but I would like to have all tests separate
 */
-TEST_F(DistanceTest, 24taxa) {
+TEST_F(RFTest, 24taxa) {
     execute_test("heads/24");
 }
-TEST_F(DistanceTest, 125taxa) {
+TEST_F(RFTest, 125taxa) {
     execute_test("heads/125");
 }
-TEST_F(DistanceTest, 141taxa) {
+TEST_F(RFTest, 141taxa) {
     execute_test("heads/141");
 }
-/*TEST_F(DistanceTest, 143taxa) {
+/*TEST_F(RFTest, 143taxa) {
     execute_test("heads/143");
 }
-TEST_F(DistanceTest, 148taxa) {
+TEST_F(RFTest, 148taxa) {
     execute_test("heads/148");
 }
-TEST_F(DistanceTest, 150taxa) {
+TEST_F(RFTest, 150taxa) {
     execute_test("heads/150");
 }
-TEST_F(DistanceTest, 218taxa) {
+TEST_F(RFTest, 218taxa) {
     execute_test("heads/218");
 }
-TEST_F(DistanceTest, 350taxa) {
+TEST_F(RFTest, 350taxa) {
     execute_test("heads/350");
 }
-TEST_F(DistanceTest, 354taxa) {
+TEST_F(RFTest, 354taxa) {
     execute_test("heads/354");
 }
-TEST_F(DistanceTest, 404taxa) {
+TEST_F(RFTest, 404taxa) {
     execute_test("heads/404");
 }
-TEST_F(DistanceTest, 500taxa) {
+TEST_F(RFTest, 500taxa) {
     execute_test("heads/500");
 }
-TEST_F(DistanceTest, 628taxa) {
+TEST_F(RFTest, 628taxa) {
     execute_test("heads/628");
 }
-TEST_F(DistanceTest, 714taxa) {
+TEST_F(RFTest, 714taxa) {
     execute_test("heads/24");
 }
-TEST_F(DistanceTest, 885taxa) {
+TEST_F(RFTest, 885taxa) {
     execute_test("heads/885");
 }
-TEST_F(DistanceTest, 994taxa) {
+TEST_F(RFTest, 994taxa) {
     execute_test("heads/994");
 }
-TEST_F(DistanceTest, 1288taxa) {
+TEST_F(RFTest, 1288taxa) {
     execute_test("heads/1288");
 }
-TEST_F(DistanceTest, 1481taxa) {
+TEST_F(RFTest, 1481taxa) {
     execute_test("heads/1481");
 }
-TEST_F(DistanceTest, 1512taxa) {
+TEST_F(RFTest, 1512taxa) {
     execute_test("heads/1512");
 }
-TEST_F(DistanceTest, 1604taxa) {
+TEST_F(RFTest, 1604taxa) {
     execute_test("heads/1604");
 }
-TEST_F(DistanceTest, 1908taxa) {
+TEST_F(RFTest, 1908taxa) {
     execute_test("heads/1908");
 }
-TEST_F(DistanceTest, 2000taxa) {
+TEST_F(RFTest, 2000taxa) {
     execute_test("heads/2000");
 }
-TEST_F(DistanceTest, 2308taxa) {
+TEST_F(RFTest, 2308taxa) {
     execute_test("heads/2308");
 }
-TEST_F(DistanceTest, 2554taxa) {
+TEST_F(RFTest, 2554taxa) {
     execute_test("heads/2554");
 }*/
