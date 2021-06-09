@@ -37,7 +37,7 @@ TEST_F(IOTest, json_read_write) {
 
 TEST_F(IOTest, matrix_read_write) {
   std::filesystem::create_directories("./foo");
-  io::IOData input = MatrixReader::read("../test/res/R_results/MCI/heads/24");
+  io::IOData input = MatrixReader::read("../test/res/R_results/MCI/similarity/heads/24");
   MatrixWriter::write("foo/24" , input);
   EXPECT_EQ(input, MatrixReader::read("foo/24"));
   std::filesystem::remove_all("./foo");

@@ -81,7 +81,7 @@ struct IOData {
 
   private:
 	// parsing helpers
-	/* @Softwipe not used so commented 
+	/* @Softwipe not used so commented
 	bool handle_pairwise_dst(size_t major,
 	                                 size_t minor,
 	                                 std::ifstream &stream,

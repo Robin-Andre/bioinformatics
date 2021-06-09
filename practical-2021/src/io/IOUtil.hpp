@@ -42,8 +42,8 @@ static std::vector<std::vector<double>> halfMatrixToFullMatrix(const std::vector
 
 static size_t calculateUniqueCount(const std::vector<std::vector<double>>& matrix) {
   size_t unique_count = matrix.size();
-  bool is_unique = true;
   for(size_t i = 0; i < matrix.size(); ++i){
+    bool is_unique = true;
     for(size_t j = 0; j < i; ++j){
       if (matrix[i][j] == 0 && is_unique){
         is_unique = false;

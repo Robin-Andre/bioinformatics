@@ -7,6 +7,7 @@
 #include "../../../src/Metric.hpp"
 
 #include <ortools/linear_solver/linear_solver.h>
+#include <string>
 
 using GRFDist = GeneralizedRFDistance;
 class GeneralizedRFTest : public testing::Test {
@@ -37,9 +38,17 @@ MSIMetric metric_msi;
 /*Method to reduce code complexity :)
 */
 void execute_test(const std::string& test_file, const Metric& metric, Mode mode) {
+    std::string mode_name;
+    if (mode == SIMILARITY){
+      mode_name = "similarity";
+    } else if (mode == ABSOLUTE){
+      mode_name = "absolute";
+    } else {
+      mode_name = "relative";
+    }
     std::vector<PllTree> trees = TreeReader::readTreeFile(current_data_dir + test_file);
     io::IOData result = GeneralizedRFDistance::computeDistances(trees, metric, mode);
-    io::IOData reference = MatrixReader::read(current_ref_dir + metric.name() + "/" + test_file);
+    io::IOData reference = MatrixReader::read(current_ref_dir + metric.name() + "/" + mode_name + "/" + test_file);
     //infos cannot be read from file
     reference.metric = metric.name();
     reference.mode = mode;
@@ -91,6 +100,7 @@ TEST_F(GeneralizedRFTest, 24taxa) {
   execute_test("heads/24", metric_msi, SIMILARITY);
   execute_test("heads/24", metric_spi, SIMILARITY);
   execute_test("heads/24", metric_mci, SIMILARITY);
+  execute_test("heads/24", metric_mci, ABSOLUTE);
 }
 TEST_F(GeneralizedRFTest, 125taxa) {
   execute_test("heads/125", metric_msi, SIMILARITY);

@@ -36,7 +36,7 @@ public:
     double distanceFromSimilarity(const PllSplitList& first,
                                   const PllSplitList& second, double similarity, Mode mode) const{
       double max_value = maximum(first, second);
-      assert(std::abs(max_value - 2 * similarity) < 0.000001);
+      assert((max_value - 2 * similarity) > -0.000001);
       double dist = std::max(0.0, max_value - 2 * similarity);
       return (mode == RELATIVE) ? dist : (dist / max_value);
     }
@@ -148,7 +148,7 @@ class MCIMetric : public GeneralizedMetric {
 
 
     private:
-    double mutualInformation(const PllSplit&s1, 
+    double mutualInformation(const PllSplit&s1,
                              const Partition block_s1, const PllSplit& s2, const Partition block_s2) const {
         double pcl = phylomath::clusteringProbability(s1, block_s1, s2, block_s2);
         assert(pcl >= 0);
@@ -188,7 +188,7 @@ public:
     }
     distance += (split_count1 - i);
     distance += (split_count2 - j);
-    return (mode == RELATIVE) ? (static_cast<double>(distance) / maximum(plist1, plist2)) 
+    return (mode == RELATIVE) ? (static_cast<double>(distance) / maximum(plist1, plist2))
                               : static_cast<double>(distance);
   }
   /*OK this is a @Softwipe hack, in order to remove the unused parameter warning I had to remove the name
