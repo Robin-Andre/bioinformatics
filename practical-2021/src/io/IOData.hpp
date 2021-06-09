@@ -1,6 +1,8 @@
 #ifndef INFORF_IODATA_H
 #define INFORF_IODATA_H
-#include "json/json.hpp"
+
+//#include "json/json.hpp"
+#include "json.hpp"
 #include <string>
 #include <vector>
 #include <cfloat>

@@ -30,7 +30,7 @@ public:
         assignment.RightMate(node),
         (- assignment.AssignmentCost(node)),
         assignment.AssignmentCost(node));*/
-        matching_vector[node] = static_cast<size_t>(assignment.RightMate(node));
+        matching_vector[node] = assignment.RightMate(static_cast<size_t>(node));
         //std::cout << "Result(Node): " << node << "->" << assignment.RightMate(node) << " = " << result << "\n";
       }
       //printf("Note that it may not be the unique optimal assignment.");

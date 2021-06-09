@@ -16,6 +16,8 @@ if(ENABLE_TESTS)
   target_link_libraries(${TEST_EXE_NAME} gtest_main)
   #gtest now requires gmp 
   target_link_libraries(${TEST_EXE_NAME} gmp :libgmp.a)
+  #gtest also requires json_lib
+  #target_link_libraries(${TEST_EXE_NAME} json_lib)
   #Linking the entire project might be a bit overkill but the test cases need a link to the classes somewhere
   #maybe figure out a smoother solution to this ... later
   target_link_libraries(${TEST_EXE_NAME} inforf)
