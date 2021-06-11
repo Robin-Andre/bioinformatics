@@ -49,6 +49,12 @@ void execute_test(const std::string& test_file, const Metric& metric, Mode mode)
     std::vector<PllTree> trees = TreeReader::readTreeFile(current_data_dir + test_file);
     io::IOData result = GeneralizedRFDistance::computeDistances(trees, metric, mode);
     io::IOData reference = MatrixReader::read(current_ref_dir + metric.name() + "/" + mode_name + "/" + test_file);
+    JSONWriter::write("../foo", result);
+    io::IOData result_2 = JSONReader::read("../foo");
+    result_2.metric = metric.name();
+    result_2.mode = mode;
+    EXPECT_EQ(result, result_2);
+    std::cout << result.toString() << result_2.toString();
     //infos cannot be read from file
     reference.metric = metric.name();
     reference.mode = mode;

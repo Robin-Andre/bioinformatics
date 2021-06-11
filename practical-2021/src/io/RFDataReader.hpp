@@ -64,14 +64,14 @@ public:
   }
 
 private:
-  static size_t getAbsoluteDistanceFromString(const std::string &line) {
+  static double getAbsoluteDistanceFromString(const std::string &line) {
       std::istringstream iss (line);
       std::string item;
       size_t i = 0;
       while (std::getline(iss, item, ' ') && i < 2) {
           i++;
       }
-      return std::stoi(item);
+      return std::stod(item);
   }
   /* @Softwipe unused function, needed if we want to test relative distances
   static float getRelativeDistanceFromString(const std::string &line) {
