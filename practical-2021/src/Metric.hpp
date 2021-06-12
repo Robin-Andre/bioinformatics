@@ -5,6 +5,7 @@
 #include "MaximumMatcher.hpp"
 
 enum Mode{SIMILARITY, ABSOLUTE, RELATIVE};
+static const char *ModeString[] = {"SIMILARITY", "ABSOLUTE", "RELATIVE"};
 
 class Metric {
     public:

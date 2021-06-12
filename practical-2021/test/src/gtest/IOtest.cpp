@@ -19,7 +19,17 @@ TEST_F(IOTest, tree_read) {
   EXPECT_TRUE(split1 < split2);
 }
 
-TEST_F(IOTest, raxml_read_write) {
+
+TEST_F(IOTest, json_read_write) {
+  std::filesystem::create_directories("./foo");
+  io::IOData input = JSONReader::read("../test/res/references_json/RF/ABSOLUTE/heads/24");
+  JSONWriter::write("foo/24" , input);
+  EXPECT_EQ(input, JSONReader::read("foo/24"));
+  std::filesystem::remove_all("./foo");
+}
+
+//Files of this format are no longer in repo
+/*TEST_F(IOTest, raxml_read_write) {
   std::filesystem::create_directories("./foo");
   io::IOData input = RAXMLReader::read("../test/res/reference_results/heads/24");
   RAXMLWriter::write("foo" , input);
@@ -27,19 +37,11 @@ TEST_F(IOTest, raxml_read_write) {
   std::filesystem::remove_all("./foo");
 }
 
-TEST_F(IOTest, json_read_write) {
-  std::filesystem::create_directories("./foo");
-  io::IOData input = RAXMLReader::read("../test/res/reference_results/heads/24");
-  JSONWriter::write("foo" , input);
-  EXPECT_EQ(input, JSONReader::read("foo"));
-  std::filesystem::remove_all("./foo");
-}
-
 TEST_F(IOTest, matrix_read_write) {
   std::filesystem::create_directories("./foo");
-  io::IOData input = MatrixReader::read("../test/res/R_results/MCI/similarity/heads/24");
+  io::IOData input = MatrixReader::read("../test/res/R_results/MCI/SIMILARITY/heads/24");
   MatrixWriter::write("foo/24" , input);
   EXPECT_EQ(input, MatrixReader::read("foo/24"));
   std::filesystem::remove_all("./foo");
-}
+}*/
 

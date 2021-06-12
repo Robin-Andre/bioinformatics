@@ -26,7 +26,7 @@ public:
       tree_splits.emplace_back(PllSplitList(tree));
     }
     io::IOData result;
-    result.mode = mode;
+    result.mode = ModeString[mode];
     result.metric = metric.name();
     result.mean_dst = 0;
     result.number_of_unique_trees = tree_count;

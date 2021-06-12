@@ -48,7 +48,7 @@ public:
 class JSONWriter : public RFDataWriter {
 public:
   static void write(const std::string& path, const io::IOData& data) {
-    std::ofstream out_stream(path + "/results.json");
+    std::ofstream out_stream(path + ".json");
     if (out_stream.is_open()) {
         nlohmann::json j;
         io::to_json(j, data);
@@ -56,7 +56,7 @@ public:
         out_stream << j;
         out_stream.close();
     } else {
-      throw ("Cannot write JSON to " + path + "/results.json");
+      throw ("Cannot write JSON to " + path + ".json");
     }
   }
 

@@ -23,7 +23,7 @@ public:
       std::string line;
       while(std::getline(res_file, line)){
         distances.push_back(getAbsoluteDistanceFromString(line));
-        //data.relative_distances.push_back(getRelativeDistanceFromString(line));
+        //distances.push_back(getRelativeDistanceFromString(line));
       }
       res_file.close(); //close the file object.
     } else {
@@ -73,8 +73,8 @@ private:
       }
       return std::stod(item);
   }
-  /* @Softwipe unused function, needed if we want to test relative distances
-  static float getRelativeDistanceFromString(const std::string &line) {
+  // @Softwipe unused function, needed if we want to test relative distances
+  /*static float getRelativeDistanceFromString(const std::string &line) {
       std::istringstream iss (line);
       std::string item;
       size_t i = 0;
@@ -82,7 +82,7 @@ private:
           i++;
       }
       return std::stod(item);
-  } */
+  }*/
 
 
   static std::string parseAfterPrefix(const std::string& line, const std::string& prefix){
@@ -106,7 +106,7 @@ public:
   static io::IOData read(const std::string& path) {
     io::IOData io_data;
     std::fstream res_file;
-    res_file.open(path + "/results.json", std::ios::in);
+    res_file.open(path + ".json", std::ios::in);
     if (res_file.is_open()){
       std::string json_str;
       std::string line;
@@ -118,7 +118,7 @@ public:
       io::from_json(jsonIn, io_data);
       return io_data;
     } else {
-      throw ("Cannot read JSON from " + path  + "/results.json");
+      throw ("Cannot read JSON from " + path + ".json");
     }
 
   }

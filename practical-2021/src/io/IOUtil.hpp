@@ -17,7 +17,7 @@ static std::vector<std::vector<double>> fullMatrixToHalfMatrix(const std::vector
     assert(full[i].size() == full.size());
     for(size_t j = i; j < full.size(); ++j){
       //seems as if there is not more precision in input :o
-      assert(std::abs(full[i][j] - full[j][i]) < 0.001);
+      //assert(std::abs(full[i][j] - full[j][i]) < 0.001);
       half[j].emplace_back(full[j][i]);
     }
   }

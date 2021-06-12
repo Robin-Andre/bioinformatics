@@ -22,7 +22,7 @@ struct IOData {
 	std::string git_revision;
 	std::string cpuInformation;
 	size_t number_of_unique_trees = 0;
-	Mode mode = ABSOLUTE;
+	std::string mode = "ABSOLUTE";
 
 	bool operator==(const IOData &rhs) const {
 		// compare floating points manually with relative distance measure
@@ -141,9 +141,11 @@ struct IOData {
 
 
 };
+
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(IOData,
                                    mean_dst,
                                    metric,
+																	 mode,
                                    taxa_names,
                                    pairwise_distance_mtx,
                                    git_revision,
