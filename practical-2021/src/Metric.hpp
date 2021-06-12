@@ -151,12 +151,12 @@ class MCIMetric : public GeneralizedMetric {
     private:
     double mutualInformation(const PllSplit&s1,
                              const Partition block_s1, const PllSplit& s2, const Partition block_s2) const {
-        double pcl = phylomath::clusteringProbability(s1, block_s1, s2, block_s2);
-        assert(pcl >= 0);
         //This is a hardcoded statement. The math agrees that x log(x) -> 0 but c++ refuses
-        if(pcl == 0) {
-            return 0.0;
+        if(s1.intersectionSize(s2, block_s1, block_s2) == 0){
+          return 0.0;
         }
+        double pcl = phylomath::clusteringProbability(s1, block_s1, s2, block_s2);
+        assert(pcl > 0);
         double p_1 = phylomath::clusteringProbability(s1, block_s1);
         double p_2 = phylomath::clusteringProbability(s2, block_s2);
         assert(p_1 > 0 && p_2 > 0);
