@@ -25,7 +25,6 @@ class PhylomathTest : public testing::Test {
   //Evaluates the double factorial and compares it to a string of base 10
   void evaluate_double_factorial(size_t x, const std::string& result_string) {
     phylomath::doublefactorial(test_variable, x);
-    phylomath::logdoublefactorial(x);
     //gmp_printf("test: %Zd \n", test_variable);
     mpz_set_str(result_variable, result_string.c_str(), 10);
     //gmp_printf("result: %Zd \n", result_variable);
@@ -36,6 +35,21 @@ class PhylomathTest : public testing::Test {
     mpq_set_str(result_variable_rational, fraction.c_str(), 10); //Base 10
     EXPECT_EQ(mpq_cmp(result_variable_rational, test_variable_rational), 0);
 
+  }
+
+  void evaluate_log_double_factorial(size_t x) {
+    mpfr_t mp_ld;
+    mpfr_init2(mp_ld, 200);
+    phylomath::logdoublefactorial(mp_ld, x);
+    double ld = mpfr_get_d(mp_ld, MPFR_RNDD);
+    mpfr_clear(mp_ld);
+
+    mpz_t mp_d;
+    mpz_init(mp_d);
+    phylomath::doublefactorial(mp_d, x);
+    double d = mpz_get_d(mp_d);
+    mpz_clear(mp_d);
+    EXPECT_DOUBLE_EQ(ld, std::log2(d));
   }
 
 };
@@ -122,4 +136,15 @@ TEST_F(PhylomathTest, test_clustering_probability) {
 
   free(split_a());
   free(split_b());
+}
+
+TEST_F(PhylomathTest, test_log_double_factorial) {
+  evaluate_log_double_factorial(0);
+  evaluate_log_double_factorial(1);
+  evaluate_log_double_factorial(2);
+  evaluate_log_double_factorial(3);
+  evaluate_log_double_factorial(4);
+  evaluate_log_double_factorial(5);
+  evaluate_log_double_factorial(6);
+  evaluate_log_double_factorial(21);
 }
