@@ -11,7 +11,7 @@ set_target_properties(inforf PROPERTIES
     CXX_STANDARD_REQUIRED YES
 )
 
-target_link_libraries(inforf ${PLLMODULES_LIBRARIES} ortools json_lib)
+target_link_libraries(inforf ${PLLMODULES_LIBRARIES} ortools json_lib ${MPFR_LIBRARIES} -lgmp)
 target_include_directories(inforf PRIVATE ${LOCALDEPS_DIR}/include $<BUILD_INTERFACE:${ortools}>)
 
 
@@ -21,7 +21,8 @@ message(${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories(json_lib SYSTEM INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/io/json>)
 
 
-
+find_package(MPFR REQUIRED)
+message(STATUS "MPFR Found: ${MPFR_FOUND}")
 add_executable(rfdist main.cpp)
 #target_include_directories(rfdist PUBLIC rf_io_lib)
 #target_link_libraries(rfdist rf_io_lib)
