@@ -2,6 +2,7 @@
 #include "../../../src/PhylogeneticMathUtils.hpp"
 #include "../TestUtil.hpp"
 #include <gmp.h>
+#include <mpfr.h>
 
 class PhylomathTest : public testing::Test {
   protected:
@@ -24,6 +25,7 @@ class PhylomathTest : public testing::Test {
   //Evaluates the double factorial and compares it to a string of base 10
   void evaluate_double_factorial(size_t x, const std::string& result_string) {
     phylomath::doublefactorial(test_variable, x);
+    phylomath::logdoublefactorial(x);
     //gmp_printf("test: %Zd \n", test_variable);
     mpz_set_str(result_variable, result_string.c_str(), 10);
     //gmp_printf("result: %Zd \n", result_variable);

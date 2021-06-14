@@ -4,11 +4,37 @@
 #include <algorithm>
 #include <vector>
 #include <gmp.h>
+#include <mpfr.h>
 #include "datastructures/PllSplits.hpp"
 namespace phylomath {
 
   /* This is the "apparent" GMP double factorial function I dislike the style of void functions changing the
      value of their parameters but in this case it is inevitable due to the implementation of gmp.*/
+
+  inline void logdoublefactorial(size_t n) {
+    unsigned int i;
+    mpfr_t s, t, u;
+
+    mpfr_init2 (t, 200);
+    mpfr_set_d (t, 1.0, MPFR_RNDD);
+    mpfr_init2 (s, 200);
+    mpfr_set_d (s, 1.0, MPFR_RNDD);
+    mpfr_init2 (u, 200);
+    for (i = 1; i <= 100; i++)
+      {
+        mpfr_mul_ui (t, t, i, MPFR_RNDU);
+        mpfr_set_d (u, 1.0, MPFR_RNDD);
+        mpfr_div (u, u, t, MPFR_RNDD);
+        mpfr_add (s, s, u, MPFR_RNDD);
+      }
+    printf ("Sum is ");
+    mpfr_out_str (stdout, 10, 0, s, MPFR_RNDD);
+    putchar ('\n');
+    mpfr_clear (s);
+    mpfr_clear (t);
+    mpfr_clear (u);
+    mpfr_free_cache ();
+  }
 
   inline void doublefactorial(mpz_t result, size_t n) {
     mpz_2fac_ui(result, n);
