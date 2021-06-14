@@ -18,6 +18,8 @@ message(WARNING ${ORTOOLS_ROOT})
 set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${ORTOOLS_ROOT})
 
 find_package(ortools REQUIRED)
+find_package(MPFR REQUIRED)
+message(STATUS "MPFR Found: ${MPFR_FOUND}")
 
 #Begin Hacky internet locate GMP
 include(FeatureSummary)
