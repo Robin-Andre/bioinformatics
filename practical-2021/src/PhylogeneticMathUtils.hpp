@@ -11,19 +11,21 @@ namespace phylomath {
   /* This is the "apparent" GMP double factorial function I dislike the style of void functions changing the
      value of their parameters but in this case it is inevitable due to the implementation of gmp.*/
 
-  inline void logdoublefactorial(mpfr_t acc, size_t n) {
-    if (n < 2){
+  inline void logdoublefactorial(mpfr_t acc, size_t n, size_t offset) {
+    if (n <= offset){
       mpfr_set_d(acc, 0.0, MPFR_RNDD);
     } else {
       mpfr_t s;
       mpfr_init2(s, 200);
       mpfr_set_d(s, n, MPFR_RNDD);
       mpfr_log2(s, s, MPFR_RNDD);
-      logdoublefactorial(acc, n-2);
+      logdoublefactorial(acc, n-2, offset);
       mpfr_add(acc, acc, s, MPFR_RNDD);
       mpfr_clear(s);
     }
   }
+
+
 
   inline void doublefactorial(mpz_t result, size_t n) {
     mpz_2fac_ui(result, n);
@@ -61,6 +63,34 @@ namespace phylomath {
   inline void factorialQuotient(mpq_t result, size_t a, size_t b, size_t x){
     assert((a % 2 == 1) && (b % 2 == 1) && (x % 2 == 1));
     factorialQuotient(result, a, b, 1, x);
+  }
+
+
+
+
+  static void logFactorialQuotient(mpfr_t result, size_t a, size_t b, size_t c, size_t x){
+    assert((a % 2 == 1) && (b % 2 == 1) && (x % 2 == 1));
+    size_t M = std::max(std::max(a, b), c);
+    size_t m_1 = (M == a) ? ((M == b) ? c : b) : a;
+    size_t m_2 = (M == b) ? c : b;
+
+    mpfr_t counter_1, counter_2, denominator;
+    mpfr_init2(counter_1, 200);
+    mpfr_init2(counter_2, 200);
+    mpfr_init2(denominator, 200);
+    logdoublefactorial(counter_1, m_1, 1);
+    logdoublefactorial(counter_2, m_2, 1);
+    logdoublefactorial(denominator, x, M);
+    mpfr_add(counter_1, counter_1, counter_2, MPFR_RNDD);
+    mpfr_sub(result, counter_1, denominator, MPFR_RNDD);
+    mpfr_clear(counter_1);
+    mpfr_clear(counter_2);
+    mpfr_clear(denominator);
+  }
+
+  static void logFactorialQuotient(mpfr_t result, size_t a, size_t b, size_t x){
+    assert((a % 2 == 1) && (b % 2 == 1) && (x % 2 == 1));
+    logFactorialQuotient(result, a, b, 1, x);
   }
 
 

@@ -40,16 +40,31 @@ class PhylomathTest : public testing::Test {
   void evaluate_log_double_factorial(size_t x) {
     mpfr_t mp_ld;
     mpfr_init2(mp_ld, 200);
-    phylomath::logdoublefactorial(mp_ld, x);
+    phylomath::logdoublefactorial(mp_ld, x, 1);
     double ld = mpfr_get_d(mp_ld, MPFR_RNDD);
     mpfr_clear(mp_ld);
 
     mpz_t mp_d;
     mpz_init(mp_d);
-    phylomath::doublefactorial(mp_d, x);
+    mpz_2fac_ui(mp_d, x);
     double d = mpz_get_d(mp_d);
     mpz_clear(mp_d);
     EXPECT_DOUBLE_EQ(ld, std::log2(d));
+  }
+
+  void evaluate_log_factorial_quotient(size_t a, size_t b, size_t c, size_t x) {
+    mpfr_t mp_lq;
+    mpfr_init2(mp_lq, 200);
+    phylomath::logFactorialQuotient(mp_lq, a, b, c, x);
+    double lq = mpfr_get_d(mp_lq, MPFR_RNDD);
+    mpfr_clear(mp_lq);
+
+    mpq_t mp_q;
+    mpq_init(mp_q);
+    phylomath::factorialQuotient(mp_q, a, b, c, x);
+    double q = mpq_get_d(mp_q);
+    mpq_clear(mp_q);
+    EXPECT_DOUBLE_EQ(lq, std::log2(q));
   }
 
 };
@@ -147,4 +162,9 @@ TEST_F(PhylomathTest, test_log_double_factorial) {
   evaluate_log_double_factorial(5);
   evaluate_log_double_factorial(6);
   evaluate_log_double_factorial(21);
+}
+
+TEST_F(PhylomathTest, test_log_factorial_quotient) {
+  evaluate_log_factorial_quotient(3, 3, 3, 9);
+  evaluate_log_factorial_quotient(3, 5, 7, 17);
 }
