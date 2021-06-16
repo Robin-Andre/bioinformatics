@@ -13,14 +13,13 @@ namespace phylomath {
 
   inline void logdoublefactorial(mpfr_t acc, size_t n, size_t offset) {
     if (n <= offset){
-      mpfr_set_d(acc, 0.0, MPFR_RNDD);
+      mpfr_set_ui(acc, 0, RND);
     } else {
       mpfr_t s;
-      mpfr_init2(s, 200);
-      mpfr_set_d(s, n, MPFR_RNDD);
-      mpfr_log2(s, s, MPFR_RNDD);
+      mpfr_init_set_ui(s, n, RND);
+      mpfr_log2(s, s, RND);
       logdoublefactorial(acc, n-2, offset);
-      mpfr_add(acc, acc, s, MPFR_RNDD);
+      mpfr_add(acc, acc, s, RND);
       mpfr_clear(s);
     }
   }
@@ -70,19 +69,31 @@ namespace phylomath {
 
   static void logFactorialQuotient(mpfr_t result, size_t a, size_t b, size_t c, size_t x){
     assert((a % 2 == 1) && (b % 2 == 1) && (x % 2 == 1));
-    size_t M = std::max(std::max(a, b), c);
-    size_t m_1 = (M == a) ? ((M == b) ? c : b) : a;
-    size_t m_2 = (M == b) ? c : b;
+    size_t M, m_1, m_2;
+    if (a >= b && a >= c){
+      M = a;
+      m_1 = b;
+      m_2 = c;
+    } else if (b >= a && b >= c){
+      M = b;
+      m_1 = a;
+      m_2 = c;
+    } else {
+      assert(c >= a && c >= b);
+      M = c;
+      m_1 = a;
+      m_2 = b;
+    }
 
     mpfr_t counter_1, counter_2, denominator;
-    mpfr_init2(counter_1, 200);
-    mpfr_init2(counter_2, 200);
-    mpfr_init2(denominator, 200);
+    mpfr_init_set_ui(counter_1, 0, RND);
+    mpfr_init_set_ui(counter_2, 0, RND);
+    mpfr_init_set_ui(denominator, 0, RND);
     logdoublefactorial(counter_1, m_1, 1);
     logdoublefactorial(counter_2, m_2, 1);
     logdoublefactorial(denominator, x, M);
-    mpfr_add(counter_1, counter_1, counter_2, MPFR_RNDD);
-    mpfr_sub(result, counter_1, denominator, MPFR_RNDD);
+    mpfr_add(counter_1, counter_1, counter_2, RND);
+    mpfr_sub(result, counter_1, denominator, RND);
     mpfr_clear(counter_1);
     mpfr_clear(counter_2);
     mpfr_clear(denominator);
@@ -99,45 +110,43 @@ namespace phylomath {
 
 
 
-  inline void phylogeneticProbability(mpq_t result, size_t a, size_t b){
+  inline void phylogeneticProbability(mpfr_t result, size_t a, size_t b){
     assert(a + b <= PllSplit::getTipCount());
     assert(a > 0 && b > 0);
     if ((a == 1) || (b == 1)) {
-      mpq_set_ui(result, 1, 1); //Set result to 1/1.
+      mpfr_set_ui(result, 0, RND); //Set result to 1/1.
       return;
       }
-    factorialQuotient(result, ((2 * a) - 3), ((2 * b) - 3), ((2 * (a + b)) - 5));
+    logFactorialQuotient(result, ((2 * a) - 3), ((2 * b) - 3), ((2 * (a + b)) - 5));
+    mpfr_mul_si(result, result, -1, RND);
+
+
   }
   //TODO to get this to work with gmp we need extra tools https://github.com/linas/anant
   //right now it is a conversion to double which will cause side effects when converting really small numbers
   //MEMO actually since we calculate on really small numbers we could theoretically use the inverse
-  inline double h(size_t a, size_t b) {
+  inline void h(mpfr_t result, size_t a, size_t b) {
     assert(a + b <= PllSplit::getTipCount());
     if(a == 0 || b == 0) {
-      return 0;
+      mpfr_set_ui(result, 0, RND);
+      return;
     }
-    mpq_t temp_result;
-    mpq_init(temp_result);
-    phylogeneticProbability(temp_result, a, b);
-    double conversion = mpq_get_d(temp_result);
-    mpq_clear(temp_result);
-    return -1 * std::log2(conversion);
+    phylogeneticProbability(result, a, b);
+
   }
-  inline double h(const PllSplit& s) {
+  inline void h(mpfr_t result, const PllSplit& s) {
     //There should never be a partition where one block is empty
     assert(s.partitionSizeOf(Block_A) > 0 && s.partitionSizeOf(Block_B) > 0);
-    return h(s.partitionSizeOf(Block_A), s.partitionSizeOf(Block_B));
+    h(result, s.partitionSizeOf(Block_A), s.partitionSizeOf(Block_B));
   }
   //This method is a mockup of the calculation of phylogenetic probability of two splits
   //Requires the size of the two partitions (A or B) which need to be compatible in the first place
   //The calculation will work even if they are not compatible but the result is entirely useless
-  inline double h(size_t taxa_partition1, size_t taxa_partition2, size_t alltaxa) {
+  inline void h(mpfr_t result, size_t taxa_partition1, size_t taxa_partition2, size_t alltaxa) {
     assert(taxa_partition1 >= 2 && taxa_partition2 >= 2);
     assert(taxa_partition1 + taxa_partition2 < alltaxa);
     /* If the partitions are compatible and the splits nonequal then
     there has to be at least one taxa which is in neither partition */
-    mpq_t temporary_result;
-    mpq_init(temporary_result);
     size_t a, b, c, x;
     a = 2 * taxa_partition1 - 3;
     b = 2 * taxa_partition2 - 3;
@@ -146,27 +155,39 @@ namespace phylomath {
 
     x = 2 * alltaxa - 5;
     assert(a > 0 && b > 0 && c > 0 && x > 0);
-    factorialQuotient(temporary_result, a, b, c, x);
-    double temporary_double_holder = mpq_get_d(temporary_result);
-    mpq_clear(temporary_result);
-    return -1 * std::log2(temporary_double_holder);
+    logFactorialQuotient(result, a, b, c, x);
+    mpfr_mul_si(result, result, -1.0, RND);
 
   }
 
-  inline double clusteringProbability(size_t count) {
-    return static_cast<double>(count) / static_cast<double>(PllSplit::getTipCount());
+  inline void clusteringProbability(mpfr_t result, size_t count) {
+    mpfr_set_ui(result, count, RND);
+    mpfr_div_ui(result, result, PllSplit::getTipCount(), RND);
   }
-  inline double clusteringProbability(const PllSplit& s, Partition block) {
-      return clusteringProbability(s.partitionSizeOf(block));
+  inline void clusteringProbability(mpfr_t result, const PllSplit& s, Partition block) {
+      clusteringProbability(result, s.partitionSizeOf(block));
   }
-  inline double clusteringProbability(const PllSplit& s1, Partition block_1, const PllSplit& s2, Partition block_2) {
-    return clusteringProbability(s1.intersectionSize(s2, block_1, block_2));
+  inline void clusteringProbability(mpfr_t result, const PllSplit& s1, Partition block_1, const PllSplit& s2, Partition block_2) {
+    clusteringProbability(result, s1.intersectionSize(s2, block_1, block_2));
   }
-  inline double entropy(const PllSplit& split) {
-    double p_a = clusteringProbability(split, Block_A);
-    double p_b = clusteringProbability(split, Block_B);
-    assert(p_a != 0 && p_b != 0);
-    return -p_a * std::log2(p_a) - p_b * std::log2(p_b);
+  inline void entropy(mpfr_t result, const PllSplit& split) {
+    mpfr_t p_a, p_b, p_a_log, p_b_log;
+    mpfr_init_set_ui(p_a, 0, RND);
+    mpfr_init_set_ui(p_b, 0, RND);
+    mpfr_init_set_ui(p_a_log, 0, RND);
+    mpfr_init_set_ui(p_b_log, 0, RND);
+    clusteringProbability(p_a, split, Block_A);
+    clusteringProbability(p_b, split, Block_B);
+    mpfr_log2(p_a_log, p_a, RND);
+    mpfr_log2(p_b_log, p_b, RND);
+    mpfr_mul(p_a, p_a, p_a_log, RND);
+    mpfr_mul(p_b, p_b, p_b_log, RND);
+    mpfr_mul_si(p_a, p_a, -1, RND);
+    mpfr_sub(result, p_a, p_b, RND);
+    mpfr_clear(p_a);
+    mpfr_clear(p_b);
+    mpfr_clear(p_a_log);
+    mpfr_clear(p_b_log);
   }
 
 }

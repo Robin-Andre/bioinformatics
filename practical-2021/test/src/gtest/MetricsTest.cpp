@@ -4,6 +4,7 @@
 #include "../../../src/io/TreeReader.hpp"
 #include "../TestUtil.hpp"
 #include <gmp.h>
+#include <mpfr.h>
 
 class MetricsTest : public testing::Test {
   protected:
@@ -13,13 +14,24 @@ class MetricsTest : public testing::Test {
   MSIMetric msi;
   SPIMetric spi;
   MCIMetric mci;
+  RFMetric rf;
+  mpfr_t test_variable;
+  mpfr_t result_variable;
+  virtual void SetUp() {
+    mpfr_init_set_ui(test_variable, 0, RND);
+    mpfr_init_set_ui(result_variable, 0, RND);
+  }
+  virtual void TearDown() {
+    mpfr_clear(test_variable);
+    mpfr_clear(result_variable);
+  }
 
   double evaluation(double h1, double h2, double h_shared) {
       return h1 + h2 - h_shared;
   }
 };
 
-TEST_F(MetricsTest, distances_example_from_slideshow_spi) {
+/*TEST_F(MetricsTest, distances_example_from_slideshow_spi) {
   PllSplit::setTipCount(6);
   PllTree tree1 = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[0];
   PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[1];
@@ -66,7 +78,8 @@ TEST_F(MetricsTest, distance_from_slideshow_msi) {
   EXPECT_DOUBLE_EQ(result[2][0], gamma);
   EXPECT_DOUBLE_EQ(result[2][1], gamma);
   EXPECT_DOUBLE_EQ(result[2][2], alpha);
-}
+}*/
+
 TEST_F(MetricsTest, maximumtest) {
   PllSplit::setTipCount(6);
   PllTree tree1 = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[0];
@@ -74,14 +87,16 @@ TEST_F(MetricsTest, maximumtest) {
   PllSplitList splits1 = PllSplitList(tree1);
   PllSplitList splits2 = PllSplitList(tree2);
   tree2.alignNodeIndices(tree1);
-  double result = msi.maximum(splits1, splits2);
-  double expected_info_content = 2 * (2 * std::log2(7) + std::log2(35.0 / 3));
-  EXPECT_DOUBLE_EQ(result, expected_info_content);
-  result = spi.maximum(splits1, splits2);
-  EXPECT_DOUBLE_EQ(result, expected_info_content);
-  result = mci.maximum(splits1, splits2);
-  double expected_entropy = 2 * (2 * (std::log2(3.0) / 3 + (2.0 / 3) * std::log2(3.0 / 2)) + 1);
-  EXPECT_DOUBLE_EQ(result, expected_entropy);
+  double expected = 2 * (2 * std::log2(7.0d) + std::log2(35.0d/3));
+  msi.maximum(test_variable, splits1, splits2);
+  EXPECT_DOUBLE_EQ(mpfr_get_d(test_variable, RND), expected);
+  spi.maximum(test_variable, splits1, splits2);
+  EXPECT_DOUBLE_EQ(mpfr_get_d(test_variable, RND), expected);
+  expected = 2 * (2 * (std::log2(3.0) / 3 + (2.0 / 3) * std::log2(3.0 / 2)) + 1);
+  mci.maximum(test_variable, splits1, splits2);
+  EXPECT_DOUBLE_EQ(mpfr_get_d(test_variable, RND), expected);
+
+
 }
 
 
@@ -114,13 +129,23 @@ TEST_F(MetricsTest, rf_test) {
   PllSplitList trd_splitlist = TestUtil::createSplitList(trd_part1s);
 
   RFMetric rf;
-  ASSERT_EQ(rf.distanceOf(fst_splitlist, snd_splitlist, ABSOLUTE), 6);
-  ASSERT_EQ(rf.distanceOf(snd_splitlist, fst_splitlist, ABSOLUTE), 6);
+  mpfr_set_ui(result_variable, 6, RND);
+  rf.distanceOf(test_variable, fst_splitlist, snd_splitlist, ABSOLUTE);
+  EXPECT_EQ(mpfr_cmp(result_variable, test_variable), 0);
+  rf.distanceOf(test_variable, snd_splitlist, fst_splitlist, ABSOLUTE);
+  EXPECT_EQ(mpfr_cmp(result_variable, test_variable), 0);
 
-  ASSERT_EQ(rf.distanceOf(fst_splitlist, trd_splitlist, ABSOLUTE), 9);
-  ASSERT_EQ(rf.distanceOf(trd_splitlist, fst_splitlist, ABSOLUTE), 9);
+  mpfr_set_ui(result_variable, 9, RND);
+  rf.distanceOf(test_variable, fst_splitlist, trd_splitlist, ABSOLUTE);
+  EXPECT_EQ(mpfr_cmp(result_variable, test_variable), 0);
+  rf.distanceOf(test_variable, trd_splitlist, fst_splitlist, ABSOLUTE);
+  EXPECT_EQ(mpfr_cmp(result_variable, test_variable), 0);
 
-  ASSERT_EQ(rf.distanceOf(snd_splitlist, trd_splitlist, ABSOLUTE), 3);
-  ASSERT_EQ(rf.distanceOf(trd_splitlist, snd_splitlist, ABSOLUTE), 3);
+  mpfr_set_ui(result_variable, 3, RND);
+  rf.distanceOf(test_variable, snd_splitlist, trd_splitlist, ABSOLUTE);
+  EXPECT_EQ(mpfr_cmp(result_variable, test_variable), 0);
+  rf.distanceOf(test_variable, trd_splitlist, snd_splitlist, ABSOLUTE);
+  EXPECT_EQ(mpfr_cmp(result_variable, test_variable), 0);
+
 
 }

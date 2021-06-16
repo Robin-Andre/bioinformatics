@@ -6,64 +6,57 @@
 
 class PhylomathTest : public testing::Test {
   protected:
-  mpz_t test_variable;
-  mpz_t result_variable;
+  mpfr_t test_variable;
+  mpfr_t result_variable;
+  mpz_t test_variable_int;
+  mpz_t result_variable_int;
   mpq_t test_variable_rational;
   mpq_t result_variable_rational;
   virtual void SetUp() {
-    mpz_init(test_variable);
-    mpz_init(result_variable);
+    mpz_init(test_variable_int);
+    mpz_init(result_variable_int);
     mpq_init(test_variable_rational);
     mpq_init(result_variable_rational);
+    mpfr_init_set_ui(test_variable, 0, RND);
+    mpfr_init_set_ui(result_variable, 0, RND);
   }
   virtual void TearDown() {
-    mpz_clear(test_variable);
-    mpz_clear(result_variable);
+    mpz_clear(test_variable_int);
+    mpz_clear(result_variable_int);
     mpq_clear(test_variable_rational);
     mpq_clear(result_variable_rational);
+    mpfr_clear(test_variable);
+    mpfr_clear(result_variable);
   }
   //Evaluates the double factorial and compares it to a string of base 10
   void evaluate_double_factorial(size_t x, const std::string& result_string) {
-    phylomath::doublefactorial(test_variable, x);
+    phylomath::doublefactorial(test_variable_int, x);
     //gmp_printf("test: %Zd \n", test_variable);
-    mpz_set_str(result_variable, result_string.c_str(), 10);
+    mpz_set_str(result_variable_int, result_string.c_str(), 10);
     //gmp_printf("result: %Zd \n", result_variable);
-    EXPECT_EQ(mpz_cmp(test_variable, result_variable), 0);
+    EXPECT_EQ(mpz_cmp(test_variable_int, result_variable_int), 0);
   }
   void evaluate_phylogenetic_probability(size_t a, size_t b, const std::string& fraction) {
-    phylomath::phylogeneticProbability(test_variable_rational, a, b);
-    mpq_set_str(result_variable_rational, fraction.c_str(), 10); //Base 10
-    EXPECT_EQ(mpq_cmp(result_variable_rational, test_variable_rational), 0);
+    phylomath::phylogeneticProbability(test_variable, a, b);
+    mpfr_set_str(result_variable, fraction.c_str(), 10, RND); //Base 10
+
 
   }
 
   void evaluate_log_double_factorial(size_t x) {
-    mpfr_t mp_ld;
-    mpfr_init2(mp_ld, 200);
-    phylomath::logdoublefactorial(mp_ld, x, 1);
-    double ld = mpfr_get_d(mp_ld, MPFR_RNDD);
-    mpfr_clear(mp_ld);
-
-    mpz_t mp_d;
-    mpz_init(mp_d);
-    mpz_2fac_ui(mp_d, x);
-    double d = mpz_get_d(mp_d);
-    mpz_clear(mp_d);
+    phylomath::logdoublefactorial(test_variable, x, 1);
+    double ld = mpfr_get_d(test_variable, RND);
+    mpz_2fac_ui(test_variable_int, x);
+    double d = mpz_get_d(test_variable_int);
     EXPECT_DOUBLE_EQ(ld, std::log2(d));
   }
 
   void evaluate_log_factorial_quotient(size_t a, size_t b, size_t c, size_t x) {
-    mpfr_t mp_lq;
-    mpfr_init2(mp_lq, 200);
-    phylomath::logFactorialQuotient(mp_lq, a, b, c, x);
-    double lq = mpfr_get_d(mp_lq, MPFR_RNDD);
-    mpfr_clear(mp_lq);
+    phylomath::logFactorialQuotient(test_variable, a, b, c, x);
+    double lq = mpfr_get_d(test_variable, RND);
 
-    mpq_t mp_q;
-    mpq_init(mp_q);
-    phylomath::factorialQuotient(mp_q, a, b, c, x);
-    double q = mpq_get_d(mp_q);
-    mpq_clear(mp_q);
+    phylomath::factorialQuotient(test_variable_rational, a, b, c, x);
+    double q = mpq_get_d(test_variable_rational);
     EXPECT_DOUBLE_EQ(lq, std::log2(q));
   }
 
@@ -120,7 +113,8 @@ TEST_F(PhylomathTest, test_phylogenetic_probability) {
 TEST_F(PhylomathTest, h_function_trivial_split) {
   PllSplit::setTipCount(4);
   PllSplit test_split = TestUtil::createSplit({0, 1, 3});
-  EXPECT_EQ(phylomath::h(test_split), 0);
+  phylomath::h(test_variable, test_split);
+  EXPECT_EQ(mpfr_get_d(test_variable, RND), 0);
   free(test_split());
 }
 
@@ -128,26 +122,38 @@ TEST_F(PhylomathTest, test_entropy) {
   PllSplit::setTipCount(6);
   std::vector<size_t> part1 = {0, 1, 2};
   PllSplit split = TestUtil::createSplit(part1);
-  EXPECT_DOUBLE_EQ(phylomath::entropy(split), -std::log2(1.0d/2));
+  phylomath::entropy(test_variable, split);
+  EXPECT_DOUBLE_EQ(mpfr_get_d(test_variable, RND), -std::log2(1.0d/2));
   free(split());
 }
 
 TEST_F(PhylomathTest, test_clustering_probability) {
   PllSplit::setTipCount(12);
-  EXPECT_DOUBLE_EQ(phylomath::clusteringProbability(4), 1.0d/3);
+  phylomath::clusteringProbability(test_variable, 4);
+  mpfr_set_ui(result_variable, 1, RND);
+  mpfr_div_ui(result_variable, result_variable, 3, RND);
+  EXPECT_EQ(mpfr_cmp(result_variable, test_variable), 0);
   std::vector<size_t> part1_a = {0, 1, 2, 3, 4};
   PllSplit split_a = TestUtil::createSplit(part1_a);
   std::vector<size_t> part1_b = {0, 3, 4, 5, 6, 7};
   PllSplit split_b = TestUtil::createSplit(part1_b);
-  EXPECT_DOUBLE_EQ(phylomath::clusteringProbability(split_a, Block_A), 5.0d/12);
-  EXPECT_DOUBLE_EQ(phylomath::clusteringProbability(split_a, Block_B), 7.0d/12);
-  EXPECT_DOUBLE_EQ(phylomath::clusteringProbability(split_b, Block_A), 1.0d/2);
-  EXPECT_DOUBLE_EQ(phylomath::clusteringProbability(split_b, Block_B), 1.0d/2);
+  phylomath::clusteringProbability(test_variable, split_a, Block_A);
+  EXPECT_DOUBLE_EQ(mpfr_get_d(test_variable, RND), 5.0d/12);
+  phylomath::clusteringProbability(test_variable, split_a, Block_B);
+  EXPECT_DOUBLE_EQ(mpfr_get_d(test_variable, RND), 7.0d/12);
+  phylomath::clusteringProbability(test_variable, split_b, Block_A);
+  EXPECT_DOUBLE_EQ(mpfr_get_d(test_variable, RND), 1.0d/2);
+  phylomath::clusteringProbability(test_variable, split_b, Block_B);
+  EXPECT_DOUBLE_EQ(mpfr_get_d(test_variable, RND), 1.0d/2);
 
-  EXPECT_DOUBLE_EQ(phylomath::clusteringProbability(split_a, Block_A, split_b, Block_A), 1.0d/4);
-  EXPECT_DOUBLE_EQ(phylomath::clusteringProbability(split_a, Block_A, split_b, Block_B), 1.0d/6);
-  EXPECT_DOUBLE_EQ(phylomath::clusteringProbability(split_a, Block_B, split_b, Block_A), 1.0d/4);
-  EXPECT_DOUBLE_EQ(phylomath::clusteringProbability(split_a, Block_B, split_b, Block_B), 1.0d/3);
+  phylomath::clusteringProbability(test_variable, split_a, Block_A, split_b, Block_A);
+  EXPECT_DOUBLE_EQ(mpfr_get_d(test_variable, RND), 1.0d/4);
+  phylomath::clusteringProbability(test_variable, split_a, Block_A, split_b, Block_B);
+  EXPECT_DOUBLE_EQ(mpfr_get_d(test_variable, RND), 1.0d/6);
+  phylomath::clusteringProbability(test_variable, split_a, Block_B, split_b, Block_A);
+  EXPECT_DOUBLE_EQ(mpfr_get_d(test_variable, RND), 1.0d/4);
+  phylomath::clusteringProbability(test_variable, split_a, Block_B, split_b, Block_B);
+  EXPECT_DOUBLE_EQ(mpfr_get_d(test_variable, RND), 1.0d/3);
 
   free(split_a());
   free(split_b());

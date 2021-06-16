@@ -94,16 +94,18 @@ TEST_F(GeneralizedRFTest, 24taxa) {
   execute_test("heads/24", metric_msi, SIMILARITY);
   execute_test("heads/24", metric_spi, SIMILARITY);
   execute_test("heads/24", metric_mci, SIMILARITY);
-  execute_test("heads/24", metric_mci, ABSOLUTE);
+  execute_test("heads/24", metric_mci, RELATIVE);
 }
-TEST_F(GeneralizedRFTest, 125taxa) {
+/*TEST_F(GeneralizedRFTest, 125taxa) {
   execute_test("heads/125", metric_rf, ABSOLUTE);
   execute_test("heads/125", metric_rf, RELATIVE);
 
   execute_test("heads/125", metric_msi, SIMILARITY);
   execute_test("heads/125", metric_spi, SIMILARITY);
   execute_test("heads/125", metric_mci, SIMILARITY);
-}/*
+
+  //execute_test("heads/125", metric_mci, RELATIVE);
+}
 TEST_F(GeneralizedRFTest, 141taxa) {
   execute_test("heads/141", metric_msi, SIMILARITY);
   execute_test("heads/141", metric_spi, SIMILARITY);

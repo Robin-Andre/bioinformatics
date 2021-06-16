@@ -35,6 +35,9 @@ struct IOData {
 		is_eq &= cpuInformation == rhs.cpuInformation;
 		is_eq &= number_of_unique_trees == rhs.number_of_unique_trees;
 		is_eq &= mode == rhs.mode;
+		/*if(!is_eq) {
+			std::cout << this->toString() << rhs.toString() << std::endl;
+		}*/
 		return is_eq;
 	}
 	bool operator!=(const IOData &rhs) const {
@@ -55,6 +58,9 @@ struct IOData {
 			}
 			for (size_t j = 0; j < el.size(); ++j) {
 				equal_pairwise &= nearly_eq_floating(el[j], othEl[j]);
+				if (! equal_pairwise){
+					std::cout << el[j] << " vs " << othEl[j] << std::endl;
+				}
 			}
 			++i;
 		}
@@ -64,11 +70,10 @@ struct IOData {
 
 	std::string toString() const{
 		std::stringstream ss;
-		ss << "mean_dst: " << mean_dst << std::endl;
 		ss << "metric: " << metric << std::endl;
+		ss << "mode: " << mode << std::endl;
+		ss << "mean_dst: " << mean_dst << std::endl;
 		ss << "number_of_unique_trees: " << number_of_unique_trees << std::endl;
-		ss << "git_revision: " << git_revision << std::endl;
-		ss << "git_revision: " << git_revision << std::endl;
 		ss << "distances: " << std::endl;
 		for(size_t i = 0; i < pairwise_distance_mtx.size(); ++i){
 			for(size_t j = 0; j < pairwise_distance_mtx[i].size(); ++j){
@@ -76,6 +81,8 @@ struct IOData {
 			}
 			ss << std::endl;
 		}
+		ss << "git_revision: " << git_revision << std::endl;
+		ss << "cpuInformation: " << cpuInformation << std::endl;
 		return ss.str();
 	}
 

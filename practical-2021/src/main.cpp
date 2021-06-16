@@ -5,6 +5,7 @@
 #include "io/TreeReader.hpp"
 
 int main(int argc, char* argv[]) {
+    //TODO: mpfr_set_default_prec
     io::Config config = io::parseCommandLineOptions(argc, argv);
     std::cout << "Input File Path: " << config.input_file_path  << std::endl;
     std::cout << "Metric Used: " << config.metric->name() <<"\n";
@@ -22,4 +23,5 @@ int main(int argc, char* argv[]) {
 
     RAXMLWriter::write(config.output_file_path, result);
     config.remove();
+
 }
