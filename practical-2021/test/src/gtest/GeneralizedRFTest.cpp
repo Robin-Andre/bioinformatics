@@ -9,6 +9,8 @@
 #include <ortools/linear_solver/linear_solver.h>
 #include <string>
 
+static constexpr bool print_execution_time = false;
+
 using GRFDist = GeneralizedRFDistance;
 class GeneralizedRFTest : public testing::Test {
 
@@ -41,9 +43,17 @@ RFMetric metric_rf;
 void execute_test(const std::string& test_file, const Metric& metric, Mode mode) {
     std::string mode_name = ModeString[mode];
     std::vector<PllTree> trees = TreeReader::readTreeFile(current_data_dir + test_file);
+    auto time_start = std::chrono::high_resolution_clock::now();
     io::IOData result = GeneralizedRFDistance::computeDistances(trees, metric, mode);
+    auto time_end = std::chrono::high_resolution_clock::now();
     io::IOData reference = JSONReader::read(current_ref_dir + metric.name() + "/" + mode_name + "/" + test_file);
     EXPECT_EQ(result, reference);
+    //This is a dirty solution to get execution time on the console for measurement purposes
+    //Right now all tests are intertwined and this is the easiest insertion point 
+    if(print_execution_time) {
+      std::cout << "TESTOUTPUT: " << test_file << " " << metric.name() << " " << mode 
+                << " " << (std::chrono::duration<double, std::milli>(time_end - time_start)).count() << "\n";
+    }
 
 }
 
