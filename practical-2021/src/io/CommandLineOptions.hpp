@@ -4,6 +4,10 @@
 #include <iostream>
 #include "../Metric.hpp"
 #include <gmp.h>
+
+#ifndef GIT_COMMIT_HASH
+#define GIT_COMMIT_HASH "?"
+#endif
 namespace io {
 struct Config {
   std::string input_file_path;
@@ -56,5 +60,19 @@ static Config parseCommandLineOptions(int argc, char* argv[]){
     config.metric = io::metricFromString(metric_name);
     return config;
 }
-
+static void clear_benchmark_timing() {
+  std::cout << "Clearing: " << GIT_COMMIT_HASH << "\n";
+  std::ofstream out_file(std::string("../benchmark/") + GIT_COMMIT_HASH + ".csv");
+  //#remove(std::string("../benchmark/") + GIT_COMMIT_HASH + ".csv");
+}
+static void write_benchmark_timing(std::string& input) {
+  std::ofstream out_file(std::string("../benchmark/") + GIT_COMMIT_HASH + ".csv", std::ios::app);
+  if(out_file.is_open()) {
+    out_file << input << "\n";
+  }
+  else {
+    std::cerr << "Benchmark Timing File not openable\n";
+  }
+  out_file.close();
+}
 } // namespace io

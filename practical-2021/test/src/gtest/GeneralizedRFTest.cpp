@@ -9,12 +9,20 @@
 #include <ortools/linear_solver/linear_solver.h>
 #include <string>
 
-static constexpr bool print_execution_time = false;
+#ifndef GIT_COMMIT_HASH
+#define GIT_COMMIT_HASH "?"
+#endif
+
+static constexpr bool print_execution_time = true;
 
 using GRFDist = GeneralizedRFDistance;
 class GeneralizedRFTest : public testing::Test {
 
 protected:
+//TODO this should be compile macroed
+static void SetUpTestSuite() {
+  io::clear_benchmark_timing();
+}
 /*Right now an instanciation of test is needed, if we turn it into a free function this needs
 to be adapted*/
 std::vector<PllTree> load_24taxa() {
@@ -51,8 +59,10 @@ void execute_test(const std::string& test_file, const Metric& metric, Mode mode)
     //This is a dirty solution to get execution time on the console for measurement purposes
     //Right now all tests are intertwined and this is the easiest insertion point 
     if(print_execution_time) {
-      std::cout << "TESTOUTPUT: " << test_file << " " << metric.name() << " " << mode 
-                << " " << (std::chrono::duration<double, std::milli>(time_end - time_start)).count() << "\n";
+      
+      std::string result = test_file + " " + metric.name() + " " + mode_name 
+                + " " + std::to_string((std::chrono::duration<double, std::milli>(time_end - time_start)).count()) + " "+ GIT_COMMIT_HASH;
+      io::write_benchmark_timing(result);
     }
 
 }
@@ -106,7 +116,7 @@ TEST_F(GeneralizedRFTest, 24taxa) {
   execute_test("heads/24", metric_mci, SIMILARITY);
   execute_test("heads/24", metric_mci, ABSOLUTE);
 }
-/*TEST_F(GeneralizedRFTest, 125taxa) {
+TEST_F(GeneralizedRFTest, 125taxa) {
   execute_test("heads/125", metric_rf, ABSOLUTE);
   execute_test("heads/125", metric_rf, RELATIVE);
 
@@ -134,6 +144,7 @@ TEST_F(GeneralizedRFTest, 150taxa) {
   execute_test("heads/150", metric_spi, SIMILARITY);
   execute_test("heads/150", metric_mci, SIMILARITY);
 }
+/*
 TEST_F(GeneralizedRFTest, 218taxa) {
   execute_test("heads/218", metric_msi, SIMILARITY);
   execute_test("heads/218", metric_spi, SIMILARITY);

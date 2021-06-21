@@ -68,7 +68,7 @@ struct IOData {
 		ss << "metric: " << metric << std::endl;
 		ss << "number_of_unique_trees: " << number_of_unique_trees << std::endl;
 		ss << "git_revision: " << git_revision << std::endl;
-		ss << "git_revision: " << git_revision << std::endl;
+		//ss << "git_revision: " << git_revision << std::endl;
 		ss << "distances: " << std::endl;
 		for(size_t i = 0; i < pairwise_distance_mtx.size(); ++i){
 			for(size_t j = 0; j < pairwise_distance_mtx[i].size(); ++j){

@@ -7,7 +7,6 @@
 #include "IOData.hpp"
 #include "IOUtil.hpp"
 
-
 enum Format {RAXML};
 class RFDataWriter {
 public:

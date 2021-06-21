@@ -11,6 +11,22 @@ if(ENABLE_TESTS)
   )
   #Compile Google Executable
   add_executable(Google_Test_run ${test_src})
+  #This is an attempt to get the git hash into c++ 
+  execute_process(
+    COMMAND git rev-parse --abbrev-ref HEAD
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    OUTPUT_VARIABLE GIT_BRANCH
+    OUTPUT_STRIP_TRAILING_WHITESPACE)
+
+# Get the latest commit hash
+execute_process(
+    COMMAND git rev-parse HEAD
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    OUTPUT_VARIABLE GIT_COMMIT_HASH
+    OUTPUT_STRIP_TRAILING_WHITESPACE)
+
+  message(Git Hash ${GIT_COMMIT_HASH})
+  target_compile_definitions(${TEST_EXE_NAME} PRIVATE "-DGIT_COMMIT_HASH=\"${GIT_COMMIT_HASH}\"")
   #googletest requires gtest as library. gtest is not linked as system library which causes a lot of
   #-Wundef errors in softwipe which are 
   target_link_libraries(${TEST_EXE_NAME} gtest_main)
