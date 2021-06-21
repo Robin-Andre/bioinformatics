@@ -3,81 +3,52 @@
 #include <cassert>
 #include <algorithm>
 #include <vector>
-#include <gmp.h>
 #include "datastructures/PllSplits.hpp"
 namespace phylomath {
 
   /* This is the "apparent" GMP double factorial function I dislike the style of void functions changing the
      value of their parameters but in this case it is inevitable due to the implementation of gmp.*/
 
-  inline void doublefactorial(mpz_t result, size_t n) {
-    mpz_2fac_ui(result, n);
+  inline double logDoublefactorial(size_t n) {
+    if (n < 2){
+      return 0;
+    } else {
+      return std::log2(n) + logDoublefactorial(n - 2);
+    }
   }
 
-  //This calculates (a!!*b!!*c!!) / x!!
+  //This calculates log((a!!*b!!*c!!) / x!!)
   //TODO this method needs a beauty session
-  inline void factorialQuotient(mpq_t result, size_t a, size_t b, size_t c, size_t x){
+  inline double logFactorialQuotient(size_t a, size_t b, size_t c, size_t x){
     assert((a % 2 == 1) && (b % 2 == 1) && (x % 2 == 1));
-    /*TODO optimization, move this allocation out of this method, maybe make it a class
-      because setting a mpz to 0 could be better than to reinitialize every single time
-      a factorialQuotient is calculated. (Which might be often)
-    */
-    mpz_t fac_a, fac_b, fac_c, fac_x;
-    mpz_init(fac_a);
-    mpz_init(fac_b);
-    mpz_init(fac_c);
-    mpz_init(fac_x);
-    doublefactorial(fac_a, a);
-    doublefactorial(fac_b, b);
-    doublefactorial(fac_c, c);
-    doublefactorial(fac_x, x);
-    mpz_mul(fac_a, fac_a, fac_b);
-    mpz_mul(fac_a, fac_a, fac_c);
-    mpq_set_num(result, fac_a);
-    mpq_set_den(result, fac_x);
-    mpq_canonicalize(result); //TODO could be a slowdown, needs evaluation
-
-    //TODO optimization, own class and clear methods in the destructor to save calls
-    mpz_clear(fac_a);
-    mpz_clear(fac_b);
-    mpz_clear(fac_c);
-    mpz_clear(fac_x);
+    return logDoublefactorial(a) + logDoublefactorial(b) + logDoublefactorial(c) - logDoublefactorial(x);
   }
-  inline void factorialQuotient(mpq_t result, size_t a, size_t b, size_t x){
+
+  inline double logFactorialQuotient(size_t a, size_t b, size_t x){
     assert((a % 2 == 1) && (b % 2 == 1) && (x % 2 == 1));
-    factorialQuotient(result, a, b, 1, x);
+    return logFactorialQuotient(a, b, 1, x);
   }
 
 
 
-
-
-
-
-  inline void phylogeneticProbability(mpq_t result, size_t a, size_t b){
+  inline double phylogeneticProbability(size_t a, size_t b){
     assert(a + b <= PllSplit::getTipCount());
     assert(a > 0 && b > 0);
     if ((a == 1) || (b == 1)) {
-      mpq_set_ui(result, 1, 1); //Set result to 1/1.
-      return;
-      }
-    factorialQuotient(result, ((2 * a) - 3), ((2 * b) - 3), ((2 * (a + b)) - 5));
+      return 0.0d;
+    }
+    return logFactorialQuotient(((2 * a) - 3), ((2 * b) - 3), ((2 * (a + b)) - 5));
   }
-  //TODO to get this to work with gmp we need extra tools https://github.com/linas/anant
-  //right now it is a conversion to double which will cause side effects when converting really small numbers
-  //MEMO actually since we calculate on really small numbers we could theoretically use the inverse
+
+
   inline double h(size_t a, size_t b) {
     assert(a + b <= PllSplit::getTipCount());
     if(a == 0 || b == 0) {
-      return 0;
+      return 0.0d;
     }
-    mpq_t temp_result;
-    mpq_init(temp_result);
-    phylogeneticProbability(temp_result, a, b);
-    double conversion = mpq_get_d(temp_result);
-    mpq_clear(temp_result);
-    return -1 * std::log2(conversion);
+    return -1 * phylogeneticProbability(a, b);;
   }
+
   inline double h(const PllSplit& s) {
     //There should never be a partition where one block is empty
     assert(s.partitionSizeOf(Block_A) > 0 && s.partitionSizeOf(Block_B) > 0);
@@ -89,22 +60,13 @@ namespace phylomath {
   inline double h(size_t taxa_partition1, size_t taxa_partition2, size_t alltaxa) {
     assert(taxa_partition1 >= 2 && taxa_partition2 >= 2);
     assert(taxa_partition1 + taxa_partition2 < alltaxa);
-    /* If the partitions are compatible and the splits nonequal then
-    there has to be at least one taxa which is in neither partition */
-    mpq_t temporary_result;
-    mpq_init(temporary_result);
     size_t a, b, c, x;
     a = 2 * taxa_partition1 - 3;
     b = 2 * taxa_partition2 - 3;
-    //(c) calculates the remaining tree (which should NOT be empty)
     c = 2 * (alltaxa - taxa_partition1 - taxa_partition2) - 1;
-
     x = 2 * alltaxa - 5;
     assert(a > 0 && b > 0 && c > 0 && x > 0);
-    factorialQuotient(temporary_result, a, b, c, x);
-    double temporary_double_holder = mpq_get_d(temporary_result);
-    mpq_clear(temporary_result);
-    return -1 * std::log2(temporary_double_holder);
+    return -1 * logFactorialQuotient(a, b, c, x);;
 
   }
 

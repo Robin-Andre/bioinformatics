@@ -1,39 +1,23 @@
 #include "gtest/gtest.h"
 #include "../../../src/PhylogeneticMathUtils.hpp"
 #include "../TestUtil.hpp"
-#include <gmp.h>
 
 class PhylomathTest : public testing::Test {
   protected:
-  mpz_t test_variable;
-  mpz_t result_variable;
-  mpq_t test_variable_rational;
-  mpq_t result_variable_rational;
-  virtual void SetUp() {
-    mpz_init(test_variable);
-    mpz_init(result_variable);
-    mpq_init(test_variable_rational);
-    mpq_init(result_variable_rational);
-  }
-  virtual void TearDown() {
-    mpz_clear(test_variable);
-    mpz_clear(result_variable);
-    mpq_clear(test_variable_rational);
-    mpq_clear(result_variable_rational);
-  }
-  //Evaluates the double factorial and compares it to a string of base 10
-  void evaluate_double_factorial(size_t x, const std::string& result_string) {
-    phylomath::doublefactorial(test_variable, x);
-    //gmp_printf("test: %Zd \n", test_variable);
-    mpz_set_str(result_variable, result_string.c_str(), 10);
-    //gmp_printf("result: %Zd \n", result_variable);
-    EXPECT_EQ(mpz_cmp(test_variable, result_variable), 0);
-  }
-  void evaluate_phylogenetic_probability(size_t a, size_t b, const std::string& fraction) {
-    phylomath::phylogeneticProbability(test_variable_rational, a, b);
-    mpq_set_str(result_variable_rational, fraction.c_str(), 10); //Base 10
-    EXPECT_EQ(mpq_cmp(result_variable_rational, test_variable_rational), 0);
 
+    double doublefactorial(size_t n) {
+      if (n < 2) {
+        return 1;
+      } else {
+        return n * doublefactorial(n - 2);
+      }
+    }
+
+    void evaluate_double_factorial(size_t n){
+      EXPECT_DOUBLE_EQ(std::log2(doublefactorial(n)), phylomath::logDoublefactorial(n));
+    }
+  void evaluate_phylogenetic_probability(size_t a, size_t b, double fraction) {
+    EXPECT_NEAR(phylomath::phylogeneticProbability(a, b), std::log2(fraction), 0.000000000001);
   }
 
 };
@@ -41,34 +25,20 @@ class PhylomathTest : public testing::Test {
 
 
 TEST_F(PhylomathTest, test_double_factorial) {
-  evaluate_double_factorial(0, "1");
-  evaluate_double_factorial(1, "1");
-  evaluate_double_factorial(2, "2");
-  evaluate_double_factorial(3, "3");
-  evaluate_double_factorial(4, "8");
-  evaluate_double_factorial(6, "48");
-  evaluate_double_factorial(41, "13113070457687988603440625");
-  evaluate_double_factorial(60, "284813089515958324736640819941867520000000");
-  evaluate_double_factorial(65, "7297912393562140321551086320493608726062890625");
+  evaluate_double_factorial(0);
+  evaluate_double_factorial(1);
+  evaluate_double_factorial(2);
+  evaluate_double_factorial(3);
+  evaluate_double_factorial(4);
+  evaluate_double_factorial(6);
+  evaluate_double_factorial(20);
 }
-//TODO I am not entirely sure what I should test, especially since mpqs are really finnicy and
-//double factorial is tested also this test will fail if normalization is remeoved in factorial quotient
+
 TEST_F(PhylomathTest, test_factorial_quotient) {
-  phylomath::factorialQuotient(test_variable_rational, 1001, 1, 1003);
-  mpq_set_str(result_variable_rational, "1/1003", 10);
-  int comp = mpq_cmp(test_variable_rational, result_variable_rational);
-  EXPECT_EQ(comp, 0);
+  EXPECT_NEAR(phylomath::logFactorialQuotient(1001, 1, 1003), std::log2(1.0d/1003), 0.000000000001);
 }
-//9 <- (this eats 2nominators) * 7 * 5 * 3 <- this eats the last so result should be 1/35
 TEST_F(PhylomathTest, test_factorial_quotient2) {
-  mpq_t quotientresult;
-  mpq_init(quotientresult);
-  phylomath::factorialQuotient(quotientresult, 3, 3, 3, 9);
-  mpz_t thirtyfive;
-  mpz_init(thirtyfive);
-  mpz_set_ui(thirtyfive, 35);
-  int comp = mpz_cmp(thirtyfive, mpq_denref(quotientresult));
-  EXPECT_EQ(comp, 0);
+  EXPECT_DOUBLE_EQ(phylomath::logFactorialQuotient(3, 3, 3, 9), std::log2(1.0d/35));
 }
 
 
@@ -76,14 +46,14 @@ TEST_F(PhylomathTest, test_factorial_quotient2) {
 TEST_F(PhylomathTest, test_phylogenetic_probability) {
 
   PllSplit::setTipCount(8);
-  evaluate_phylogenetic_probability(2, 3, "1/5");
-  evaluate_phylogenetic_probability(2, 4, "1/7");
-  evaluate_phylogenetic_probability(3, 4, "1/21");
-  evaluate_phylogenetic_probability(2, 2, "1/3");
-  evaluate_phylogenetic_probability(3, 3, "3/35");
-  evaluate_phylogenetic_probability(4, 4, "5/231");
+  evaluate_phylogenetic_probability(2, 3, 1.0d/5);
+  evaluate_phylogenetic_probability(2, 4, 1.0d/7);
+  evaluate_phylogenetic_probability(3, 4, 1.0d/21);
+  evaluate_phylogenetic_probability(2, 2, 1.0d/3);
+  evaluate_phylogenetic_probability(3, 3, 3.0d/35);
+  evaluate_phylogenetic_probability(4, 4, 5.0d/231);
   PllSplit::setTipCount(24);
-  evaluate_phylogenetic_probability(2,22, "1/43");
+  evaluate_phylogenetic_probability(2,22, 1.0d/43);
 }
 //The probability of a trivial split is 1, the value of h should be 0 as in -log(1) == 0
 TEST_F(PhylomathTest, h_function_trivial_split) {
