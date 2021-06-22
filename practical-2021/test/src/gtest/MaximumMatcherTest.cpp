@@ -94,30 +94,31 @@ TEST_F(MaximumMatcherTest, test_unequal_mci) {
 
 //This test was for debugging the normalization values, we can first reenable it as soon as alexis speaks
 //How to do the normalization.
-/*TEST_F(MaximumMatcherTest, test_unequal_msi) {
+TEST_F(MaximumMatcherTest, test_unequal_mci2) {
 
-  PllTree tree1 = TreeReader::readTreeFile(current_data_dir + "heads/24")[0];
-  PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "heads/24")[3];
+  PllTree tree1 = TreeReader::readTreeFile(current_data_dir + "heads/141")[2];
+  PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "heads/141")[5];
+  PllSplit::setTipCount(tree1.getTipCount());
   PllSplitList s1 = PllSplitList(tree1);
   PllSplitList s2 = PllSplitList(tree2);
-  PllSplit::setTipCount(tree1.getTipCount());
-  std::vector<std::vector<double>> similarities = msi.similaritiesForSplits(s1, s2);
-  for(unsigned i = 0; i < similarities.size(); ++i) {
+  
+  std::vector<std::vector<double>> similarities = mci.similaritiesForSplits(s1, s2);
+  /*for(unsigned i = 0; i < similarities.size(); ++i) {
     for(unsigned j = 0; j < similarities.size(); ++j) {
       std::cout << similarities[i][j] << " ";
     }
     std::cout << "\n";
-  }
+  }*/
   std::vector<size_t> match_results = MaximumMatcher::match_vector(similarities);
   double match = MaximumMatcher::match(similarities);
   for(unsigned i = 0; i < match_results.size(); ++i) {
     std::cout << match_results[i] << " ";
-    //std::cout << "Node: " << i << " -> " << match_results[i] << "\n";
+    std::cout << "Node: " << i << " -> " << match_results[i] << "\n";
   }
-  double maximum = msi.maximumValue(s1, s2);
+  double maximum = mci.maximum(s1, s2);
   std::cout << "\nValue: " << match << "\n";
   std::cout << "Maximum: " << maximum << "\n";
   std::cout << "Fraction: " << match / maximum << "\n";
   std::cout << "Normalized(x2): " << 2*(maximum - match) << "\n";
   std::cout << "Double normalized(x2) " <<  2*(maximum - match) / (2*maximum) << "\n";
-}*/
+}

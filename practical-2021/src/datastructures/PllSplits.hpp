@@ -37,7 +37,11 @@ class PllTree;
  */
 class PllSplit {
 public:
-  explicit PllSplit(pll_split_t s) : _split{s} {assert(splitValid());}
+  explicit PllSplit(pll_split_t s) : _split{s} {
+    assert(splitValid());
+    size_block_A = this->popcount();
+    size_block_B = PllSplit::getTipCount() - this->popcount();
+  }
   PllSplit() {
     PllSplit(static_cast<pll_split_t> (calloc(PllSplit::getSplitLen(), sizeof(pll_split_base_t))));
   }
@@ -50,7 +54,7 @@ public:
   uint32_t bitExtract(size_t bit_index) const;
   size_t partitionSizeOf (Partition block) const {
     assert(splitValid());
-    return (block == Block_A) ? this->popcount() : PllSplit::getTipCount() - this->popcount();
+    return (block == Block_A) ? size_block_A : size_block_B;
   }
   size_t intersectionSize(const PllSplit& other, Partition partition_this, Partition partition_other) const;
 
@@ -100,6 +104,9 @@ private:
   size_t basePopcount(pll_split_base_t count) const;
 
   pll_split_t _split = nullptr;
+
+  size_t size_block_A;
+  size_t size_block_B;
 
   static size_t tip_count;
   static pll_split_base_t bitmask_for_unused_bits;
