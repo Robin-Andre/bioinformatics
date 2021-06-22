@@ -34,6 +34,30 @@ TEST_F(PhylomathTest, test_double_factorial) {
   evaluate_double_factorial(20);
 }
 
+
+TEST_F(PhylomathTest, test_double_factorial_with_cache) {
+  PllSplit::setTipCount(15);
+  phylomath::initLdfCache();
+  evaluate_double_factorial(0);
+  evaluate_double_factorial(1);
+  evaluate_double_factorial(5);
+  evaluate_double_factorial(7);
+  evaluate_double_factorial(4);
+  evaluate_double_factorial(17);
+  evaluate_double_factorial(21);
+}
+
+TEST_F(PhylomathTest, test_double_factorial_without_cache) {
+  phylomath::flushLdfCache();
+  evaluate_double_factorial(0);
+  evaluate_double_factorial(1);
+  evaluate_double_factorial(5);
+  evaluate_double_factorial(7);
+  evaluate_double_factorial(4);
+  evaluate_double_factorial(17);
+  evaluate_double_factorial(21);
+}
+
 TEST_F(PhylomathTest, test_factorial_quotient) {
   EXPECT_NEAR(phylomath::logFactorialQuotient(1001, 1, 1003), std::log2(1.0d/1003), 0.000000000001);
 }

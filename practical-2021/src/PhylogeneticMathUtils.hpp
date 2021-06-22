@@ -19,17 +19,33 @@ public:
   }
 
   static void initLdfCache() {
-    for (size_t i = ldfCache.size(); i <= PllSplit::getTipCount(); ++i){
-      phylomath::ldfCache.push_back(computeLogDoublefactorial(i));
+    size_t upper_bound = (PllSplit::getTipCount() * 2) - 1;
+    size_t lower_bound;
+    if(ldfCache.size() == 0){
+      ldfCache.push_back(0);
+      lower_bound = 3;
+    } else {
+      lower_bound = (ldfCache.size() * 2) - 1;
+    }
+    double prev = ldfCache.back();
+    for (size_t i = lower_bound; i <= upper_bound; i+=2){
+      prev = prev + std::log2(i);
+      phylomath::ldfCache.push_back(prev);
     }
   }
+
+  static void flushLdfCache() {
+    ldfCache.clear();
+  }
+
 
   /* This is the "apparent" GMP double factorial function I dislike the style of void functions changing the
      value of their parameters but in this case it is inevitable due to the implementation of gmp.*/
 
   inline static double logDoublefactorial(size_t n) {
-    if (n < phylomath::ldfCache.size()){
-      return phylomath::ldfCache[n];
+    if (n == 0) return 0;
+    if ((n - 1) / 2 < phylomath::ldfCache.size() && n % 2 == 1){
+      return phylomath::ldfCache[(n - 1) / 2];
     } else {
       return computeLogDoublefactorial(n);
     }
