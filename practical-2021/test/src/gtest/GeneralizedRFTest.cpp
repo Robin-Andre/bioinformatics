@@ -13,7 +13,7 @@
 #define GIT_COMMIT_HASH "?"
 #endif
 
-static constexpr bool print_execution_time = true;
+static constexpr bool print_execution_time = false;
 
 using GRFDist = GeneralizedRFDistance;
 class GeneralizedRFTest : public testing::Test {
@@ -21,7 +21,10 @@ class GeneralizedRFTest : public testing::Test {
 protected:
 //TODO this should be compile macroed
 static void SetUpTestSuite() {
-  io::clear_benchmark_timing();
+  if(print_execution_time) {
+    io::clear_benchmark_timing();
+  }
+  
 }
 /*Right now an instanciation of test is needed, if we turn it into a free function this needs
 to be adapted*/
@@ -124,7 +127,7 @@ TEST_F(GeneralizedRFTest, 125taxa) {
   execute_test("heads/125", metric_spi, SIMILARITY);
   execute_test("heads/125", metric_mci, SIMILARITY);
 }
-/*TEST_F(GeneralizedRFTest, 141taxa) {
+TEST_F(GeneralizedRFTest, 141taxa) {
   execute_test("heads/141", metric_msi, SIMILARITY);
   execute_test("heads/141", metric_spi, SIMILARITY);
   execute_test("heads/141", metric_mci, SIMILARITY);
