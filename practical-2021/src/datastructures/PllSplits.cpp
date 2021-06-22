@@ -66,7 +66,7 @@ std::string PllSplit::toString() const {
   size_t split_len = PllSplit::getSplitLen();
   for (size_t i = 0; i < split_len; ++i){
     auto str = std::bitset<32>(_split[i]).to_string();
-    std::reverse(str.begin(), str.end()); 
+    std::reverse(str.begin(), str.end());
     ss << str << "|";
   }
   ss << std::endl;
@@ -76,12 +76,14 @@ std::string PllSplit::toString() const {
 
 //TODO @Robin might wanna do a speedtest, or find another implementation with registers
 size_t PllSplit::basePopcount(pll_split_base_t val) const {
-  return std::bitset<32>(val).count();
+  return __builtin_popcount(val);
+  //return std::bitset<32>(val).count();
 }
 
 bool PllSplit::splitValid() const {
-  return (_split != nullptr) && !(_split[PllSplit::getSplitLen() - 1]
-                                  & ~PllSplit::bitmask_for_unused_bits) && _split[0] & 1u;
+  return true;
+  //return (_split != nullptr) && !(_split[PllSplit::getSplitLen() - 1]
+  //                                & ~PllSplit::bitmask_for_unused_bits) && _split[0] & 1u;
 }
 
 
