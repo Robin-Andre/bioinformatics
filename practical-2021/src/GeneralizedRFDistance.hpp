@@ -20,6 +20,7 @@ public:
     size_t tip_count = trees[0].getTipCount();
     assert(tip_count > 3);
     PllSplit::setTipCount(trees[0].getTipCount());
+    phylomath::initLdfCache();
     std::vector<PllSplitList> tree_splits;
     for(PllTree tree :  trees){
       assert(tree.getTipCount() == PllSplit::getTipCount());

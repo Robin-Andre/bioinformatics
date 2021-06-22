@@ -57,10 +57,10 @@ void execute_test(const std::string& test_file, const Metric& metric, Mode mode)
     io::IOData reference = JSONReader::read(current_ref_dir + metric.name() + "/" + mode_name + "/" + test_file);
     EXPECT_EQ(result, reference);
     //This is a dirty solution to get execution time on the console for measurement purposes
-    //Right now all tests are intertwined and this is the easiest insertion point 
+    //Right now all tests are intertwined and this is the easiest insertion point
     if(print_execution_time) {
-      
-      std::string result = test_file + " " + metric.name() + " " + mode_name 
+
+      std::string result = test_file + " " + metric.name() + " " + mode_name
                 + " " + std::to_string((std::chrono::duration<double, std::milli>(time_end - time_start)).count()) + " "+ GIT_COMMIT_HASH;
       io::write_benchmark_timing(result);
     }
@@ -124,7 +124,7 @@ TEST_F(GeneralizedRFTest, 125taxa) {
   execute_test("heads/125", metric_spi, SIMILARITY);
   execute_test("heads/125", metric_mci, SIMILARITY);
 }
-TEST_F(GeneralizedRFTest, 141taxa) {
+/*TEST_F(GeneralizedRFTest, 141taxa) {
   execute_test("heads/141", metric_msi, SIMILARITY);
   execute_test("heads/141", metric_spi, SIMILARITY);
   execute_test("heads/141", metric_mci, SIMILARITY);

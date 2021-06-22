@@ -3,6 +3,9 @@ add_library(inforf STATIC
     datastructures/PllTree.hpp
     datastructures/PllSplits.cpp
     datastructures/PllSplits.hpp
+    PhylogeneticMathUtils.cpp
+    PhylogeneticMathUtils.hpp
+
 )
 
 
