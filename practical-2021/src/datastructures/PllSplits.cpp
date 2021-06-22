@@ -3,6 +3,7 @@
 #include "../enums.hpp"
 
 size_t PllSplit::tip_count = 0;
+size_t PllSplit::split_length = 0;
 pll_split_base_t PllSplit::bitmask_for_unused_bits = 0;
 
 

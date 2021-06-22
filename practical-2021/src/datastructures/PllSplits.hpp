@@ -61,25 +61,31 @@ public:
 
   std::string toString() const;
 
+  static void setSplitLen(size_t tipcount) {
+    size_t split_len = (tipcount / computSplitBaseSize());
+    if (tipcount % computSplitBaseSize() > 0) { split_len += 1; }
+    assert(split_len * computSplitBaseSize() >= tipcount);
+    PllSplit::split_length = split_len;
+  }
 
   static void setTipCount(size_t val) {
     PllSplit::tip_count = val;
+    PllSplit::setSplitLen(val);
     pll_split_base_t bit_mask = 0;
     size_t offset = val - ((PllSplit::getSplitLen() - 1) * computSplitBaseSize());
     for(size_t i = 0; i < offset; ++i){
       bit_mask |= (1 << i);
     }
     PllSplit::bitmask_for_unused_bits = bit_mask;
+    //PllSplit::setSplitLen(val);
   }
   static size_t getTipCount() {
     return PllSplit::tip_count;
   }
+
   //This returns the amount of registers needed to store a split
   static size_t getSplitLen() {
-    size_t split_len = (PllSplit::tip_count / computSplitBaseSize());
-    if (tip_count % computSplitBaseSize() > 0) { split_len += 1; }
-    assert(split_len * computSplitBaseSize() >= tip_count);
-    return split_len;
+    return PllSplit::split_length;
   }
 
 private:
@@ -109,6 +115,8 @@ private:
   size_t size_block_B;
 
   static size_t tip_count;
+  static size_t split_length;
+
   static pll_split_base_t bitmask_for_unused_bits;
 };
 //bool operator == (const PllSplit & p1, const PllSplit& p2);

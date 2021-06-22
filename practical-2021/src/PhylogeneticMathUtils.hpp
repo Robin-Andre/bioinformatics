@@ -7,7 +7,6 @@
 class phylomath {
 private:
   static std::vector<double> ldfCache; //Note that the cache only contains log(x!!) for odd x (We dont need others)
-
 public:
 
   inline static double computeLogDoublefactorial(size_t n) {
