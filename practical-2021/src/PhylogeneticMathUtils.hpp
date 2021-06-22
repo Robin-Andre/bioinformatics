@@ -39,9 +39,7 @@ public:
   }
 
 
-  /* This is the "apparent" GMP double factorial function I dislike the style of void functions changing the
-     value of their parameters but in this case it is inevitable due to the implementation of gmp.*/
-
+  //Check for cache hit should be removed, make sure, that cache always hits
   inline static double logDoublefactorial(size_t n) {
     if (n == 0) return 0;
     if ((n - 1) / 2 < phylomath::ldfCache.size() && n % 2 == 1){
