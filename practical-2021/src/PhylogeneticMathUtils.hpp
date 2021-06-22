@@ -14,7 +14,7 @@ public:
     if (n < 2){
       return 0;
     } else {
-      return std::log2(n) + computeLogDoublefactorial(n - 2);
+      return std::log2(n) + logDoublefactorial(n - 2);
     }
   }
 
