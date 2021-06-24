@@ -24,7 +24,7 @@ static void SetUpTestSuite() {
   if(print_execution_time) {
     io::clear_benchmark_timing();
   }
-  
+
 }
 /*Right now an instanciation of test is needed, if we turn it into a free function this needs
 to be adapted*/
@@ -118,6 +118,18 @@ TEST_F(GeneralizedRFTest, 24taxa) {
   execute_test("heads/24", metric_spi, SIMILARITY);
   execute_test("heads/24", metric_mci, SIMILARITY);
   execute_test("heads/24", metric_mci, ABSOLUTE);
+  /*execute_test("full/24", metric_rf, ABSOLUTE);
+  std::cout << "RF ABSOLUTE done" << std::endl;
+  execute_test("full/24", metric_rf, RELATIVE);
+  std::cout << "RF RELATIVE done" << std::endl;
+
+  execute_test("full/24", metric_msi, SIMILARITY);
+  std::cout << "MSI done" << std::endl;
+  execute_test("full/24", metric_spi, SIMILARITY);
+  std::cout << "SPI done" << std::endl;
+  execute_test("full/24", metric_mci, SIMILARITY);
+  std::cout << "MCI done" << std::endl;
+  execute_test("full/24", metric_mci, ABSOLUTE);*/
 }
 TEST_F(GeneralizedRFTest, 125taxa) {
   execute_test("heads/125", metric_rf, ABSOLUTE);

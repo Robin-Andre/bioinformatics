@@ -85,16 +85,22 @@ class SPIMetric : public GeneralizedMetric {
     if (s1 == s2) return phylomath::h(a_2, b_2);
 
     double phylo_shared;
-    // here worst case three calls to intersection size...can we avoid this? Choose clever order?
-    if(!s1.intersectionSize(s2, Block_B, Block_A)) {
+    size_t intersect_b_a = s1.intersectionSize(s2, Block_B, Block_A);
+    if(!intersect_b_a) {
       phylo_shared = phylomath::h(b_1, a_2, a_1 + b_1);
-    } else if (!s1.intersectionSize(s2, Block_A, Block_B)) {
-      phylo_shared = phylomath::h(a_1, b_2, a_1 + b_1);
-    } else if(!s1.intersectionSize(s2, Block_B, Block_B)) {
-      phylo_shared = phylomath::h(b_1, b_2, a_1 + b_1);
     } else {
-      //partitions incompatible
-      return 0.0;
+      size_t intersect_b_b = b_1 - intersect_b_a;
+      if(!intersect_b_b){
+        phylo_shared = phylomath::h(b_1, b_2, a_1 + b_1);
+      } else {
+        size_t intersect_a_b = b_2- intersect_b_b;
+        if(!intersect_a_b){
+          phylo_shared = phylomath::h(a_1, b_2, a_1 + b_1);
+        } else {
+          //partitions incompatible
+          return 0.0;
+        }
+      }
     }
     return phylomath::h(a_1, b_1) + phylomath::h(a_2, b_2) - phylo_shared;
   }
@@ -131,10 +137,11 @@ class MCIMetric : public GeneralizedMetric {
     double mutualInformation(const PllSplit&s1,
                              const Partition block_s1, const PllSplit& s2, const Partition block_s2) const {
         //This is a hardcoded statement. The math agrees that x log(x) -> 0 but c++ refuses
-        if(s1.intersectionSize(s2, block_s1, block_s2) == 0){
+        size_t intersection_size = s1.intersectionSize(s2, block_s1, block_s2);
+        if(intersection_size == 0){
           return 0.0;
         }
-        double pcl = phylomath::clusteringProbability(s1, block_s1, s2, block_s2);
+        double pcl = phylomath::clusteringProbability(intersection_size);
         assert(pcl > 0);
         double p_1 = phylomath::clusteringProbability(s1, block_s1);
         double p_2 = phylomath::clusteringProbability(s2, block_s2);
