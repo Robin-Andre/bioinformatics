@@ -19,7 +19,7 @@ public:
   }
   static void initLdfCache() {
     size_t upper_bound = (PllSplit::getTipCount() * 2) - 1;
-    size_t lower_bound; //What is the purpose of lower bound ?
+    size_t lower_bound; 
     if(ldfCache.size() == 0){
       ldfCache.push_back(0);
       lower_bound = 3;
@@ -39,7 +39,7 @@ public:
 
 
   //Check for cache hit should be removed, make sure, that cache always hits
-  //@Robin: I will try to move all logDF calls up one method, if the methods are fine no 
+  //@Robin: I will try to move all logDF calls up one method, if the methods are fine no
   // cache miss should ever occur
   inline static double logDoublefactorial(size_t n) {
     if (n == 0) return 0;
@@ -73,7 +73,7 @@ public:
     if ((a == 1) || (b == 1)) {
       return 0.0d;
     }
-    
+
     return ldfCache[a - 2] + ldfCache[b - 2] - ldfCache[a + b - 3];
     //return logFactorialQuotient(((2 * a) - 3), ((2 * b) - 3), ((2 * (a + b)) - 5));
   }
@@ -101,7 +101,7 @@ public:
     size_t c;
     c = 2 * (alltaxa - taxa_partition1 - taxa_partition2) - 1;
     assert(c > 0 && alltaxa > 3);
-    return -1 * (ldfCache[taxa_partition1 - 2] + ldfCache[taxa_partition2 - 2] 
+    return -1 * (ldfCache[taxa_partition1 - 2] + ldfCache[taxa_partition2 - 2]
               + ldfCache[alltaxa - taxa_partition1 - taxa_partition2 - 1] - ldfCache[alltaxa - 3]);
     //return -1 * logFactorialQuotient(a, b, c, x);
 

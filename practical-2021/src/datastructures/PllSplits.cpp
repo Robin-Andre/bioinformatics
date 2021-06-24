@@ -3,12 +3,12 @@
 #include "../enums.hpp"
 
 size_t PllSplit::tip_count = 0;
+size_t PllSplit::split_len = 0;
 pll_split_base_t PllSplit::bitmask_for_unused_bits = 0;
 
 
 bool operator == (const PllSplit& p1, const PllSplit& p2) {
-  size_t split_len = PllSplit::getSplitLen();
-  for(unsigned i = 0; i < split_len; ++i) {
+  for(unsigned i = 0; i < PllSplit::split_len; ++i) {
     if(p1._split[i] != p2._split[i]) {
       return false;
     }
@@ -16,8 +16,7 @@ bool operator == (const PllSplit& p1, const PllSplit& p2) {
   return true;
 }
 bool operator < (const PllSplit&p1, const PllSplit& p2) {
-  size_t split_len = PllSplit::getSplitLen();
-  for(unsigned i = 0; i < split_len; ++i) {
+  for(unsigned i = 0; i < PllSplit::split_len; ++i) {
     if(p1._split[i] != p2._split[i]) {
       return (p1._split[i] < p2._split[i]);
     }
@@ -26,17 +25,16 @@ bool operator < (const PllSplit&p1, const PllSplit& p2) {
 }
 
 size_t PllSplit::popcount() const{
-  assert(splitValid());
+  //assert(splitValid());
   size_t popcount = 0;
-  size_t split_len = PllSplit::getSplitLen();
-  for(size_t i = 0; i < split_len; ++i){
-    popcount += basePopcount(_split[i]);
+  for(size_t i = 0; i < PllSplit::split_len; ++i){
+    popcount += __builtin_popcount(_split[i]);
   }
   return popcount;
 }
 //TODO, we should kill this once we are certain that we don't need it
 uint32_t PllSplit::bitExtract(size_t bit_index) const {
-  assert(splitValid());
+  //assert(splitValid());
   assert(bit_index < PllSplit::getTipCount());
   pll_split_base_t split_part = _split[computeMajorIndex(bit_index)];
   return (split_part & (1u << computeMinorIndex(bit_index))) >> computeMinorIndex(bit_index);
@@ -45,17 +43,17 @@ uint32_t PllSplit::bitExtract(size_t bit_index) const {
 
 size_t PllSplit::intersectionSize(const PllSplit& other,
                                   Partition partition_this, Partition partition_other) const {
-  assert(splitValid());
-  assert(other.splitValid());
-  size_t split_len = PllSplit::getSplitLen();
+  //assert(splitValid());
+  //assert(other.splitValid());
+  pll_split_t other_split = other();
   pll_split_base_t this_mask = (partition_this == Block_A) ? 0 : ~0u; //This is a xor mask so it is flipped for A/B
   pll_split_base_t other_mask = (partition_other == Block_A) ? 0 : ~0u;
   size_t count = 0;
 
-  for (size_t i = 0; i < split_len - 1; ++i){
-    count += basePopcount((_split[i] ^ this_mask) & (other()[i] ^ other_mask));
+  for (size_t i = 0; i < PllSplit::split_len - 1; ++i){
+    count += __builtin_popcount((_split[i] ^ this_mask) & (other_split[i] ^ other_mask));
   }
-  count += basePopcount((_split[split_len - 1] ^ this_mask) & (other()[split_len - 1] ^ other_mask)
+  count += __builtin_popcount((_split[PllSplit::split_len - 1] ^ this_mask) & (other_split[PllSplit::split_len - 1] ^ other_mask)
                         & PllSplit::bitmask_for_unused_bits);
   return count;
 }
@@ -63,8 +61,7 @@ size_t PllSplit::intersectionSize(const PllSplit& other,
 std::string PllSplit::toString() const {
   std::stringstream ss;
   ss << this << ": " << _split << ": ";
-  size_t split_len = PllSplit::getSplitLen();
-  for (size_t i = 0; i < split_len; ++i){
+  for (size_t i = 0; i < PllSplit::split_len; ++i){
     auto str = std::bitset<32>(_split[i]).to_string();
     std::reverse(str.begin(), str.end());
     ss << str << "|";
@@ -75,16 +72,16 @@ std::string PllSplit::toString() const {
 
 
 //TODO @Robin might wanna do a speedtest, or find another implementation with registers
-size_t PllSplit::basePopcount(pll_split_base_t val) const {
+/*size_t PllSplit::basePopcount(pll_split_base_t val) const {
   return __builtin_popcount(val);
   //return std::bitset<32>(val).count();
-}
+}*/
 
-bool PllSplit::splitValid() const {
+/*bool PllSplit::splitValid() const {
   return true;
-  //return (_split != nullptr) && !(_split[PllSplit::getSplitLen() - 1]
+  //return (_split != nullptr) && !(_split[PllSplit::split_len - 1]
   //                                & ~PllSplit::bitmask_for_unused_bits) && _split[0] & 1u;
-}
+}*/
 
 
 //TODO find out if preallocation can be done.
@@ -99,8 +96,8 @@ PllSplitList::PllSplitList(const PllTree &tree) {
 }
 //TODO find out if preallocation can be done
 PllSplitList::PllSplitList(const std::vector<PllSplit> &splits) {
-  size_t split_len = PllSplit::getSplitLen();
   if(splits.size() > 0){
+    size_t split_len = PllSplit::getSplitLen();
     pll_split_t split_pointer = static_cast<pll_split_t> (calloc(splits.size()* split_len, sizeof(pll_split_base_t)));
     for (size_t i=0; i<splits.size(); ++i) {
       memcpy(split_pointer + i* split_len, splits[i](), split_len * sizeof(pll_split_base_t));
