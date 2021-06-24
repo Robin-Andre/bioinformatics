@@ -9,6 +9,7 @@ extern "C" {
 #include <vector>
 #include <iostream>
 #include <immintrin.h>
+#include <float.h>
 #include <bitset>
 #include <algorithm>
 #include <sstream>
@@ -16,7 +17,9 @@ extern "C" {
 #include "../enums.hpp"
 
 
+
 class PllTree;
+class phylomath;
 
 /*
  * A convenience class for the purposes of doing math on the individual splits.
@@ -125,9 +128,15 @@ public:
 
   /* Rule of 5 constructors/destructors */
   ~PllSplitList();
-  PllSplitList(const PllSplitList &other) : PllSplitList(other._splits) {}
+  PllSplitList(const PllSplitList &other) : PllSplitList(other._splits) {
+    this->maximum_entropy = other.getMaximumEntropy();
+    this->maximum_information_content = other.getMaximumInformationContent();
+  }
   PllSplitList(PllSplitList &&other) :
-      _splits(std::exchange(other._splits, {})) {}
+      _splits(std::exchange(other._splits, {})) {
+        this->maximum_entropy = other.getMaximumEntropy();
+        this->maximum_information_content = other.getMaximumInformationContent();
+      }
   PllSplitList &operator=(const PllSplitList &other) {
     return *this = PllSplitList(other);
   }
@@ -142,9 +151,14 @@ public:
   const std::vector<PllSplit>& getSplits() const {return _splits;}
   size_t getSplitCount() const {return _splits.size();}
 
+  double getMaximumEntropy() const {return maximum_entropy;}
+  double getMaximumInformationContent() const {return maximum_information_content;}
+
   std::string toString() const;
 
 
 private:
   std::vector<PllSplit> _splits;
+  double maximum_entropy = DBL_MAX;
+  double maximum_information_content = DBL_MAX;
 };

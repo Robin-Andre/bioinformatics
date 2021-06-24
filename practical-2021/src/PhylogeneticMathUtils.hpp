@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <vector>
 #include "datastructures/PllSplits.hpp"
+
 class phylomath {
 private:
   static std::vector<double> ldfCache; //Note that the cache only contains log(x!!) for odd x (We dont need others)
@@ -19,7 +20,7 @@ public:
   }
   static void initLdfCache() {
     size_t upper_bound = (PllSplit::getTipCount() * 2) - 1;
-    size_t lower_bound; 
+    size_t lower_bound;
     if(ldfCache.size() == 0){
       ldfCache.push_back(0);
       lower_bound = 3;

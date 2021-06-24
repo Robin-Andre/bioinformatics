@@ -1,6 +1,7 @@
 #include "PllSplits.hpp"
 #include "PllTree.hpp"
 #include "../enums.hpp"
+#include "../PhylogeneticMathUtils.hpp"
 
 size_t PllSplit::tip_count = 0;
 size_t PllSplit::split_len = 0;
@@ -89,19 +90,28 @@ PllSplitList::PllSplitList(const PllTree &tree) {
   assert(PllSplit::getTipCount() == tree.getTipCount());
   pll_split_t* tmp_splits = pllmod_utree_split_create(tree.tree()->vroot, tree.getTipCount(), nullptr);
   //_splits.reserve(tree.tree()->tip_count - 3);
+  maximum_entropy = 0.0;
+  maximum_information_content = 0.0;
   for (size_t i = 0; i < tree.getTipCount() - 3; ++i) {
     _splits.emplace_back(PllSplit(tmp_splits[i]));
+    maximum_entropy += phylomath::entropy(_splits.back());
+    maximum_information_content += phylomath::h(_splits.back());
   }
   free(tmp_splits);
+
 }
 //TODO find out if preallocation can be done
 PllSplitList::PllSplitList(const std::vector<PllSplit> &splits) {
   if(splits.size() > 0){
     size_t split_len = PllSplit::getSplitLen();
     pll_split_t split_pointer = static_cast<pll_split_t> (calloc(splits.size()* split_len, sizeof(pll_split_base_t)));
+    maximum_entropy = 0.0;
+    maximum_information_content = 0.0;
     for (size_t i=0; i<splits.size(); ++i) {
       memcpy(split_pointer + i* split_len, splits[i](), split_len * sizeof(pll_split_base_t));
       _splits.emplace_back(PllSplit(split_pointer + i*split_len));
+      maximum_entropy += phylomath::entropy(_splits.back());
+      maximum_information_content += phylomath::h(_splits.back());
     }
   }
 }
@@ -118,6 +128,7 @@ bool operator == (const PllSplitList& p1, const PllSplitList& p2) {
   }
   return true;
 }
+
 
 std::string PllSplitList::toString() const {
   std::stringstream ss;

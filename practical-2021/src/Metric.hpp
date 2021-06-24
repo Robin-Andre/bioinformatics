@@ -63,14 +63,7 @@ class MSIMetric : public GeneralizedMetric {
                     phylomath::h(s1.intersectionSize(s2, Block_B, Block_A), s1.intersectionSize(s2, Block_A, Block_B)));
   }
   double maximum(const PllSplitList& plist1, const PllSplitList& plist2) const override {
-    double result = 0;
-    for(unsigned i = 0; i < plist1.getSplitCount(); ++i) {
-      result += phylomath::h(plist1[i]);
-    }
-    for(unsigned i = 0; i < plist2.getSplitCount(); ++i) {
-      result += phylomath::h(plist2[i]);
-    }
-    return result;
+    return plist1.getMaximumInformationContent() + plist2.getMaximumInformationContent();
   }
 
   std::string name() const override {
@@ -92,6 +85,7 @@ class SPIMetric : public GeneralizedMetric {
     if (s1 == s2) return phylomath::h(a_2, b_2);
 
     double phylo_shared;
+    // here worst case three calls to intersection size...can we avoid this? Choose clever order?
     if(!s1.intersectionSize(s2, Block_B, Block_A)) {
       phylo_shared = phylomath::h(b_1, a_2, a_1 + b_1);
     } else if (!s1.intersectionSize(s2, Block_A, Block_B)) {
@@ -106,14 +100,7 @@ class SPIMetric : public GeneralizedMetric {
   }
 
   double maximum(const PllSplitList& plist1, const PllSplitList& plist2) const override {
-    double result = 0.0;
-    for(unsigned i = 0; i < plist1.getSplitCount(); ++i) {
-      result += phylomath::h(plist1[i]);
-    }
-    for(unsigned i = 0; i < plist2.getSplitCount(); ++i) {
-      result += phylomath::h(plist2[i]);
-    }
-    return result;
+    return plist1.getMaximumInformationContent() + plist2.getMaximumInformationContent();
   }
 
   std::string name() const override {
@@ -131,15 +118,7 @@ class MCIMetric : public GeneralizedMetric {
              + mutualInformation(s1, Block_A, s2, Block_B) + mutualInformation(s1, Block_B, s2, Block_B);
     }
     double maximum(const PllSplitList& plist1, const PllSplitList& plist2) const override {
-      double result = 0.0;
-      //TODO it feels weird to A) Recalculate this every time. B) not being able to call it on a single splitlist
-      for(size_t i = 0; i < plist1.getSplitCount(); ++i){
-        result += phylomath::entropy(plist1[i]);
-      }
-      for(size_t i = 0; i < plist2.getSplitCount(); ++i){
-        result += phylomath::entropy(plist2[i]);
-      }
-      return result;
+      return plist1.getMaximumEntropy() + plist2.getMaximumEntropy();
     }
 
     std::string name() const override {
