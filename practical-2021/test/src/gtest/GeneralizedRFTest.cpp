@@ -13,7 +13,7 @@
 #define GIT_COMMIT_HASH "?"
 #endif
 
-static constexpr bool print_execution_time = true;
+static constexpr bool print_execution_time = false;
 
 using GRFDist = GeneralizedRFDistance;
 class GeneralizedRFTest : public testing::Test {
@@ -127,6 +127,7 @@ TEST_F(GeneralizedRFTest, 125taxa) {
   execute_test("heads/125", metric_spi, SIMILARITY);
   execute_test("heads/125", metric_mci, SIMILARITY);
 }
+/*
 TEST_F(GeneralizedRFTest, 141taxa) {
   execute_test("heads/141", metric_msi, SIMILARITY);
   execute_test("heads/141", metric_spi, SIMILARITY);
@@ -147,7 +148,7 @@ TEST_F(GeneralizedRFTest, 150taxa) {
   execute_test("heads/150", metric_spi, SIMILARITY);
   execute_test("heads/150", metric_mci, SIMILARITY);
 }
-/*
+
 TEST_F(GeneralizedRFTest, 218taxa) {
   execute_test("heads/218", metric_msi, SIMILARITY);
   execute_test("heads/218", metric_spi, SIMILARITY);
@@ -173,7 +174,16 @@ TEST_F(GeneralizedRFTest, 500taxa) {
   execute_test("heads/500", metric_spi, SIMILARITY);
   execute_test("heads/500", metric_mci, SIMILARITY);
 }
-/*
+TEST_F(GeneralizedRFTest, 628taxa) {
+  execute_test("heads/628", metric_msi, SIMILARITY);
+  execute_test("heads/628", metric_spi, SIMILARITY);
+  execute_test("heads/628", metric_mci, SIMILARITY);
+}
+TEST_F(GeneralizedRFTest, 714taxa) {
+  execute_test("heads/714", metric_msi, SIMILARITY);
+  execute_test("heads/714", metric_spi, SIMILARITY);
+  execute_test("heads/714", metric_mci, SIMILARITY);
+}
 TEST_F(GeneralizedRFTest, 885taxa) {
   execute_test("heads/885", metric_msi, SIMILARITY);
   execute_test("heads/885", metric_spi, SIMILARITY);
