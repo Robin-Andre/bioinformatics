@@ -11,12 +11,13 @@ protected:
   std::string target_path = "../test/res/references_json/";
   std::string matrix_path = "../test/res/R_results/";
   //std::vector<std::string> test_setups = {"heads" , "full"};
-  std::vector<std::string> test_setups = {"heads"};
-  std::vector<std::string> test_sizes = {"24", "125", "141", "143", "148",
+  std::vector<std::string> test_setups = {"full"};
+  std::vector<std::string> test_sizes = {"24"};
+  /*"125", "141", "143", "148",
   "150", "218", "350", "354", "404",
   "500", "628", "714", "885", "994",
   "1288", "1481", "1512", "1604",
-   "1908", "2000", "2308", "2554"};
+   "1908", "2000", "2308", "2554"};*/
 
   std::vector<std::string> metrics = {"MSI" , "SPI", "MCI"};
   std::vector<std::string> modes = {"SIMILARITY" , "RELATIVE", "ABSOLUTE"};
@@ -24,7 +25,8 @@ protected:
 
 /*TEST_F(Conversion, convert_raxml) {
   std::string metric_name = "RF";
-  std::string mode_name = "RELATIVE";
+  //RAXMLReader::read needs to be adapted to switch from relative to absolute!
+  std::string mode_name = "ABSOLUTE";
   for(std::string setup : test_setups){
     for(std::string size : test_sizes){
       std::string in_path = raxml_path + setup + "/" + size + "/";

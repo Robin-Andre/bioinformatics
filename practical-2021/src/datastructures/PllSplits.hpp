@@ -9,6 +9,7 @@ extern "C" {
 #include <vector>
 #include <iostream>
 #include <immintrin.h>
+#include <float.h>
 #include <bitset>
 #include <algorithm>
 #include <sstream>
@@ -16,7 +17,9 @@ extern "C" {
 #include "../enums.hpp"
 
 
+
 class PllTree;
+class phylomath;
 
 /*
  * A convenience class for the purposes of doing math on the individual splits.
@@ -38,12 +41,12 @@ class PllTree;
 class PllSplit {
 public:
   explicit PllSplit(pll_split_t s) : _split{s} {
-    assert(splitValid());
+    //assert(splitValid());
     size_block_A = this->popcount();
     size_block_B = PllSplit::getTipCount() - this->popcount();
   }
   PllSplit() {
-    PllSplit(static_cast<pll_split_t> (calloc(PllSplit::getSplitLen(), sizeof(pll_split_base_t))));
+    PllSplit(static_cast<pll_split_t> (calloc(PllSplit::split_len, sizeof(pll_split_base_t))));
   }
 
   pll_split_t operator()() const { return _split; }
@@ -53,7 +56,7 @@ public:
   size_t   popcount() const;
   uint32_t bitExtract(size_t bit_index) const;
   size_t partitionSizeOf (Partition block) const {
-    assert(splitValid());
+    //assert(splitValid());
     return (block == Block_A) ? size_block_A : size_block_B;
   }
   size_t intersectionSize(const PllSplit& other, Partition partition_this, Partition partition_other) const;
@@ -61,31 +64,29 @@ public:
 
   std::string toString() const;
 
-  static void setSplitLen(size_t tipcount) {
-    size_t split_len = (tipcount / computSplitBaseSize());
-    if (tipcount % computSplitBaseSize() > 0) { split_len += 1; }
-    assert(split_len * computSplitBaseSize() >= tipcount);
-    PllSplit::split_length = split_len;
-  }
-
   static void setTipCount(size_t val) {
     PllSplit::tip_count = val;
-    PllSplit::setSplitLen(val);
+
+    size_t split_base_size = PllSplit::computSplitBaseSize();
+    PllSplit::split_len = (PllSplit::tip_count / split_base_size);
+    if (tip_count % split_base_size > 0) { PllSplit::split_len += 1; }
+    assert(PllSplit::split_len * split_base_size >= tip_count);
+
     pll_split_base_t bit_mask = 0;
-    size_t offset = val - ((PllSplit::getSplitLen() - 1) * computSplitBaseSize());
+    size_t offset = val - ((PllSplit::split_len - 1) * split_base_size);
     for(size_t i = 0; i < offset; ++i){
       bit_mask |= (1 << i);
     }
     PllSplit::bitmask_for_unused_bits = bit_mask;
-    //PllSplit::setSplitLen(val);
+
+
   }
   static size_t getTipCount() {
     return PllSplit::tip_count;
   }
 
-  //This returns the amount of registers needed to store a split
   static size_t getSplitLen() {
-    return PllSplit::split_length;
+    return PllSplit::split_len;
   }
 
 private:
@@ -102,12 +103,12 @@ private:
   }
 
   /* Computes the number of bits per split base */
-  static size_t computSplitBaseSize() {
+  static inline size_t computSplitBaseSize() {
     return sizeof(pll_split_base_t) * 8;
   }
 
-  bool splitValid() const;
-  size_t basePopcount(pll_split_base_t count) const;
+  //bool splitValid() const;
+  //size_t basePopcount(pll_split_base_t count) const;
 
   pll_split_t _split = nullptr;
 
@@ -115,8 +116,7 @@ private:
   size_t size_block_B;
 
   static size_t tip_count;
-  static size_t split_length;
-
+  static size_t split_len;
   static pll_split_base_t bitmask_for_unused_bits;
 };
 //bool operator == (const PllSplit & p1, const PllSplit& p2);
@@ -127,9 +127,15 @@ public:
 
   /* Rule of 5 constructors/destructors */
   ~PllSplitList();
-  PllSplitList(const PllSplitList &other) : PllSplitList(other._splits) {}
+  PllSplitList(const PllSplitList &other) : PllSplitList(other._splits) {
+    this->maximum_entropy = other.getMaximumEntropy();
+    this->maximum_information_content = other.getMaximumInformationContent();
+  }
   PllSplitList(PllSplitList &&other) :
-      _splits(std::exchange(other._splits, {})) {}
+      _splits(std::exchange(other._splits, {})) {
+        this->maximum_entropy = other.getMaximumEntropy();
+        this->maximum_information_content = other.getMaximumInformationContent();
+      }
   PllSplitList &operator=(const PllSplitList &other) {
     return *this = PllSplitList(other);
   }
@@ -144,9 +150,14 @@ public:
   const std::vector<PllSplit>& getSplits() const {return _splits;}
   size_t getSplitCount() const {return _splits.size();}
 
+  double getMaximumEntropy() const {return maximum_entropy;}
+  double getMaximumInformationContent() const {return maximum_information_content;}
+
   std::string toString() const;
 
 
 private:
   std::vector<PllSplit> _splits;
+  double maximum_entropy = DBL_MAX;
+  double maximum_information_content = DBL_MAX;
 };
