@@ -33,10 +33,12 @@ public:
     result.number_of_unique_trees = tree_count;
     result.pairwise_distance_mtx = std::vector<std::vector<double>>(tree_count, std::vector<double>());
     size_t dist_count = 0;
+    size_t n = tree_splits[0].getSplits().size();
+    std::vector<std::vector<double>>  similarities = std::vector<std::vector<double>>(n, std::vector<double>(n));
     for(size_t i = 0; i < tree_count; ++i){
       bool is_unique = true;
       for(size_t j = i; j < tree_count; ++j){
-        double dist = metric.distanceOf(tree_splits[i], tree_splits[j], mode);
+        double dist = metric.distanceOf(tree_splits[i], tree_splits[j], mode, similarities);
         assert(dist >= 0.0);
         //TODO: Check near 0 because of numerical issues
         if (i != j && dist == 0 && is_unique){

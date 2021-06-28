@@ -9,7 +9,7 @@ static const char *ModeString[] = {"SIMILARITY", "ABSOLUTE", "RELATIVE"};
 
 class Metric {
     public:
-    virtual double distanceOf(const PllSplitList& plist1, const PllSplitList& plist2, Mode mode) const = 0;
+    virtual double distanceOf(const PllSplitList& plist1, const PllSplitList& plist2, Mode mode, std::vector<std::vector<double>> &similarities) const = 0;
     virtual double maximum(const PllSplitList& plist1, const PllSplitList& plist2) const = 0;
     virtual std::string name() const = 0;
     virtual ~Metric() {
@@ -25,8 +25,10 @@ public:
 
     }
 
-  double distanceOf(const PllSplitList& first, const PllSplitList& second, Mode mode) const override {
-    std::vector<std::vector<double>> similarities = similaritiesForSplits(first, second);
+  double distanceOf(const PllSplitList& first, const PllSplitList& second, Mode mode, std::vector<std::vector<double>> &similarities) const override {
+    assert(first.getSplits().size() == first.getSplits().size());
+    assert(similarities.size() == first.getSplits().size());
+    similaritiesForSplits(first, second, similarities);
     assert(similarities.size() == first.getSplits().size());
     double similarity = MaximumMatcher::match(similarities);
     assert(similarity >= 0);
@@ -42,16 +44,13 @@ public:
       return (mode == RELATIVE) ? dist : (dist / max_value);
     }
 
-    std::vector<std::vector<double>> similaritiesForSplits(const PllSplitList& first, const PllSplitList& second) const{
-      assert(first.getSplits().size() == first.getSplits().size());
+    void similaritiesForSplits(const PllSplitList& first, const PllSplitList& second, std::vector<std::vector<double>> &result) const{
       size_t n = first.getSplits().size();
-      std::vector<std::vector<double>>  result = std::vector<std::vector<double>>(n, std::vector<double>(n));
       for(size_t i = 0; i < n; ++i){
         for(size_t j = 0; j < n; ++j){
           result[i][j] = evaluate(first[i], second[j]);
         }
       }
-      return result;
     }
 };
 
@@ -153,7 +152,7 @@ class MCIMetric : public GeneralizedMetric {
 
 class RFMetric : public Metric {
 public:
-  virtual double distanceOf(const PllSplitList& plist1, const PllSplitList& plist2, Mode mode) const override {
+  virtual double distanceOf(const PllSplitList& plist1, const PllSplitList& plist2, Mode mode, std::vector<std::vector<double>> &similarities) const override {
     size_t split_count1 = plist1.getSplitCount();
     size_t split_count2 = plist2.getSplitCount();
     if (split_count1 == 0) return static_cast<double> (split_count2);

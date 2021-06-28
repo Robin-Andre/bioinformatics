@@ -26,7 +26,9 @@ TEST_F(MetricsTest, distances_example_from_slideshow_spi) {
   PllSplitList splits1 = PllSplitList(tree1);
   PllSplitList splits2 = PllSplitList(tree2);
   tree2.alignNodeIndices(tree1);
-  std::vector<std::vector<double>> result = spi.similaritiesForSplits(splits1, splits2);
+  size_t n = splits1.getSplits().size();
+  std::vector<std::vector<double>>  result = std::vector<std::vector<double>>(n, std::vector<double>(n));
+  spi.similaritiesForSplits(splits1, splits2, result);
   double h_standard = phylomath::h(2, 4);
   double h_i1 = phylomath::h(3, 3);
   double h_shared_beta = phylomath::h(3, 2, 6);
@@ -50,7 +52,9 @@ TEST_F(MetricsTest, distance_from_slideshow_msi) {
   PllSplitList splits1 = PllSplitList(tree1);
   PllSplitList splits2 = PllSplitList(tree2);
   tree2.alignNodeIndices(tree1);
-  std::vector<std::vector<double>> result = msi.similaritiesForSplits(splits1, splits2);
+  size_t n = splits1.getSplits().size();
+  std::vector<std::vector<double>>  result = std::vector<std::vector<double>>(n, std::vector<double>(n));
+  msi.similaritiesForSplits(splits1, splits2, result);
   double alpha = std::log2(7);
   double beta = std::log2(5);
   double gamma = std::log2(3);
@@ -114,13 +118,14 @@ TEST_F(MetricsTest, rf_test) {
   PllSplitList trd_splitlist = TestUtil::createSplitList(trd_part1s);
 
   RFMetric rf;
-  ASSERT_EQ(rf.distanceOf(fst_splitlist, snd_splitlist, ABSOLUTE), 6);
-  ASSERT_EQ(rf.distanceOf(snd_splitlist, fst_splitlist, ABSOLUTE), 6);
+  std::vector<std::vector<double>>  result = std::vector<std::vector<double>>();
+  ASSERT_EQ(rf.distanceOf(fst_splitlist, snd_splitlist, ABSOLUTE, result), 6);
+  ASSERT_EQ(rf.distanceOf(snd_splitlist, fst_splitlist, ABSOLUTE, result), 6);
 
-  ASSERT_EQ(rf.distanceOf(fst_splitlist, trd_splitlist, ABSOLUTE), 9);
-  ASSERT_EQ(rf.distanceOf(trd_splitlist, fst_splitlist, ABSOLUTE), 9);
+  ASSERT_EQ(rf.distanceOf(fst_splitlist, trd_splitlist, ABSOLUTE, result), 9);
+  ASSERT_EQ(rf.distanceOf(trd_splitlist, fst_splitlist, ABSOLUTE, result), 9);
 
-  ASSERT_EQ(rf.distanceOf(snd_splitlist, trd_splitlist, ABSOLUTE), 3);
-  ASSERT_EQ(rf.distanceOf(trd_splitlist, snd_splitlist, ABSOLUTE), 3);
+  ASSERT_EQ(rf.distanceOf(snd_splitlist, trd_splitlist, ABSOLUTE, result), 3);
+  ASSERT_EQ(rf.distanceOf(trd_splitlist, snd_splitlist, ABSOLUTE, result), 3);
 
 }

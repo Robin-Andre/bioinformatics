@@ -67,7 +67,9 @@ TEST_F(MaximumMatcherTest, test_real){
   PllTree tree = TreeReader::readTreeFile(current_data_dir + "heads/24")[0];
   PllSplit::setTipCount(tree.getTipCount());
   PllSplitList split_list = PllSplitList(tree);
-  std::vector<std::vector<double>> similarities = spi.similaritiesForSplits(split_list, split_list);
+  size_t s = split_list.getSplits().size();
+  std::vector<std::vector<double>>  similarities = std::vector<std::vector<double>>(s, std::vector<double>(s));
+  spi.similaritiesForSplits(split_list, split_list, similarities);
   std::vector<std::vector<double>> weights = std::vector<std::vector<double>> (n, std::vector<double>(n));
   for(size_t i = 0; i < n; ++i){
     for(size_t j = 0; j < n; ++j){
@@ -84,7 +86,9 @@ TEST_F(MaximumMatcherTest, test_unequal_mci) {
   PllSplitList s1 = PllSplitList(tree1);
   PllSplitList s2 = PllSplitList(tree2);
   PllSplit::setTipCount(tree1.getTipCount());
-  std::vector<std::vector<double>> similarities = mci.similaritiesForSplits(s1, s2);
+  size_t n = s1.getSplits().size();
+  std::vector<std::vector<double>>  similarities = std::vector<std::vector<double>>(n, std::vector<double>(n));
+  mci.similaritiesForSplits(s1, s2, similarities);
 
   //std::vector<size_t> match_results = MaximumMatcher::match_vector(similarities); We cannot trivially test matchings
   double match = MaximumMatcher::match(similarities);
@@ -101,8 +105,10 @@ TEST_F(MaximumMatcherTest, test_unequal_mci2) {
   PllSplit::setTipCount(tree1.getTipCount());
   PllSplitList s1 = PllSplitList(tree1);
   PllSplitList s2 = PllSplitList(tree2);
+  size_t n = s1.getSplits().size();
+  std::vector<std::vector<double>>  similarities = std::vector<std::vector<double>>(n, std::vector<double>(n));
 
-  std::vector<std::vector<double>> similarities = mci.similaritiesForSplits(s1, s2);
+  mci.similaritiesForSplits(s1, s2, similarities);
   /*for(unsigned i = 0; i < similarities.size(); ++i) {
     for(unsigned j = 0; j < similarities.size(); ++j) {
       std::cout << similarities[i][j] << " ";
