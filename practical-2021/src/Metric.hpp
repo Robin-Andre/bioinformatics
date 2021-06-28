@@ -85,13 +85,13 @@ class SPIMetric : public GeneralizedMetric {
     if (s1 == s2) return phylomath::h(a_2, b_2);
 
     double phylo_shared;
-    size_t intersect_b_a = s1.intersectionSize(s2, Block_B, Block_A);
-    if(!intersect_b_a) {
-      phylo_shared = phylomath::h(b_1, a_2, a_1 + b_1);
+    size_t intersect_b_b = s1.intersectionSize(s2, Block_B, Block_B);
+    if(!intersect_b_b) {
+      phylo_shared = phylomath::h(b_1, b_2, a_1 + b_1);
     } else {
-      size_t intersect_b_b = b_1 - intersect_b_a;
-      if(!intersect_b_b){
-        phylo_shared = phylomath::h(b_1, b_2, a_1 + b_1);
+      size_t intersect_b_a = b_1 - intersect_b_b;
+      if(!intersect_b_a){
+        phylo_shared = phylomath::h(b_1, a_2, a_1 + b_1);
       } else {
         size_t intersect_a_b = b_2- intersect_b_b;
         if(!intersect_a_b){
