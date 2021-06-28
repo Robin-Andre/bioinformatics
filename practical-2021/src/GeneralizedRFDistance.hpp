@@ -22,9 +22,9 @@ public:
     
   }
   static io::IOData computeDistances(const std::vector<PllTree>& trees, const Metric& metric, Mode mode) {
-
     PllSplit::setTipCount(trees[0].getTipCount());
-    GeneralizedRFDistance test(trees);
+
+
     //test.initializePointerSplitLists(trees);
     size_t tree_count = trees.size();
     assert(tree_count > 0);
@@ -32,11 +32,12 @@ public:
     assert(tip_count > 3);
 
     phylomath::initLdfCache();
-    std::vector<PllSplitList> tree_splits;
-    for(PllTree tree :  trees){
+    GeneralizedRFDistance test(trees);
+    std::vector<PllSplitList>& tree_splits = test._map.vectors();
+    /*for(PllTree tree :  trees){
       assert(tree.getTipCount() == PllSplit::getTipCount());
       tree_splits.emplace_back(PllSplitList(tree));
-    }
+    }*/
     io::IOData result;
     result.mode = ModeString[mode];
     result.metric = metric.name();

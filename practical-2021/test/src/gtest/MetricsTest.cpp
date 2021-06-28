@@ -85,7 +85,7 @@ TEST_F(MetricsTest, maximumtest) {
 }
 
 
-TEST_F(MetricsTest, rf_test) {
+/*TEST_F(MetricsTest, rf_test) {
   PllSplit::setTipCount(64);
   std::vector<std::vector<size_t>> fst_part1s = {
                 { 0, 1, 2, 3, 4, 5, 6, 7},
@@ -123,4 +123,4 @@ TEST_F(MetricsTest, rf_test) {
   ASSERT_EQ(rf.distanceOf(snd_splitlist, trd_splitlist, ABSOLUTE), 3);
   ASSERT_EQ(rf.distanceOf(trd_splitlist, snd_splitlist, ABSOLUTE), 3);
 
-}
+}*/

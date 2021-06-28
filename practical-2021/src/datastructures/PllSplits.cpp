@@ -79,35 +79,36 @@ PllSplitList::PllSplitList(const PllTree &tree) {
   maximum_entropy = 0.0;
   maximum_information_content = 0.0;
   for (size_t i = 0; i < tree.getTipCount() - 3; ++i) {
-    _splits.emplace_back(PllSplit(tmp_splits[i]));
-    maximum_entropy += phylomath::entropy(_splits.back());
-    maximum_information_content += phylomath::h(_splits.back());
+    _splits.emplace_back(new PllSplit(tmp_splits[i]));
+    maximum_entropy += phylomath::entropy(*_splits.back());
+    maximum_information_content += phylomath::h(*_splits.back());
   }
   free(tmp_splits);
 
 }
 //TODO find out if preallocation can be done
-PllSplitList::PllSplitList(const std::vector<PllSplit> &splits) {
+PllSplitList::PllSplitList(const std::vector<PllSplit*> &splits) {
   if(splits.size() > 0){
     size_t split_len = PllSplit::getSplitLen();
     pll_split_t split_pointer = static_cast<pll_split_t> (calloc(splits.size()* split_len, sizeof(pll_split_base_t)));
     maximum_entropy = 0.0;
     maximum_information_content = 0.0;
     for (size_t i=0; i<splits.size(); ++i) {
-      memcpy(split_pointer + i* split_len, splits[i](), split_len * sizeof(pll_split_base_t));
-      _splits.emplace_back(PllSplit(split_pointer + i*split_len));
-      maximum_entropy += phylomath::entropy(_splits.back());
-      maximum_information_content += phylomath::h(_splits.back());
+      //TODO rethink if correct
+      memcpy(split_pointer + i* split_len, splits[i], split_len * sizeof(pll_split_base_t));
+      _splits.emplace_back(new PllSplit(split_pointer + i*split_len));
+      maximum_entropy += phylomath::entropy(*_splits.back());
+      maximum_information_content += phylomath::h(*_splits.back());
     }
   }
 }
 
 PllSplitList::~PllSplitList() {
-  if (!_splits.empty()) { free(_splits[0]()); }
+  if (!_splits.empty()) { /*free(_splits[0]);*/ }
 }
 bool operator == (const PllSplitList& p1, const PllSplitList& p2) {
-  const std::vector<PllSplit>& splits1 = p1.getSplits();
-  const std::vector<PllSplit>& splits2 = p2.getSplits();
+  const std::vector<PllSplit*>& splits1 = p1.getSplits();
+  const std::vector<PllSplit*>& splits2 = p2.getSplits();
   if(splits1.size() != splits2.size()) return false;
   for(size_t i = 0; i < splits1.size(); ++i){
     if (!(splits1[i] == splits2[i])) return false;
@@ -115,12 +116,19 @@ bool operator == (const PllSplitList& p1, const PllSplitList& p2) {
   return true;
 }
 
-
+  void PllSplitList::push(PllSplit* split) {
+    _splits.push_back(split);
+    maximum_entropy += phylomath::entropy(*split);
+    //std::cout << "Push command: " << split << "\n";
+    //std::cout << "Dereferenced: " << (*split).toString();
+    maximum_information_content += phylomath::h(*split);
+    //std::cout << "after: " << split << "\n";
+  }
 std::string PllSplitList::toString() const {
   std::stringstream ss;
   ss <<  "-------------------------" << std::endl;
   for(size_t i = 0; i < _splits.size(); ++i){
-    ss << _splits[i].toString();
+    ss << _splits[i]->toString();
   }
   ss << "-------------------------" << std::endl;
   return ss.str();

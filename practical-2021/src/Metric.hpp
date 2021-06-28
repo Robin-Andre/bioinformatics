@@ -18,7 +18,7 @@ class Metric {
 };
 
 
-class GeneralizedMetric : public Metric{
+class GeneralizedMetric : public Metric {
 public:
   virtual double evaluate(const PllSplit& s1, const PllSplit& s2) const = 0;
   virtual ~GeneralizedMetric() override {
@@ -48,7 +48,7 @@ public:
       std::vector<std::vector<double>>  result = std::vector<std::vector<double>>(n, std::vector<double>(n));
       for(size_t i = 0; i < n; ++i){
         for(size_t j = 0; j < n; ++j){
-          result[i][j] = evaluate(first[i], second[j]);
+          result[i][j] = evaluate(*first[i], *second[j]);
         }
       }
       return result;

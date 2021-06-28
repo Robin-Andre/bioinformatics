@@ -19,7 +19,7 @@ extern "C" {
 
 
 class PllTree;
-class phylomath;
+class phylomath; 
 
 /*
  * A convenience class for the purposes of doing math on the individual splits.
@@ -122,7 +122,13 @@ private:
 class PllSplitList {
 public:
   explicit PllSplitList(const PllTree &tree);
-  explicit PllSplitList(const std::vector<PllSplit> &splits);
+  explicit PllSplitList(const std::vector<PllSplit*> &splits);
+  explicit PllSplitList() {
+
+  }
+  /*explicit PllSplitList(size_t amount_of_elements) {
+    _splits = std::vector<PllSplit*>(amount_of_elements);
+  }*/
 
   /* Rule of 5 constructors/destructors */
   ~PllSplitList();
@@ -144,19 +150,19 @@ public:
   }
 
   friend bool operator == (const PllSplitList& p1, const PllSplitList& p2);
-  PllSplit operator[](size_t index) const { return _splits[index]; }
+  PllSplit* operator[](size_t index) const { return _splits[index]; }
 
-  const std::vector<PllSplit>& getSplits() const {return _splits;}
+  const std::vector<PllSplit*>& getSplits() const {return _splits;}
   size_t getSplitCount() const {return _splits.size();}
 
   double getMaximumEntropy() const {return maximum_entropy;}
   double getMaximumInformationContent() const {return maximum_information_content;}
 
   std::string toString() const;
-
+  void push(PllSplit* split);
 
 private:
-  std::vector<PllSplit> _splits;
-  double maximum_entropy = DBL_MAX;
-  double maximum_information_content = DBL_MAX;
+  std::vector<PllSplit*> _splits;
+  double maximum_entropy = 0;
+  double maximum_information_content = 0;
 };

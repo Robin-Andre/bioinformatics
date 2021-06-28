@@ -23,12 +23,12 @@ public:
   }
 
   static PllSplitList createSplitList(std::vector<std::vector<size_t>> part1s){
-    std::vector<PllSplit> splits;
+    std::vector<PllSplit*> splits;
     size_t split_len = PllSplit::getSplitLen();
     pll_split_t split_pointer = (pll_split_t) calloc(part1s.size()* split_len, sizeof(pll_split_base_t));
     for (size_t i=0; i<part1s.size(); ++i) {
       setBits(split_pointer + i* split_len, part1s[i]);
-      splits.emplace_back(PllSplit(split_pointer + i * split_len));
+      splits.emplace_back(new PllSplit(split_pointer + i * split_len));
     }
     std::sort(splits.begin(), splits.end());
     return PllSplitList(splits);
