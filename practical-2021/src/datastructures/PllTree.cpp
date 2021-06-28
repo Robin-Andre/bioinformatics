@@ -23,8 +23,6 @@ PllTree::PllTree(const PllTree &other) { _tree = pll_utree_clone(other._tree); }
 PllTree::~PllTree() { pll_utree_destroy(_tree, nullptr); }
 
 
-//TODO We don't use this anymore ? PllSplitList PllTree::makeSplits() const { return PllSplitList(*this); }
-
 void PllTree::alignNodeIndices(const PllTree &other) {
   /* Bad things happen if we call this function with the same tree twice */
   if (this == &other || _tree == other._tree) { return; }

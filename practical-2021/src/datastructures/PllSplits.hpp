@@ -48,7 +48,6 @@ public:
   PllSplit() {
     PllSplit(static_cast<pll_split_t> (calloc(PllSplit::split_len, sizeof(pll_split_base_t))));
   }
-
   pll_split_t operator()() const { return _split; }
   friend bool operator == (const PllSplit& p1, const PllSplit& p2);
   friend bool operator < (const PllSplit& p1, const PllSplit& p2);

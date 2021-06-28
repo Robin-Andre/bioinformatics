@@ -71,20 +71,6 @@ std::string PllSplit::toString() const {
   return ss.str();
 }
 
-
-//TODO @Robin might wanna do a speedtest, or find another implementation with registers
-/*size_t PllSplit::basePopcount(pll_split_base_t val) const {
-  return __builtin_popcount(val);
-  //return std::bitset<32>(val).count();
-}*/
-
-/*bool PllSplit::splitValid() const {
-  return true;
-  //return (_split != nullptr) && !(_split[PllSplit::split_len - 1]
-  //                                & ~PllSplit::bitmask_for_unused_bits) && _split[0] & 1u;
-}*/
-
-
 //TODO find out if preallocation can be done.
 PllSplitList::PllSplitList(const PllTree &tree) {
   assert(PllSplit::getTipCount() == tree.getTipCount());

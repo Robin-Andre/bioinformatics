@@ -28,7 +28,7 @@ void execute_test(const std::string& test_file, Mode mode) {
 Yes it would be smart to simply loop over an array of strings and call them instead of this repetitive nonsense
 but I would like to have all tests separate
 */
-TEST_F(RFTest, 24taxa) {
+/*TEST_F(RFTest, 24taxa) {
     execute_test("heads/24", ABSOLUTE);
     execute_test("heads/24", RELATIVE);
 }
@@ -39,7 +39,7 @@ TEST_F(RFTest, 125taxa) {
 TEST_F(RFTest, 141taxa) {
     execute_test("heads/141", ABSOLUTE);
     execute_test("heads/141", RELATIVE);
-}
+}*/
 /*TEST_F(RFTest, 143taxa) {
     execute_test("heads/143", ABSOLUTE);
 }

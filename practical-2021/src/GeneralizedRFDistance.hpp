@@ -5,21 +5,32 @@ extern "C" {
 }
 #include "datastructures/PllSplits.hpp"
 #include "datastructures/PllTree.hpp"
+#include "datastructures/PllPointerMap.hpp"
 #include "io/IOData.hpp"
 #include "Metric.hpp"
 #include <vector>
 #include <iostream>
+#include <queue>
 
-//TODO without attributes it might not need to be a class
 class GeneralizedRFDistance {
 public:
+  GeneralizedRFDistance(const std::vector<PllTree>& trees) : _map(trees) {
+  }
 
+  ~GeneralizedRFDistance() {
+
+    
+  }
   static io::IOData computeDistances(const std::vector<PllTree>& trees, const Metric& metric, Mode mode) {
+
+    PllSplit::setTipCount(trees[0].getTipCount());
+    GeneralizedRFDistance test(trees);
+    //test.initializePointerSplitLists(trees);
     size_t tree_count = trees.size();
     assert(tree_count > 0);
     size_t tip_count = trees[0].getTipCount();
     assert(tip_count > 3);
-    PllSplit::setTipCount(trees[0].getTipCount());
+
     phylomath::initLdfCache();
     std::vector<PllSplitList> tree_splits;
     for(PllTree tree :  trees){
@@ -54,5 +65,6 @@ public:
     assert(result.number_of_unique_trees >= 1);
     return result;
   }
-
+  private:
+  PllPointerMap _map;
 };

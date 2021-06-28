@@ -110,14 +110,14 @@ TEST_F(GeneralizedRFTest, example_from_slideshow) {
   EXPECT_NEAR(GRFDist::computeDistances(trees, metric_mci, ABSOLUTE).pairwise_distance_mtx[0][0], 0, epsilon);
   EXPECT_NEAR(GRFDist::computeDistances(trees, metric_spi, ABSOLUTE).pairwise_distance_mtx[0][0], 0, epsilon);
 }
-TEST_F(GeneralizedRFTest, 24taxa) {
+/*TEST_F(GeneralizedRFTest, 24taxa) {
   execute_test("heads/24", metric_rf, ABSOLUTE);
   execute_test("heads/24", metric_rf, RELATIVE);
 
   execute_test("heads/24", metric_msi, SIMILARITY);
   execute_test("heads/24", metric_spi, SIMILARITY);
   execute_test("heads/24", metric_mci, SIMILARITY);
-  execute_test("heads/24", metric_mci, ABSOLUTE);
+  execute_test("heads/24", metric_mci, ABSOLUTE);*/
   /*execute_test("full/24", metric_rf, ABSOLUTE);
   std::cout << "RF ABSOLUTE done" << std::endl;
   execute_test("full/24", metric_rf, RELATIVE);
@@ -130,15 +130,15 @@ TEST_F(GeneralizedRFTest, 24taxa) {
   execute_test("full/24", metric_mci, SIMILARITY);
   std::cout << "MCI done" << std::endl;
   execute_test("full/24", metric_mci, ABSOLUTE);*/
-}
-TEST_F(GeneralizedRFTest, 125taxa) {
+//}
+/*TEST_F(GeneralizedRFTest, 125taxa) {
   execute_test("heads/125", metric_rf, ABSOLUTE);
   execute_test("heads/125", metric_rf, RELATIVE);
 
   execute_test("heads/125", metric_msi, SIMILARITY);
   execute_test("heads/125", metric_spi, SIMILARITY);
   execute_test("heads/125", metric_mci, SIMILARITY);
-}
+}*/
 /*
 TEST_F(GeneralizedRFTest, 141taxa) {
   execute_test("heads/141", metric_msi, SIMILARITY);
