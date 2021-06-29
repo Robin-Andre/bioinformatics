@@ -1,5 +1,6 @@
 #include "gtest/gtest.h"
 #include "../../../src/datastructures/PllSplits.hpp"
+#include "../../../src/datastructures/PllPointerMap.hpp"
 #include "../../../src/Metric.hpp"
 #include "../../../src/io/TreeReader.hpp"
 #include "../TestUtil.hpp"
@@ -23,9 +24,12 @@ TEST_F(MetricsTest, distances_example_from_slideshow_spi) {
   PllSplit::setTipCount(6);
   PllTree tree1 = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[0];
   PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[1];
-  PllSplitList splits1 = PllSplitList(tree1);
-  PllSplitList splits2 = PllSplitList(tree2);
   tree2.alignNodeIndices(tree1);
+  PllPointerMap test_map({tree1, tree2});
+  std::vector<PllSplitList>& vec = test_map.vectors();
+  PllSplitList& splits1 = vec[0];
+  PllSplitList& splits2 = vec[1];
+
   std::vector<std::vector<double>> result = spi.similaritiesForSplits(splits1, splits2);
   double h_standard = phylomath::h(2, 4);
   double h_i1 = phylomath::h(3, 3);
