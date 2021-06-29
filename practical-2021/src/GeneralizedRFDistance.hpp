@@ -23,7 +23,7 @@ public:
   }
   static io::IOData computeDistances(const std::vector<PllTree>& trees, const Metric& metric, Mode mode) {
     PllSplit::setTipCount(trees[0].getTipCount());
-
+    
 
     //test.initializePointerSplitLists(trees);
     size_t tree_count = trees.size();

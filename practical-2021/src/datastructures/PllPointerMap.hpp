@@ -19,7 +19,7 @@ class PllPointerMap {
       trees_as_pointers[i] = pllmod_utree_split_create(trees[i].tree()->vroot, trees[0].getTipCount(), nullptr);
       push(i); //Push the first element of every tree into the queue
     }
-    emptyQueue();
+    processQueue();
     //verify(0);
     //std::cout << "---------------------\n";
     //verify(1);
@@ -64,7 +64,7 @@ class PllPointerMap {
     }
     return false;
   }
-  void emptyQueue() {
+  void processQueue() {
       
     while(!queue.empty()) {
       SplitReference top = queue.top();
