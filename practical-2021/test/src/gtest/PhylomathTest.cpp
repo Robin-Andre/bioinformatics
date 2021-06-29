@@ -83,7 +83,7 @@ TEST_F(PhylomathTest, test_phylogenetic_probability) {
 TEST_F(PhylomathTest, h_function_trivial_split) {
   PllSplit::setTipCount(4);
   PllSplit test_split = TestUtil::createSplit({0, 1, 3});
-  EXPECT_EQ(phylomath::h(test_split), 0);
+  EXPECT_EQ(test_split.h(), 0);
   free(test_split());
 }
 
@@ -91,7 +91,7 @@ TEST_F(PhylomathTest, test_entropy) {
   PllSplit::setTipCount(6);
   std::vector<size_t> part1 = {0, 1, 2};
   PllSplit split = TestUtil::createSplit(part1);
-  EXPECT_DOUBLE_EQ(phylomath::entropy(split), -std::log2(1.0d/2));
+  EXPECT_DOUBLE_EQ(phylomath::entropy(split.partitionSizeOf(Block_A), split.partitionSizeOf(Block_B)), -std::log2(1.0d/2));
   free(split());
 }
 
@@ -102,15 +102,15 @@ TEST_F(PhylomathTest, test_clustering_probability) {
   PllSplit split_a = TestUtil::createSplit(part1_a);
   std::vector<size_t> part1_b = {0, 3, 4, 5, 6, 7};
   PllSplit split_b = TestUtil::createSplit(part1_b);
-  EXPECT_DOUBLE_EQ(phylomath::clusteringProbability(split_a, Block_A), 5.0d/12);
-  EXPECT_DOUBLE_EQ(phylomath::clusteringProbability(split_a, Block_B), 7.0d/12);
-  EXPECT_DOUBLE_EQ(phylomath::clusteringProbability(split_b, Block_A), 1.0d/2);
-  EXPECT_DOUBLE_EQ(phylomath::clusteringProbability(split_b, Block_B), 1.0d/2);
+  EXPECT_DOUBLE_EQ(phylomath::clusteringProbability(split_a.partitionSizeOf(Block_A)), 5.0d/12);
+  EXPECT_DOUBLE_EQ(phylomath::clusteringProbability(split_a.partitionSizeOf(Block_B)), 7.0d/12);
+  EXPECT_DOUBLE_EQ(phylomath::clusteringProbability(split_b.partitionSizeOf(Block_A)), 1.0d/2);
+  EXPECT_DOUBLE_EQ(phylomath::clusteringProbability(split_b.partitionSizeOf(Block_B)), 1.0d/2);
 
-  EXPECT_DOUBLE_EQ(phylomath::clusteringProbability(split_a, Block_A, split_b, Block_A), 1.0d/4);
-  EXPECT_DOUBLE_EQ(phylomath::clusteringProbability(split_a, Block_A, split_b, Block_B), 1.0d/6);
-  EXPECT_DOUBLE_EQ(phylomath::clusteringProbability(split_a, Block_B, split_b, Block_A), 1.0d/4);
-  EXPECT_DOUBLE_EQ(phylomath::clusteringProbability(split_a, Block_B, split_b, Block_B), 1.0d/3);
+  EXPECT_DOUBLE_EQ(phylomath::clusteringProbability(&split_a, Block_A, &split_b, Block_A), 1.0d/4);
+  EXPECT_DOUBLE_EQ(phylomath::clusteringProbability(&split_a, Block_A, &split_b, Block_B), 1.0d/6);
+  EXPECT_DOUBLE_EQ(phylomath::clusteringProbability(&split_a, Block_B, &split_b, Block_A), 1.0d/4);
+  EXPECT_DOUBLE_EQ(phylomath::clusteringProbability(&split_a, Block_B, &split_b, Block_B), 1.0d/3);
 
   free(split_a());
   free(split_b());

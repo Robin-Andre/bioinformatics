@@ -19,7 +19,7 @@ extern "C" {
 
 
 class PllTree;
-class phylomath; 
+class phylomath;
 
 /*
  * A convenience class for the purposes of doing math on the individual splits.
@@ -40,11 +40,7 @@ class phylomath;
  */
 class PllSplit {
 public:
-  explicit PllSplit(pll_split_t s) : _split{s} {
-    //assert(splitValid());
-    size_block_A = this->popcount();
-    size_block_B = PllSplit::getTipCount() - this->popcount();
-  }
+  explicit PllSplit(pll_split_t s);
   PllSplit() {
     PllSplit(static_cast<pll_split_t> (calloc(PllSplit::split_len, sizeof(pll_split_base_t))));
   }
@@ -58,6 +54,9 @@ public:
     //assert(splitValid());
     return (block == Block_A) ? size_block_A : size_block_B;
   }
+
+  double h() const {return h_value;}
+  double entropy() const {return entropy_value;}
   size_t intersectionSize(const PllSplit& other, Partition partition_this, Partition partition_other) const;
 
 
@@ -113,6 +112,8 @@ private:
 
   size_t size_block_A;
   size_t size_block_B;
+  double h_value;
+  double entropy_value;
 
   static size_t tip_count;
   static size_t split_len;

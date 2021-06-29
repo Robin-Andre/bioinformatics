@@ -7,6 +7,14 @@ size_t PllSplit::tip_count = 0;
 size_t PllSplit::split_len = 0;
 pll_split_base_t PllSplit::bitmask_for_unused_bits = 0;
 
+PllSplit::PllSplit(pll_split_t s) : _split{s} {
+  //assert(splitValid());
+  size_block_A = this->popcount();
+  size_block_B = PllSplit::getTipCount() - this->popcount();
+  h_value = phylomath::h(size_block_A, size_block_B);
+  entropy_value = phylomath::entropy(size_block_A, size_block_B);
+}
+
 
 bool operator == (const PllSplit& p1, const PllSplit& p2) {
   for(unsigned i = 0; i < PllSplit::split_len; ++i) {
@@ -80,8 +88,8 @@ PllSplitList::PllSplitList(const PllTree &tree) {
   maximum_information_content = 0.0;
   for (size_t i = 0; i < tree.getTipCount() - 3; ++i) {
     _splits.emplace_back(new PllSplit(tmp_splits[i]));
-    maximum_entropy += phylomath::entropy(*_splits.back());
-    maximum_information_content += phylomath::h(*_splits.back());
+    maximum_entropy += _splits.back()->entropy();
+    maximum_information_content += _splits.back()->h();
   }
   free(tmp_splits);
 
@@ -97,8 +105,8 @@ PllSplitList::PllSplitList(const std::vector<PllSplit*> &splits) {
       //TODO rethink if correct
       memcpy(split_pointer + i* split_len, splits[i], split_len * sizeof(pll_split_base_t));
       _splits.emplace_back(new PllSplit(split_pointer + i*split_len));
-      maximum_entropy += phylomath::entropy(*_splits.back());
-      maximum_information_content += phylomath::h(*_splits.back());
+      maximum_entropy += _splits.back()->entropy();
+      maximum_information_content += _splits.back()->h();
     }
   }
 }
@@ -118,10 +126,10 @@ bool operator == (const PllSplitList& p1, const PllSplitList& p2) {
 
   void PllSplitList::push(PllSplit* split) {
     _splits.push_back(split);
-    maximum_entropy += phylomath::entropy(*split);
+    maximum_entropy += split->entropy();
     //std::cout << "Push command: " << split << "\n";
     //std::cout << "Dereferenced: " << (*split).toString();
-    maximum_information_content += phylomath::h(*split);
+    maximum_information_content += split->h();
     //std::cout << "after: " << split << "\n";
   }
 std::string PllSplitList::toString() const {

@@ -58,7 +58,7 @@ public:
 class MSIMetric : public GeneralizedMetric {
   public:
   double evaluate(const PllSplit* s1, const PllSplit* s2) const override {
-    if (s1 == s2) return phylomath::h(*(s1));
+    if (s1 == s2) return s1->h();
     return std::max(phylomath::h(s1->intersectionSize(*(s2), Block_A, Block_A), s1->intersectionSize(*(s2), Block_B, Block_B)),
                     phylomath::h(s1->intersectionSize(*(s2), Block_B, Block_A), s1->intersectionSize(*(s2), Block_A, Block_B)));
   }
@@ -143,8 +143,8 @@ class MCIMetric : public GeneralizedMetric {
         }
         double pcl = phylomath::clusteringProbability(intersection_size);
         assert(pcl > 0);
-        double p_1 = phylomath::clusteringProbability(*(s1), block_s1);
-        double p_2 = phylomath::clusteringProbability(*(s2), block_s2);
+        double p_1 = phylomath::clusteringProbability(s1->partitionSizeOf(block_s1));
+        double p_2 = phylomath::clusteringProbability(s2->partitionSizeOf(block_s2));
         assert(p_1 > 0 && p_2 > 0);
         return pcl * std::log2(pcl / (p_1 * p_2));
     }

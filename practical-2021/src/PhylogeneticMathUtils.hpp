@@ -87,11 +87,6 @@ public:
     return -1 * phylogeneticProbability(a, b);
   }
 
-  inline static double h(const PllSplit& s) {
-    //There should never be a partition where one block is empty
-    assert(s.partitionSizeOf(Block_A) > 0 && s.partitionSizeOf(Block_B) > 0);
-    return h(s.partitionSizeOf(Block_A), s.partitionSizeOf(Block_B));
-  }
   //This method is a mockup of the calculation of phylogenetic probability of two splits
   //Requires the size of the two partitions (A or B) which need to be compatible in the first place
   //The calculation will work even if they are not compatible but the result is entirely useless
@@ -110,15 +105,14 @@ public:
   inline static double clusteringProbability(size_t count) {
     return static_cast<double>(count) / static_cast<double>(PllSplit::getTipCount());
   }
-  inline static double clusteringProbability(const PllSplit& s, Partition block) {
-      return clusteringProbability(s.partitionSizeOf(block));
+
+  inline static double clusteringProbability(const PllSplit* s1, Partition block_1, const PllSplit* s2, Partition block_2) {
+    return clusteringProbability(s1->intersectionSize(*s2, block_1, block_2));
   }
-  inline static double clusteringProbability(const PllSplit& s1, Partition block_1, const PllSplit& s2, Partition block_2) {
-    return clusteringProbability(s1.intersectionSize(s2, block_1, block_2));
-  }
-  inline static double entropy(const PllSplit& split) {
-    double p_a = clusteringProbability(split, Block_A);
-    double p_b = clusteringProbability(split, Block_B);
+  inline static double entropy(size_t a, size_t b) {
+    if (a == 0 || b == 0) return 0;
+    double p_a = clusteringProbability(a);
+    double p_b = clusteringProbability(b);
     assert(p_a != 0 && p_b != 0);
     return -p_a * std::log2(p_a) - p_b * std::log2(p_b);
   }
