@@ -106,9 +106,6 @@ public:
     return static_cast<double>(count) / static_cast<double>(PllSplit::getTipCount());
   }
 
-  inline static double clusteringProbability(const PllSplit* s1, Partition block_1, const PllSplit* s2, Partition block_2) {
-    return clusteringProbability(s1->intersectionSize(*s2, block_1, block_2));
-  }
   inline static double entropy(size_t a, size_t b) {
     if (a == 0 || b == 0) return 0;
     double p_a = clusteringProbability(a);
