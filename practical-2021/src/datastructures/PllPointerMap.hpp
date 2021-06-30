@@ -20,6 +20,14 @@ class PllPointerMap {
       push(i); //Push the first element of every tree into the queue
     }
     processQueue();
+    for(size_t i = 0; i < map_pos; ++i){
+      PllSplit* s = &all_splits_unique[i];
+      if(s->getOccurences() > 1){
+        for(size_t j = 0; j < map_pos; ++j){
+          s->precomputeIntersection(&all_splits_unique[j]);
+        }
+      }
+    }
     //verify(0);
     //std::cout << "---------------------\n";
     //verify(1);
@@ -35,7 +43,7 @@ class PllPointerMap {
   std::vector<PllSplitList>& vectors() {
       return lol;
   }
-  private: 
+  private:
   struct SplitReference {
     PllSplit split_temp;
     int tree_number;
@@ -55,7 +63,7 @@ class PllPointerMap {
     returns true if an element could be pushed, false otherwise
   */
   bool push(size_t ID) {
-    //Limit is hardcoded in the constructor to tipcount - 3 
+    //Limit is hardcoded in the constructor to tipcount - 3
     if(treeIter[ID] < limit) {
       //std::cout << "Inserting: " << treeIter[ID] <<"\n";
       queue.push({PllSplit(trees_as_pointers[ID][treeIter[ID]]), ID});
@@ -65,7 +73,7 @@ class PllPointerMap {
     return false;
   }
   void processQueue() {
-      
+
     while(!queue.empty()) {
       SplitReference top = queue.top();
       insertIntoMap(top);
@@ -75,9 +83,10 @@ class PllPointerMap {
   }
   void insertIntoMap(const SplitReference& split_and_id) {
     if(map_pos > 0 && all_splits_unique[map_pos - 1] == split_and_id.split_temp) {
+      all_splits_unique[map_pos - 1].addOccurence();
       //TODO rewrite since nothing is executed here
       //This is extremely weird but this if block represents when a duplicate split has been found
-      //since we do not 
+      //since we do not
     }
     else {
       all_splits_unique[map_pos] = std::move(split_and_id.split_temp);
@@ -87,9 +96,9 @@ class PllPointerMap {
   }
   void updateSplitList(PllSplit& pointer, size_t ID) {
     //Since the push method always increases treeIter and points to the next element to be inserted into queue
-    //We have to subtract 1 to find the location as where to insert the element. 
-    auto oldID = treeIter[ID] - 1; 
-    lol[ID].push(&pointer);    
+    //We have to subtract 1 to find the location as where to insert the element.
+    auto oldID = treeIter[ID] - 1;
+    lol[ID].push(&pointer);
   }
   void verify(unsigned ID) {
     for(unsigned i = 0; i < lol[ID].getSplitCount(); ++i) {

@@ -154,7 +154,7 @@ TEST_F(GeneralizedRFTest, 148taxa) {
   execute_test("heads/148", metric_msi, SIMILARITY);
   execute_test("heads/148", metric_spi, SIMILARITY);
   execute_test("heads/148", metric_mci, SIMILARITY);
-}
+}*
 TEST_F(GeneralizedRFTest, 150taxa) {
   execute_test("heads/150", metric_msi, SIMILARITY);
   execute_test("heads/150", metric_spi, SIMILARITY);

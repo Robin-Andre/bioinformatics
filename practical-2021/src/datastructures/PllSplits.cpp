@@ -49,22 +49,47 @@ uint32_t PllSplit::bitExtract(size_t bit_index) const {
   return (split_part & (1u << computeMinorIndex(bit_index))) >> computeMinorIndex(bit_index);
 }
 
+size_t PllSplit::computeIntersectionSize(const PllSplit* other) const {
+  size_t count = 0;
+  pll_split_t other_split = (*other)();
+  for (size_t i = 0; i < PllSplit::split_len - 1; ++i){
+    count += __builtin_popcount(_split[i] & other_split[i]);
+  }
+  count += __builtin_popcount(_split[PllSplit::split_len - 1] & other_split[PllSplit::split_len - 1] & PllSplit::bitmask_for_unused_bits);
+  return count;
+}
 
-size_t PllSplit::intersectionSize(const PllSplit& other,
+void PllSplit::precomputeIntersection(const PllSplit* other) {
+  intersections[other] = computeIntersectionSize(other);
+}
+
+
+size_t PllSplit::intersectionSize(const PllSplit* other,
                                   Partition partition_this, Partition partition_other) const {
   //assert(splitValid());
   //assert(other.splitValid());
-  pll_split_t other_split = other();
-  pll_split_base_t this_mask = (partition_this == Block_A) ? 0 : ~0u; //This is a xor mask so it is flipped for A/B
-  pll_split_base_t other_mask = (partition_other == Block_A) ? 0 : ~0u;
-  size_t count = 0;
-
-  for (size_t i = 0; i < PllSplit::split_len - 1; ++i){
-    count += __builtin_popcount((_split[i] ^ this_mask) & (other_split[i] ^ other_mask));
+  size_t count;
+  if (occurences == 1) {
+    count = computeIntersectionSize(other);
+  } else {
+    std::unordered_map<const PllSplit*,size_t>::const_iterator got = intersections.find(other);
+    assert(got != intersections.end());
+    count = got->second;
   }
-  count += __builtin_popcount((_split[PllSplit::split_len - 1] ^ this_mask) & (other_split[PllSplit::split_len - 1] ^ other_mask)
-                        & PllSplit::bitmask_for_unused_bits);
-  return count;
+
+  if (partition_this == Block_A){
+    if (partition_other == Block_A){
+      return count;
+    } else {
+      return size_block_A - count;
+    }
+  } else {
+    if (partition_other == Block_A){
+      return other->partitionSizeOf(Block_A) - count;
+    } else {
+      return size_block_B - other->partitionSizeOf(Block_A) + count;
+    }
+  }
 }
 
 std::string PllSplit::toString() const {

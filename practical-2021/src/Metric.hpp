@@ -59,8 +59,8 @@ class MSIMetric : public GeneralizedMetric {
   public:
   double evaluate(const PllSplit* s1, const PllSplit* s2) const override {
     if (s1 == s2) return s1->h();
-    return std::max(phylomath::h(s1->intersectionSize(*(s2), Block_A, Block_A), s1->intersectionSize(*(s2), Block_B, Block_B)),
-                    phylomath::h(s1->intersectionSize(*(s2), Block_B, Block_A), s1->intersectionSize(*(s2), Block_A, Block_B)));
+    return std::max(phylomath::h(s1->intersectionSize(s2, Block_A, Block_A), s1->intersectionSize(s2, Block_B, Block_B)),
+                    phylomath::h(s1->intersectionSize(s2, Block_B, Block_A), s1->intersectionSize(s2, Block_A, Block_B)));
   }
   double maximum(const PllSplitList& plist1, const PllSplitList& plist2) const override {
     return plist1.getMaximumInformationContent() + plist2.getMaximumInformationContent();
@@ -75,7 +75,7 @@ class SPIMetric : public GeneralizedMetric {
   public:
   double evaluate(const PllSplit* s1, const PllSplit* s2) const override {
     //because of normalization, the 1-Partitions of s1 and s2 always overlap
-    assert(s1->intersectionSize(*(s2), Block_A, Block_A) > 0);
+    assert(s1->intersectionSize(s2, Block_A, Block_A) > 0);
 
     size_t a_1 = s1->partitionSizeOf(Block_A);
     size_t a_2 = s2->partitionSizeOf(Block_A);
@@ -85,7 +85,7 @@ class SPIMetric : public GeneralizedMetric {
     if (s1 == s2) return phylomath::h(a_2, b_2);
 
     double phylo_shared;
-    size_t intersect_b_a = s1->intersectionSize(*(s2), Block_B, Block_A);
+    size_t intersect_b_a = s1->intersectionSize(s2, Block_B, Block_A);
     if(!intersect_b_a) {
       phylo_shared = phylomath::h(b_1, a_2, a_1 + b_1);
     } else {
@@ -137,7 +137,7 @@ class MCIMetric : public GeneralizedMetric {
     double mutualInformation(const PllSplit* s1,
                              const Partition block_s1, const PllSplit* s2, const Partition block_s2) const {
         //This is a hardcoded statement. The math agrees that x log(x) -> 0 but c++ refuses
-        size_t intersection_size = s1->intersectionSize(*(s2), block_s1, block_s2);
+        size_t intersection_size = s1->intersectionSize(s2, block_s1, block_s2);
         if(intersection_size == 0){
           return 0.0;
         }

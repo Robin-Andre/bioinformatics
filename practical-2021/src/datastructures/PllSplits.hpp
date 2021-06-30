@@ -14,6 +14,7 @@ extern "C" {
 #include <algorithm>
 #include <sstream>
 #include <string>
+#include <unordered_map>
 #include "../enums.hpp"
 
 
@@ -44,6 +45,7 @@ public:
   PllSplit() {
     PllSplit(static_cast<pll_split_t> (calloc(PllSplit::split_len, sizeof(pll_split_base_t))));
   }
+  
   pll_split_t operator()() const { return _split; }
   friend bool operator == (const PllSplit& p1, const PllSplit& p2);
   friend bool operator < (const PllSplit& p1, const PllSplit& p2);
@@ -57,7 +59,16 @@ public:
 
   double h() const {return h_value;}
   double entropy() const {return entropy_value;}
-  size_t intersectionSize(const PllSplit& other, Partition partition_this, Partition partition_other) const;
+  size_t getOccurences() const {return occurences;}
+  void addOccurence() {++occurences;}
+  size_t intersectionSize(const PllSplit* other, Partition partition_this, Partition partition_other) const;
+  void precomputeIntersection(const PllSplit* other);
+  void printMap() const{
+    std::cout << "Map of " << toString();
+    for(std::unordered_map<const PllSplit*, size_t>::const_iterator iter = intersections.begin(); iter != intersections.end(); ++iter){
+      std::cout << iter->first << ": " << iter->second << std::endl;
+    }
+  }
 
 
   std::string toString() const;
@@ -105,6 +116,8 @@ private:
     return sizeof(pll_split_base_t) * 8;
   }
 
+  size_t computeIntersectionSize(const PllSplit* other) const;
+
   //bool splitValid() const;
   //size_t basePopcount(pll_split_base_t count) const;
 
@@ -114,6 +127,8 @@ private:
   size_t size_block_B;
   double h_value;
   double entropy_value;
+  size_t occurences = 1;
+  std::unordered_map<const PllSplit*, size_t> intersections;
 
   static size_t tip_count;
   static size_t split_len;
