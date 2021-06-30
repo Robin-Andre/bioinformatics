@@ -68,6 +68,7 @@ size_t PllSplit::intersectionSize(const PllSplit* other,
                                   Partition partition_this, Partition partition_other) const {
   //assert(splitValid());
   //assert(other.splitValid());
+  assert(this < other || this == other);
   size_t count;
   if (occurences == 1) {
     count = computeIntersectionSize(other);

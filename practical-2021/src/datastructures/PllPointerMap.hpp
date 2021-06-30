@@ -21,10 +21,13 @@ class PllPointerMap {
     }
     processQueue();
     for(size_t i = 0; i < map_pos; ++i){
-      PllSplit* s = &all_splits_unique[i];
-      if(s->getOccurences() > 1){
+      PllSplit* s1 = &all_splits_unique[i];
+      if(s1->getOccurences() > 1){
         for(size_t j = 0; j < map_pos; ++j){
-          s->precomputeIntersection(&all_splits_unique[j]);
+          PllSplit* s2 = &all_splits_unique[j];
+          if (s1 < s2 || s1 == s2){
+            s1->precomputeIntersection(s2);
+          }
         }
       }
     }
