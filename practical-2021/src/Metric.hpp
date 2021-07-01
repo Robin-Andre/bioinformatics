@@ -83,13 +83,13 @@ class SPIMetric : public GeneralizedMetric {
     assert(intersect_a_a > 0);
 
 
-    size_t a_1 = s_1->partitionSizeOf(Block_A);
-    size_t a_2 = s_2->partitionSizeOf(Block_A);
-    size_t b_1 = s_1->partitionSizeOf(Block_B);
-    size_t b_2 = s_2->partitionSizeOf(Block_B);
+    size_t a_1 = s1->partitionSizeOf(Block_A);
+    size_t a_2 = s2->partitionSizeOf(Block_A);
+    size_t b_1 = s1->partitionSizeOf(Block_B);
+    size_t b_2 = s2->partitionSizeOf(Block_B);
 
     if (s1 == s2) return phylomath::h(a_2, b_2);
-    assert(s_min->intersectionSize(s_max, Block_A, Block_A) > 0);
+    assert(s1->intersectionSize(s2) > 0);
     double phylo_shared;
     size_t intersect_b_a = a_2 - intersect_a_a;
     if(!intersect_b_a) {
