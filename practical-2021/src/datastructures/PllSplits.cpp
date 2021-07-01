@@ -64,8 +64,7 @@ void PllSplit::precomputeIntersection(const PllSplit* other) {
 }
 
 
-size_t PllSplit::intersectionSize(const PllSplit* other,
-                                  Partition partition_this, Partition partition_other) const {
+size_t PllSplit::intersectionSize(const PllSplit* other) const {
   //assert(splitValid());
   //assert(other.splitValid());
   size_t count;
@@ -75,20 +74,6 @@ size_t PllSplit::intersectionSize(const PllSplit* other,
     std::unordered_map<const PllSplit*,size_t>::const_iterator got = intersections.find(other);
     assert(got != intersections.end());
     count = got->second;
-  }
-
-  if (partition_this == Block_A){
-    if (partition_other == Block_A){
-      return count;
-    } else {
-      return size_block_A - count;
-    }
-  } else {
-    if (partition_other == Block_A){
-      return other->partitionSizeOf(Block_A) - count;
-    } else {
-      return size_block_B - other->partitionSizeOf(Block_A) + count;
-    }
   }
 }
 

@@ -45,7 +45,7 @@ public:
   PllSplit() {
     PllSplit(static_cast<pll_split_t> (calloc(PllSplit::split_len, sizeof(pll_split_base_t))));
   }
-  
+
   pll_split_t operator()() const { return _split; }
   friend bool operator == (const PllSplit& p1, const PllSplit& p2);
   friend bool operator < (const PllSplit& p1, const PllSplit& p2);
@@ -61,7 +61,7 @@ public:
   double entropy() const {return entropy_value;}
   size_t getOccurences() const {return occurences;}
   void addOccurence() {++occurences;}
-  size_t intersectionSize(const PllSplit* other, Partition partition_this, Partition partition_other) const;
+  size_t intersectionSize(const PllSplit* other) const;
   void precomputeIntersection(const PllSplit* other);
   void printMap() const{
     std::cout << "Map of " << toString();

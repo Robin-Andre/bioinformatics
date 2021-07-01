@@ -59,8 +59,12 @@ class MSIMetric : public GeneralizedMetric {
   public:
   double evaluate(const PllSplit* s1, const PllSplit* s2) const override {
     if (s1 == s2) return s1->h();
-    return std::max(phylomath::h(s1->intersectionSize(s2, Block_A, Block_A), s1->intersectionSize(s2, Block_B, Block_B)),
-                    phylomath::h(s1->intersectionSize(s2, Block_B, Block_A), s1->intersectionSize(s2, Block_A, Block_B)));
+    size_t intersect_a_a = s1->intersectionSize(s2);
+    size_t intersect_b_a = s2->partitionSizeOf(Block_A) - intersect_a_a;
+    size_t intersect_b_b = s1->partitionSizeOf(Block_B) - intersect_b_a;
+    size_t intersect_a_b = s2->partitionSizeOf(Block_B) - intersect_b_b;
+    return std::max(phylomath::h(intersect_a_a, intersect_b_b),
+                    phylomath::h(intersect_b_a, intersect_a_b));
   }
   double maximum(const PllSplitList& plist1, const PllSplitList& plist2) const override {
     return plist1.getMaximumInformationContent() + plist2.getMaximumInformationContent();
@@ -74,8 +78,9 @@ class MSIMetric : public GeneralizedMetric {
 class SPIMetric : public GeneralizedMetric {
   public:
   double evaluate(const PllSplit* s1, const PllSplit* s2) const override {
+    size_t intersect_a_a = s1->intersectionSize(s2);
     //because of normalization, the 1-Partitions of s1 and s2 always overlap
-    assert(s1->intersectionSize(s2, Block_A, Block_A) > 0);
+    assert(intersect_a_a > 0);
 
     size_t a_1 = s1->partitionSizeOf(Block_A);
     size_t a_2 = s2->partitionSizeOf(Block_A);
@@ -85,7 +90,7 @@ class SPIMetric : public GeneralizedMetric {
     if (s1 == s2) return phylomath::h(a_2, b_2);
 
     double phylo_shared;
-    size_t intersect_b_a = s1->intersectionSize(s2, Block_B, Block_A);
+    size_t intersect_b_a = a_2 - intersect_a_a;
     if(!intersect_b_a) {
       phylo_shared = phylomath::h(b_1, a_2, a_1 + b_1);
     } else {
@@ -120,8 +125,16 @@ class SPIMetric : public GeneralizedMetric {
 class MCIMetric : public GeneralizedMetric {
     public:
     double evaluate(const PllSplit* s1, const PllSplit* s2) const override {
-        return mutualInformation(s1, Block_A, s2, Block_A) + mutualInformation(s1, Block_B, s2, Block_A)
-             + mutualInformation(s1, Block_A, s2, Block_B) + mutualInformation(s1, Block_B, s2, Block_B);
+      size_t a_1 = s1->partitionSizeOf(Block_A);
+      size_t a_2 = s2->partitionSizeOf(Block_A);
+      size_t b_1 = s1->partitionSizeOf(Block_B);
+      size_t b_2 = s2->partitionSizeOf(Block_B);
+      size_t intersect_a_a = s1->intersectionSize(s2);
+      size_t intersect_b_a = a_2 - intersect_a_a;
+      size_t intersect_b_b = b_1 - intersect_b_a;
+      size_t intersect_a_b = b_2 - intersect_b_b;
+        return mutualInformation(a_1, a_2, intersect_a_a) + mutualInformation(b_1, a_2, intersect_b_a)
+             + mutualInformation(a_1, b_2, intersect_a_b) + mutualInformation(b_1, b_2, intersect_b_b);
     }
     double maximum(const PllSplitList& plist1, const PllSplitList& plist2) const override {
       return plist1.getMaximumEntropy() + plist2.getMaximumEntropy();
@@ -134,17 +147,15 @@ class MCIMetric : public GeneralizedMetric {
 
 
     private:
-    double mutualInformation(const PllSplit* s1,
-                             const Partition block_s1, const PllSplit* s2, const Partition block_s2) const {
+    double mutualInformation(size_t block_size1, size_t block_size2, size_t intersection_size) const {
         //This is a hardcoded statement. The math agrees that x log(x) -> 0 but c++ refuses
-        size_t intersection_size = s1->intersectionSize(s2, block_s1, block_s2);
         if(intersection_size == 0){
           return 0.0;
         }
         double pcl = phylomath::clusteringProbability(intersection_size);
         assert(pcl > 0);
-        double p_1 = phylomath::clusteringProbability(s1->partitionSizeOf(block_s1));
-        double p_2 = phylomath::clusteringProbability(s2->partitionSizeOf(block_s2));
+        double p_1 = phylomath::clusteringProbability(block_size1);
+        double p_2 = phylomath::clusteringProbability(block_size2);
         assert(p_1 > 0 && p_2 > 0);
         return pcl * std::log2(pcl / (p_1 * p_2));
     }
