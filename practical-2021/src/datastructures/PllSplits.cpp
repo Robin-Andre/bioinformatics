@@ -69,7 +69,7 @@ size_t PllSplit::intersectionSize(const PllSplit* other) const {
   //assert(other.splitValid());
   //assert(this < other || this == other);
   size_t count;
-  if (occurences <= 1) {
+  if (occurences <= 100) {
     count = computeIntersectionSize(other);
   } else {
     std::unordered_map<const PllSplit*,size_t>::const_iterator got = intersections.find(other);

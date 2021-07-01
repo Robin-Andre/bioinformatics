@@ -22,7 +22,7 @@ class PllPointerMap {
     processQueue();
     for(size_t i = 0; i < map_pos; ++i){
       PllSplit* s1 = &all_splits_unique[i];
-      if(s1->getOccurences() > 1){
+      if(s1->getOccurences() > 100){
         for(size_t j = 0; j < map_pos; ++j){
           s1->precomputeIntersection(&all_splits_unique[j]);
         }
