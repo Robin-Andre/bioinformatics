@@ -66,8 +66,9 @@ TEST_F(MaximumMatcherTest, test_real){
   size_t n = 10;
   PllTree tree = TreeReader::readTreeFile(current_data_dir + "heads/24")[0];
   PllSplit::setTipCount(tree.getTipCount());
-  PllSplitList split_list = PllSplitList(tree);
-  std::vector<std::vector<double>> similarities = spi.similaritiesForSplits(split_list, split_list);
+  PllPointerMap map = PllPointerMap({tree});
+  PllSplitList& split_list = map.vectors()[0];
+  std::vector<std::vector<double>> similarities = spi.similaritiesForSplits(split_list, split_list, map);
   std::vector<std::vector<double>> weights = std::vector<std::vector<double>> (n, std::vector<double>(n));
   for(size_t i = 0; i < n; ++i){
     for(size_t j = 0; j < n; ++j){
@@ -81,10 +82,11 @@ TEST_F(MaximumMatcherTest, test_unequal_mci) {
 
   PllTree tree1 = TreeReader::readTreeFile(current_data_dir + "heads/24")[0];
   PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "heads/24")[2];
-  PllSplitList s1 = PllSplitList(tree1);
-  PllSplitList s2 = PllSplitList(tree2);
+    PllPointerMap map = PllPointerMap({tree1, tree2});
+  PllSplitList& s1 = map.vectors()[0];
+  PllSplitList& s2 = map.vectors()[1];
   PllSplit::setTipCount(tree1.getTipCount());
-  std::vector<std::vector<double>> similarities = mci.similaritiesForSplits(s1, s2);
+  std::vector<std::vector<double>> similarities = mci.similaritiesForSplits(s1, s2, map);
 
   //std::vector<size_t> match_results = MaximumMatcher::match_vector(similarities); We cannot trivially test matchings
   double match = MaximumMatcher::match(similarities);
@@ -98,11 +100,13 @@ TEST_F(MaximumMatcherTest, test_unequal_mci2) {
 
   PllTree tree1 = TreeReader::readTreeFile(current_data_dir + "heads/141")[2];
   PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "heads/141")[5];
-  PllSplit::setTipCount(tree1.getTipCount());
-  PllSplitList s1 = PllSplitList(tree1);
-  PllSplitList s2 = PllSplitList(tree2);
 
-  std::vector<std::vector<double>> similarities = mci.similaritiesForSplits(s1, s2);
+  PllSplit::setTipCount(tree1.getTipCount());
+  PllPointerMap map = PllPointerMap({tree1, tree2});
+  PllSplitList& s1 = map.vectors()[0];
+  PllSplitList& s2 = map.vectors()[1];
+
+  std::vector<std::vector<double>> similarities = mci.similaritiesForSplits(s1, s2, map);
   /*for(unsigned i = 0; i < similarities.size(); ++i) {
     for(unsigned j = 0; j < similarities.size(); ++j) {
       std::cout << similarities[i][j] << " ";

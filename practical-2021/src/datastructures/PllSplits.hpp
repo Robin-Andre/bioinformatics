@@ -152,6 +152,7 @@ public:
 
   friend bool operator == (const PllSplitList& p1, const PllSplitList& p2);
   PllSplit* operator[](size_t index) const { return _splits[index]; }
+  size_t pos(size_t index) const {return _split_offsets[index];}
 
   const std::vector<PllSplit*>& getSplits() const {return _splits;}
   size_t getSplitCount() const {return _splits.size();}
@@ -160,10 +161,11 @@ public:
   double getMaximumInformationContent() const {return maximum_information_content;}
 
   std::string toString() const;
-  void push(PllSplit* split);
+  void push(PllSplit* split, size_t offset);
 
 private:
   std::vector<PllSplit*> _splits;
+  std::vector<size_t> _split_offsets;
   double maximum_entropy = 0;
   double maximum_information_content = 0;
 };

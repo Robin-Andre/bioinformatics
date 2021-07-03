@@ -48,7 +48,7 @@ public:
     for(size_t i = 0; i < tree_count; ++i){
       bool is_unique = true;
       for(size_t j = i; j < tree_count; ++j){
-        double dist = metric.distanceOf(tree_splits[i], tree_splits[j], mode);
+        double dist = metric.distanceOf(tree_splits[i], tree_splits[j], mode, test._map);
         assert(dist >= 0.0);
         //TODO: Check near 0 because of numerical issues
         if (i != j && dist == 0 && is_unique){

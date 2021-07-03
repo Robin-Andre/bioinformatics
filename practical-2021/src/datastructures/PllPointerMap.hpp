@@ -1,3 +1,4 @@
+#pragma once
 #include <vector>
 #include <queue>
 #include "PllTree.hpp"
@@ -28,6 +29,10 @@ class PllPointerMap {
     for(unsigned i = 0; i < trees_as_pointers.size(); ++i) {
       free(trees_as_pointers[i]);
     }
+  }
+  PllSplit operator[] (size_t index) const {
+    std::cout << "Accessing at: " <<index << " maxsize: " << all_splits_unique.size() << "\n";
+    return all_splits_unique[index];
   }
   std::vector<PllSplit> getMap() {
       return all_splits_unique;
@@ -89,7 +94,7 @@ class PllPointerMap {
     //Since the push method always increases treeIter and points to the next element to be inserted into queue
     //We have to subtract 1 to find the location as where to insert the element. 
     auto oldID = treeIter[ID] - 1; 
-    lol[ID].push(&pointer);    
+    lol[ID].push(&pointer, map_pos - 1);    
   }
   void verify(unsigned ID) {
     for(unsigned i = 0; i < lol[ID].getSplitCount(); ++i) {

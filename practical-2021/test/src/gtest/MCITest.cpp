@@ -17,7 +17,7 @@ TEST_F(MCITest, test_clustering_probability) {
   double solution = ((1.0 / 4) * std::log2(6.0 / 5)) + ((1.0 / 6) * std::log2(4.0 / 5)) +
     ((1.0 / 4) * std::log2(6.0 / 7)) + ((1.0 / 3) * std::log2(8.0 / 7));
   MCIMetric metric_mci;
-  EXPECT_NEAR(metric_mci.evaluate(&split_a, &split_b), solution, 0.00000000001);
+  EXPECT_NEAR(metric_mci.evaluate(split_a, split_b), solution, 0.00000000001);
   free(split_a());
   free(split_b());
 }
@@ -28,7 +28,7 @@ TEST_F(MCITest, test_identity) {
   MCIMetric metric_mci;
   double p_a = phylomath::clusteringProbability(split.partitionSizeOf(Block_A));
   double p_b = phylomath::clusteringProbability(split.partitionSizeOf(Block_B));
-  EXPECT_DOUBLE_EQ(metric_mci.evaluate(&split, &split), p_a * std::log2(6.0/3) + p_b * std::log2(6.0/3));
+  EXPECT_DOUBLE_EQ(metric_mci.evaluate(split, split), p_a * std::log2(6.0/3) + p_b * std::log2(6.0/3));
   free(split());
 }
 TEST_F(MCITest, test_luise_graph) {
@@ -39,12 +39,12 @@ TEST_F(MCITest, test_luise_graph) {
   PllSplit split_4 = TestUtil::createSplit({0, 1, 2, 3, 4, 5});
   MCIMetric metric_mci;
   double result = 1.0 / 2 * std::log2(4.0/3) + 1.0 / 2 * std::log2(8.0 / 9); // Yeah that one was calculated by hand
-  EXPECT_DOUBLE_EQ(metric_mci.evaluate(&split_1, &split_2), result);
-  EXPECT_DOUBLE_EQ(metric_mci.evaluate(&split_1, &split_3), result);
-  EXPECT_DOUBLE_EQ(metric_mci.evaluate(&split_1, &split_4), result);
-  EXPECT_DOUBLE_EQ(metric_mci.evaluate(&split_2, &split_3), result);
-  EXPECT_DOUBLE_EQ(metric_mci.evaluate(&split_2, &split_4), result);
-  EXPECT_DOUBLE_EQ(metric_mci.evaluate(&split_3, &split_4), result);
+  EXPECT_DOUBLE_EQ(metric_mci.evaluate(split_1, split_2), result);
+  EXPECT_DOUBLE_EQ(metric_mci.evaluate(split_1, split_3), result);
+  EXPECT_DOUBLE_EQ(metric_mci.evaluate(split_1, split_4), result);
+  EXPECT_DOUBLE_EQ(metric_mci.evaluate(split_2, split_3), result);
+  EXPECT_DOUBLE_EQ(metric_mci.evaluate(split_2, split_4), result);
+  EXPECT_DOUBLE_EQ(metric_mci.evaluate(split_3, split_4), result);
   free(split_1());
   free(split_2());
   free(split_3());

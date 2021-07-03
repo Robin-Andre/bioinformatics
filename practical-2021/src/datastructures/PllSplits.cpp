@@ -124,8 +124,9 @@ bool operator == (const PllSplitList& p1, const PllSplitList& p2) {
   return true;
 }
 
-  void PllSplitList::push(PllSplit* split) {
+  void PllSplitList::push(PllSplit* split, size_t offset) {
     _splits.push_back(split);
+    _split_offsets.push_back(offset);
     maximum_entropy += split->entropy();
     //std::cout << "Push command: " << split << "\n";
     //std::cout << "Dereferenced: " << (*split).toString();

@@ -30,7 +30,7 @@ TEST_F(MetricsTest, distances_example_from_slideshow_spi) {
   PllSplitList& splits1 = vec[0];
   PllSplitList& splits2 = vec[1];
 
-  std::vector<std::vector<double>> result = spi.similaritiesForSplits(splits1, splits2);
+  std::vector<std::vector<double>> result = spi.similaritiesForSplits(splits1, splits2, test_map);
   double h_standard = phylomath::h(2, 4);
   double h_i1 = phylomath::h(3, 3);
   double h_shared_beta = phylomath::h(3, 2, 6);
@@ -51,10 +51,11 @@ TEST_F(MetricsTest, distance_from_slideshow_msi) {
   PllSplit::setTipCount(6);
   PllTree tree1 = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[0];
   PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[1];
-  PllSplitList splits1 = PllSplitList(tree1);
-  PllSplitList splits2 = PllSplitList(tree2);
-  tree2.alignNodeIndices(tree1);
-  std::vector<std::vector<double>> result = msi.similaritiesForSplits(splits1, splits2);
+    PllPointerMap map = PllPointerMap({tree1, tree2});
+  PllSplitList& s1 = map.vectors()[0];
+  PllSplitList& s2 = map.vectors()[1];
+  //tree2.alignNodeIndices(tree1);
+  std::vector<std::vector<double>> result = msi.similaritiesForSplits(s1, s2, map);
   double alpha = std::log2(7);
   double beta = std::log2(5);
   double gamma = std::log2(3);
