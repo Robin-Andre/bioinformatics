@@ -14,7 +14,8 @@ protected:
       EXPECT_EQ(*l1[i], *l2[i]);
     }
   }
-  void constructor_eq() {
+  //Disabled until replaced with PllMap
+  /*void constructor_eq() {
     PllTree test_tree = PllTree("((a1, a2), (b1,b2), (c, (d1, d2)));");
     PllSplit::setTipCount(test_tree.getTipCount());
     PllSplitList split_list_from_tree = PllSplitList(test_tree);
@@ -26,7 +27,7 @@ protected:
     };
     PllSplitList expected_splitlist = TestUtil::createSplitList(expected);
     ASSERT_EQ(expected_splitlist, split_list_from_tree);
-  }
+  }*/
 };
 
 

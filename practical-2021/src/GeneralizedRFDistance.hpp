@@ -6,6 +6,7 @@ extern "C" {
 #include "datastructures/PllSplits.hpp"
 #include "datastructures/PllTree.hpp"
 #include "datastructures/PllPointerMap.hpp"
+#include "datastructures/IntersectionCache.hpp"
 #include "io/IOData.hpp"
 #include "Metric.hpp"
 #include <vector>
@@ -14,13 +15,7 @@ extern "C" {
 
 class GeneralizedRFDistance {
 public:
-  GeneralizedRFDistance(const std::vector<PllTree>& trees) : _map(trees) {
-  }
 
-  ~GeneralizedRFDistance() {
-
-    
-  }
   static io::IOData computeDistances(const std::vector<PllTree>& trees, const Metric& metric, Mode mode) {
     PllSplit::setTipCount(trees[0].getTipCount());
     
@@ -32,8 +27,9 @@ public:
     assert(tip_count > 3);
 
     phylomath::initLdfCache();
-    GeneralizedRFDistance test(trees);
-    std::vector<PllSplitList>& tree_splits = test._map.vectors();
+    PllPointerMap _map(trees);
+    IntersectionCache lulcache(_map);
+    std::vector<PllSplitList>& tree_splits = _map.vectors();
     /*for(PllTree tree :  trees){
       assert(tree.getTipCount() == PllSplit::getTipCount());
       tree_splits.emplace_back(PllSplitList(tree));
@@ -48,7 +44,7 @@ public:
     for(size_t i = 0; i < tree_count; ++i){
       bool is_unique = true;
       for(size_t j = i; j < tree_count; ++j){
-        double dist = metric.distanceOf(tree_splits[i], tree_splits[j], mode, test._map);
+        double dist = metric.distanceOf(tree_splits[i], tree_splits[j], mode, _map);
         assert(dist >= 0.0);
         //TODO: Check near 0 because of numerical issues
         if (i != j && dist == 0 && is_unique){
@@ -67,5 +63,4 @@ public:
     return result;
   }
   private:
-  PllPointerMap _map;
 };

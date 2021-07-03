@@ -12,9 +12,10 @@ class IOTest : public testing::Test {
 TEST_F(IOTest, tree_read) {
   PllTree tree = TreeReader::readTreeFile("../test/res/data/simple_newick")[0];
   PllSplit::setTipCount(tree.getTipCount());
-  PllSplitList splits = PllSplitList(tree);
-  PllSplit split1 = *splits[0];
-  PllSplit split2 = *splits[1];
+  PllPointerMap map({tree});
+  PllSplitList& splits = map.vectors()[0];
+  PllSplit split1 = map[0];
+  PllSplit split2 = map[1];
   EXPECT_FALSE(split1==split2);
   EXPECT_TRUE(split1 < split2);
 }

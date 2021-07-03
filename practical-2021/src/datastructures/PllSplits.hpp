@@ -119,26 +119,23 @@ private:
   static size_t split_len;
   static pll_split_base_t bitmask_for_unused_bits;
 };
-//bool operator == (const PllSplit & p1, const PllSplit& p2);
 class PllSplitList {
 public:
   explicit PllSplitList(const PllTree &tree);
-  explicit PllSplitList(const std::vector<PllSplit*> &splits);
+  explicit PllSplitList(const std::vector<size_t> &splits);
+  //We can now actually use the default constructor since the map is constantly pushing. 
+  //TODO buid nondefault constructor which preallocates elements
   explicit PllSplitList() {
 
   }
-  /*explicit PllSplitList(size_t amount_of_elements) {
-    _splits = std::vector<PllSplit*>(amount_of_elements);
-  }*/
-
   /* Rule of 5 constructors/destructors */
   ~PllSplitList();
-  PllSplitList(const PllSplitList &other) : PllSplitList(other._splits) {
+  PllSplitList(const PllSplitList &other) : PllSplitList(other._split_offsets) {
     this->maximum_entropy = other.getMaximumEntropy();
     this->maximum_information_content = other.getMaximumInformationContent();
   }
   PllSplitList(PllSplitList &&other) :
-      _splits(std::exchange(other._splits, {})) {
+      _split_offsets(std::exchange(other._split_offsets, {})) {
         this->maximum_entropy = other.getMaximumEntropy();
         this->maximum_information_content = other.getMaximumInformationContent();
       }
@@ -146,26 +143,28 @@ public:
     return *this = PllSplitList(other);
   }
   PllSplitList &operator=(PllSplitList &&other) {
-    std::swap(_splits, other._splits);
+    std::swap(_split_offsets, other._split_offsets);
     return *this;
   }
 
   friend bool operator == (const PllSplitList& p1, const PllSplitList& p2);
-  PllSplit* operator[](size_t index) const { return _splits[index]; }
-  size_t pos(size_t index) const {return _split_offsets[index];}
+  size_t operator[](size_t index) const { return _split_offsets[index]; }
+  //size_t pos(size_t index) const {return _split_offsets[index];}
 
-  const std::vector<PllSplit*>& getSplits() const {return _splits;}
-  size_t getSplitCount() const {return _splits.size();}
+  const std::vector<size_t>& getSplits() const {return _split_offsets;}
+  size_t getSplitCount() const {return _split_offsets.size();}
 
   double getMaximumEntropy() const {return maximum_entropy;}
   double getMaximumInformationContent() const {return maximum_information_content;}
 
   std::string toString() const;
-  void push(PllSplit* split, size_t offset);
+  void push(const PllSplit& split, size_t offset);
 
 private:
-  std::vector<PllSplit*> _splits;
-  std::vector<size_t> _split_offsets;
+  /* This vector now represents the PllSplitList, each element is now an array index of
+  the big PllMap. 
+  */
+  std::vector<size_t> _split_offsets; 
   double maximum_entropy = 0;
   double maximum_information_content = 0;
 };

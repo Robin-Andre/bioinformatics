@@ -51,7 +51,7 @@ TEST_F(MetricsTest, distance_from_slideshow_msi) {
   PllSplit::setTipCount(6);
   PllTree tree1 = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[0];
   PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[1];
-    PllPointerMap map = PllPointerMap({tree1, tree2});
+  PllPointerMap map = PllPointerMap({tree1, tree2});
   PllSplitList& s1 = map.vectors()[0];
   PllSplitList& s2 = map.vectors()[1];
   //tree2.alignNodeIndices(tree1);
@@ -76,8 +76,10 @@ TEST_F(MetricsTest, maximumtest) {
   PllSplit::setTipCount(6);
   PllTree tree1 = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[0];
   PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[0];
-  PllSplitList splits1 = PllSplitList(tree1);
-  PllSplitList splits2 = PllSplitList(tree2);
+  PllPointerMap map({tree1, tree2});
+
+  PllSplitList& splits1 = map.vectors()[0];
+  PllSplitList& splits2 = map.vectors()[1];
   tree2.alignNodeIndices(tree1);
   double result = msi.maximum(splits1, splits2);
   double expected_info_content = 2 * (2 * std::log2(7) + std::log2(35.0 / 3));

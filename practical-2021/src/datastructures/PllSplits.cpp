@@ -79,8 +79,8 @@ std::string PllSplit::toString() const {
   return ss.str();
 }
 
-//TODO find out if preallocation can be done.
-PllSplitList::PllSplitList(const PllTree &tree) {
+//TODO This should no longer be called
+/*PllSplitList::PllSplitList(const PllTree &tree) {
   assert(PllSplit::getTipCount() == tree.getTipCount());
   pll_split_t* tmp_splits = pllmod_utree_split_create(tree.tree()->vroot, tree.getTipCount(), nullptr);
   //_splits.reserve(tree.tree()->tip_count - 3);
@@ -93,9 +93,9 @@ PllSplitList::PllSplitList(const PllTree &tree) {
   }
   free(tmp_splits);
 
-}
-//TODO find out if preallocation can be done
-PllSplitList::PllSplitList(const std::vector<PllSplit*> &splits) {
+}*/
+//TODO find out if preallocation can be done THIS SHOULD NO LONGER BE CALLED
+/*PllSplitList::PllSplitList(const std::vector<PllSplit*> &splits) {
   if(splits.size() > 0){
     size_t split_len = PllSplit::getSplitLen();
     pll_split_t split_pointer = static_cast<pll_split_t> (calloc(splits.size()* split_len, sizeof(pll_split_base_t)));
@@ -109,14 +109,15 @@ PllSplitList::PllSplitList(const std::vector<PllSplit*> &splits) {
       maximum_information_content += _splits.back()->h();
     }
   }
-}
+}*/
 
 PllSplitList::~PllSplitList() {
-  if (!_splits.empty()) { /*free(_splits[0]);*/ }
+  //NO longer needed
+  //if (!_splits.empty()) { /*free(_splits[0]);*/ }
 }
 bool operator == (const PllSplitList& p1, const PllSplitList& p2) {
-  const std::vector<PllSplit*>& splits1 = p1.getSplits();
-  const std::vector<PllSplit*>& splits2 = p2.getSplits();
+  const std::vector<size_t>& splits1 = p1.getSplits();
+  const std::vector<size_t>& splits2 = p2.getSplits();
   if(splits1.size() != splits2.size()) return false;
   for(size_t i = 0; i < splits1.size(); ++i){
     if (!(splits1[i] == splits2[i])) return false;
@@ -124,16 +125,17 @@ bool operator == (const PllSplitList& p1, const PllSplitList& p2) {
   return true;
 }
 
-  void PllSplitList::push(PllSplit* split, size_t offset) {
-    _splits.push_back(split);
+  void PllSplitList::push(const PllSplit& split, size_t offset) {
+    //_splits.push_back(split); //No longer needed since we do not store splits or pointers but rather offsets on the map
     _split_offsets.push_back(offset);
-    maximum_entropy += split->entropy();
+    maximum_entropy += split.entropy();
     //std::cout << "Push command: " << split << "\n";
     //std::cout << "Dereferenced: " << (*split).toString();
-    maximum_information_content += split->h();
+    maximum_information_content += split.h();
     //std::cout << "after: " << split << "\n";
   }
-std::string PllSplitList::toString() const {
+  //Disabled for the restructuring of PLlSplitlists since I wanna remove _splits
+/*std::string PllSplitList::toString() const {
   std::stringstream ss;
   ss <<  "-------------------------" << std::endl;
   for(size_t i = 0; i < _splits.size(); ++i){
@@ -141,4 +143,4 @@ std::string PllSplitList::toString() const {
   }
   ss << "-------------------------" << std::endl;
   return ss.str();
-}
+}*/

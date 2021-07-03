@@ -49,10 +49,9 @@ public:
       std::vector<std::vector<double>>  result = std::vector<std::vector<double>>(n, std::vector<double>(n));
       for(size_t i = 0; i < n; ++i){
         for(size_t j = 0; j < n; ++j) {
-          std::cout << "pos: " << first.pos(i) <<"\n";
           //map[first.pos(i)];
           //std::cout << first.pos(i) << first[i]->toString() << "---------------------\n";
-          result[i][j] = evaluate(map[first.pos(i)], map[second.pos(j)]);
+          result[i][j] = evaluate(map[first[i]], map[second[j]]);
           //result[i][j] = evaluate(first[i], second[j]);
         }
       }
@@ -146,6 +145,7 @@ class MCIMetric : public GeneralizedMetric {
         if(intersection_size == 0){
           return 0.0;
         }
+        //TODO most of this could be cached
         double pcl = phylomath::clusteringProbability(intersection_size);
         assert(pcl > 0);
         double p_1 = phylomath::clusteringProbability(s1.partitionSizeOf(block_s1));
