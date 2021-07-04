@@ -29,6 +29,8 @@ public:
     phylomath::initLdfCache();
     PllPointerMap _map(trees);
     IntersectionCache lulcache(_map);
+    TempManager data({_map, lulcache});
+    //TempManager data;
     std::vector<PllSplitList>& tree_splits = _map.vectors();
     /*for(PllTree tree :  trees){
       assert(tree.getTipCount() == PllSplit::getTipCount());
@@ -44,7 +46,7 @@ public:
     for(size_t i = 0; i < tree_count; ++i){
       bool is_unique = true;
       for(size_t j = i; j < tree_count; ++j){
-        double dist = metric.distanceOf(tree_splits[i], tree_splits[j], mode, _map);
+        double dist = metric.distanceOf(tree_splits[i], tree_splits[j], mode, data);
         assert(dist >= 0.0);
         //TODO: Check near 0 because of numerical issues
         if (i != j && dist == 0 && is_unique){

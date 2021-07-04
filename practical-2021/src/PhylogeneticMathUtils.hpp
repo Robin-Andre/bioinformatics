@@ -8,6 +8,7 @@
 class phylomath {
 private:
   static std::vector<double> ldfCache; //Note that the cache only contains log(x!!) for odd x (We dont need others)
+  static std::vector<double> logCache; //Contains all logs up to Tipcount starting from 1 : log(1) log(2) ...etc.
 public:
 
   inline static double computeLogDoublefactorial(size_t n) {
@@ -31,10 +32,17 @@ public:
       prev = prev + std::log2(i);
       phylomath::ldfCache.push_back(prev);
     }
+    initLogCache();
   }
-
+  static void initLogCache() {
+    logCache.clear();
+    for(unsigned i = 1; i < PllSplit::getTipCount() + 1; ++i) {
+      logCache.push_back(std::log2(i));
+    }
+  }
   static void flushLdfCache() {
     ldfCache.clear();
+    logCache.clear();
   }
 
 
@@ -105,7 +113,11 @@ public:
   inline static double clusteringProbability(size_t count) {
     return static_cast<double>(count) / static_cast<double>(PllSplit::getTipCount());
   }
-
+  inline static double quickerClusteringProbability(size_t intersectsize, size_t size1, size_t size2) {
+    assert(intersectsize > 0 && size1 > 0 && size2 > 0);
+    assert(intersectsize < PllSplit::getTipCount() && size1 < PllSplit::getTipCount() && size2 < PllSplit::getTipCount());
+    return logCache[intersectsize - 1] + logCache[PllSplit::getTipCount() - 1] - logCache[size1 - 1] - logCache[size2 - 1];
+  }
   inline static double entropy(size_t a, size_t b) {
     if (a == 0 || b == 0) return 0;
     double p_a = clusteringProbability(a);

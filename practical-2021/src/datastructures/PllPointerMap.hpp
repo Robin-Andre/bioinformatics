@@ -20,9 +20,13 @@ class PllPointerMap {
     processQueue();
     all_splits_unique.resize(map_pos);
   }
+  //This is for testing purposes only 
+  explicit PllPointerMap(std::vector<PllSplit>& splits) {
+    all_splits_unique = splits;
+  }
   ~PllPointerMap() {
     for(unsigned i = 0; i < trees_as_pointers.size(); ++i) {
-      free(trees_as_pointers[i]);
+      //free(trees_as_pointers[i]);
     }
   }
   PllSplit operator[] (size_t index) const {

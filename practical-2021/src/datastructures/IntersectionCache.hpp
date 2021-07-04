@@ -1,17 +1,17 @@
 #pragma once
 #include <vector>
 #include "PllPointerMap.hpp"
-class IntersectionCache {
-    public:
-        struct IntersectionTableEntry {
+    struct IntersectionTableEntry {
         size_t cut_AA;
         size_t cut_AB;
         size_t cut_BA;
         size_t cut_BB;
         
     };
+class IntersectionCache {
+    public:
+
     IntersectionCache(const PllPointerMap& map) {
-      std::cout << "Map Size: " << map.size() << "\n";
       cache = std::vector(map.size(), std::vector<IntersectionTableEntry>(map.size()));
       for(unsigned i = 0; i < cache.size(); ++i) {
           //Theoretically we could make this a triangular matrix and make the access well formed i.e. A < B

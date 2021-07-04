@@ -9,8 +9,12 @@ TEST_F(SPITest, test_identity) {
   PllSplit::setTipCount(6);
   std::vector<size_t> part1 = {0, 3, 4};
   PllSplit split = TestUtil::createSplit(part1);
+  std::vector<PllSplit> vec {split};
+  PllPointerMap map(vec);
+  IntersectionCache cache(map);
+  TempManager data({map, cache});
   SPIMetric metric_spi;
-  EXPECT_DOUBLE_EQ(metric_spi.evaluate(split, split), phylomath::h(3,3));
+  EXPECT_DOUBLE_EQ(metric_spi.evaluate(0, 0, data), phylomath::h(3,3));
   free(split());
 }
 /*TODO this test case only works if a phylogenetic probability of "all splits in the same partition" == 1
@@ -42,8 +46,12 @@ TEST_F(SPITest, test_incompatible_splits) {
   PllSplit split_a = TestUtil::createSplit(part1_a);
   std::vector<size_t> part1_b = {0, 2};
   PllSplit split_b = TestUtil::createSplit(part1_b);
+  std::vector<PllSplit> vec {split_a, split_b};
+  PllPointerMap map(vec);
+  IntersectionCache cache(map);
+  TempManager data({map, cache});
   SPIMetric metric_spi;
-  EXPECT_DOUBLE_EQ(metric_spi.evaluate(split_a, split_b), 0);
+  EXPECT_DOUBLE_EQ(metric_spi.evaluate(0, 1 , data), 0);
   free(split_a());
   free(split_b());
 
@@ -61,11 +69,15 @@ TEST_F(SPITest, test_special) {
   PllSplit split_a = TestUtil::createSplit(part1_a);
   std::vector<size_t> part1_b = {0, 1, 2, 3};
   PllSplit split_b = TestUtil::createSplit(part1_b);
+  std::vector<PllSplit> vec {split_a, split_b};
+  PllPointerMap map(vec);
+  IntersectionCache cache(map);
+  TempManager data({map, cache});
   SPIMetric metric_spi;
   double h_a = -std::log2(15.0/105);
   double h_b = -std::log2(15.0/105);
   double h_a_intersect_b = -std::log2(3.0/105);
-  EXPECT_DOUBLE_EQ(metric_spi.evaluate(split_a, split_b),h_a + h_b - h_a_intersect_b);
+  EXPECT_DOUBLE_EQ(metric_spi.evaluate(0, 1, data),h_a + h_b - h_a_intersect_b);
   free(split_a());
   free(split_b());
 }
@@ -76,8 +88,12 @@ TEST_F(SPITest, test_spi) {
   PllSplit split_a = TestUtil::createSplit(part1_a);
   std::vector<size_t> part1_b = {0, 1, 2};
   PllSplit split_b = TestUtil::createSplit(part1_b);
+  std::vector<PllSplit> vec {split_a, split_b};
+  PllPointerMap map(vec);
+  IntersectionCache cache(map);
+  TempManager data({map, cache});
   SPIMetric metric_spi;
-  EXPECT_DOUBLE_EQ(metric_spi.evaluate(split_a, split_b), -std::log2(1.0d/7) - std::log2(3.0d/35) + std::log2(1.0d/35));
+  EXPECT_DOUBLE_EQ(metric_spi.evaluate(0, 1, data), -std::log2(1.0d/7) - std::log2(3.0d/35) + std::log2(1.0d/35));
   free(split_a());
   free(split_b());
 }
@@ -92,16 +108,20 @@ TEST_F(SPITest, test_luise_graph) {
   PllSplit split_2 = TestUtil::createSplit({0, 1, 4, 5, 6, 7});
   PllSplit split_3 = TestUtil::createSplit({0, 1, 2, 3, 6, 7});
   PllSplit split_4 = TestUtil::createSplit({0, 1, 2, 3, 4, 5});
+  std::vector<PllSplit> vec {split_1, split_2, split_3, split_4};
+  PllPointerMap map(vec);
+  IntersectionCache cache(map);
+  TempManager data({map, cache});
   SPIMetric metric_spi;
   double expected_probability_single = 1.0 / 11;
   double expected_probability_intersect = 1.0 / 99;
   double result = -2 * std::log2(expected_probability_single) + std::log2(expected_probability_intersect);
-  EXPECT_DOUBLE_EQ(metric_spi.evaluate(split_1, split_2), result);
-  EXPECT_DOUBLE_EQ(metric_spi.evaluate(split_1, split_3), result);
-  EXPECT_DOUBLE_EQ(metric_spi.evaluate(split_1, split_4), result);
-  EXPECT_DOUBLE_EQ(metric_spi.evaluate(split_2, split_3), result);
-  EXPECT_DOUBLE_EQ(metric_spi.evaluate(split_2, split_4), result);
-  EXPECT_DOUBLE_EQ(metric_spi.evaluate(split_3, split_4), result);
+  EXPECT_DOUBLE_EQ(metric_spi.evaluate(0, 1, data), result);
+  EXPECT_DOUBLE_EQ(metric_spi.evaluate(0, 2, data), result);
+  EXPECT_DOUBLE_EQ(metric_spi.evaluate(0, 3, data), result);
+  EXPECT_DOUBLE_EQ(metric_spi.evaluate(1, 2, data), result);
+  EXPECT_DOUBLE_EQ(metric_spi.evaluate(1, 3, data), result);
+  EXPECT_DOUBLE_EQ(metric_spi.evaluate(2, 3, data), result);
   free(split_1());
   free(split_2());
   free(split_3());

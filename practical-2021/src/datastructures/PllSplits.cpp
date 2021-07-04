@@ -95,21 +95,9 @@ std::string PllSplit::toString() const {
 
 }*/
 //TODO find out if preallocation can be done THIS SHOULD NO LONGER BE CALLED
-/*PllSplitList::PllSplitList(const std::vector<PllSplit*> &splits) {
-  if(splits.size() > 0){
-    size_t split_len = PllSplit::getSplitLen();
-    pll_split_t split_pointer = static_cast<pll_split_t> (calloc(splits.size()* split_len, sizeof(pll_split_base_t)));
-    maximum_entropy = 0.0;
-    maximum_information_content = 0.0;
-    for (size_t i=0; i<splits.size(); ++i) {
-      //TODO rethink if correct
-      memcpy(split_pointer + i* split_len, splits[i], split_len * sizeof(pll_split_base_t));
-      _splits.emplace_back(new PllSplit(split_pointer + i*split_len));
-      maximum_entropy += _splits.back()->entropy();
-      maximum_information_content += _splits.back()->h();
-    }
-  }
-}*/
+PllSplitList::PllSplitList(const std::vector<size_t> &splits) {
+  _split_offsets = splits;
+}
 
 PllSplitList::~PllSplitList() {
   //NO longer needed

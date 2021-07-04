@@ -131,15 +131,15 @@ TEST_F(GeneralizedRFTest, 24taxa) {
   std::cout << "MCI done" << std::endl;
   execute_test("full/24", metric_mci, ABSOLUTE);*/
 }
-/*TEST_F(GeneralizedRFTest, 125taxa) {
+TEST_F(GeneralizedRFTest, 125taxa) {
   execute_test("heads/125", metric_rf, ABSOLUTE);
   execute_test("heads/125", metric_rf, RELATIVE);
 
   execute_test("heads/125", metric_msi, SIMILARITY);
   execute_test("heads/125", metric_spi, SIMILARITY);
   execute_test("heads/125", metric_mci, SIMILARITY);
-}*/
-/*
+}
+
 TEST_F(GeneralizedRFTest, 141taxa) {
   execute_test("heads/141", metric_msi, SIMILARITY);
   execute_test("heads/141", metric_spi, SIMILARITY);
@@ -185,7 +185,7 @@ TEST_F(GeneralizedRFTest, 500taxa) {
   execute_test("heads/500", metric_msi, SIMILARITY);
   execute_test("heads/500", metric_spi, SIMILARITY);
   execute_test("heads/500", metric_mci, SIMILARITY);
-}
+}/*
 TEST_F(GeneralizedRFTest, 628taxa) {
   execute_test("heads/628", metric_msi, SIMILARITY);
   execute_test("heads/628", metric_spi, SIMILARITY);
