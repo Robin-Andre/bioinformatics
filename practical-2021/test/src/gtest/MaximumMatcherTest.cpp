@@ -67,10 +67,8 @@ TEST_F(MaximumMatcherTest, test_real){
   PllTree tree = TreeReader::readTreeFile(current_data_dir + "heads/24")[0];
   PllSplit::setTipCount(tree.getTipCount());
   PllPointerMap map = PllPointerMap({tree});
-    IntersectionCache cache(map);
-  TempManager data({map, cache});
   PllSplitList& split_list = map.vectors()[0];
-  std::vector<std::vector<double>> similarities = spi.similaritiesForSplits(split_list, split_list, data);
+  std::vector<std::vector<double>> similarities = spi.similaritiesForSplits(split_list, split_list, map);
   std::vector<std::vector<double>> weights = std::vector<std::vector<double>> (n, std::vector<double>(n));
   for(size_t i = 0; i < n; ++i){
     for(size_t j = 0; j < n; ++j){
@@ -85,12 +83,11 @@ TEST_F(MaximumMatcherTest, test_unequal_mci) {
   PllTree tree1 = TreeReader::readTreeFile(current_data_dir + "heads/24")[0];
   PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "heads/24")[2];
     PllPointerMap map = PllPointerMap({tree1, tree2});
-      IntersectionCache cache(map);
-  TempManager data({map, cache});
+
   PllSplitList& s1 = map.vectors()[0];
   PllSplitList& s2 = map.vectors()[1];
   PllSplit::setTipCount(tree1.getTipCount());
-  std::vector<std::vector<double>> similarities = mci.similaritiesForSplits(s1, s2, data);
+  std::vector<std::vector<double>> similarities = mci.similaritiesForSplits(s1, s2, map);
 
   //std::vector<size_t> match_results = MaximumMatcher::match_vector(similarities); We cannot trivially test matchings
   double match = MaximumMatcher::match(similarities);
@@ -107,12 +104,10 @@ TEST_F(MaximumMatcherTest, test_unequal_mci2) {
 
   PllSplit::setTipCount(tree1.getTipCount());
   PllPointerMap map = PllPointerMap({tree1, tree2});
-    IntersectionCache cache(map);
-  TempManager data({map, cache});
   PllSplitList& s1 = map.vectors()[0];
   PllSplitList& s2 = map.vectors()[1];
 
-  std::vector<std::vector<double>> similarities = mci.similaritiesForSplits(s1, s2, data);
+  std::vector<std::vector<double>> similarities = mci.similaritiesForSplits(s1, s2, map);
   /*for(unsigned i = 0; i < similarities.size(); ++i) {
     for(unsigned j = 0; j < similarities.size(); ++j) {
       std::cout << similarities[i][j] << " ";

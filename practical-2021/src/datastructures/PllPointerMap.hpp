@@ -29,7 +29,7 @@ class PllPointerMap {
       //free(trees_as_pointers[i]);
     }
   }
-  PllSplit operator[] (size_t index) const {
+  const PllSplit& operator[] (size_t index) const {
     return all_splits_unique[index];
   }
   std::vector<PllSplit> getMap() {

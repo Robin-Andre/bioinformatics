@@ -15,9 +15,7 @@ TEST_F(MCITest, test_clustering_probability) {
   std::vector<size_t> part1_b = {0, 3, 4, 5, 6, 7};
   PllSplit split_b = TestUtil::createSplit(part1_b);
   std::vector<PllSplit> vec {split_a, split_b};
-  PllPointerMap map(vec);
-  IntersectionCache cache(map);
-  TempManager data({map, cache});
+  PllPointerMap data(vec);
   double solution = ((1.0 / 4) * std::log2(6.0 / 5)) + ((1.0 / 6) * std::log2(4.0 / 5)) +
     ((1.0 / 4) * std::log2(6.0 / 7)) + ((1.0 / 3) * std::log2(8.0 / 7));
   MCIMetric metric_mci;
@@ -29,10 +27,8 @@ TEST_F(MCITest, test_identity) {
   PllSplit::setTipCount(6);
   std::vector<size_t> part1 = {0, 3, 4};
   PllSplit split = TestUtil::createSplit(part1);
-    std::vector<PllSplit> vec {split};
-  PllPointerMap map(vec);
-  IntersectionCache cache(map);
-  TempManager data({map, cache});
+  std::vector<PllSplit> vec {split};
+  PllPointerMap data(vec);
   MCIMetric metric_mci;
   double p_a = phylomath::clusteringProbability(split.partitionSizeOf(Block_A));
   double p_b = phylomath::clusteringProbability(split.partitionSizeOf(Block_B));
@@ -46,9 +42,7 @@ TEST_F(MCITest, test_luise_graph) {
   PllSplit split_3 = TestUtil::createSplit({0, 1, 2, 3, 6, 7});
   PllSplit split_4 = TestUtil::createSplit({0, 1, 2, 3, 4, 5});
   std::vector<PllSplit> vec {split_1, split_2, split_3, split_4};
-  PllPointerMap map(vec);
-  IntersectionCache cache(map);
-  TempManager data({map, cache});
+  PllPointerMap data(vec);
   MCIMetric metric_mci;
   double result = 1.0 / 2 * std::log2(4.0/3) + 1.0 / 2 * std::log2(8.0 / 9); // Yeah that one was calculated by hand
   EXPECT_NEAR(metric_mci.evaluate(0, 1, data), result, 0.00000001);

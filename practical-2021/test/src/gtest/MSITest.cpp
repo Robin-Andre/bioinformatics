@@ -10,9 +10,8 @@ TEST_F(MSITest, test_identity) {
   std::vector<size_t> part1 = {0, 3, 4};
   PllSplit split = TestUtil::createSplit(part1);
   std::vector<PllSplit> vec {split};
-  PllPointerMap map(vec);
-  IntersectionCache cache(map);
-  TempManager data({map, cache});
+  PllPointerMap data(vec);
+
   MSIMetric metric_msi;
   EXPECT_DOUBLE_EQ(metric_msi.evaluate(0, 0, data), phylomath::h(3,3));
   free(split());
@@ -45,9 +44,7 @@ TEST_F(MSITest, test_msi) {
   MSIMetric metric_msi;
 
   std::vector<PllSplit> vec {split_a, split_b};
-  PllPointerMap map(vec);
-  IntersectionCache cache(map);
-  TempManager data({map, cache});
+  PllPointerMap data(vec);
   EXPECT_DOUBLE_EQ(metric_msi.evaluate(0, 1, data), -std::log2(1.0d/21));
   free(split_a());
   free(split_b());
@@ -60,9 +57,7 @@ TEST_F(MSITest, test_luise_graph) {
   PllSplit split_4 = TestUtil::createSplit({0, 1, 2, 3, 4, 5});
   MSIMetric metric_msi;
   std::vector<PllSplit> vec {split_1, split_2, split_3, split_4};
-  PllPointerMap map(vec);
-  IntersectionCache cache(map);
-  TempManager data({map, cache});
+  PllPointerMap data(vec);
   double result = std::log2(3);
   EXPECT_DOUBLE_EQ(metric_msi.evaluate(0, 1, data), result);
   EXPECT_DOUBLE_EQ(metric_msi.evaluate(0, 2, data), result);
