@@ -68,7 +68,9 @@ TEST_F(MaximumMatcherTest, test_real){
   PllSplit::setTipCount(tree.getTipCount());
   PllPointerMap map = PllPointerMap({tree});
   PllSplitList& split_list = map.vectors()[0];
-  std::vector<std::vector<double>> similarities = spi.similaritiesForSplits(split_list, split_list, map);
+  size_t split_count = split_list.getSplits().size();
+  std::vector<std::vector<double>> similarities = std::vector<std::vector<double>>(split_count, std::vector<double>(split_count));
+  spi.similaritiesForSplits(split_list, split_list, map, &similarities);
   std::vector<std::vector<double>> weights = std::vector<std::vector<double>> (n, std::vector<double>(n));
   for(size_t i = 0; i < n; ++i){
     for(size_t j = 0; j < n; ++j){
@@ -86,7 +88,9 @@ TEST_F(MaximumMatcherTest, test_unequal_mci) {
   PllSplitList& s1 = map.vectors()[0];
   PllSplitList& s2 = map.vectors()[1];
   PllSplit::setTipCount(tree1.getTipCount());
-  std::vector<std::vector<double>> similarities = mci.similaritiesForSplits(s1, s2, map);
+  size_t split_count = s1.getSplits().size();
+  std::vector<std::vector<double>> similarities = std::vector<std::vector<double>>(split_count, std::vector<double>(split_count));
+  mci.similaritiesForSplits(s1, s2, map, &similarities);
 
   //std::vector<size_t> match_results = MaximumMatcher::match_vector(similarities); We cannot trivially test matchings
   double match = MaximumMatcher::match(similarities);
@@ -105,8 +109,9 @@ TEST_F(MaximumMatcherTest, test_unequal_mci2) {
   PllPointerMap map = PllPointerMap({tree1, tree2});
   PllSplitList& s1 = map.vectors()[0];
   PllSplitList& s2 = map.vectors()[1];
-
-  std::vector<std::vector<double>> similarities = mci.similaritiesForSplits(s1, s2, map);
+  size_t split_count = s1.getSplits().size();
+  std::vector<std::vector<double>> similarities = std::vector<std::vector<double>>(split_count, std::vector<double>(split_count));
+  mci.similaritiesForSplits(s1, s2, map, &similarities);
   /*for(unsigned i = 0; i < similarities.size(); ++i) {
     for(unsigned j = 0; j < similarities.size(); ++j) {
       std::cout << similarities[i][j] << " ";

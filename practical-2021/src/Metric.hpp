@@ -27,8 +27,9 @@ public:
     }
 
   double distanceOf(const PllSplitList& first, const PllSplitList& second, Mode mode, const PllPointerMap& map) const override {
-    std::vector<std::vector<double>> similarities = similaritiesForSplits(first, second, map);
-    assert(similarities.size() == first.getSplits().size());
+    size_t split_count = first.getSplits().size();
+    std::vector<std::vector<double>> similarities = std::vector<std::vector<double>>(split_count, std::vector<double>(split_count));
+    similaritiesForSplits(first, second, map, &similarities);
     double similarity = MaximumMatcher::match(similarities);
     assert(similarity >= 0);
     return (mode == SIMILARITY) ? similarity : distanceFromSimilarity(first, second, similarity, mode);
@@ -43,20 +44,19 @@ public:
       return (mode == RELATIVE) ? dist : (dist / max_value);
     }
 
-    std::vector<std::vector<double>> similaritiesForSplits(const PllSplitList& first, const PllSplitList& second, const PllPointerMap& map) const{
+    void similaritiesForSplits(const PllSplitList& first, const PllSplitList& second, const PllPointerMap& map, std::vector<std::vector<double>>* result) const{
       assert(first.getSplits().size() == first.getSplits().size());
       size_t n = first.getSplits().size();
-      std::vector<std::vector<double>>  result = std::vector<std::vector<double>>(n, std::vector<double>(n));
+      assert(result->size() == n);
       for(size_t i = 0; i < n; ++i){
+        assert((*result)[i].size() == n);
         for(size_t j = 0; j < n; ++j) {
-          std::cout << "pos: " << first.pos(i) <<"\n";
           //map[first.pos(i)];
           //std::cout << first.pos(i) << first[i]->toString() << "---------------------\n";
-          result[i][j] = evaluate(map[first.pos(i)], map[second.pos(j)]);
+          (*result)[i][j] = evaluate(map[first.pos(i)], map[second.pos(j)]);
           //result[i][j] = evaluate(first[i], second[j]);
         }
       }
-      return result;
     }
 };
 

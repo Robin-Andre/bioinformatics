@@ -30,7 +30,9 @@ TEST_F(MetricsTest, distances_example_from_slideshow_spi) {
   PllSplitList& splits1 = vec[0];
   PllSplitList& splits2 = vec[1];
 
-  std::vector<std::vector<double>> result = spi.similaritiesForSplits(splits1, splits2, test_map);
+  size_t split_count = splits1.getSplits().size();
+  std::vector<std::vector<double>> result = std::vector<std::vector<double>>(split_count, std::vector<double>(split_count));
+  spi.similaritiesForSplits(splits1, splits2, test_map, &result);
   double h_standard = phylomath::h(2, 4);
   double h_i1 = phylomath::h(3, 3);
   double h_shared_beta = phylomath::h(3, 2, 6);
@@ -55,7 +57,10 @@ TEST_F(MetricsTest, distance_from_slideshow_msi) {
   PllSplitList& s1 = map.vectors()[0];
   PllSplitList& s2 = map.vectors()[1];
   //tree2.alignNodeIndices(tree1);
-  std::vector<std::vector<double>> result = msi.similaritiesForSplits(s1, s2, map);
+
+  size_t split_count = s1.getSplits().size();
+  std::vector<std::vector<double>> result = std::vector<std::vector<double>>(split_count, std::vector<double>(split_count));
+  msi.similaritiesForSplits(s1, s2, map, &result);
   double alpha = std::log2(7);
   double beta = std::log2(5);
   double gamma = std::log2(3);
