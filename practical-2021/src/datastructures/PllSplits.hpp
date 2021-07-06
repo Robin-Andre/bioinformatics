@@ -48,6 +48,7 @@ public:
   friend bool operator == (const PllSplit& p1, const PllSplit& p2);
   friend bool operator < (const PllSplit& p1, const PllSplit& p2);
 
+
   size_t   popcount() const;
   uint32_t bitExtract(size_t bit_index) const;
   size_t partitionSizeOf (Partition block) const {
@@ -58,6 +59,7 @@ public:
   double h() const {return h_value;}
   double entropy() const {return entropy_value;}
   size_t intersectionSize(const PllSplit& other, Partition partition_this, Partition partition_other) const;
+
 
 
   std::string toString() const;

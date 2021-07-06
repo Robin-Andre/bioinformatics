@@ -25,8 +25,15 @@ public:
     assert(tip_count > 3);
 
     phylomath::initLdfCache();
+    auto time_1 = std::chrono::high_resolution_clock::now();
     PllPointerMap _map(trees);
+    auto time_2 = std::chrono::high_resolution_clock::now();
     IntersectionCache pairwise_cache(_map, metric);
+    auto time_3 = std::chrono::high_resolution_clock::now();
+    std::cout << "Map Size: " << _map.size() << "\n";
+    std::cout << "Map Time: " << std::to_string((std::chrono::duration<double, std::milli>(time_2 - time_1)).count()) << "\n";
+    std::cout << "Cache Time: " << std::to_string((std::chrono::duration<double, std::milli>(time_3 - time_2)).count()) << "\n";
+
     std::vector<PllSplitList>& tree_splits = _map.vectors();
     /*for(PllTree tree :  trees){
       assert(tree.getTipCount() == PllSplit::getTipCount());
