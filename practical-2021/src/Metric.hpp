@@ -2,7 +2,6 @@
 #include <string>
 #include "datastructures/PllSplits.hpp"
 #include "datastructures/PllPointerMap.hpp"
-#include "datastructures/IntersectionCache.hpp"
 #include "datastructures/TempManager.hpp"
 #include "PhylogeneticMathUtils.hpp"
 #include "MaximumMatcher.hpp"
@@ -14,8 +13,6 @@ static const char *ModeString[] = {"SIMILARITY", "ABSOLUTE", "RELATIVE"};
 
 class Metric {
     public:
-    virtual double evaluate(const PllPosition& s1, const PllPosition& s2, const PllPointerMap& map) const = 0;
-    virtual double distanceOf(const PllSplitList& plist1, const PllSplitList& plist2, Mode mode, const PllPointerMap& map) const = 0;
     virtual double maximum(const PllSplitList& plist1, const PllSplitList& plist2) const = 0;
     virtual std::string name() const = 0;
     virtual ~Metric() {
@@ -26,42 +23,12 @@ class Metric {
 
 class GeneralizedMetric : public Metric {
 public:
-
+  virtual double evaluate(const PllPosition& s1, const PllPosition& s2, const PllPointerMap& map) const = 0;
   virtual ~GeneralizedMetric() override {
 
     }
 
-  double distanceOf(const PllSplitList& first, const PllSplitList& second, Mode mode, const PllPointerMap& map) const override {
-    std::vector<std::vector<double>> similarities = similaritiesForSplits(first, second, map);
-    assert(similarities.size() == first.getSplits().size());
-    double similarity = MaximumMatcher::match(similarities);
-    assert(similarity >= 0);
-    return (mode == SIMILARITY) ? similarity : distanceFromSimilarity(first, second, similarity, mode);
-  }
-
-
-    double distanceFromSimilarity(const PllSplitList& first,
-                                  const PllSplitList& second, double similarity, Mode mode) const{
-      double max_value = maximum(first, second);
-      assert((max_value - 2 * similarity) > -0.000001);
-      double dist = std::max(0.0, max_value - 2 * similarity);
-      return (mode == RELATIVE) ? dist : (dist / max_value);
-    }
-
-    std::vector<std::vector<double>> similaritiesForSplits(const PllSplitList& first, const PllSplitList& second, const PllPointerMap& map) const{
-      assert(first.getSplits().size() == first.getSplits().size());
-      size_t n = first.getSplits().size();
-      std::vector<std::vector<double>>  result = std::vector<std::vector<double>>(n, std::vector<double>(n));
-      for(size_t i = 0; i < n; ++i){
-        for(size_t j = 0; j < n; ++j) {
-          //map[first.pos(i)];
-          //std::cout << first.pos(i) << first[i]->toString() << "---------------------\n";
-          result[i][j] = evaluate(first[i], second[j], map);
-          //result[i][j] = evaluate(first[i], second[j]);
-        }
-      }
-      return result;
-    }
+  
 };
 
 class MSIMetric : public GeneralizedMetric {
@@ -188,7 +155,7 @@ class MCIMetric : public GeneralizedMetric {
 
 class RFMetric : public Metric {
 public:
-  virtual double distanceOf(const PllSplitList& plist1, const PllSplitList& plist2, Mode mode, const PllPointerMap& map) const override {
+  virtual double distanceOfRF(const PllSplitList& plist1, const PllSplitList& plist2, Mode mode, const PllPointerMap& map) const {
     size_t split_count1 = plist1.getSplitCount();
     size_t split_count2 = plist2.getSplitCount();
     if (split_count1 == 0) return static_cast<double> (split_count2);
@@ -213,10 +180,6 @@ public:
     return (mode == RELATIVE) ? (static_cast<double>(distance) / maximum(plist1, plist2))
                               : static_cast<double>(distance);
   }
-  /* TODO ROBIN find a better solution*/
-  double evaluate(const PllPosition& s1, const PllPosition& s2, const PllPointerMap& map) const override {
-    return 0.0;
-  };
   /*OK this is a @Softwipe hack, in order to remove the unused parameter warning I had to remove the name
   but since the signature is still the same its still an override */
   double maximum(const PllSplitList&, const PllSplitList&) const override {

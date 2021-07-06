@@ -16,6 +16,7 @@ set_target_properties(inforf PROPERTIES
     CXX_STANDARD_REQUIRED YES
 )
 
+target_link_libraries(inforf Threads::Threads)
 target_link_libraries(inforf ${PLLMODULES_LIBRARIES} ortools json_lib)
 target_include_directories(inforf PRIVATE ${LOCALDEPS_DIR}/include $<BUILD_INTERFACE:${ortools}>)
 

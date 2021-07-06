@@ -61,7 +61,7 @@ class PllPointerMap {
     returns true if an element could be pushed, false otherwise
   */
   bool push(size_t ID) {
-    //Limit is hardcoded in the constructor to tipcount - 3 
+    //Limit is hardcoded in the constructor to tipcount - 3
     if(treeIter[ID] < limit) {
       queue.push({PllSplit(trees_as_pointers[ID][treeIter[ID]]), ID});
       ++treeIter[ID];
@@ -70,7 +70,7 @@ class PllPointerMap {
     return false;
   }
   void processQueue() {
-      
+
     while(!queue.empty()) {
       SplitReference top = queue.top();
       insertIntoMap(top);
@@ -82,7 +82,7 @@ class PllPointerMap {
     if(map_pos > 0 && all_splits_unique[map_pos - 1] == split_and_id.split_temp) {
       //TODO rewrite since nothing is executed here
       //This is extremely weird but this if block represents when a duplicate split has been found
-      //since we do not 
+      //since we do not
     }
     else {
       all_splits_unique[map_pos] = std::move(split_and_id.split_temp);

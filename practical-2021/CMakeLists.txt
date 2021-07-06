@@ -19,6 +19,10 @@ set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${ORTOOLS_ROOT})
 
 find_package(ortools REQUIRED)
 
+# multithreading for std::async
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package(Threads REQUIRED)
+
 
 add_subdirectory(libs)
 add_subdirectory(src)
