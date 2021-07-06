@@ -19,6 +19,10 @@ class PllPointerMap {
     }
     processQueue();
     all_splits_unique.resize(map_pos);
+    all_inverse_splits_unique = std::vector<PllSplit>(all_splits_unique.size());
+    for(unsigned i = 0; i < all_splits_unique.size(); ++i) {
+
+    }
   }
   //This is for testing purposes only 
   explicit PllPointerMap(std::vector<PllSplit>& splits) {
@@ -53,6 +57,7 @@ class PllPointerMap {
   std::vector<size_t> treeIter;
   std::vector<pll_split_t*> trees_as_pointers;
   std::vector<PllSplit> all_splits_unique;
+  std::vector<PllSplit> all_inverse_splits_unique;
   std::vector<PllSplitList> lol;
   size_t limit;
   size_t map_pos;

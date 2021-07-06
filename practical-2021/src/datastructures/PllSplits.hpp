@@ -45,9 +45,9 @@ public:
     PllSplit(static_cast<pll_split_t> (calloc(PllSplit::split_len, sizeof(pll_split_base_t))));
   }
   pll_split_t operator()() const { return _split; }
+  pll_split_t operator !() const { return _inverse; }
   friend bool operator == (const PllSplit& p1, const PllSplit& p2);
   friend bool operator < (const PllSplit& p1, const PllSplit& p2);
-
 
   size_t   popcount() const;
   uint32_t bitExtract(size_t bit_index) const;
@@ -59,7 +59,13 @@ public:
   double h() const {return h_value;}
   double entropy() const {return entropy_value;}
   size_t intersectionSize(const PllSplit& other, Partition partition_this, Partition partition_other) const;
-
+  static size_t intersectionSize(const pll_split_t& first, const pll_split_t& second) {
+  size_t count = 0; 
+  for(unsigned i = 0; i < PllSplit::getSplitLen(); ++i) {
+    count += __builtin_popcount(first[i] & second[i]);
+  }
+  return count;
+}
 
 
   std::string toString() const;
@@ -111,15 +117,17 @@ private:
   //size_t basePopcount(pll_split_base_t count) const;
 
   pll_split_t _split = nullptr;
-
+  pll_split_t _inverse = nullptr;
   size_t size_block_A;
   size_t size_block_B;
   double h_value;
   double entropy_value;
 
+
   static size_t tip_count;
   static size_t split_len;
   static pll_split_base_t bitmask_for_unused_bits;
+
 };
 class PllSplitList {
 public:

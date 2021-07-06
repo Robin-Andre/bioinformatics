@@ -36,8 +36,12 @@ class MSIMetric : public GeneralizedMetric {
     const PllSplit& sp1 = map[s1];
     if (s1 == s2) return sp1.h();
     const PllSplit& sp2 = map[s2];
+    return std::max(phylomath::h(PllSplit::intersectionSize(sp1(), sp2()), PllSplit::intersectionSize(!sp1, !sp2)),
+                    phylomath::h(PllSplit::intersectionSize(!sp1, sp2()), PllSplit::intersectionSize(sp1(), !sp2)));
+    /*
     return std::max(phylomath::h(sp1.intersectionSize(sp2, Block_A, Block_A), sp1.intersectionSize(sp2, Block_B, Block_B)),
                     phylomath::h(sp1.intersectionSize(sp2, Block_B, Block_A), sp1.intersectionSize(sp2, Block_A, Block_B)));
+    */
   }
   double maximum(const PllSplitList& plist1, const PllSplitList& plist2) const override {
     return plist1.getMaximumInformationContent() + plist2.getMaximumInformationContent();
@@ -64,7 +68,8 @@ class SPIMetric : public GeneralizedMetric {
     if (s1 == s2) return phylomath::h(a_2, b_2);
 
     double phylo_shared;
-    size_t intersect_b_a = sp1.intersectionSize(sp2, Block_B, Block_A);
+    size_t intersect_b_a = PllSplit::intersectionSize(!sp1, sp2());
+    //size_t intersect_b_a = sp1.intersectionSize(sp2, Block_B, Block_A);
     if(!intersect_b_a) {
       phylo_shared = phylomath::h(b_1, a_2, a_1 + b_1);
     } else {
@@ -106,8 +111,17 @@ class MCIMetric : public GeneralizedMetric {
       size_t size_b1 = sp1.partitionSizeOf(Block_B);
       size_t size_a2 = sp2.partitionSizeOf(Block_A);
       size_t size_b2 = sp2.partitionSizeOf(Block_B);
+      size_t intersect_ba = PllSplit::intersectionSize(!sp1, sp2());
+      size_t intersect_bb = size_b1 - intersect_ba;
+      size_t intersect_ab = size_b2 - intersect_bb;
+      size_t intersect_aa = size_a1 - intersect_ab;
+      return mutualInformation(intersect_aa, size_a1, size_a2) + 
+             mutualInformation(intersect_ab, size_a1, size_b2) +
+             mutualInformation(intersect_ba, size_b1, size_a2) +
+             mutualInformation(intersect_bb, size_b1, size_b2);
+      /*       
       return mutualInformation(sp1, Block_A, sp2, Block_A) + mutualInformation(sp1, Block_A, sp2, Block_B) 
-           + mutualInformation(sp1, Block_B, sp2, Block_A) + mutualInformation(sp1, Block_B, sp2, Block_B);
+           + mutualInformation(sp1, Block_B, sp2, Block_A) + mutualInformation(sp1, Block_B, sp2, Block_B);*/
     }
     double maximum(const PllSplitList& plist1, const PllSplitList& plist2) const override {
       return plist1.getMaximumEntropy() + plist2.getMaximumEntropy();
@@ -120,7 +134,7 @@ class MCIMetric : public GeneralizedMetric {
 
 
     private:
-    /*double mutualInformation(const size_t intersection_size, const size_t size_of_partition_block1,
+    double mutualInformation(const size_t intersection_size, const size_t size_of_partition_block1,
                              const size_t size_of_partition_block2) const {
       assert(size_of_partition_block1 > 0 && size_of_partition_block2 > 0);
       if(intersection_size == 0) {
@@ -133,7 +147,7 @@ class MCIMetric : public GeneralizedMetric {
       //double p_2 = phylomath::clusteringProbability(size_of_partition_block2);
       //double res = pcl * std::log2(pcl / (p_1 * p_2));
       return pcl * phylomath::quickerClusteringProbability(intersection_size, size_of_partition_block1, size_of_partition_block2);
-    }*/
+    }
     double mutualInformation(const PllSplit& s1,
                              const Partition block_s1, const PllSplit& s2, const Partition block_s2) const {
         //This is a hardcoded statement. The math agrees that x log(x) -> 0 but c++ refuses
