@@ -2,7 +2,6 @@
 #include <string>
 #include "datastructures/PllSplits.hpp"
 #include "datastructures/PllPointerMap.hpp"
-#include "datastructures/TempManager.hpp"
 #include "PhylogeneticMathUtils.hpp"
 #include "MaximumMatcher.hpp"
 

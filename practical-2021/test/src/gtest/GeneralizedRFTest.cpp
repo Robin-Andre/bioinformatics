@@ -178,12 +178,12 @@ TEST_F(GeneralizedRFTest, 404taxa) {
   execute_test("heads/404", metric_msi, SIMILARITY);
   execute_test("heads/404", metric_spi, SIMILARITY);
   execute_test("heads/404", metric_mci, SIMILARITY);
-}
+}/*
 TEST_F(GeneralizedRFTest, 500taxa) {
   execute_test("heads/500", metric_msi, SIMILARITY);
   execute_test("heads/500", metric_spi, SIMILARITY);
   execute_test("heads/500", metric_mci, SIMILARITY);
-}/*
+}
 TEST_F(GeneralizedRFTest, 628taxa) {
   execute_test("heads/628", metric_msi, SIMILARITY);
   execute_test("heads/628", metric_spi, SIMILARITY);

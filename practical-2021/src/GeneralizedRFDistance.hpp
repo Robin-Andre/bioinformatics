@@ -14,13 +14,8 @@ extern "C" {
 #include <iostream>
 #include <queue>
 #include <future>
-
 class GeneralizedRFDistance {
 public:
-
-
-  
-
   static io::IOData computeGeneralizedDistances(const std::vector<PllTree>& trees, const GeneralizedMetric& metric, Mode mode) {
     PllSplit::setTipCount(trees[0].getTipCount());
     //test.initializePointerSplitLists(trees);
@@ -32,8 +27,6 @@ public:
     phylomath::initLdfCache();
     PllPointerMap _map(trees);
     IntersectionCache pairwise_cache(_map, metric);
-    //TempManager data({_map, lulcache});
-    //TempManager data;
     std::vector<PllSplitList>& tree_splits = _map.vectors();
     /*for(PllTree tree :  trees){
       assert(tree.getTipCount() == PllSplit::getTipCount());
@@ -60,7 +53,7 @@ public:
       for(size_t j = i; j < tree_count; ++j){
         double dist = futures[j-i].get();
         assert(dist >= 0.0);
-        dist = (mode == SIMILARITY) ? dist : Solver::distanceFromSimilarity(tree_splits[i], tree_splits[j], dist, mode);
+        dist = (mode == SIMILARITY) ? dist : Solver::distanceFromSimilarity(tree_splits[i], tree_splits[j], dist, mode, metric);
         //TODO: Check near 0 because of numerical issues
         if (i != j && dist == 0 && is_unique){
           is_unique = false;
