@@ -28,8 +28,8 @@ public:
 
     phylomath::initLdfCache();
     PllPointerMap _map(trees);
-    IntersectionCache lulcache(_map);
-    TempManager data({_map, lulcache});
+    IntersectionCache lulcache(_map, metric);
+    //TempManager data({_map, lulcache});
     //TempManager data;
     std::vector<PllSplitList>& tree_splits = _map.vectors();
     /*for(PllTree tree :  trees){

@@ -14,6 +14,7 @@ static const char *ModeString[] = {"SIMILARITY", "ABSOLUTE", "RELATIVE"};
 
 class Metric {
     public:
+    virtual double evaluate(const PllPosition& s1, const PllPosition& s2, const PllPointerMap& map) const = 0;
     virtual double distanceOf(const PllSplitList& plist1, const PllSplitList& plist2, Mode mode, const PllPointerMap& map) const = 0;
     virtual double maximum(const PllSplitList& plist1, const PllSplitList& plist2) const = 0;
     virtual std::string name() const = 0;
@@ -25,7 +26,7 @@ class Metric {
 
 class GeneralizedMetric : public Metric {
 public:
-  virtual double evaluate(const PllPosition& s1, const PllPosition& s2, const PllPointerMap& map) const = 0;
+
   virtual ~GeneralizedMetric() override {
 
     }
@@ -212,6 +213,10 @@ public:
     return (mode == RELATIVE) ? (static_cast<double>(distance) / maximum(plist1, plist2))
                               : static_cast<double>(distance);
   }
+  /* TODO ROBIN find a better solution*/
+  double evaluate(const PllPosition& s1, const PllPosition& s2, const PllPointerMap& map) const override {
+    return 0.0;
+  };
   /*OK this is a @Softwipe hack, in order to remove the unused parameter warning I had to remove the name
   but since the signature is still the same its still an override */
   double maximum(const PllSplitList&, const PllSplitList&) const override {
