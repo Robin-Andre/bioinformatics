@@ -21,19 +21,9 @@ class Solver {
       for(size_t i = 0; i < n; ++i){
         assert((*result)[i].size() == n);
         for(size_t j = 0; j < n; ++j) {
-
-          // todo lookup
           (*result)[i][j] = cache.access(first[i], second[j]);
         }
       }
     }
-    static double distanceOf(const PllSplitList& first, const PllSplitList& second, Mode mode, const PllPointerMap& map
-    ,const IntersectionCache& cache, const GeneralizedMetric& metric) {
-      size_t split_count = first.getSplits().size();
-      std::vector<std::vector<double>> similarities = std::vector<std::vector<double>>(split_count, std::vector<double>(split_count));
-      similaritiesForSplits(first, second, map, &similarities, cache);
-      double similarity = MaximumMatcher::match(similarities);
-      assert(similarity >= 0);
-      return (mode == SIMILARITY) ? similarity : distanceFromSimilarity(first, second, similarity, mode, metric);
-  }
+
 }; //class solver

@@ -56,19 +56,16 @@ uint32_t PllSplit::bitExtract(size_t bit_index) const {
 }
 
 
-size_t PllSplit::intersectionSize(const PllSplit& other,
-                                  Partition partition_this, Partition partition_other) const {
+size_t PllSplit::intersectionSize(const PllSplit& other) const {
   //assert(splitValid());
   //assert(other.splitValid());
   pll_split_t other_split = other();
-  pll_split_base_t this_mask = (partition_this == Block_A) ? 0 : ~0u; //This is a xor mask so it is flipped for A/B
-  pll_split_base_t other_mask = (partition_other == Block_A) ? 0 : ~0u;
   size_t count = 0;
 
   for (size_t i = 0; i < PllSplit::split_len - 1; ++i){
-    count += __builtin_popcount((_split[i] ^ this_mask) & (other_split[i] ^ other_mask));
+    count += __builtin_popcount(_split[i] & other_split[i]);
   }
-  count += __builtin_popcount((_split[PllSplit::split_len - 1] ^ this_mask) & (other_split[PllSplit::split_len - 1] ^ other_mask)
+  count += __builtin_popcount(_split[PllSplit::split_len - 1] & other_split[PllSplit::split_len - 1]
                         & PllSplit::bitmask_for_unused_bits);
   return count;
 }

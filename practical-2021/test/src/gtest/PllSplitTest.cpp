@@ -118,15 +118,15 @@ TEST_F(PllSplitTest, test_intersectcount) {
     std::vector<size_t> part1_b = {0, 1, 7, 9};
     PllSplit split_b = TestUtil::createSplit(part1_b);
 
-    EXPECT_EQ(split_a.intersectionSize(split_a, Block_A, Block_A), 4);
-    EXPECT_EQ(split_a.intersectionSize(split_a, Block_B, Block_B), 6);
+    EXPECT_EQ(split_a.intersectionSize(split_a), 4);
+    /*EXPECT_EQ(split_a.intersectionSize(split_a, Block_B, Block_B), 6);
     EXPECT_EQ(split_a.intersectionSize(split_a, Block_A, Block_B), 0);
-    EXPECT_EQ(split_a.intersectionSize(split_a, Block_B, Block_A), 0);
+    EXPECT_EQ(split_a.intersectionSize(split_a, Block_B, Block_A), 0);*/
 
-    EXPECT_EQ(split_a.intersectionSize(split_b, Block_A, Block_A), 2);
-    EXPECT_EQ(split_a.intersectionSize(split_b, Block_B, Block_B), 4);
+    EXPECT_EQ(split_a.intersectionSize(split_b), 2);
+    /*EXPECT_EQ(split_a.intersectionSize(split_b, Block_B, Block_B), 4);
     EXPECT_EQ(split_a.intersectionSize(split_b, Block_A, Block_B), 2);
-    EXPECT_EQ(split_a.intersectionSize(split_b, Block_B, Block_A), 2);
+    EXPECT_EQ(split_a.intersectionSize(split_b, Block_B, Block_A), 2);*/
 
     free(split_a());
     free(split_b());
@@ -197,10 +197,10 @@ TEST_F(PllSplitTest, popcount_2registers_nonfull) {
 TEST_F(PllSplitTest, intersectionsize_2registers_nonfull) {
   PllSplit::setTipCount(36);
   PllSplit test_split = TestUtil::createSplit({0, 31, 33, 35});
-  EXPECT_EQ(test_split.intersectionSize(test_split, Block_A, Block_A), 4);
-  EXPECT_EQ(test_split.intersectionSize(test_split, Block_B, Block_A), 0);
+  EXPECT_EQ(test_split.intersectionSize(test_split), 4);
+  /*EXPECT_EQ(test_split.intersectionSize(test_split, Block_B, Block_A), 0);
   EXPECT_EQ(test_split.intersectionSize(test_split, Block_A, Block_B), 0);
-  EXPECT_EQ(test_split.intersectionSize(test_split, Block_B, Block_B), 32);
+  EXPECT_EQ(test_split.intersectionSize(test_split, Block_B, Block_B), 32);*/
   free(test_split());
 }
 //Remember that the splits are sorted by LSB, but our print method is reverting the order

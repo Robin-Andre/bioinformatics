@@ -58,14 +58,7 @@ public:
 
   double h() const {return h_value;}
   double entropy() const {return entropy_value;}
-  size_t intersectionSize(const PllSplit& other, Partition partition_this, Partition partition_other) const;
-  static size_t intersectionSize(const pll_split_t& first, const pll_split_t& second) {
-  size_t count = 0; 
-  for(unsigned i = 0; i < PllSplit::getSplitLen(); ++i) {
-    count += __builtin_popcount(first[i] & second[i]);
-  }
-  return count;
-}
+  size_t intersectionSize(const PllSplit& other) const;
 
 
   std::string toString() const;
@@ -133,7 +126,7 @@ class PllSplitList {
 public:
   explicit PllSplitList(const PllTree &tree);
   explicit PllSplitList(const std::vector<size_t> &splits);
-  //We can now actually use the default constructor since the map is constantly pushing. 
+  //We can now actually use the default constructor since the map is constantly pushing.
   //TODO buid nondefault constructor which preallocates elements
   explicit PllSplitList() {
 
@@ -172,9 +165,9 @@ public:
 
 private:
   /* This vector now represents the PllSplitList, each element is now an array index of
-  the big PllMap. 
+  the big PllMap.
   */
-  std::vector<size_t> _split_offsets; 
+  std::vector<size_t> _split_offsets;
   double maximum_entropy = 0;
   double maximum_information_content = 0;
 };
