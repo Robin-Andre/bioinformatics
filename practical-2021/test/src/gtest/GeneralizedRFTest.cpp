@@ -13,7 +13,7 @@
 #define GIT_COMMIT_HASH "?"
 #endif
 
-static constexpr bool print_execution_time = false;
+static constexpr bool print_execution_time = true;
 
 using GRFDist = GeneralizedRFDistance;
 class GeneralizedRFTest : public testing::Test {

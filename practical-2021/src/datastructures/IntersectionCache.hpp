@@ -2,11 +2,17 @@
 #include <vector>
 #include "PllPointerMap.hpp"
 #include "../Metric.hpp"
+
 class IntersectionCache {
     public:
+    virtual double access(size_t i, size_t j) const = 0;
+};
 
-    IntersectionCache(const PllPointerMap& map, const GeneralizedMetric& metric) ;
-    double access(size_t i, size_t j) const {
+
+class IntersectionCacheLinear : public IntersectionCache {
+    public:
+    IntersectionCacheLinear(const PllPointerMap& map, const GeneralizedMetric& metric) ;
+    double access(size_t i, size_t j) const override {
         return cache[pos(std::min(i, j), std::max(i, j))];
     }
 
@@ -22,4 +28,17 @@ class IntersectionCache {
 
     std::vector<double> cache;
     size_t n;
+};
+
+class IntersectionCacheMatrix : public IntersectionCache {
+    public:
+
+    IntersectionCacheMatrix(const PllPointerMap& map, const GeneralizedMetric& metric) ;
+    double access(size_t i, size_t j) const override{
+        //std::cout << "access " << std::max(i, j) << " " << std::min(i, j) << std::endl;
+        return cache[std::max(i, j)][std::min(i, j)];
+    }
+
+    private:
+    std::vector<std::vector<double>> cache;
 };

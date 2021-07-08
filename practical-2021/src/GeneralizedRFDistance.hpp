@@ -26,7 +26,7 @@ public:
 
     phylomath::initLdfCache();
     PllPointerMap _map(trees);
-    IntersectionCache pairwise_cache(_map, metric);
+    IntersectionCacheMatrix pairwise_cache(_map, metric);
 
 
     std::vector<PllSplitList>& tree_splits = _map.vectors();

@@ -69,7 +69,7 @@ TEST_F(MaximumMatcherTest, test_real){
   PllTree tree = TreeReader::readTreeFile(current_data_dir + "heads/24")[0];
   PllSplit::setTipCount(tree.getTipCount());
   PllPointerMap map = PllPointerMap({tree});
-    IntersectionCache cache(map, mci);
+  IntersectionCacheLinear cache(map, mci);
   PllSplitList& split_list = map.vectors()[0];
   size_t split_count = split_list.getSplits().size();
   std::vector<std::vector<double>> similarities = std::vector<std::vector<double>>(split_count, std::vector<double>(split_count));
@@ -88,7 +88,7 @@ TEST_F(MaximumMatcherTest, test_unequal_mci) {
   PllTree tree1 = TreeReader::readTreeFile(current_data_dir + "heads/24")[0];
   PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "heads/24")[2];
     PllPointerMap map = PllPointerMap({tree1, tree2});
-  IntersectionCache cache(map, mci);
+  IntersectionCacheLinear cache(map, mci);
   PllSplitList& s1 = map.vectors()[0];
   PllSplitList& s2 = map.vectors()[1];
   PllSplit::setTipCount(tree1.getTipCount());
@@ -111,7 +111,7 @@ TEST_F(MaximumMatcherTest, test_unequal_mci2) {
 
   PllSplit::setTipCount(tree1.getTipCount());
   PllPointerMap map = PllPointerMap({tree1, tree2});
-  IntersectionCache cache(map, mci);
+  IntersectionCacheLinear cache(map, mci);
   PllSplitList& s1 = map.vectors()[0];
   PllSplitList& s2 = map.vectors()[1];
   size_t split_count = s1.getSplits().size();

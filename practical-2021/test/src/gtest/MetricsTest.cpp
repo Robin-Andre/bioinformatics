@@ -28,7 +28,7 @@ TEST_F(MetricsTest, distances_example_from_slideshow_spi) {
   PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[1];
   tree2.alignNodeIndices(tree1);
   PllPointerMap map({tree1, tree2});
-  IntersectionCache cache(map, spi);
+  IntersectionCacheLinear cache(map, spi);
   std::vector<PllSplitList>& vec = map.vectors();
   PllSplitList& splits1 = vec[0];
   PllSplitList& splits2 = vec[1];
@@ -57,7 +57,7 @@ TEST_F(MetricsTest, distance_from_slideshow_msi) {
   PllTree tree1 = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[0];
   PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[1];
   PllPointerMap map = PllPointerMap({tree1, tree2});
-  IntersectionCache cache(map, msi);
+  IntersectionCacheLinear cache(map, msi);
   PllSplitList& s1 = map.vectors()[0];
   PllSplitList& s2 = map.vectors()[1];
   //tree2.alignNodeIndices(tree1);
