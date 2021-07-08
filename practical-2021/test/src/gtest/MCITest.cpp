@@ -30,8 +30,8 @@ TEST_F(MCITest, test_identity) {
   std::vector<PllSplit> vec {split};
   PllPointerMap data(vec);
   MCIMetric metric_mci;
-  double p_a = phylomath::clusteringProbability(split.partitionSizeOf(Block_A));
-  double p_b = phylomath::clusteringProbability(split.partitionSizeOf(Block_B));
+  double p_a = phylomath::clusteringProbability(split.partitionSizeOf(1));
+  double p_b = phylomath::clusteringProbability(split.partitionSizeOf(0));
   EXPECT_DOUBLE_EQ(metric_mci.evaluate(0, 0, data), p_a * std::log2(6.0/3) + p_b * std::log2(6.0/3));
   free(split());
 }

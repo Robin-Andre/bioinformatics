@@ -24,23 +24,26 @@ public:
     size_t tip_count = trees[0].getTipCount();
     assert(tip_count > 3);
 
+    //precalculations
     phylomath::initLdfCache();
     PllPointerMap _map(trees);
+    std::vector<PllSplitList>& tree_splits = _map.vectors();
     IntersectionCacheMatrix pairwise_cache(_map, metric);
 
-
-    std::vector<PllSplitList>& tree_splits = _map.vectors();
-
+    //Init result
     io::IOData result;
     result.mode = ModeString[mode];
     result.metric = metric.name();
     result.mean_dst = 0;
     result.number_of_unique_trees = tree_count;
     result.pairwise_distance_mtx = std::vector<std::vector<double>>(tree_count, std::vector<double>());
+
+    //Required for (parallel) computation
     size_t dist_count = 0;
     size_t split_count = tree_splits[0].getSplits().size();
     std::vector<std::vector<double>> similarities = std::vector<std::vector<double>>(split_count, std::vector<double>(split_count));
     std::vector<std::future<double>> futures;
+
     for(size_t i = 0; i < tree_count; ++i){
       futures.clear();
       for(size_t j = i; j < tree_count; ++j){
@@ -88,7 +91,7 @@ public:
     for(size_t i = 0; i < tree_count; ++i){
       bool is_unique = true;
       for(size_t j = i; j < tree_count; ++j){
-        double dist = metric.distanceOfRF(tree_splits[i], tree_splits[j], mode, map);
+        double dist = metric.distanceOf(tree_splits[i], tree_splits[j], mode, map);
         assert(dist >= 0.0);
         //TODO: Check near 0 because of numerical issues
         if (i != j && dist == 0 && is_unique){

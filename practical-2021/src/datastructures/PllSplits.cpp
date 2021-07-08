@@ -1,6 +1,5 @@
 #include "PllSplits.hpp"
 #include "PllTree.hpp"
-#include "../enums.hpp"
 #include "../PhylogeneticMathUtils.hpp"
 
 size_t PllSplit::tip_count = 0;
@@ -8,7 +7,6 @@ size_t PllSplit::split_len = 0;
 pll_split_base_t PllSplit::bitmask_for_unused_bits = 0;
 
 PllSplit::PllSplit(pll_split_t s) : _split{s} {
-  //assert(splitValid());
   size_block_A = this->popcount();
   size_block_B = PllSplit::getTipCount() - this->popcount();
   h_value = phylomath::h(size_block_A, size_block_B);
@@ -34,25 +32,14 @@ bool operator < (const PllSplit&p1, const PllSplit& p2) {
 }
 
 size_t PllSplit::popcount() const{
-  //assert(splitValid());
   size_t popcount = 0;
   for(size_t i = 0; i < PllSplit::split_len; ++i){
     popcount += __builtin_popcount(_split[i]);
   }
   return popcount;
 }
-//TODO, we should kill this once we are certain that we don't need it
-uint32_t PllSplit::bitExtract(size_t bit_index) const {
-  //assert(splitValid());
-  assert(bit_index < PllSplit::getTipCount());
-  pll_split_base_t split_part = _split[computeMajorIndex(bit_index)];
-  return (split_part & (1u << computeMinorIndex(bit_index))) >> computeMinorIndex(bit_index);
-}
-
 
 size_t PllSplit::intersectionSize(const PllSplit& other) const {
-  //assert(splitValid());
-  //assert(other.splitValid());
   pll_split_t other_split = other();
   size_t count = 0;
 
@@ -76,30 +63,12 @@ std::string PllSplit::toString() const {
   return ss.str();
 }
 
-//TODO This should no longer be called
-/*PllSplitList::PllSplitList(const PllTree &tree) {
-  assert(PllSplit::getTipCount() == tree.getTipCount());
-  pll_split_t* tmp_splits = pllmod_utree_split_create(tree.tree()->vroot, tree.getTipCount(), nullptr);
-  //_splits.reserve(tree.tree()->tip_count - 3);
-  maximum_entropy = 0.0;
-  maximum_information_content = 0.0;
-  for (size_t i = 0; i < tree.getTipCount() - 3; ++i) {
-    _splits.emplace_back(new PllSplit(tmp_splits[i]));
-    maximum_entropy += _splits.back()->entropy();
-    maximum_information_content += _splits.back()->h();
-  }
-  free(tmp_splits);
 
-}*/
 //TODO find out if preallocation can be done THIS SHOULD NO LONGER BE CALLED
 PllSplitList::PllSplitList(const std::vector<size_t> &splits) {
   _split_offsets = splits;
 }
 
-PllSplitList::~PllSplitList() {
-  //NO longer needed
-  //if (!_splits.empty()) { /*free(_splits[0]);*/ }
-}
 bool operator == (const PllSplitList& p1, const PllSplitList& p2) {
   const std::vector<size_t>& splits1 = p1.getSplits();
   const std::vector<size_t>& splits2 = p2.getSplits();
@@ -111,14 +80,11 @@ bool operator == (const PllSplitList& p1, const PllSplitList& p2) {
 }
 
   void PllSplitList::push(const PllSplit& split, size_t offset) {
-    //_splits.push_back(split); //No longer needed since we do not store splits or pointers but rather offsets on the map
     _split_offsets.push_back(offset);
     maximum_entropy += split.entropy();
-    //std::cout << "Push command: " << split << "\n";
-    //std::cout << "Dereferenced: " << (*split).toString();
     maximum_information_content += split.h();
-    //std::cout << "after: " << split << "\n";
   }
+
   //Disabled for the restructuring of PLlSplitlists since I wanna remove _splits
 /*std::string PllSplitList::toString() const {
   std::stringstream ss;

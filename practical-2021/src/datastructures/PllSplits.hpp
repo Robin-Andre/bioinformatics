@@ -14,9 +14,6 @@ extern "C" {
 #include <algorithm>
 #include <sstream>
 #include <string>
-#include "../enums.hpp"
-
-
 
 class PllTree;
 class phylomath;
@@ -38,6 +35,7 @@ class phylomath;
  * the could be more than 32 (or even 64). This means that you will need to
  * iterate over the array to compute the correct value for popcount etc.
  */
+typedef bool partition_t;
 class PllSplit {
 public:
   explicit PllSplit(pll_split_t s);
@@ -48,11 +46,9 @@ public:
   friend bool operator == (const PllSplit& p1, const PllSplit& p2);
   friend bool operator < (const PllSplit& p1, const PllSplit& p2);
 
-  size_t   popcount() const;
-  uint32_t bitExtract(size_t bit_index) const;
-  size_t partitionSizeOf (Partition block) const {
-    //assert(splitValid());
-    return (block == Block_A) ? size_block_A : size_block_B;
+
+  size_t partitionSizeOf (partition_t block) const {
+    return block ? size_block_A : size_block_B;
   }
 
   double h() const {return h_value;}
@@ -105,8 +101,8 @@ private:
     return sizeof(pll_split_base_t) * 8;
   }
 
-  //bool splitValid() const;
-  //size_t basePopcount(pll_split_base_t count) const;
+  size_t  popcount() const;
+
 
   pll_split_t _split = nullptr;
   size_t size_block_A;
@@ -130,7 +126,7 @@ public:
 
   }
   /* Rule of 5 constructors/destructors */
-  ~PllSplitList();
+  ~PllSplitList(){}
   PllSplitList(const PllSplitList &other) : PllSplitList(other._split_offsets) {
     this->maximum_entropy = other.getMaximumEntropy();
     this->maximum_information_content = other.getMaximumInformationContent();

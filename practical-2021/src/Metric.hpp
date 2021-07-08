@@ -37,15 +37,12 @@ class MSIMetric : public GeneralizedMetric {
     if (s1 == s2) return sp1.h();
     const PllSplit& sp2 = map[s2];
     size_t intersect_aa = sp1.intersectionSize(sp2);
-    size_t intersect_ba = sp2.partitionSizeOf(Block_A) - intersect_aa;
-    size_t intersect_bb = sp1.partitionSizeOf(Block_B) - intersect_ba;
-    size_t intersect_ab = sp2.partitionSizeOf(Block_B) - intersect_bb;
+    size_t intersect_ba = sp2.partitionSizeOf(1) - intersect_aa;
+    size_t intersect_bb = sp1.partitionSizeOf(0) - intersect_ba;
+    size_t intersect_ab = sp2.partitionSizeOf(0) - intersect_bb;
     return std::max(phylomath::h(intersect_aa, intersect_bb),
                     phylomath::h(intersect_ba, intersect_ab));
-    /*
-    return std::max(phylomath::h(sp1.intersectionSize(sp2, Block_A, Block_A), sp1.intersectionSize(sp2, Block_B, Block_B)),
-                    phylomath::h(sp1.intersectionSize(sp2, Block_B, Block_A), sp1.intersectionSize(sp2, Block_A, Block_B)));
-    */
+
   }
   double maximum(const PllSplitList& plist1, const PllSplitList& plist2) const override {
     return plist1.getMaximumInformationContent() + plist2.getMaximumInformationContent();
@@ -64,10 +61,10 @@ class SPIMetric : public GeneralizedMetric {
     const PllSplit& sp2 = map[s2];
 
 
-    size_t a_1 = sp1.partitionSizeOf(Block_A);
-    size_t a_2 = sp2.partitionSizeOf(Block_A);
-    size_t b_1 = sp1.partitionSizeOf(Block_B);
-    size_t b_2 = sp2.partitionSizeOf(Block_B);
+    size_t a_1 = sp1.partitionSizeOf(1);
+    size_t a_2 = sp2.partitionSizeOf(1);
+    size_t b_1 = sp1.partitionSizeOf(0);
+    size_t b_2 = sp2.partitionSizeOf(0);
 
     if (s1 == s2) return phylomath::h(a_2, b_2);
 
@@ -112,10 +109,10 @@ class MCIMetric : public GeneralizedMetric {
       const PllSplit& sp1 = map[s1];
       const PllSplit& sp2 = map[s2];
 
-      size_t size_a1 = sp1.partitionSizeOf(Block_A);
-      size_t size_b1 = sp1.partitionSizeOf(Block_B);
-      size_t size_a2 = sp2.partitionSizeOf(Block_A);
-      size_t size_b2 = sp2.partitionSizeOf(Block_B);
+      size_t size_a1 = sp1.partitionSizeOf(1);
+      size_t size_b1 = sp1.partitionSizeOf(0);
+      size_t size_a2 = sp2.partitionSizeOf(1);
+      size_t size_b2 = sp2.partitionSizeOf(0);
       size_t intersect_aa = sp1.intersectionSize(sp2);
       size_t intersect_ba = size_a2 - intersect_aa;
       size_t intersect_bb = size_b1 - intersect_ba;
@@ -124,9 +121,7 @@ class MCIMetric : public GeneralizedMetric {
              mutualInformation(intersect_ab, size_a1, size_b2) +
              mutualInformation(intersect_ba, size_b1, size_a2) +
              mutualInformation(intersect_bb, size_b1, size_b2);
-      /*
-      return mutualInformation(sp1, Block_A, sp2, Block_A) + mutualInformation(sp1, Block_A, sp2, Block_B)
-           + mutualInformation(sp1, Block_B, sp2, Block_A) + mutualInformation(sp1, Block_B, sp2, Block_B);*/
+
     }
     double maximum(const PllSplitList& plist1, const PllSplitList& plist2) const override {
       return plist1.getMaximumEntropy() + plist2.getMaximumEntropy();
@@ -148,9 +143,6 @@ class MCIMetric : public GeneralizedMetric {
       assert(intersection_size > 0);
       //TODO most of this could be cached
       double pcl = phylomath::clusteringProbability(intersection_size);
-      //double p_1 = phylomath::clusteringProbability(size_of_partition_block1);
-      //double p_2 = phylomath::clusteringProbability(size_of_partition_block2);
-      //double res = pcl * std::log2(pcl / (p_1 * p_2));
       return pcl * phylomath::quickerClusteringProbability(intersection_size, size_of_partition_block1, size_of_partition_block2);
     }
 
@@ -159,7 +151,7 @@ class MCIMetric : public GeneralizedMetric {
 
 class RFMetric : public Metric {
 public:
-  virtual double distanceOfRF(const PllSplitList& plist1, const PllSplitList& plist2, Mode mode, const PllPointerMap& map) const {
+  virtual double distanceOf(const PllSplitList& plist1, const PllSplitList& plist2, Mode mode, const PllPointerMap& map) const {
     size_t split_count1 = plist1.getSplitCount();
     size_t split_count2 = plist2.getSplitCount();
     if (split_count1 == 0) return static_cast<double> (split_count2);

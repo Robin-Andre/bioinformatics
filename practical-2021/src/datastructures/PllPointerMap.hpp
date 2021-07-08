@@ -6,10 +6,10 @@
 class PllPointerMap {
   public:
   explicit PllPointerMap(const std::vector<PllTree> &trees) {
-    treeIter = std::vector<size_t>(trees.size());
+    tree_iterator = std::vector<size_t>(trees.size());
     trees_as_pointers = std::vector<pll_split_t*>(trees.size());
     limit = trees[0].getTipCount() - 3;
-    lol = std::vector<PllSplitList>(trees.size());
+    split_lists = std::vector<PllSplitList>(trees.size());
     all_splits_unique = std::vector<PllSplit>(trees.size() * limit); // IN the worst case every split is unique so limit * trees
     map_pos = 0;
     //std::cout << "Size: " << all_splits_unique.size() <<" Limit: " << limit << "\n";
@@ -19,12 +19,11 @@ class PllPointerMap {
     }
     processQueue();
     all_splits_unique.resize(map_pos);
-    all_inverse_splits_unique = std::vector<PllSplit>(all_splits_unique.size());
     for(unsigned i = 0; i < all_splits_unique.size(); ++i) {
 
     }
   }
-  //This is for testing purposes only 
+  //This is for testing purposes only
   explicit PllPointerMap(std::vector<PllSplit>& splits) {
     all_splits_unique = splits;
   }
@@ -40,12 +39,12 @@ class PllPointerMap {
       return all_splits_unique;
   }
   std::vector<PllSplitList>& vectors() {
-      return lol;
+      return split_lists;
   }
   size_t size() const {
     return all_splits_unique.size();
   }
-  private: 
+  private:
   struct SplitReference {
     PllSplit split_temp;
     int tree_number;
@@ -54,11 +53,10 @@ class PllPointerMap {
     }
   };
   std::priority_queue<SplitReference> queue;
-  std::vector<size_t> treeIter;
+  std::vector<size_t> tree_iterator;
   std::vector<pll_split_t*> trees_as_pointers;
   std::vector<PllSplit> all_splits_unique;
-  std::vector<PllSplit> all_inverse_splits_unique;
-  std::vector<PllSplitList> lol;
+  std::vector<PllSplitList> split_lists;
   size_t limit;
   size_t map_pos;
   /*
@@ -67,9 +65,9 @@ class PllPointerMap {
   */
   bool push(size_t ID) {
     //Limit is hardcoded in the constructor to tipcount - 3
-    if(treeIter[ID] < limit) {
-      queue.push({PllSplit(trees_as_pointers[ID][treeIter[ID]]), ID});
-      ++treeIter[ID];
+    if(tree_iterator[ID] < limit) {
+      queue.push({PllSplit(trees_as_pointers[ID][tree_iterator[ID]]), static_cast<int>(ID)});
+      ++tree_iterator[ID];
       return true;
     }
     return false;
@@ -96,15 +94,15 @@ class PllPointerMap {
     updateSplitList(all_splits_unique[map_pos - 1], split_and_id.tree_number);
   }
   void updateSplitList(const PllSplit& current_split, size_t ID) {
-    //Since the push method always increases treeIter and points to the next element to be inserted into queue
-    //We have to subtract 1 to find the location as where to insert the element. 
-    auto oldID = treeIter[ID] - 1; 
-    lol[ID].push(current_split, map_pos - 1);    
+    //Since the push method always increases tree_iterator and points to the next element to be inserted into queue
+    //We have to subtract 1 to find the location as where to insert the element.
+    auto oldID = tree_iterator[ID] - 1;
+    split_lists[ID].push(current_split, map_pos - 1);
   }
-  void verify(unsigned ID) {
-    for(unsigned i = 0; i < lol[ID].getSplitCount(); ++i) {
-      //std::cout << lol[ID][i]->toString();
+  /*void verify(unsigned ID) {
+    for(unsigned i = 0; i < split_lists[ID].getSplitCount(); ++i) {
+      std::cout << split_lists[ID][i]->toString();
     }
-  }
+  }*/
 
 };
