@@ -45,7 +45,6 @@ public:
     PllSplit(static_cast<pll_split_t> (calloc(PllSplit::split_len, sizeof(pll_split_base_t))));
   }
   pll_split_t operator()() const { return _split; }
-  pll_split_t operator !() const { return _inverse; }
   friend bool operator == (const PllSplit& p1, const PllSplit& p2);
   friend bool operator < (const PllSplit& p1, const PllSplit& p2);
 
@@ -110,7 +109,6 @@ private:
   //size_t basePopcount(pll_split_base_t count) const;
 
   pll_split_t _split = nullptr;
-  pll_split_t _inverse = nullptr;
   size_t size_block_A;
   size_t size_block_B;
   double h_value;

@@ -13,12 +13,6 @@ PllSplit::PllSplit(pll_split_t s) : _split{s} {
   size_block_B = PllSplit::getTipCount() - this->popcount();
   h_value = phylomath::h(size_block_A, size_block_B);
   entropy_value = phylomath::entropy(size_block_A, size_block_B);
-
-  _inverse = static_cast<pll_split_t> (calloc(PllSplit::split_len, sizeof(pll_split_base_t)));
-  for(unsigned i = 0; i < PllSplit::split_len - 1; ++i) {
-    _inverse[i] = ~_split[i];
-  }
-  _inverse[PllSplit::split_len - 1] = ~_split[PllSplit::split_len - 1] & PllSplit::bitmask_for_unused_bits;
 }
 
 
@@ -75,13 +69,6 @@ std::string PllSplit::toString() const {
   ss << this << ": " << _split << ": ";
   for (size_t i = 0; i < PllSplit::split_len; ++i){
     auto str = std::bitset<32>(_split[i]).to_string();
-    std::reverse(str.begin(), str.end());
-    ss << str << "|";
-  }
-  ss << std::endl;
-    ss << this << ": " << _inverse << ": ";
-  for (size_t i = 0; i < PllSplit::split_len; ++i){
-    auto str = std::bitset<32>(_inverse[i]).to_string();
     std::reverse(str.begin(), str.end());
     ss << str << "|";
   }
