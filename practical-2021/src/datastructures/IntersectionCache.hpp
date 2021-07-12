@@ -35,7 +35,7 @@ class IntersectionCacheMatrix : public IntersectionCache {
 
     IntersectionCacheMatrix(const PllPointerMap& map, const GeneralizedMetric& metric) ;
     double access(size_t i, size_t j) const override{
-        //std::cout << "access " << std::max(i, j) << " " << std::min(i, j) << std::endl;
+        assert(i < cache.size() && j < cache.size());
         return cache[std::max(i, j)][std::min(i, j)];
     }
 

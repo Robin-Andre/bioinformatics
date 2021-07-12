@@ -1,0 +1,2 @@
+Found 90 assertions in 16997 lines of pure code (i.e. excluding blank lines and comment lines).
+That's an assertion rate of 0.005295052068012002, or 0.5295052068012002%.

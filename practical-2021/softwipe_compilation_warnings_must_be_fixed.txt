@@ -1,0 +1,33 @@
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/../PhylogeneticMathUtils.hpp:125:16: warning: comparing floating point with == or != is unsafe [-Wfloat-equal]
+    assert(p_a != 0 && p_b != 0);
+           ~~~ ^  ~
+/usr/include/assert.h:89:5: note: expanded from macro 'assert'
+  ((expr)                                                               \
+    ^~~~
+In file included from /home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllSplits.cpp:3:
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/../PhylogeneticMathUtils.hpp:125:28: warning: comparing floating point with == or != is unsafe [-Wfloat-equal]
+    assert(p_a != 0 && p_b != 0);
+                       ~~~ ^  ~
+/usr/include/assert.h:89:5: note: expanded from macro 'assert'
+  ((expr)                                                               \
+    ^~~~
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllSplits.cpp:40:17: warning: implicit conversion changes signedness: 'int' to 'unsigned long' [-Wsign-conversion]
+    popcount += __builtin_popcount(_split[i]);
+             ~~ ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllSplits.cpp:50:14: warning: implicit conversion changes signedness: 'int' to 'unsigned long' [-Wsign-conversion]
+    count += __builtin_popcount(_split[i] & other_split[i]);
+          ~~ ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllSplits.cpp:52:12: warning: implicit conversion changes signedness: 'int' to 'unsigned long' [-Wsign-conversion]
+  count += __builtin_popcount(_split[PllSplit::split_len - 1] & other_split[PllSplit::split_len - 1]
+        ~~ ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+10 warnings and 2 errors generated.
+make[2]: *** [src/CMakeFiles/inforf.dir/datastructures/PllSplits.cpp.o] Error 1
+make[1]: *** [src/CMakeFiles/inforf.dir/all] Error 2
+make: *** [all] Error 2
+Unable to create '/usr/local/lib/python3.5/dist-packages/bashlex/parsetab.py'
+[Errno 13] Permission denied: '/usr/local/lib/python3.5/dist-packages/bashlex/parsetab.py'
+## Processing build commands from <stdin>
+## Loaded compilation database with 0 entries from compile_commands.json
+## Writing compilation database with 0 entries to compile_commands.json
+## Done.
+

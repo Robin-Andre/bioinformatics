@@ -1,0 +1,1561 @@
+================================================
+  NLOC    CCN   token  PARAM  length  location  
+------------------------------------------------
+       1      1     14      0       1 cli_option_t::cli_option_t@14-14@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/utils/datagen/main.cpp
+       1      1     19      1       1 cli_option_t::cli_option_t@15-15@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/utils/datagen/main.cpp
+       4      2     23      0       4 cli_option_t::get@17-20@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/utils/datagen/main.cpp
+       1      1      8      0       1 cli_option_t::set@22-22@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/utils/datagen/main.cpp
+       5      1     22      1       5 cli_option_t::operator =@24-28@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/utils/datagen/main.cpp
+       4      2     25      0       4 cli_option_t::operator T@30-33@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/utils/datagen/main.cpp
+       5      2     39      2       5 ipow@46-50@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/utils/datagen/main.cpp
+      12      5     75      1      15 compute_base_length@52-66@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/utils/datagen/main.cpp
+      18      5    156      1      23 base26_label@68-90@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/utils/datagen/main.cpp
+       5      2     57      1       5 generate_labels@92-96@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/utils/datagen/main.cpp
+       9      1     34      0       9 print_help@98-106@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/utils/datagen/main.cpp
+      34      8    198      2      34 parse_cli_options@108-141@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/utils/datagen/main.cpp
+      26      6    248      2      38 main@143-180@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/utils/datagen/main.cpp
+       5      1     47      1       6 TestUtil::createSplit@8-13@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/TestUtil.hpp
+       9      2     68      2       9 TestUtil::setBits@15-23@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/TestUtil.hpp
+       5      2     17      0       6 GeneralizedRFTest::SetUpTestSuite@23-28@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/GeneralizedRFTest.cpp
+       7      1     59      0       7 GeneralizedRFTest::load_24taxa@31-37@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/GeneralizedRFTest.cpp
+      14      2    188      3      19 GeneralizedRFTest::execute_test@54-72@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/GeneralizedRFTest.cpp
+      10      1    193      2      17 TEST_F@77-93@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/GeneralizedRFTest.cpp
+      10      1    149      2      11 TEST_F@95-105@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/GeneralizedRFTest.cpp
+       8      1    122      2       8 TEST_F@107-114@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/GeneralizedRFTest.cpp
+       5      1     72      2       5 TEST_F@115-119@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/GeneralizedRFTest.cpp
+       4      1     46      2       4 TEST_F@120-123@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/GeneralizedRFTest.cpp
+       9      1    137      2       9 TEST_F@125-133@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/GeneralizedRFTest.cpp
+       5      1     35      2      18 TEST_F@134-151@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/GeneralizedRFTest.cpp
+       5      1     35      2       8 TEST_F@152-159@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/GeneralizedRFTest.cpp
+       5      1     35      2       5 TEST_F@161-165@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/GeneralizedRFTest.cpp
+       5      1     35      2       5 TEST_F@166-170@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/GeneralizedRFTest.cpp
+       5      1     35      2       5 TEST_F@171-175@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/GeneralizedRFTest.cpp
+       5      1     35      2       5 TEST_F@176-180@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/GeneralizedRFTest.cpp
+       5      1     35      2       5 TEST_F@182-186@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/GeneralizedRFTest.cpp
+       5      1     35      2       5 TEST_F@187-191@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/GeneralizedRFTest.cpp
+       5      1     35      2       5 TEST_F@192-196@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/GeneralizedRFTest.cpp
+       5      1     35      2       5 TEST_F@197-201@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/GeneralizedRFTest.cpp
+       5      1     35      2       5 TEST_F@202-206@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/GeneralizedRFTest.cpp
+       7      2     31      1       7 PhylomathTest::doublefactorial@8-14@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/PhylomathTest.cpp
+       3      1     27      1       3 PhylomathTest::evaluate_double_factorial@16-18@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/PhylomathTest.cpp
+       3      1     36      3       3 PhylomathTest::evaluate_phylogenetic_probability@19-21@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/PhylomathTest.cpp
+       9      1     43      2       9 TEST_F@27-35@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/PhylomathTest.cpp
+      11      1     56      2      11 TEST_F@38-48@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/PhylomathTest.cpp
+      10      1     49      2      10 TEST_F@50-59@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/PhylomathTest.cpp
+       3      1     37      2       3 TEST_F@61-63@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/PhylomathTest.cpp
+       3      1     35      2       3 TEST_F@64-66@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/PhylomathTest.cpp
+      11      1    113      2      12 TEST_F@70-81@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/PhylomathTest.cpp
+       6      1     49      2       6 TEST_F@83-88@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/PhylomathTest.cpp
+       7      1     82      2       7 TEST_F@90-96@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/PhylomathTest.cpp
+      14      1    191      2      15 TEST_F@98-112@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/PhylomathTest.cpp
+      19      5    214      2      19 TEST_F@12-30@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/IOUtilTest.cpp
+      21      5    226      2      21 TEST_F@32-52@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/IOUtilTest.cpp
+      20      5    174      2      20 TEST_F@55-74@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/IOUtilTest.cpp
+      10      1     83      2      10 TEST_F@12-21@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/IOtest.cpp
+       7      1     59      2       7 TEST_F@24-30@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/IOtest.cpp
+      17      4    148      2      17 MaximumMatcherTest::checkAllPermutations@21-37@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/MaximumMatcherTest.cpp
+       4      1    112      2       4 TEST_F@42-45@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/MaximumMatcherTest.cpp
+      14      3    142      2      17 TEST_F@48-64@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/MaximumMatcherTest.cpp
+      19      3    240      2      19 TEST_F@67-85@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/MaximumMatcherTest.cpp
+      14      1    185      2      17 TEST_F@86-102@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/MaximumMatcherTest.cpp
+      15      1    199      2      32 TEST_F@107-138@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/MaximumMatcherTest.cpp
+       6      1     65      2       6 RFTest::execute_test@19-24@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/RFTest.cpp
+       4      1     22      2       4 TEST_F@31-34@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/RFTest.cpp
+       4      1     22      2       4 TEST_F@35-38@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/RFTest.cpp
+       3      1     20      3       3 MetricsTest::evaluation@20-22@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/MetricsTest.cpp
+      27      1    381      2      30 TEST_F@25-54@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/MetricsTest.cpp
+      25      1    310      2      29 TEST_F@55-83@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/MetricsTest.cpp
+      17      1    213      2      18 TEST_F@84-101@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/MetricsTest.cpp
+      10      1     91      2      11 TEST_F@8-18@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/MSITest.cpp
+      13      1    139      2      14 TEST_F@38-51@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/MSITest.cpp
+      21      1    255      2      22 TEST_F@52-73@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/MSITest.cpp
+       6      2     76      2       6 PllSplitTest::split_vector_eq@11-16@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/PllSplitTest.cpp
+       7      1     72      2       8 TEST_F@21-28@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/PllSplitTest.cpp
+      15      1    159      2      18 TEST_F@31-48@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/PllSplitTest.cpp
+      11      1    109      2      13 TEST_F@51-63@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/PllSplitTest.cpp
+       6      1     52      2       6 TEST_F@67-72@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/PllSplitTest.cpp
+       6      1     52      2       6 TEST_F@73-78@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/PllSplitTest.cpp
+      12      1    111      2      15 TEST_F@80-94@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/PllSplitTest.cpp
+       6      1     47      2       6 TEST_F@95-100@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/PllSplitTest.cpp
+      10      1     91      2      10 TEST_F@8-17@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/SPITest.cpp
+      13      1    115      2      14 TEST_F@41-54@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/SPITest.cpp
+      16      1    172      2      16 TEST_F@62-77@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/SPITest.cpp
+      13      1    149      2      13 TEST_F@79-91@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/SPITest.cpp
+      23      1    283      2      23 TEST_F@97-119@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/SPITest.cpp
+      16      1    236      2      16 TEST_F@10-25@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/MCITest.cpp
+      12      1    138      2      12 TEST_F@26-37@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/MCITest.cpp
+      21      1    306      2      21 TEST_F@38-58@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/MCITest.cpp
+       3      1     25      1       3 MaximumMatcher::convert_weight@9-11@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/MaximumMatcher.hpp
+      16      5    182      1      17 MaximumMatcher::match_vector@12-28@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/MaximumMatcher.hpp
+       9      2     88      1       9 MaximumMatcher::match@29-37@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/MaximumMatcher.hpp
+       7      2     36      1       7 phylomath::computeLogDoublefactorial@14-20@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/PhylogeneticMathUtils.hpp
+      16      3    113      0      16 phylomath::initLdfCache@21-36@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/PhylogeneticMathUtils.hpp
+       6      2     45      0       6 phylomath::initLogCache@37-42@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/PhylogeneticMathUtils.hpp
+       4      1     17      0       4 phylomath::flushLdfCache@43-46@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/PhylogeneticMathUtils.hpp
+       8      4     65      1       9 phylomath::logDoublefactorial@52-60@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/PhylogeneticMathUtils.hpp
+       4      3     64      4       4 phylomath::logFactorialQuotient@66-69@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/PhylogeneticMathUtils.hpp
+       4      3     52      3       4 phylomath::logFactorialQuotient@71-74@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/PhylogeneticMathUtils.hpp
+       8      4     79      2      10 phylomath::phylogeneticProbability@78-87@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/PhylogeneticMathUtils.hpp
+       7      3     51      2       7 phylomath::h@90-96@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/PhylogeneticMathUtils.hpp
+       9      3     99      3      11 phylomath::h@101-111@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/PhylogeneticMathUtils.hpp
+       3      1     28      1       3 phylomath::clusteringProbability@113-115@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/PhylogeneticMathUtils.hpp
+       5      5     88      3       5 phylomath::quickerClusteringProbability@116-120@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/PhylogeneticMathUtils.hpp
+       7      4     70      2       7 phylomath::entropy@121-127@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/PhylogeneticMathUtils.hpp
+       8      2     93      5       8 Solver::distanceFromSimilarity@8-15@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/Solver.hpp
+      12      3    160      5      12 Solver::similaritiesForSplits@17-28@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/Solver.hpp
+      14      2    151      2      18 main@7-24@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/main.cpp
+      55     13    527      3      64 GeneralizedRFDistance::computeGeneralizedDistances@19-82@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/GeneralizedRFDistance.hpp
+      44     11    363      3      45 GeneralizedRFDistance::computeRFDistances@85-129@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/GeneralizedRFDistance.hpp
+       2      1      5      0       3 Metric::~Metric@17-19@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/Metric.hpp
+       2      1      6      0       3 GeneralizedMetric::~GeneralizedMetric@26-28@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/Metric.hpp
+      15      6    208      3      16 MSIMetric::evaluate@35-50@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/Metric.hpp
+       3      1     29      2       3 MSIMetric::maximum@51-53@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/Metric.hpp
+       3      1     10      0       3 MSIMetric::name@55-57@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/Metric.hpp
+      32      9    276      3      38 SPIMetric::evaluate@62-99@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/Metric.hpp
+       3      1     29      2       3 SPIMetric::maximum@101-103@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/Metric.hpp
+       3      1     10      0       3 SPIMetric::name@105-107@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/Metric.hpp
+      20      5    193      3      22 MCIMetric::evaluate@115-136@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/Metric.hpp
+       3      1     29      2       3 MCIMetric::maximum@137-139@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/Metric.hpp
+       3      1     10      0       3 MCIMetric::name@141-143@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/Metric.hpp
+      10      3     72      3      11 MCIMetric::mutualInformation@148-158@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/Metric.hpp
+      25      8    196      4      25 RFMetric::distanceOf@165-189@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/Metric.hpp
+       4      1     44      2       4 RFMetric::maximum@192-195@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/Metric.hpp
+       3      1     10      0       3 RFMetric::name@198-200@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/Metric.hpp
+       3      1     37      2       3 IntersectionCacheLinear::access@15-17@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/IntersectionCache.hpp
+       6      1     73      2       6 IntersectionCacheLinear::pos@21-26@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/IntersectionCache.hpp
+       4      2     54      2       4 IntersectionCacheMatrix::access@37-40@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/IntersectionCache.hpp
+       9      1     79      1       9 PllSplit::PllSplit@9-17@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllSplits.cpp
+       8      3     57      2       8 operator ==@20-27@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllSplits.cpp
+       8      3     71      2       8 operator <@28-35@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllSplits.cpp
+       7      2     44      0       7 PllSplit::popcount@37-43@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllSplits.cpp
+      10      2     89      1      11 PllSplit::intersectionSize@45-55@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllSplits.cpp
+      11      2    104      0      11 PllSplit::toString@57-67@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllSplits.cpp
+       3      1     20      1       3 PllSplitList::PllSplitList@71-73@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllSplits.cpp
+       9      4    105      2       9 operator ==@75-83@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllSplits.cpp
+       5      1     37      2       5 PllSplitList::push@85-89@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllSplits.cpp
+      12      3    121      2      12 IntersectionCacheLinear::IntersectionCacheLinear@3-14@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/IntersectionCache.cpp
+       9      3     83      2       9 IntersectionCacheMatrix::IntersectionCacheMatrix@16-24@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/IntersectionCache.cpp
+      14      2    164      1      15 PllPointerMap::PllPointerMap@8-22@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllPointerMap.hpp
+       3      1     17      1       3 PllPointerMap::PllPointerMap@24-26@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllPointerMap.hpp
+       1      1      5      0       1 PllPointerMap::~PllPointerMap@27-27@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllPointerMap.hpp
+       3      1     16      1       3 PllPointerMap::operator [ ]@28-30@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllPointerMap.hpp
+       3      1      8      0       3 PllPointerMap::getMap@31-33@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllPointerMap.hpp
+       3      1      8      0       3 PllPointerMap::vectors@34-36@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllPointerMap.hpp
+       3      1     13      0       3 PllPointerMap::size@37-39@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllPointerMap.hpp
+       3      1     19      1       3 PllPointerMap::SplitReference::operator <@44-46@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllPointerMap.hpp
+       8      2     59      1       9 PllPointerMap::push@59-67@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllPointerMap.hpp
+       8      2     43      0       9 PllPointerMap::processQueue@68-76@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllPointerMap.hpp
+      10      3     73      1      13 PllPointerMap::insertIntoMap@77-89@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllPointerMap.hpp
+       5      1     47      2       7 PllPointerMap::updateSplitList@90-96@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllPointerMap.hpp
+       1      1     22      1       1 PllTree::PllTree@26-26@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllTree.hpp
+       1      1     19      1       1 PllTree::operator =@27-27@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllTree.hpp
+       4      1     24      1       4 PllTree::operator =@28-31@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllTree.hpp
+       1      1      9      0       1 PllTree::tree@35-35@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllTree.hpp
+       1      1     11      0       1 PllTree::getTipCount@42-42@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllTree.hpp
+       6      2     40      1       6 PllTree::PllTree@6-11@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllTree.cpp
+       7      2     50      2       7 PllTree::PllTree@13-19@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllTree.cpp
+       1      1     20      1       1 PllTree::PllTree@21-21@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllTree.cpp
+       1      1     14      0       1 PllTree::~PllTree@23-23@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllTree.cpp
+       5      4     56      1       7 PllTree::alignNodeIndices@26-32@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllTree.cpp
+       3      1     26      0       3 PllSplit::PllSplit@42-44@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllSplits.hpp
+       1      1     11      0       1 PllSplit::operator ( )@45-45@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllSplits.hpp
+       3      2     15      1       3 PllSplit::partitionSizeOf@50-52@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllSplits.hpp
+       1      1      9      0       1 PllSplit::h@54-54@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllSplits.hpp
+       1      1      9      0       1 PllSplit::entropy@55-55@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllSplits.hpp
+      13      3    114      1      17 PllSplit::setTipCount@61-77@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllSplits.hpp
+       3      1     10      0       3 PllSplit::getTipCount@78-80@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllSplits.hpp
+       3      1     10      0       3 PllSplit::getSplitLen@82-84@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllSplits.hpp
+       3      1     14      0       3 PllSplit::splitBitWidth@87-89@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllSplits.hpp
+       3      1     15      1       3 PllSplit::computeMajorIndex@91-93@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllSplits.hpp
+       3      1     15      1       3 PllSplit::computeMinorIndex@95-97@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllSplits.hpp
+       3      1     13      0       3 PllSplit::computSplitBaseSize@100-102@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllSplits.hpp
+       2      1      5      0       3 PllSplitList::PllSplitList@125-127@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllSplits.hpp
+       1      1      5      0       1 PllSplitList::~PllSplitList@129-129@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllSplits.hpp
+       4      1     36      1       4 PllSplitList::PllSplitList@130-133@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllSplits.hpp
+       5      1     43      1       5 PllSplitList::PllSplitList@134-138@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllSplits.hpp
+       3      1     19      1       3 PllSplitList::operator =@139-141@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllSplits.hpp
+       4      1     24      1       4 PllSplitList::operator =@142-145@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllSplits.hpp
+       1      1     16      1       1 PllSplitList::operator [ ]@148-148@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllSplits.hpp
+       1      1      9      0       1 PllSplitList::getSplits@151-151@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllSplits.hpp
+       1      1     13      0       1 PllSplitList::getSplitCount@152-152@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllSplits.hpp
+       1      1      9      0       1 PllSplitList::getMaximumEntropy@154-154@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllSplits.hpp
+       1      1      9      0       1 PllSplitList::getMaximumInformationContent@155-155@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllSplits.hpp
+      17      3    120      1      17 TreeReader::readTreeFile@12-28@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/TreeReader.hpp
+       8      2     78      4       8 Converter::raxmlToJSON@12-19@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/Converter.hpp
+       6      1     65      4       6 Converter::matrixToJSON@21-26@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/Converter.hpp
+      10      3    125      1      12 IOUtil::fullMatrixToHalfMatrix@14-25@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/IOUtil.hpp
+      14      4    153      1      14 IOUtil::halfMatrixToFullMatrix@28-41@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/IOUtil.hpp
+      14      5    102      1      14 IOUtil::calculateUniqueCount@43-56@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/IOUtil.hpp
+      14      4    126      2      15 IOUtil::vectorToHalfMatrix@58-72@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/IOUtil.hpp
+      11      3     95      1      11 IOUtil::calculateAverageDistance@74-84@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/IOUtil.hpp
+      11      1     81      1      13 io::IOData::operator ==@27-39@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/IOData.hpp
+       3      1     20      1       3 io::IOData::operator !=@40-42@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/IOData.hpp
+      19      5    130      1      19 io::IOData::comparePairwiseDistances@44-62@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/IOData.hpp
+      15      3    149      0      16 io::IOData::toString@65-80@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/IOData.hpp
+       7      3     74      2       7 io::IOData::nearly_eq_floating@134-140@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/IOData.hpp
+      41      7    329      1      47 RAXMLReader::read@18-64@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/RFDataReader.hpp
+       9      3     59      1       9 RAXMLReader::getAbsoluteDistanceFromString@67-75@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/RFDataReader.hpp
+       9      3     59      1       9 RAXMLReader::getRelativeDistanceFromString@77-85@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/RFDataReader.hpp
+      11      2     84      2      12 RAXMLReader::parseAfterPrefix@88-99@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/RFDataReader.hpp
+      18      3    115      1      19 JSONReader::read@106-124@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/RFDataReader.hpp
+      26      4    212      1      27 MatrixReader::read@131-157@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/RFDataReader.hpp
+       3      1      8      0       3 io::Config::remove@17-19@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/CommandLineOptions.hpp
+      13      4     73      1      16 io::metricFromString@22-37@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/CommandLineOptions.hpp
+      23      6    112      2      24 io::parseCommandLineOptions@39-62@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/CommandLineOptions.hpp
+       4      1     35      0       5 io::clear_benchmark_timing@63-67@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/CommandLineOptions.hpp
+      10      2     67      1      10 io::write_benchmark_timing@68-77@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/CommandLineOptions.hpp
+      24      5    232      2      24 RAXMLWriter::write@19-42@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/RFDataWriter.hpp
+      12      2     82      2      12 JSONWriter::write@49-60@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/RFDataWriter.hpp
+      17      4    165      2      17 MatrixWriter::write@67-83@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/RFDataWriter.hpp
+       4      1     10      0       4 nlohmann::detail::position_t::operator size_t@97-100@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     15      0       4 nlohmann::detail::exception::what@2358-2361@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       1      1     21      2       1 nlohmann::detail::exception::exception@2368-2368@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     30      2       4 nlohmann::detail::exception::name@2370-2373@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     60      3       6 nlohmann::detail::parse_error::create@2437-2442@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       7      2     72      3       7 nlohmann::detail::parse_error::create@2444-2450@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       2      1     29      3       2 nlohmann::detail::parse_error::parse_error@2464-2465@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     34      1       5 nlohmann::detail::parse_error::position_string@2467-2471@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     42      2       5 nlohmann::detail::invalid_iterator::create@2514-2518@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       2      1     18      2       2 nlohmann::detail::invalid_iterator::invalid_iterator@2522-2523@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     42      2       5 nlohmann::detail::type_error::create@2568-2572@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       1      1     18      2       1 nlohmann::detail::type_error::type_error@2576-2576@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     42      2       5 nlohmann::detail::out_of_range::create@2615-2619@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       1      1     18      2       1 nlohmann::detail::out_of_range::out_of_range@2623-2623@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     42      2       5 nlohmann::detail::other_error::create@2653-2657@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       1      1     18      2       1 nlohmann::detail::other_error::other_error@2661-2661@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     13      0       4 nlohmann::detail::index_sequence::size@2692-2695@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      12      3    105      2      13 nlohmann::detail::operator <@3405-3417@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       8      2     57      2       8 nlohmann::detail::from_json@3427-3434@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      23      4    149      2      24 nlohmann::detail::get_arithmetic_value@3441-3464@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       8      2     71      2       8 nlohmann::detail::from_json@3467-3474@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       8      2     71      2       8 nlohmann::detail::from_json@3477-3484@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       8      2     68      2       9 nlohmann::detail::from_json@3493-3501@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     23      2       4 nlohmann::detail::from_json@3504-3507@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     23      2       4 nlohmann::detail::from_json@3510-3513@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     23      2       4 nlohmann::detail::from_json@3516-3519@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     41      2       6 nlohmann::detail::from_json@3523-3528@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      13      2    109      2      13 nlohmann::detail::from_json@3533-3545@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      13      2    112      2      13 nlohmann::detail::from_json@3550-3562@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       8      2     73      2       8 nlohmann::detail::from_json@3565-3572@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     39      3       4 nlohmann::detail::from_json_array_impl@3575-3578@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       9      2     80      3       9 nlohmann::detail::from_json_array_impl@3581-3589@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      16      1    137      3      19 nlohmann::detail::from_json_array_impl@3592-3610@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      13      1     89      3      16 nlohmann::detail::from_json_array_impl@3613-3628@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       2      1     26      2       2 nlohmann::detail::from_json@3638-3639@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     37      1       5 nlohmann::detail::if@3643-3647@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       8      2     71      2       9 nlohmann::detail::from_json@3653-3661@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      18      2    157      2      19 nlohmann::detail::from_json@3665-3683@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      28      5    182      2      29 nlohmann::detail::from_json@3697-3725@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     54      2       4 nlohmann::detail::from_json@3728-3731@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     52      3       4 nlohmann::detail::from_json_tuple_impl@3734-3737@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     34      2       4 nlohmann::detail::from_json@3740-3743@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      16      4    150      2      16 nlohmann::detail::from_json@3748-3763@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      16      4    152      2      16 nlohmann::detail::from_json@3768-3783@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     50      2       6 nlohmann::detail::from_json_fn::operator ( )@3788-3793@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     25      2       6 nlohmann::detail::int_to_string@3836-3841@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       1      1     13      1       1 nlohmann::detail::iteration_proxy_value::iteration_proxy_value@3865-3865@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     10      0       4 nlohmann::detail::iteration_proxy_value::operator *@3868-3871@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     16      0       7 nlohmann::detail::iteration_proxy_value::operator ++@3874-3880@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     18      1       4 nlohmann::detail::iteration_proxy_value::operator ==@3883-3886@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     18      1       4 nlohmann::detail::iteration_proxy_value::operator !=@3889-3892@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      20      4     73      0      26 nlohmann::detail::iteration_proxy_value::key@3895-3920@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     13      0       4 nlohmann::detail::iteration_proxy_value::value@3923-3926@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       2      1     16      1       2 nlohmann::detail::iteration_proxy::iteration_proxy@3938-3939@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     19      0       4 nlohmann::detail::iteration_proxy::begin@3942-3945@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     19      0       4 nlohmann::detail::iteration_proxy::end@3948-3951@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     32      1       4 nlohmann::detail::get@3957-3960@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     32      1       4 nlohmann::detail::get@3965-3968@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     35      2       6 nlohmann::detail::external_constructor<value_t::boolean>::construct@4021-4026@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     36      2       6 nlohmann::detail::external_constructor<value_t::string>::construct@4033-4038@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     40      2       6 nlohmann::detail::external_constructor<value_t::string>::construct@4041-4046@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     47      2       6 nlohmann::detail::external_constructor<value_t::string>::construct@4051-4056@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       7      1     45      2       7 nlohmann::detail::external_constructor<value_t::binary>::construct@4063-4069@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       7      1     49      2       7 nlohmann::detail::external_constructor<value_t::binary>::construct@4072-4078@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     35      2       6 nlohmann::detail::external_constructor<value_t::number_float>::construct@4085-4090@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     35      2       6 nlohmann::detail::external_constructor<value_t::number_unsigned>::construct@4097-4102@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     35      2       6 nlohmann::detail::external_constructor<value_t::number_integer>::construct@4109-4114@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     36      2       6 nlohmann::detail::external_constructor<value_t::array>::construct@4121-4126@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     40      2       6 nlohmann::detail::external_constructor<value_t::array>::construct@4129-4134@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       8      1     65      2       8 nlohmann::detail::external_constructor<value_t::array>::construct@4139-4146@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      11      2     76      2      11 nlohmann::detail::external_constructor<value_t::array>::construct@4149-4159@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      11      2     96      2      11 nlohmann::detail::external_constructor<value_t::array>::construct@4163-4173@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     36      2       6 nlohmann::detail::external_constructor<value_t::object>::construct@4180-4185@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     40      2       6 nlohmann::detail::external_constructor<value_t::object>::construct@4188-4193@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       8      1     65      2       9 nlohmann::detail::external_constructor<value_t::object>::construct@4197-4205@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     26      2       4 nlohmann::detail::to_json@4214-4217@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     27      2       4 nlohmann::detail::to_json@4221-4224@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     34      2       4 nlohmann::detail::to_json@4227-4230@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     35      2       4 nlohmann::detail::to_json@4234-4237@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     35      2       4 nlohmann::detail::to_json@4241-4244@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     35      2       4 nlohmann::detail::to_json@4248-4251@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     45      2       5 nlohmann::detail::to_json@4255-4259@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     32      2       4 nlohmann::detail::to_json@4262-4265@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     27      2       4 nlohmann::detail::to_json@4275-4278@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     30      2       4 nlohmann::detail::to_json@4281-4284@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     37      2       4 nlohmann::detail::to_json@4288-4291@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     34      2       4 nlohmann::detail::to_json@4294-4297@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     27      2       4 nlohmann::detail::to_json@4301-4304@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     34      2       4 nlohmann::detail::to_json@4307-4310@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     32      2       4 nlohmann::detail::to_json@4317-4320@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     32      2       4 nlohmann::detail::to_json@4323-4326@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     31      2       4 nlohmann::detail::to_json@4331-4334@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     34      3       4 nlohmann::detail::to_json_tuple_impl@4337-4340@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     34      2       4 nlohmann::detail::to_json@4343-4346@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     73      2       5 nlohmann::detail::to_json_fn::operator ( )@4351-4355@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     78      2       6 nlohmann::adl_serializer::from_json@4383-4388@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     78      2       6 nlohmann::adl_serializer::to_json@4400-4405@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       3      1     18      0       3 nlohmann::byte_container_with_subtype::byte_container_with_subtype@4440-4442@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       3      1     24      1       3 nlohmann::byte_container_with_subtype::byte_container_with_subtype@4444-4446@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       3      1     33      1       3 nlohmann::byte_container_with_subtype::byte_container_with_subtype@4448-4450@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     39      2       5 nlohmann::byte_container_with_subtype::byte_container_with_subtype@4452-4456@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     48      2       5 nlohmann::byte_container_with_subtype::byte_container_with_subtype@4458-4462@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     55      1       5 nlohmann::byte_container_with_subtype::operator ==@4464-4468@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     20      1       4 nlohmann::byte_container_with_subtype::operator !=@4470-4473@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     18      1       5 nlohmann::byte_container_with_subtype::set_subtype@4493-4497@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     10      0       4 nlohmann::byte_container_with_subtype::subtype@4520-4523@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     10      0       4 nlohmann::byte_container_with_subtype::has_subtype@4541-4544@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     14      0       5 nlohmann::byte_container_with_subtype::clear_subtype@4565-4569@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     38      2       5 nlohmann::detail::combine@4596-4600@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      75     14    563      1      85 nlohmann::detail::hash@4614-4698@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       3      1     15      1       3 nlohmann::detail::file_input_adapter::file_input_adapter@4761-4763@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     14      0       4 nlohmann::detail::file_input_adapter::get_character@4771-4774@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       7      2     30      0       9 nlohmann::detail::input_stream_adapter::~input_stream_adapter@4796-4804@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       3      1     25      1       3 nlohmann::detail::input_stream_adapter::input_stream_adapter@4806-4808@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     35      1       5 nlohmann::detail::input_stream_adapter::input_stream_adapter@4815-4819@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       9      2     45      0      10 nlohmann::detail::input_stream_adapter::get_character@4824-4833@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       2      1     30      2       2 nlohmann::detail::iterator_input_adapter::iterator_input_adapter@4849-4850@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      13      2     59      0      13 nlohmann::detail::iterator_input_adapter::get_character@4852-4864@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     11      0       4 nlohmann::detail::iterator_input_adapter::empty@4873-4876@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      47      6    509      4      52 nlohmann::detail::wide_string_input_helper<BaseInputAdapter,4>::fill_buffer@4888-4939@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      52      7    534      4      56 nlohmann::detail::wide_string_input_helper<BaseInputAdapter,2>::fill_buffer@4946-5001@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       2      1     12      1       2 nlohmann::detail::wide_string_input_adapter::wide_string_input_adapter@5011-5012@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      12      2     59      0      16 nlohmann::detail::wide_string_input_adapter::get_character@5014-5029@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     23      0       4 nlohmann::detail::wide_string_input_adapter::fill_buffer@5035-5038@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     28      2       4 nlohmann::detail::iterator_input_adapter_factory::create@5057-5060@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     31      2       4 nlohmann::detail::iterator_input_adapter_factory<IteratorType,enable_if_t<is_iterator_of_multibyte<IteratorType>::value>>::create@5081-5084@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     28      2       5 nlohmann::detail::input_adapter@5089-5093@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     49      1       8 nlohmann::detail::input_adapter@5097-5104@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     16      1       4 nlohmann::detail::input_adapter@5107-5110@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     16      1       4 nlohmann::detail::input_adapter@5112-5115@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     16      1       4 nlohmann::detail::input_adapter@5117-5120@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     50      1       6 nlohmann::detail::input_adapter@5132-5137@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     35      1       4 nlohmann::detail::input_adapter@5140-5143@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       2      1     37      2       2 nlohmann::detail::span_input_adapter::span_input_adapter@5157-5158@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       2      1     20      2       2 nlohmann::detail::span_input_adapter::span_input_adapter@5164-5165@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     13      0       4 nlohmann::detail::span_input_adapter::get@5167-5170@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       3      1     24      2       3 nlohmann::detail::json_sax_dom_parser::json_sax_dom_parser@5343-5345@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     13      0       5 nlohmann::detail::json_sax_dom_parser::null@5354-5358@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     15      1       5 nlohmann::detail::json_sax_dom_parser::boolean@5360-5364@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     15      1       5 nlohmann::detail::json_sax_dom_parser::number_integer@5366-5370@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     15      1       5 nlohmann::detail::json_sax_dom_parser::number_unsigned@5372-5376@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     19      2       5 nlohmann::detail::json_sax_dom_parser::number_float@5378-5382@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     16      1       5 nlohmann::detail::json_sax_dom_parser::string@5384-5388@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     21      1       5 nlohmann::detail::json_sax_dom_parser::binary@5390-5394@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      10      3     74      1      12 nlohmann::detail::json_sax_dom_parser::start_object@5396-5407@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     33      1       6 nlohmann::detail::json_sax_dom_parser::key@5409-5414@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     14      0       5 nlohmann::detail::json_sax_dom_parser::end_object@5416-5420@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      10      3     74      1      12 nlohmann::detail::json_sax_dom_parser::start_array@5422-5433@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     14      0       5 nlohmann::detail::json_sax_dom_parser::end_array@5435-5439@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      11      2     45      3      11 nlohmann::detail::json_sax_dom_parser::parse_error@5442-5452@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1      9      0       4 nlohmann::detail::json_sax_dom_parser::is_errored@5454-5457@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      18      4    152      1      21 nlohmann::detail::json_sax_dom_parser::handle_value@5468-5488@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       7      1     40      3       7 nlohmann::detail::json_sax_dom_callback_parser::json_sax_dom_callback_parser@5514-5520@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     13      0       5 nlohmann::detail::json_sax_dom_callback_parser::null@5529-5533@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     15      1       5 nlohmann::detail::json_sax_dom_callback_parser::boolean@5535-5539@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     15      1       5 nlohmann::detail::json_sax_dom_callback_parser::number_integer@5541-5545@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     15      1       5 nlohmann::detail::json_sax_dom_callback_parser::number_unsigned@5547-5551@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     19      2       5 nlohmann::detail::json_sax_dom_callback_parser::number_float@5553-5557@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     16      1       5 nlohmann::detail::json_sax_dom_callback_parser::string@5559-5563@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     21      1       5 nlohmann::detail::json_sax_dom_callback_parser::binary@5565-5569@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      12      4    121      1      17 nlohmann::detail::json_sax_dom_callback_parser::start_object@5571-5587@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      11      3     87      1      16 nlohmann::detail::json_sax_dom_callback_parser::key@5589-5604@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      23      8    170      0      28 nlohmann::detail::json_sax_dom_callback_parser::end_object@5606-5633@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      12      4    121      1      16 nlohmann::detail::json_sax_dom_callback_parser::start_array@5635-5650@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      21      6    139      0      27 nlohmann::detail::json_sax_dom_callback_parser::end_array@5652-5678@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      11      2     45      3      11 nlohmann::detail::json_sax_dom_callback_parser::parse_error@5681-5691@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1      9      0       4 nlohmann::detail::json_sax_dom_callback_parser::is_errored@5693-5696@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      40      9    298      2      62 nlohmann::detail::json_sax_dom_callback_parser::handle_value@5715-5776@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1      8      0       4 nlohmann::detail::json_sax_acceptor::null@5808-5811@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1      9      1       4 nlohmann::detail::json_sax_acceptor::boolean@5813-5816@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1      9      1       4 nlohmann::detail::json_sax_acceptor::number_integer@5818-5821@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1      9      1       4 nlohmann::detail::json_sax_acceptor::number_unsigned@5823-5826@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     13      2       4 nlohmann::detail::json_sax_acceptor::number_float@5828-5831@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     10      1       4 nlohmann::detail::json_sax_acceptor::string@5833-5836@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     10      1       4 nlohmann::detail::json_sax_acceptor::binary@5838-5841@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     19      1       4 nlohmann::detail::json_sax_acceptor::start_object@5843-5846@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     10      1       4 nlohmann::detail::json_sax_acceptor::key@5848-5851@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1      8      0       4 nlohmann::detail::json_sax_acceptor::end_object@5853-5856@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     19      1       4 nlohmann::detail::json_sax_acceptor::start_array@5858-5861@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1      8      0       4 nlohmann::detail::json_sax_acceptor::end_array@5863-5866@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     23      3       4 nlohmann::detail::json_sax_acceptor::parse_error@5868-5871@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      40     18    150      1      42 nlohmann::detail::lexer_base::token_type_name@5934-5975@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     41      2       5 nlohmann::detail::lexer::lexer@5995-5999@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      2     40      0       6 nlohmann::detail::lexer::get_decimal_point@6015-6020@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      28      9    176      0      32 nlohmann::detail::lexer::get_codepoint@6041-6072@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      19      6    110      1      21 nlohmann::detail::lexer::next_byte_in_range@6089-6109@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+     488    212   1789      0     585 nlohmann::detail::lexer::scan_string@6126-6710@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      57     13    147      0      66 nlohmann::detail::lexer::scan_comment@6716-6781@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     28      3       4 nlohmann::detail::lexer::strtof@6784-6787@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     28      3       4 nlohmann::detail::lexer::strtof@6790-6793@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     29      3       4 nlohmann::detail::lexer::strtof@6796-6799@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+     266     98    851      0     324 nlohmann::detail::lexer::scan_number@6841-7164@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      14      3     93      3      14 nlohmann::detail::lexer::scan_literal@7172-7185@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     35      0       6 nlohmann::detail::lexer::reset@7192-7197@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      23      4     95      0      28 nlohmann::detail::lexer::get@7209-7236@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      21      4     83      0      25 nlohmann::detail::lexer::unget@7246-7270@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     23      1       4 nlohmann::detail::lexer::add@7273-7276@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     10      0       4 nlohmann::detail::lexer::get_number_integer@7284-7287@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     10      0       4 nlohmann::detail::lexer::get_number_unsigned@7290-7293@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     10      0       4 nlohmann::detail::lexer::get_number_float@7296-7299@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1      8      0       4 nlohmann::detail::lexer::get_string@7302-7305@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     10      0       4 nlohmann::detail::lexer::get_position@7312-7315@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      18      3    111      0      22 nlohmann::detail::lexer::get_token_string@7320-7341@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     10      0       4 nlohmann::detail::lexer::get_error_message@7345-7348@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       9      3     35      0      13 nlohmann::detail::lexer::skip_bom@7358-7370@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       8      5     31      0       8 nlohmann::detail::lexer::skip_whitespace@7372-7379@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      67     29    335      0      87 nlohmann::detail::lexer::scan@7381-7467@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     24      1       4 nlohmann::detail::little_endianess@7682-7685@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     32      1       4 nlohmann::detail::binary_reader::binary_reader@7713-7716@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      42      9    188      4      51 nlohmann::detail::binary_reader::sax_parse@7734-7784@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      14      3     75      0      17 nlohmann::detail::binary_reader::parse_bson_internal@7795-7811@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      17      4     74      1      17 nlohmann::detail::binary_reader::get_bson_cstr@7820-7836@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       9      3    102      2      10 nlohmann::detail::binary_reader::get_bson_string@7850-7859@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      12      2    107      2      15 nlohmann::detail::binary_reader::get_bson_binary@7871-7885@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      56     17    362      2      65 nlohmann::detail::binary_reader::parse_bson_element_internal@7897-7961@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      26      7    111      1      33 nlohmann::detail::binary_reader::parse_bson_element_list@7975-8007@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      14      3     75      0      17 nlohmann::detail::binary_reader::parse_bson_array@8013-8029@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+     382    233   1873      2     433 nlohmann::detail::binary_reader::parse_cbor_internal@8043-8475@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      75     37    345      1      83 nlohmann::detail::binary_reader::get_cbor_string@8488-8570@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      79     37    361      1      87 nlohmann::detail::binary_reader::get_cbor_binary@8583-8669@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      29      7    120      2      31 nlohmann::detail::binary_reader::get_cbor_array@8677-8707@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      41     11    187      2      45 nlohmann::detail::binary_reader::get_cbor_object@8715-8759@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+     339    273   1378      0     369 nlohmann::detail::binary_reader::parse_msgpack_internal@8768-9136@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      65     40    295      1      71 nlohmann::detail::binary_reader::get_msgpack_string@9148-9218@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      93     34    504      1     106 nlohmann::detail::binary_reader::get_msgpack_binary@9230-9335@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      15      4     68      1      17 nlohmann::detail::binary_reader::get_msgpack_array@9341-9357@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      22      6    105      1      25 nlohmann::detail::binary_reader::get_msgpack_object@9363-9387@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      2     22      1       4 nlohmann::detail::binary_reader::parse_ubjson_internal@9400-9403@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      42     13    256      2      49 nlohmann::detail::binary_reader::get_ubjson_string@9419-9467@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      61     11    296      1      66 nlohmann::detail::binary_reader::get_ubjson_size_value@9473-9538@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      30      6    172      1      36 nlohmann::detail::binary_reader::get_ubjson_size_type@9550-9585@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      82     27    477      1      97 nlohmann::detail::binary_reader::get_ubjson_value@9591-9687@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      54     13    223      0      58 nlohmann::detail::binary_reader::get_ubjson_array@9692-9749@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      67     18    307      0      71 nlohmann::detail::binary_reader::get_ubjson_object@9754-9824@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      40      8    336      0      48 nlohmann::detail::binary_reader::get_ubjson_high_precision_number@9829-9876@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     17      0       5 nlohmann::detail::binary_reader::get@9891-9895@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       9      2     22      0      10 nlohmann::detail::binary_reader::get_ignore_noop@9900-9909@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      22      4    140      2      27 nlohmann::detail::binary_reader::get_number@9925-9951@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      17      3     82      3      17 nlohmann::detail::binary_reader::get_string@9968-9984@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      17      3     80      3      17 nlohmann::detail::binary_reader::get_binary@10001-10017@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       9      2     64      2       9 nlohmann::detail::binary_reader::unexpect_eof@10025-10033@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     62      0       6 nlohmann::detail::binary_reader::get_token_string@10038-10043@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      24      5     98      3      30 nlohmann::detail::binary_reader::exception_message@10051-10080@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      10      1     55      4      11 nlohmann::detail::parser::parser@10175-10185@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      43      9    229      2      54 nlohmann::detail::parser::parse@10197-10250@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     25      1       5 nlohmann::detail::parser::accept@10258-10262@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      13      4     97      2      16 nlohmann::detail::parser::sax_parse@10266-10281@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+     216     41   1057      1     280 nlohmann::detail::parser::sax_parse_internal@10286-10565@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     14      0       4 nlohmann::detail::parser::get_token@10568-10571@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      23      4    126      2      28 nlohmann::detail::parser::exception_message@10573-10600@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     10      0       4 nlohmann::detail::primitive_iterator_t::get_value@10648-10651@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     10      0       4 nlohmann::detail::primitive_iterator_t::set_begin@10654-10657@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     10      0       4 nlohmann::detail::primitive_iterator_t::set_end@10660-10663@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     12      0       4 nlohmann::detail::primitive_iterator_t::is_begin@10666-10669@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     12      0       4 nlohmann::detail::primitive_iterator_t::is_end@10672-10675@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     21      2       4 nlohmann::detail::primitive_iterator_t::operator ==@10677-10680@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     21      2       4 nlohmann::detail::primitive_iterator_t::operator <@10682-10685@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     22      1       6 nlohmann::detail::primitive_iterator_t::operator +@10687-10692@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     21      2       4 nlohmann::detail::primitive_iterator_t::operator -@10694-10697@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     14      0       5 nlohmann::detail::primitive_iterator_t::operator ++@10699-10703@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     20      1       6 nlohmann::detail::primitive_iterator_t::operator ++@10705-10710@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     14      0       5 nlohmann::detail::primitive_iterator_t::operator --@10712-10716@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     20      1       6 nlohmann::detail::primitive_iterator_t::operator --@10718-10723@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     17      1       5 nlohmann::detail::primitive_iterator_t::operator +=@10725-10729@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     17      1       5 nlohmann::detail::primitive_iterator_t::operator -=@10731-10735@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      22      3     82      1      25 nlohmann::detail::iter_impl::iter_impl@10855-10879@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       3      1     28      1       3 nlohmann::detail::iter_impl::iter_impl@10897-10899@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     31      1       6 nlohmann::detail::iter_impl::operator =@10907-10912@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       3      1     35      1       3 nlohmann::detail::iter_impl::iter_impl@10919-10921@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     38      1       6 nlohmann::detail::iter_impl::operator =@10929-10934@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      27      4     98      0      32 nlohmann::detail::iter_impl::set_begin@10941-10972@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      22      3     81      0      25 nlohmann::detail::iter_impl::set_end@10978-11002@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      27      5    135      0      32 nlohmann::detail::iter_impl::operator *@11009-11040@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      25      4    121      0      29 nlohmann::detail::iter_impl::operator ->@11046-11074@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     22      1       6 nlohmann::detail::iter_impl::operator ++@11080-11085@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      23      3     76      0      27 nlohmann::detail::iter_impl::operator ++@11091-11117@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     22      1       6 nlohmann::detail::iter_impl::operator --@11123-11128@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      23      3     78      0      27 nlohmann::detail::iter_impl::operator --@11134-11160@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      17      4    102      1      22 nlohmann::detail::iter_impl::operator ==@11166-11187@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     19      1       4 nlohmann::detail::iter_impl::operator !=@11193-11196@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      17      4    101      1      22 nlohmann::detail::iter_impl::operator <@11202-11223@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     22      1       4 nlohmann::detail::iter_impl::operator <=@11229-11232@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     19      1       4 nlohmann::detail::iter_impl::operator >@11238-11241@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     19      1       4 nlohmann::detail::iter_impl::operator >=@11247-11250@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      20      3     76      1      24 nlohmann::detail::iter_impl::operator +=@11256-11279@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     16      1       4 nlohmann::detail::iter_impl::operator -=@11285-11288@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     22      1       6 nlohmann::detail::iter_impl::operator +@11294-11299@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     25      2       6 nlohmann::detail::iter_impl::operator +@11305-11310@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     22      1       6 nlohmann::detail::iter_impl::operator -@11316-11321@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      13      3     72      1      16 nlohmann::detail::iter_impl::operator -@11327-11342@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      21      5    115      1      26 nlohmann::detail::iter_impl::operator [ ]@11348-11373@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       9      2     45      0      11 nlohmann::detail::iter_impl::key@11379-11389@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     12      0       4 nlohmann::detail::iter_impl::value@11395-11398@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       2      1     18      1       2 nlohmann::detail::json_reverse_iterator::json_reverse_iterator@11455-11456@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       1      1     15      1       1 nlohmann::detail::json_reverse_iterator::json_reverse_iterator@11459-11459@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     22      1       4 nlohmann::detail::json_reverse_iterator::operator ++@11462-11465@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     21      0       4 nlohmann::detail::json_reverse_iterator::operator ++@11468-11471@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     22      1       4 nlohmann::detail::json_reverse_iterator::operator --@11474-11477@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     21      0       4 nlohmann::detail::json_reverse_iterator::operator --@11480-11483@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     24      1       4 nlohmann::detail::json_reverse_iterator::operator +=@11486-11489@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     24      1       4 nlohmann::detail::json_reverse_iterator::operator +@11492-11495@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     24      1       4 nlohmann::detail::json_reverse_iterator::operator -@11498-11501@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     23      1       4 nlohmann::detail::json_reverse_iterator::operator -@11504-11507@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     22      1       4 nlohmann::detail::json_reverse_iterator::operator [ ]@11510-11513@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     39      0       5 nlohmann::detail::json_reverse_iterator::key@11516-11520@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     24      0       5 nlohmann::detail::json_reverse_iterator::value@11523-11527@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       3      1     21      1       3 nlohmann::json_pointer::json_pointer@11583-11585@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       9      1     60      0       9 nlohmann::json_pointer::to_string@11601-11609@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     14      0       4 nlohmann::json_pointer::operator std :: string@11612-11615@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       7      1     42      1       7 nlohmann::json_pointer::operator / =@11633-11639@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     25      1       5 nlohmann::json_pointer::operator / =@11657-11661@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     23      1       4 nlohmann::json_pointer::operator / =@11679-11682@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     24      2       5 nlohmann::json_pointer::operator /@11699-11703@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     29      2       4 nlohmann::json_pointer::operator /@11720-11723@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     24      2       4 nlohmann::json_pointer::operator /@11740-11743@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      10      2     33      0      11 nlohmann::json_pointer::parent_pointer@11758-11768@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       8      2     36      0       9 nlohmann::json_pointer::pop_back@11783-11791@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       8      2     38      0       9 nlohmann::json_pointer::back@11807-11815@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     18      1       4 nlohmann::json_pointer::push_back@11829-11832@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     22      1       4 nlohmann::json_pointer::push_back@11835-11838@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     14      0       4 nlohmann::json_pointer::empty@11854-11857@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      33      8    256      1      44 nlohmann::json_pointer::array_index@11870-11913@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      10      2     51      0      11 nlohmann::json_pointer::top@11915-11925@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      35      6    151      1      52 nlohmann::json_pointer::get_and_create@11935-11986@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      41      8    207      1      52 nlohmann::json_pointer::get_unchecked@12007-12058@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      28      5    141      1      35 nlohmann::json_pointer::get_checked@12066-12100@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      28      5    146      1      35 nlohmann::json_pointer::get_unchecked@12115-12149@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      28      5    142      1      35 nlohmann::json_pointer::get_checked@12157-12191@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      55     16    260      1      70 nlohmann::json_pointer::contains@12197-12266@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      38      9    252      1      61 nlohmann::json_pointer::split@12277-12337@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      10      2     88      3      10 nlohmann::json_pointer::replace_substring@12352-12361@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     30      1       6 nlohmann::json_pointer::escape@12364-12369@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     28      1       5 nlohmann::json_pointer::unescape@12372-12376@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      44      7    204      3      51 nlohmann::json_pointer::flatten@12385-12435@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      17      4    105      1      26 nlohmann::json_pointer::unflatten@12448-12473@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     25      2       5 nlohmann::json_pointer::operator ==@12486-12490@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     24      2       5 nlohmann::json_pointer::operator !=@12503-12507@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     29      1       5 nlohmann::detail::json_ref::json_ref@12533-12537@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     27      1       4 nlohmann::detail::json_ref::json_ref@12539-12542@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     28      1       5 nlohmann::detail::json_ref::json_ref@12544-12548@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     34      1       5 nlohmann::detail::json_ref::json_ref@12553-12557@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       8      2     25      0       8 nlohmann::detail::json_ref::moved_or_copied@12566-12573@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     19      0       4 nlohmann::detail::json_ref::operator *@12575-12578@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     18      0       4 nlohmann::detail::json_ref::operator ->@12580-12583@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       3      1     19      1       3 nlohmann::detail::output_vector_adapter::output_vector_adapter@12649-12651@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     15      1       4 nlohmann::detail::output_vector_adapter::write_character@12653-12656@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     32      2       4 nlohmann::detail::output_vector_adapter::write_characters@12659-12662@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       3      1     19      1       3 nlohmann::detail::output_stream_adapter::output_stream_adapter@12673-12675@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     15      1       4 nlohmann::detail::output_stream_adapter::write_character@12677-12680@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     31      2       4 nlohmann::detail::output_stream_adapter::write_characters@12683-12686@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       3      1     14      1       3 nlohmann::detail::output_string_adapter::output_string_adapter@12697-12699@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     15      1       4 nlohmann::detail::output_string_adapter::write_character@12701-12704@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     23      2       4 nlohmann::detail::output_string_adapter::write_characters@12707-12710@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       2      1     29      1       2 nlohmann::detail::output_adapter::output_adapter@12720-12721@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       2      1     29      1       2 nlohmann::detail::output_adapter::output_adapter@12723-12724@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       2      1     26      1       2 nlohmann::detail::output_adapter::output_adapter@12726-12727@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     12      0       4 nlohmann::detail::output_adapter::operator output_adapter_t < CharType >@12729-12732@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     20      1       4 nlohmann::detail::binary_writer::binary_writer@12765-12768@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      15      2     65      1      16 nlohmann::detail::binary_writer::write_bson@12774-12789@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+     263     50   1927      1     301 nlohmann::detail::binary_writer::write_cbor@12794-13094@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+     258     56   1822      1     317 nlohmann::detail::binary_writer::write_msgpack@13099-13415@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+     171     35    903      4     197 nlohmann::detail::binary_writer::write_ubjson@13423-13619@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      10      2     76      1      11 nlohmann::detail::binary_writer::calc_bson_entry_header_size@13630-13640@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       8      1     52      2       8 nlohmann::detail::binary_writer::write_bson_entry_header@13645-13652@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      2     37      2       6 nlohmann::detail::binary_writer::write_bson_boolean@13657-13662@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     30      2       6 nlohmann::detail::binary_writer::write_bson_double@13667-13672@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     25      1       4 nlohmann::detail::binary_writer::calc_bson_string_size@13677-13680@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       9      1     74      2      10 nlohmann::detail::binary_writer::write_bson_string@13685-13694@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     16      1       4 nlohmann::detail::binary_writer::write_bson_null@13699-13702@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      3     59      1       6 nlohmann::detail::binary_writer::calc_bson_integer_size@13707-13712@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      14      3    110      2      14 nlohmann::detail::binary_writer::write_bson_integer@13717-13730@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      2     53      1       6 nlohmann::detail::binary_writer::calc_bson_unsigned_size@13735-13740@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      18      3    152      2      18 nlohmann::detail::binary_writer::write_bson_unsigned@13745-13762@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     29      2       6 nlohmann::detail::binary_writer::write_bson_object_entry@13767-13772@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       9      1    102      1      11 nlohmann::detail::binary_writer::calc_bson_array_size@13777-13787@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     28      1       4 nlohmann::detail::binary_writer::calc_bson_binary_size@13792-13795@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      12      2     88      2      15 nlohmann::detail::binary_writer::write_bson_array@13800-13814@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       8      2     92      2      10 nlohmann::detail::binary_writer::write_bson_binary@13819-13828@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      29     10    179      2      40 nlohmann::detail::binary_writer::calc_bson_element_size@13834-13873@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      28     10    184      2      39 nlohmann::detail::binary_writer::write_bson_element@13882-13920@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       9      1     86      1      10 nlohmann::detail::binary_writer::calc_bson_object_size@13928-13937@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       9      2     67      1      11 nlohmann::detail::binary_writer::write_bson_object@13943-13953@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     12      1       4 nlohmann::detail::binary_writer::get_cbor_float_prefix@13959-13962@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     12      1       4 nlohmann::detail::binary_writer::get_cbor_float_prefix@13964-13967@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     12      1       4 nlohmann::detail::binary_writer::get_msgpack_float_prefix@13973-13976@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     12      1       4 nlohmann::detail::binary_writer::get_msgpack_float_prefix@13978-13981@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       9      2     33      2       9 nlohmann::detail::binary_writer::write_number_with_ubjson_prefix@13990-13998@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      57     13    384      2      58 nlohmann::detail::binary_writer::write_number_with_ubjson_prefix@14003-14060@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      57     18    453      2      60 nlohmann::detail::binary_writer::write_number_with_ubjson_prefix@14066-14125@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      69     26    539      1      79 nlohmann::detail::binary_writer::ubjson_prefix@14130-14208@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1      9      1       4 nlohmann::detail::binary_writer::get_ubjson_float_prefix@14210-14213@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1      9      1       4 nlohmann::detail::binary_writer::get_ubjson_float_prefix@14215-14218@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      10      2     81      1      15 nlohmann::detail::binary_writer::write_number@14236-14250@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      19      6    168      2      19 nlohmann::detail::binary_writer::write_compact_float@14252-14270@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     22      1       4 nlohmann::detail::binary_writer::to_char_type@14279-14282@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       8      1     63      1       8 nlohmann::detail::binary_writer::to_char_type@14286-14293@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     13      1       4 nlohmann::detail::binary_writer::to_char_type@14297-14300@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     11      1       4 nlohmann::detail::binary_writer::to_char_type@14308-14311@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       7      1     45      1       8 nlohmann::detail::dtoa_impl::reinterpret_bits@14381-14388@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       1      1     23      2       1 nlohmann::detail::dtoa_impl::diyfp::diyfp@14397-14397@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     52      2       7 nlohmann::detail::dtoa_impl::diyfp::sub@14403-14409@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      21      1    230      2      60 nlohmann::detail::dtoa_impl::diyfp::mul@14415-14474@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      10      2     46      1      12 nlohmann::detail::dtoa_impl::diyfp::normalize@14480-14491@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       7      1     64      2       9 nlohmann::detail::dtoa_impl::diyfp::normalize_to@14497-14505@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      27      4    317      1      66 nlohmann::detail::dtoa_impl::compute_boundaries@14522-14587@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+     100      1    890      1     159 nlohmann::detail::dtoa_impl::get_cached_power_for_binary_exponent@14661-14819@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      53     10    169      2      55 nlohmann::detail::dtoa_impl::find_largest_pow10@14825-14879@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      16      5    115      6      36 nlohmann::detail::dtoa_impl::grisu2_round@14881-14916@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      57      5    472      6     234 nlohmann::detail::dtoa_impl::grisu2_digit_gen@14922-15155@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      15      1    161      6      52 nlohmann::detail::dtoa_impl::grisu2@15163-15214@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      10      2    100      4      32 nlohmann::detail::dtoa_impl::grisu2@15223-15254@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      35      4    200      2      40 nlohmann::detail::dtoa_impl::append_exponent@15263-15302@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      42      8    372      5      69 nlohmann::detail::dtoa_impl::format_buffer@15315-15383@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      28      3    227      3      44 nlohmann::detail::to_chars@15400-15443@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      10      1    113      3      10 nlohmann::detail::serializer::serializer@15494-15503@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+     221     30   1439      5     268 nlohmann::detail::serializer::dump@15534-15801@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+     194     30    943      2     247 nlohmann::detail::serializer::dump_escaped@15818-16064@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      25      6     81      1      25 nlohmann::detail::serializer::count_digits@16074-16098@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      58      6   1092      1      77 nlohmann::detail::serializer::dump_integer@16114-16190@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      12      7    117      1      20 nlohmann::detail::serializer::dump_float@16200-16219@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     62      2       7 nlohmann::detail::serializer::dump_float@16221-16227@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      34      7    287      2      48 nlohmann::detail::serializer::dump_float@16229-16276@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      30      2    926      3      33 nlohmann::detail::serializer::decode@16299-16331@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     15      1       5 nlohmann::detail::serializer::remove_sign@16338-16342@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      2     46      1       5 nlohmann::detail::serializer::remove_sign@16353-16357@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       1      1     18      1       1 nlohmann::ordered_map::ordered_map@16418-16418@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       2      1     28      3       2 nlohmann::ordered_map::ordered_map@16420-16421@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       2      1     28      2       2 nlohmann::ordered_map::ordered_map@16422-16423@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      12      3     75      2      12 nlohmann::ordered_map::emplace@16425-16436@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     25      1       4 nlohmann::ordered_map::operator [ ]@16438-16441@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     18      1       4 nlohmann::ordered_map::operator [ ]@16443-16446@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      11      3     56      1      12 nlohmann::ordered_map::at@16448-16459@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      11      3     57      1      12 nlohmann::ordered_map::at@16461-16472@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      17      4     99      1      18 nlohmann::ordered_map::erase@16474-16491@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      11      2     65      1      13 nlohmann::ordered_map::erase@16493-16505@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      11      3     50      1      11 nlohmann::ordered_map::count@16507-16517@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      11      3     53      1      11 nlohmann::ordered_map::find@16519-16529@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      11      3     54      1      11 nlohmann::ordered_map::find@16531-16541@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     25      1       4 nlohmann::ordered_map::insert@16543-16546@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      12      3     71      1      12 nlohmann::ordered_map::insert@16548-16559@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      10      1     61      4      10 nlohmann::basic_json::parser@16685-16694@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     10      0       4 nlohmann::basic_json::get_allocator@16800-16803@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      31     14    336      0      54 nlohmann::basic_json::meta@16832-16885@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      13      1    116      1      14 nlohmann::basic_json::create@17407-17420@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       1      1     13      1       1 nlohmann::basic_json::json_value::json_value@17473-17473@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       1      1     13      1       1 nlohmann::basic_json::json_value::json_value@17475-17475@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       1      1     13      1       1 nlohmann::basic_json::json_value::json_value@17477-17477@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       1      1     13      1       1 nlohmann::basic_json::json_value::json_value@17479-17479@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      60     11    200      1      69 nlohmann::basic_json::json_value::json_value@17481-17549@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     19      1       4 nlohmann::basic_json::json_value::json_value@17552-17555@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     23      1       4 nlohmann::basic_json::json_value::json_value@17558-17561@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     19      1       4 nlohmann::basic_json::json_value::json_value@17564-17567@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     23      1       4 nlohmann::basic_json::json_value::json_value@17570-17573@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     19      1       4 nlohmann::basic_json::json_value::json_value@17576-17579@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     23      1       4 nlohmann::basic_json::json_value::json_value@17582-17585@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     22      1       4 nlohmann::basic_json::json_value::json_value@17588-17591@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     26      1       4 nlohmann::basic_json::json_value::json_value@17594-17597@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     19      1       4 nlohmann::basic_json::json_value::json_value@17600-17603@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     23      1       4 nlohmann::basic_json::json_value::json_value@17606-17609@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      71     14    458      1      89 nlohmann::basic_json::json_value::destroy@17611-17699@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       7      5     67      0       7 nlohmann::basic_json::assert_invariant@17711-17717@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     22      1       5 nlohmann::basic_json::basic_json@17831-17835@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     22      1       5 nlohmann::basic_json::basic_json@17855-17859@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       7      1     66      1       7 nlohmann::basic_json::basic_json@17928-17934@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      47     11    351      1      48 nlohmann::basic_json::basic_json@17965-18012@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      39      8    275      3      51 nlohmann::basic_json::basic_json@18088-18138@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       7      1     36      1       7 nlohmann::basic_json::binary@18168-18174@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       7      1     46      2       7 nlohmann::basic_json::binary@18205-18211@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       7      1     40      1       7 nlohmann::basic_json::binary@18215-18221@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       7      1     50      2       7 nlohmann::basic_json::binary@18225-18231@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     22      1       4 nlohmann::basic_json::array@18271-18274@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     22      1       4 nlohmann::basic_json::object@18315-18318@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     37      2       6 nlohmann::basic_json::basic_json@18342-18347@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      77     17    366      2      94 nlohmann::basic_json::basic_json@18407-18500@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       1      1     18      1       1 nlohmann::basic_json::basic_json@18510-18510@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      51      9    176      1      62 nlohmann::basic_json::basic_json@18537-18598@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       9      1     58      1      13 nlohmann::basic_json::basic_json@18626-18638@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      14      1     83      1      17 nlohmann::basic_json::operator =@18663-18679@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     17      0       5 nlohmann::basic_json::~basic_json@18696-18700@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      17      2    104      4      19 nlohmann::basic_json::dump@18760-18778@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     10      0       4 nlohmann::basic_json::type@18813-18816@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      5     28      0       4 nlohmann::basic_json::is_primitive@18844-18847@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      2     16      0       4 nlohmann::basic_json::is_structured@18871-18874@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     14      0       4 nlohmann::basic_json::is_null@18893-18896@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     14      0       4 nlohmann::basic_json::is_boolean@18915-18918@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      2     16      0       4 nlohmann::basic_json::is_number@18945-18948@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      2     20      0       4 nlohmann::basic_json::is_number_integer@18974-18977@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     14      0       4 nlohmann::basic_json::is_number_unsigned@19002-19005@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     14      0       4 nlohmann::basic_json::is_number_float@19030-19033@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     14      0       4 nlohmann::basic_json::is_object@19052-19055@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     14      0       4 nlohmann::basic_json::is_array@19074-19077@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     14      0       4 nlohmann::basic_json::is_string@19096-19099@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     14      0       4 nlohmann::basic_json::is_binary@19118-19121@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     14      0       4 nlohmann::basic_json::is_discarded@19145-19148@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     11      0       4 nlohmann::basic_json::operator value_t@19171-19174@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       8      2     45      1       9 nlohmann::basic_json::get_impl@19184-19192@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      2     19      1       4 nlohmann::basic_json::get_impl_ptr@19195-19198@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      2     21      1       4 nlohmann::basic_json::get_impl_ptr@19201-19204@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      2     19      1       4 nlohmann::basic_json::get_impl_ptr@19207-19210@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      2     21      1       4 nlohmann::basic_json::get_impl_ptr@19213-19216@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      2     19      1       4 nlohmann::basic_json::get_impl_ptr@19219-19222@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      2     21      1       4 nlohmann::basic_json::get_impl_ptr@19225-19228@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      2     20      1       4 nlohmann::basic_json::get_impl_ptr@19231-19234@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      2     22      1       4 nlohmann::basic_json::get_impl_ptr@19237-19240@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      2     20      1       4 nlohmann::basic_json::get_impl_ptr@19243-19246@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      2     22      1       4 nlohmann::basic_json::get_impl_ptr@19249-19252@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      2     20      1       4 nlohmann::basic_json::get_impl_ptr@19255-19258@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      2     22      1       4 nlohmann::basic_json::get_impl_ptr@19261-19264@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      2     20      1       4 nlohmann::basic_json::get_impl_ptr@19267-19270@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      2     22      1       4 nlohmann::basic_json::get_impl_ptr@19273-19276@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      2     19      1       4 nlohmann::basic_json::get_impl_ptr@19279-19282@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      2     21      1       4 nlohmann::basic_json::get_impl_ptr@19285-19288@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       9      2     67      1      12 nlohmann::basic_json::get_ref_impl@19302-19313@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     10      0       4 nlohmann::basic_json::get@19337-19340@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     10      0       4 nlohmann::basic_json::get@19360-19363@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      11      1     88      0      15 nlohmann::basic_json::get@19410-19424@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       7      1     57      0       7 nlohmann::basic_json::get@19461-19467@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     51      1       6 nlohmann::basic_json::get_to@19507-19512@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     17      1       5 nlohmann::basic_json::get_to@19520-19524@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       7      1     56      1       7 nlohmann::basic_json::get_to@19531-19537@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     43      0       5 nlohmann::basic_json::get_ptr@19568-19572@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     45      0       5 nlohmann::basic_json::get_ptr@19581-19585@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     35      0       5 nlohmann::basic_json::get@19616-19620@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     37      0       5 nlohmann::basic_json::get@19628-19632@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     15      0       5 nlohmann::basic_json::get_ref@19662-19666@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     16      0       5 nlohmann::basic_json::get_ref@19675-19679@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     15      0       5 nlohmann::basic_json::operator ValueType@19721-19725@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       8      2     45      0       9 nlohmann::basic_json::get_binary@19736-19744@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       8      2     47      0       9 nlohmann::basic_json::get_binary@19747-19755@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      18      2     85      1      20 nlohmann::basic_json::at@19794-19813@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      18      2     86      1      20 nlohmann::basic_json::at@19841-19860@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      18      2     85      1      20 nlohmann::basic_json::at@19892-19911@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      18      2     86      1      20 nlohmann::basic_json::at@19943-19962@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      20      4    127      1      26 nlohmann::basic_json::operator [ ]@19989-20014@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       8      2     54      1      10 nlohmann::basic_json::operator [ ]@20035-20044@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      14      3     87      1      18 nlohmann::basic_json::operator [ ]@20073-20090@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       9      2     79      1      11 nlohmann::basic_json::operator [ ]@20122-20132@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      14      3     75      1      18 nlohmann::basic_json::operator [ ]@20163-20180@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       9      2     72      1      11 nlohmann::basic_json::operator [ ]@20214-20224@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      13      3     83      2      17 nlohmann::basic_json::value@20280-20296@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     29      2       4 nlohmann::basic_json::value@20302-20305@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      15      2     76      2      18 nlohmann::basic_json::value@20352-20369@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     25      2       4 nlohmann::basic_json::value@20376-20379@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     11      0       4 nlohmann::basic_json::front@20406-20409@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     12      0       4 nlohmann::basic_json::front@20414-20417@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     19      0       6 nlohmann::basic_json::back@20450-20455@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     20      0       6 nlohmann::basic_json::back@20460-20465@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      53     13    322      1      62 nlohmann::basic_json::erase@20517-20578@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      56     15    354      2      65 nlohmann::basic_json::erase@20630-20694@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       8      2     54      1      10 nlohmann::basic_json::erase@20725-20734@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      15      3    100      1      17 nlohmann::basic_json::erase@20760-20776@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       9      2     49      1      11 nlohmann::basic_json::find@20813-20823@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       9      2     50      1      11 nlohmann::basic_json::find@20830-20840@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      2     33      1       5 nlohmann::basic_json::count@20864-20868@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      2     39      1       4 nlohmann::basic_json::contains@20897-20900@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     18      1       4 nlohmann::basic_json::contains@20928-20931@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     21      0       6 nlohmann::basic_json::begin@20967-20972@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     12      0       4 nlohmann::basic_json::begin@20977-20980@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     22      0       6 nlohmann::basic_json::cbegin@21007-21012@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     21      0       6 nlohmann::basic_json::end@21038-21043@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     12      0       4 nlohmann::basic_json::end@21048-21051@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     22      0       6 nlohmann::basic_json::cend@21078-21083@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     14      0       4 nlohmann::basic_json::rbegin@21108-21111@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     12      0       4 nlohmann::basic_json::rbegin@21116-21119@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     14      0       4 nlohmann::basic_json::rend@21145-21148@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     12      0       4 nlohmann::basic_json::rend@21153-21156@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     15      0       4 nlohmann::basic_json::crbegin@21182-21185@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     15      0       4 nlohmann::basic_json::crend@21211-21214@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     14      1       4 nlohmann::basic_json::iterator_wrapper@21275-21278@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     14      1       4 nlohmann::basic_json::iterator_wrapper@21284-21287@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     16      0       4 nlohmann::basic_json::items@21357-21360@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     17      0       4 nlohmann::basic_json::items@21365-21368@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      22      4     62      0      29 nlohmann::basic_json::empty@21422-21450@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      22      4     62      0      29 nlohmann::basic_json::size@21495-21523@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      18      3     54      0      23 nlohmann::basic_json::max_size@21566-21588@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      48      9    146      0      56 nlohmann::basic_json::clear@21637-21692@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      14      4     85      1      20 nlohmann::basic_json::push_back@21714-21733@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     23      1       5 nlohmann::basic_json::operator +=@21739-21743@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      14      4     81      1      19 nlohmann::basic_json::push_back@21749-21767@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     19      1       5 nlohmann::basic_json::operator +=@21773-21777@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      14      4     84      1      19 nlohmann::basic_json::push_back@21799-21817@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     22      1       5 nlohmann::basic_json::operator +=@21823-21827@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      13      4     99      1      13 nlohmann::basic_json::push_back@21854-21866@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     17      1       5 nlohmann::basic_json::operator +=@21872-21876@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      16      5    118      1      24 nlohmann::basic_json::emplace_back@21902-21925@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      17      4    119      1      25 nlohmann::basic_json::emplace@21955-21979@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       9      1     92      2      15 nlohmann::basic_json::insert_iterator@21985-21999@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      12      3     77      2      17 nlohmann::basic_json::insert@22023-22039@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     19      2       4 nlohmann::basic_json::insert@22045-22048@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      12      3     82      3      17 nlohmann::basic_json::insert@22074-22090@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      20      5    141      3      28 nlohmann::basic_json::insert@22122-22149@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      12      3     86      2      17 nlohmann::basic_json::insert@22175-22191@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      16      4    117      2      22 nlohmann::basic_json::insert@22216-22237@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      21      5    151      1      24 nlohmann::basic_json::update@22258-22281@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      26      7    173      2      33 nlohmann::basic_json::update@22309-22341@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      11      1     71      1      11 nlohmann::basic_json::swap@22360-22370@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       9      1     55      2       9 nlohmann::basic_json::swap@22390-22398@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      11      2     57      1      12 nlohmann::basic_json::swap@22420-22431@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      11      2     57      1      12 nlohmann::basic_json::swap@22453-22464@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      11      2     57      1      12 nlohmann::basic_json::swap@22486-22497@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      11      2     57      1      12 nlohmann::basic_json::swap@22519-22530@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      11      2     60      1      12 nlohmann::basic_json::swap@22533-22544@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      56     23    430      2      67 nlohmann::basic_json::operator ==@22611-22677@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     21      2       4 nlohmann::basic_json::operator ==@22685-22688@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     21      2       4 nlohmann::basic_json::operator ==@22696-22699@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     20      2       4 nlohmann::basic_json::operator !=@22719-22722@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     21      2       4 nlohmann::basic_json::operator !=@22730-22733@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     21      2       4 nlohmann::basic_json::operator !=@22741-22744@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      56     23    468      2      72 nlohmann::basic_json::operator <@22772-22843@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     21      2       4 nlohmann::basic_json::operator <@22851-22854@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     21      2       4 nlohmann::basic_json::operator <@22862-22865@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     20      2       4 nlohmann::basic_json::operator <=@22886-22889@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     21      2       4 nlohmann::basic_json::operator <=@22897-22900@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     21      2       4 nlohmann::basic_json::operator <=@22908-22911@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     20      2       4 nlohmann::basic_json::operator >@22932-22935@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     21      2       4 nlohmann::basic_json::operator >@22943-22946@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     21      2       4 nlohmann::basic_json::operator >@22954-22957@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     20      2       4 nlohmann::basic_json::operator >=@22978-22981@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     21      2       4 nlohmann::basic_json::operator >=@22989-22992@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     21      2       4 nlohmann::basic_json::operator >=@23000-23003@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       9      2     93      2      14 nlohmann::basic_json::operator < <@23045-23058@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     20      0       4 nlohmann::basic_json::operator > >@23069-23072@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       9      1     63      0       9 nlohmann::basic_json::parse@23137-23145@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      10      1     69      0      10 nlohmann::basic_json::parse@23175-23184@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       9      1     55      0       9 nlohmann::basic_json::parse@23188-23196@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     44      0       5 nlohmann::basic_json::accept@23229-23233@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     50      0       5 nlohmann::basic_json::accept@23236-23240@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     36      0       5 nlohmann::basic_json::accept@23244-23248@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      10      2    109      0      10 nlohmann::basic_json::sax_parse@23292-23301@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      10      2    115      0      10 nlohmann::basic_json::sax_parse@23305-23314@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      10      2    102      0      10 nlohmann::basic_json::sax_parse@23319-23328@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     23      2       4 nlohmann::basic_json::operator < <@23339-23342@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     36      2       5 nlohmann::basic_json::operator > >@23369-23373@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      24      8     76      0      24 nlohmann::basic_json::type_name@23413-23436@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     27      1       6 nlohmann::basic_json::to_cbor@23552-23557@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     30      2       4 nlohmann::basic_json::to_cbor@23559-23562@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     30      2       4 nlohmann::basic_json::to_cbor@23564-23567@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     27      1       6 nlohmann::basic_json::to_msgpack@23647-23652@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     30      2       4 nlohmann::basic_json::to_msgpack@23654-23657@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     30      2       4 nlohmann::basic_json::to_msgpack@23659-23662@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       8      1     43      3       8 nlohmann::basic_json::to_ubjson@23750-23757@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     46      4       5 nlohmann::basic_json::to_ubjson@23759-23763@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     46      4       5 nlohmann::basic_json::to_ubjson@23765-23769@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     27      1       6 nlohmann::basic_json::to_bson@23828-23833@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     30      2       4 nlohmann::basic_json::to_bson@23843-23846@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     30      2       4 nlohmann::basic_json::to_bson@23851-23854@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      11      2    108      4      11 nlohmann::basic_json::from_cbor@23961-23971@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      11      2    114      5      11 nlohmann::basic_json::from_cbor@23978-23988@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       7      1     49      5       7 nlohmann::basic_json::from_cbor@23993-23999@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      11      2    100      4      11 nlohmann::basic_json::from_cbor@24004-24014@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      10      2     98      3      10 nlohmann::basic_json::from_msgpack@24104-24113@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      10      2    104      4      10 nlohmann::basic_json::from_msgpack@24120-24129@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     39      4       6 nlohmann::basic_json::from_msgpack@24135-24140@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      10      2     90      3      10 nlohmann::basic_json::from_msgpack@24144-24153@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      10      2     98      3      10 nlohmann::basic_json::from_ubjson@24220-24229@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      10      2    104      4      10 nlohmann::basic_json::from_ubjson@24236-24245@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     39      4       6 nlohmann::basic_json::from_ubjson@24250-24255@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      10      2     90      3      10 nlohmann::basic_json::from_ubjson@24259-24268@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      10      2     98      3      10 nlohmann::basic_json::from_bson@24333-24342@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      10      2    104      4      10 nlohmann::basic_json::from_bson@24349-24358@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     39      4       6 nlohmann::basic_json::from_bson@24363-24368@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      10      2     90      3      10 nlohmann::basic_json::from_bson@24372-24381@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     19      1       4 nlohmann::basic_json::operator [ ]@24424-24427@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     20      1       4 nlohmann::basic_json::operator [ ]@24452-24455@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     17      1       4 nlohmann::basic_json::at@24495-24498@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     18      1       4 nlohmann::basic_json::at@24538-24541@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       6      1     29      0       6 nlohmann::basic_json::flatten@24565-24570@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     15      0       4 nlohmann::basic_json::unflatten@24602-24605@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+     185     31   1026      1     261 nlohmann::basic_json::patch@24663-24923@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      92     13    575      3     123 nlohmann::basic_json::diff@24959-25081@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      25      5    113      1      25 nlohmann::basic_json::merge_patch@25134-25158@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     16      1       4 nlohmann::to_string@25173-25176@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     24      1       4 std::hash<nlohmann::json>::operator ( )@25196-25199@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       5      1     35      2       5 std::less<::nlohmann::detail::value_t>::operator ( )@25212-25216@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       7      1     48      2       7 std::swap<nlohmann::json>@25228-25234@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     27      2       4 operator "" _json@25254-25257@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+       4      1     30      2       4 operator "" _json_pointer@25273-25276@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+37 file analyzed.
+==============================================================
+NLOC    Avg.NLOC  AvgCCN  Avg.token  function_cnt    file
+--------------------------------------------------------------
+    146       9.6     2.8       70.6        13     /home/luise/Exelixis-Lab/bioinformatics/practical-2021/utils/datagen/main.cpp
+     19       7.0     1.5       57.5         2     /home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/TestUtil.hpp
+    148       6.3     1.1       68.4        20     /home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/GeneralizedRFTest.cpp
+     93       7.2     1.1       62.4        12     /home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/PhylomathTest.cpp
+     68      20.0     5.0      204.7         3     /home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/IOUtilTest.cpp
+     26       8.5     1.0       71.0         2     /home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/IOtest.cpp
+     16       0.0     0.0        0.0         0     /home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/Conversion.cpp
+    100      13.8     2.2      171.0         6     /home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/MaximumMatcherTest.cpp
+     27       4.7     1.0       36.3         3     /home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/RFTest.cpp
+     88      18.0     1.0      231.0         4     /home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/MetricsTest.cpp
+     50      14.7     1.0      161.7         3     /home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/MSITest.cpp
+     76       8.6     1.1       84.8         8     /home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/PllSplitTest.cpp
+     81      15.0     1.0      162.0         5     /home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/SPITest.cpp
+     55      16.3     1.0      226.7         3     /home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/MCITest.cpp
+     35       9.3     2.7       98.3         3     /home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/MaximumMatcher.hpp
+      3       0.0     0.0        0.0         0     /home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/PhylogeneticMathUtils.cpp
+     99       6.8     2.9       62.1        13     /home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/PhylogeneticMathUtils.hpp
+     25      10.0     2.5      126.5         2     /home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/Solver.hpp
+     19      14.0     2.0      151.0         1     /home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/main.cpp
+    119      49.5    12.0      445.0         2     /home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/GeneralizedRFDistance.hpp
+    161       8.7     2.7       75.1        15     /home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/Metric.hpp
+     33       4.3     1.3       54.7         3     /home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/IntersectionCache.hpp
+     76       7.8     2.1       67.3         9     /home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllSplits.cpp
+     22      10.5     3.0      102.0         2     /home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/IntersectionCache.cpp
+     82       5.3     1.4       39.3        12     /home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllPointerMap.hpp
+     28       1.6     1.0       17.0         5     /home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllTree.hpp
+     24       4.0     2.0       36.0         5     /home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllTree.cpp
+    112       2.8     1.1       19.5        23     /home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/datastructures/PllSplits.hpp
+      0       0.0     0.0        0.0         0     /home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/IOData.cpp
+     22      17.0     3.0      120.0         1     /home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/TreeReader.hpp
+     19       7.0     1.5       71.5         2     /home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/Converter.hpp
+     73      12.6     3.8      120.2         5     /home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/IOUtil.hpp
+     86      11.0     2.6       90.8         5     /home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/IOData.hpp
+    135      19.0     3.7      143.0         6     /home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/RFDataReader.hpp
+     65      10.6     2.8       59.0         5     /home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/CommandLineOptions.hpp
+     74      17.7     3.7      159.7         3     /home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/RFDataWriter.hpp
+  12405      15.4     4.2       91.3       677     /home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+
+===========================================================================================================
+!!!! Warnings (cyclomatic_complexity > 15 or nloc > 1000000 or length > 1000 or parameter_count > 100) !!!!
+================================================
+  NLOC    CCN   token  PARAM  length  location  
+------------------------------------------------
+      40     18    150      1      42 nlohmann::detail::lexer_base::token_type_name@5934-5975@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+     488    212   1789      0     585 nlohmann::detail::lexer::scan_string@6126-6710@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+     266     98    851      0     324 nlohmann::detail::lexer::scan_number@6841-7164@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      67     29    335      0      87 nlohmann::detail::lexer::scan@7381-7467@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      56     17    362      2      65 nlohmann::detail::binary_reader::parse_bson_element_internal@7897-7961@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+     382    233   1873      2     433 nlohmann::detail::binary_reader::parse_cbor_internal@8043-8475@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      75     37    345      1      83 nlohmann::detail::binary_reader::get_cbor_string@8488-8570@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      79     37    361      1      87 nlohmann::detail::binary_reader::get_cbor_binary@8583-8669@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+     339    273   1378      0     369 nlohmann::detail::binary_reader::parse_msgpack_internal@8768-9136@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      65     40    295      1      71 nlohmann::detail::binary_reader::get_msgpack_string@9148-9218@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      93     34    504      1     106 nlohmann::detail::binary_reader::get_msgpack_binary@9230-9335@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      82     27    477      1      97 nlohmann::detail::binary_reader::get_ubjson_value@9591-9687@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      67     18    307      0      71 nlohmann::detail::binary_reader::get_ubjson_object@9754-9824@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+     216     41   1057      1     280 nlohmann::detail::parser::sax_parse_internal@10286-10565@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      55     16    260      1      70 nlohmann::json_pointer::contains@12197-12266@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+     263     50   1927      1     301 nlohmann::detail::binary_writer::write_cbor@12794-13094@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+     258     56   1822      1     317 nlohmann::detail::binary_writer::write_msgpack@13099-13415@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+     171     35    903      4     197 nlohmann::detail::binary_writer::write_ubjson@13423-13619@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      57     18    453      2      60 nlohmann::detail::binary_writer::write_number_with_ubjson_prefix@14066-14125@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      69     26    539      1      79 nlohmann::detail::binary_writer::ubjson_prefix@14130-14208@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+     221     30   1439      5     268 nlohmann::detail::serializer::dump@15534-15801@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+     194     30    943      2     247 nlohmann::detail::serializer::dump_escaped@15818-16064@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      77     17    366      2      94 nlohmann::basic_json::basic_json@18407-18500@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      56     23    430      2      67 nlohmann::basic_json::operator ==@22611-22677@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+      56     23    468      2      72 nlohmann::basic_json::operator <@22772-22843@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+     185     31   1026      1     261 nlohmann::basic_json::patch@24663-24923@/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp
+==========================================================================================
+Total nloc   Avg.NLOC  AvgCCN  Avg.token   Fun Cnt  Warning cnt   Fun Rt   nloc Rt
+------------------------------------------------------------------------------------------
+     14710      13.9     3.7       89.6      883           26      0.03    0.32
+Duplicates
+===================================
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/GeneralizedRFTest.cpp:136 ~ 157
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/GeneralizedRFTest.cpp:157 ~ 163
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/GeneralizedRFTest.cpp:163 ~ 168
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/GeneralizedRFTest.cpp:168 ~ 173
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/GeneralizedRFTest.cpp:173 ~ 178
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/GeneralizedRFTest.cpp:178 ~ 184
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/GeneralizedRFTest.cpp:184 ~ 189
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/GeneralizedRFTest.cpp:189 ~ 194
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/GeneralizedRFTest.cpp:194 ~ 199
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/GeneralizedRFTest.cpp:199 ~ 204
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/MaximumMatcherTest.cpp:52 ~ 56
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/MaximumMatcherTest.cpp:76 ~ 80
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/MaximumMatcherTest.cpp:74 ~ 76
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/MaximumMatcherTest.cpp:95 ~ 97
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/MaximumMatcherTest.cpp:117 ~ 119
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/MSITest.cpp:1 ~ 40
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/SPITest.cpp:1 ~ 43
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/MSITest.cpp:8 ~ 16
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/SPITest.cpp:8 ~ 15
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/test/src/gtest/MCITest.cpp:26 ~ 33
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:3533 ~ 3538
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:3550 ~ 3555
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:3641 ~ 3647
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:3748 ~ 3753
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:3768 ~ 3773
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:3748 ~ 3763
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:3768 ~ 3783
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:3601 ~ 3612
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:3618 ~ 3630
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:3748 ~ 3763
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:3768 ~ 3783
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:4882 ~ 4913
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:4940 ~ 4971
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:4908 ~ 4913
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:4914 ~ 4919
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:4921 ~ 4926
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:4966 ~ 4971
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:4908 ~ 4914
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:4914 ~ 4920
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:4921 ~ 4927
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:4914 ~ 4921
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:4921 ~ 4928
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:4913 ~ 4913
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:4919 ~ 4919
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:4920 ~ 4920
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:4926 ~ 4926
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:4927 ~ 4927
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:4928 ~ 4928
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:4978 ~ 4978
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:4913 ~ 4914
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:4920 ~ 4921
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:4928 ~ 4929
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:4978 ~ 4979
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:4928 ~ 4933
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:4978 ~ 4983
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:4913 ~ 4914
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:4920 ~ 4921
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:4928 ~ 4929
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:4971 ~ 4972
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:4978 ~ 4979
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:5205 ~ 5209
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:5332 ~ 5336
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:5506 ~ 5510
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:5802 ~ 5806
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:5985 ~ 5989
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:5205 ~ 5209
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:5332 ~ 5336
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:5506 ~ 5510
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:5802 ~ 5806
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:5577 ~ 5589
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:5640 ~ 5652
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:6489 ~ 6510
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:8106 ~ 8127
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:8811 ~ 8832
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:6489 ~ 6547
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:8811 ~ 8869
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:6519 ~ 6542
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:8156 ~ 8179
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:8593 ~ 8616
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:8841 ~ 8864
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:6519 ~ 6547
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:8156 ~ 8184
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:8841 ~ 8869
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:6546 ~ 6581
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:8869 ~ 8904
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:6550 ~ 6573
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:8191 ~ 8214
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:8498 ~ 8521
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:8873 ~ 8896
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:6550 ~ 6578
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:8191 ~ 8219
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:8873 ~ 8901
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:6937 ~ 6953
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:7000 ~ 7016
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:7065 ~ 7081
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:7091 ~ 7107
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:6939 ~ 6953
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:6976 ~ 6990
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:7002 ~ 7016
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:7067 ~ 7081
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:7093 ~ 7107
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:6941 ~ 6953
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:6978 ~ 6990
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:7004 ~ 7016
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:7042 ~ 7054
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:7069 ~ 7081
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:7095 ~ 7107
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:8050 ~ 8076
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:8774 ~ 8800
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:8277 ~ 8303
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:8943 ~ 8969
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:8280 ~ 8303
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:8946 ~ 8969
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:9158 ~ 9181
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:8946 ~ 8977
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:9158 ~ 9189
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:9264 ~ 9272
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:9274 ~ 9282
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:9284 ~ 9292
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:9479 ~ 9484
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:9490 ~ 9495
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:9501 ~ 9506
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:9512 ~ 9517
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:9523 ~ 9528
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:9479 ~ 9488
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:9490 ~ 9499
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:9501 ~ 9510
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:9512 ~ 9521
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:10201 ~ 10219
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:10230 ~ 10248
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:10272 ~ 10277
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:10319 ~ 10324
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:10332 ~ 10337
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:10514 ~ 10519
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:10528 ~ 10533
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:10319 ~ 10332
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:10514 ~ 10528
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:10273 ~ 10277
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:10320 ~ 10324
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:10333 ~ 10337
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:10446 ~ 10451
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:10455 ~ 10459
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:10515 ~ 10519
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:10529 ~ 10533
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:10274 ~ 10277
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:10321 ~ 10324
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:10334 ~ 10337
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:10448 ~ 10451
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:10456 ~ 10459
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:10503 ~ 10506
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:10516 ~ 10519
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:10530 ~ 10533
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:10559 ~ 10562
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:10319 ~ 10332
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:10514 ~ 10528
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:12066 ~ 12100
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:12157 ~ 12191
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:12075 ~ 12090
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:12124 ~ 12139
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:12166 ~ 12181
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:13127 ~ 13152
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:13198 ~ 13223
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:12935 ~ 12939
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:12973 ~ 12977
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:13018 ~ 13022
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:13057 ~ 13061
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:13240 ~ 13245
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:12939 ~ 12944
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:12977 ~ 12982
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:13022 ~ 13027
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:13061 ~ 13066
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:13245 ~ 13251
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:12940 ~ 12944
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:12978 ~ 12982
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:13023 ~ 13027
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:13062 ~ 13066
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:13246 ~ 13251
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:13275 ~ 13280
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:12944 ~ 12948
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:12982 ~ 12986
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:13027 ~ 13031
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:13066 ~ 13070
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:13251 ~ 13255
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:13280 ~ 13284
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:13354 ~ 13358
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:13393 ~ 13397
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:12944 ~ 12949
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:12982 ~ 12987
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:13027 ~ 13032
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:13066 ~ 13071
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:13251 ~ 13257
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:13280 ~ 13286
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:13393 ~ 13399
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:12949 ~ 12955
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:12987 ~ 12993
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:13032 ~ 13038
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:13071 ~ 13077
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:13120 ~ 13133
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:13194 ~ 13204
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:13491 ~ 13508
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:13579 ~ 13596
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:14038 ~ 14060
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:14101 ~ 14125
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:16426 ~ 16430
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:16449 ~ 16453
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:16462 ~ 16466
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:16475 ~ 16479
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:16508 ~ 16512
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:16520 ~ 16524
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:16532 ~ 16536
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:16426 ~ 16431
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:16449 ~ 16454
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:16462 ~ 16467
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:16508 ~ 16513
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:16520 ~ 16525
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:16532 ~ 16537
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:19795 ~ 19813
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:19842 ~ 19860
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:20122 ~ 20161
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:20214 ~ 20277
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:20538 ~ 20563
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:20652 ~ 20677
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:21714 ~ 21731
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:21749 ~ 21766
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:22687 ~ 22696
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:22732 ~ 22741
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:22853 ~ 22862
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:22899 ~ 22908
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:22945 ~ 22954
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:22991 ~ 23000
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:22687 ~ 22696
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:22721 ~ 22730
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:22732 ~ 22741
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:22853 ~ 22862
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:22899 ~ 22908
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:22934 ~ 22943
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:22945 ~ 22954
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:22980 ~ 22989
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:22991 ~ 23000
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:22687 ~ 22696
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:22721 ~ 22730
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:22732 ~ 22741
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:22842 ~ 22851
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:22853 ~ 22862
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:22888 ~ 22897
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:22899 ~ 22908
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:22934 ~ 22943
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:22945 ~ 22954
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:22980 ~ 22989
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:22991 ~ 23000
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:23297 ~ 23301
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:23310 ~ 23314
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:23324 ~ 23328
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:23964 ~ 23969
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:24106 ~ 24111
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:24222 ~ 24227
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:24335 ~ 24340
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:23968 ~ 23976
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:23985 ~ 23990
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:24011 ~ 24102
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:23981 ~ 23985
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:24122 ~ 24126
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:24238 ~ 24242
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:24351 ~ 24355
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:24122 ~ 24127
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:24238 ~ 24243
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:24351 ~ 24356
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:23985 ~ 23986
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:24126 ~ 24127
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:24242 ~ 24243
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:24355 ~ 24356
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:24146 ~ 24151
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:24261 ~ 24266
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:24374 ~ 24379
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:24010 ~ 24012
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:24149 ~ 24151
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:24264 ~ 24266
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:24377 ~ 24379
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:24145 ~ 24151
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:24260 ~ 24266
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:24373 ~ 24379
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:24106 ~ 24111
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:24222 ~ 24227
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:24335 ~ 24340
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:24110 ~ 24118
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:24126 ~ 24132
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:24150 ~ 24218
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Duplicate block:
+--------------------------
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:24226 ~ 24234
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:24242 ~ 24247
+/home/luise/Exelixis-Lab/bioinformatics/practical-2021/src/io/json/json.hpp:24265 ~ 24331
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Total duplicate rate: 16.67%
+Total unique rate: 0.00%

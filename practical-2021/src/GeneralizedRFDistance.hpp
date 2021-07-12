@@ -43,6 +43,7 @@ public:
     size_t split_count = tree_splits[0].getSplits().size();
     std::vector<std::vector<double>> similarities = std::vector<std::vector<double>>(split_count, std::vector<double>(split_count));
     std::vector<std::future<double>> futures;
+    bool all_trees_equal_to_last = true;
 
     for(size_t i = 0; i < tree_count; ++i){
       futures.clear();
@@ -60,6 +61,9 @@ public:
           is_unique = false;
           --result.number_of_unique_trees;
         }
+        if(j == tree_count - 1 && dist != 0){
+          all_trees_equal_to_last = false;
+        }
         result.pairwise_distance_mtx[j].emplace_back(dist);
         if(i != j){
           result.mean_dst += dist;
@@ -67,8 +71,13 @@ public:
         }
       }
     }
+    if (all_trees_equal_to_last){
+      --result.number_of_unique_trees;
+      assert(result.number_of_unique_trees == 0);
+    } else {
+      assert(result.number_of_unique_trees > 0);
+    }
     result.mean_dst = (dist_count == 0) ? 0 : result.mean_dst  / static_cast<double>(dist_count);
-    assert(result.number_of_unique_trees >= 1);
     return result;
   }
 
@@ -88,6 +97,7 @@ public:
     result.number_of_unique_trees = tree_count;
     result.pairwise_distance_mtx = std::vector<std::vector<double>>(tree_count, std::vector<double>());
     size_t dist_count = 0;
+    bool all_trees_equal_to_last = true;
     for(size_t i = 0; i < tree_count; ++i){
       bool is_unique = true;
       for(size_t j = i; j < tree_count; ++j){
@@ -98,6 +108,9 @@ public:
           is_unique = false;
           --result.number_of_unique_trees;
         }
+        if(j == tree_count - 1 && dist != 0){
+          all_trees_equal_to_last = false;
+        }
         result.pairwise_distance_mtx[j].emplace_back(dist);
         if(i != j){
           result.mean_dst += dist;
@@ -105,8 +118,13 @@ public:
         }
       }
     }
+    if (all_trees_equal_to_last){
+      --result.number_of_unique_trees;
+      assert(result.number_of_unique_trees == 0);
+    } else {
+      assert(result.number_of_unique_trees > 0);
+    }
     result.mean_dst = (dist_count == 0) ? 0 : result.mean_dst  / static_cast<double>(dist_count);
-    assert(result.number_of_unique_trees >= 1);
     return result;
   }
 

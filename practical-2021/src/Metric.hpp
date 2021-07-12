@@ -36,12 +36,16 @@ class MSIMetric : public GeneralizedMetric {
     const PllSplit& sp1 = map[s1];
     if (s1 == s2) return sp1.h();
     const PllSplit& sp2 = map[s2];
-    size_t intersect_aa = sp1.intersectionSize(sp2);
-    size_t intersect_ba = sp2.partitionSizeOf(1) - intersect_aa;
-    size_t intersect_bb = sp1.partitionSizeOf(0) - intersect_ba;
-    size_t intersect_ab = sp2.partitionSizeOf(0) - intersect_bb;
-    return std::max(phylomath::h(intersect_aa, intersect_bb),
-                    phylomath::h(intersect_ba, intersect_ab));
+    size_t intersect_11 = sp1.intersectionSize(sp2);
+    assert(intersect_11 <= sp1.partitionSizeOf(1) && intersect_11 <= sp2.partitionSizeOf(1));
+    size_t intersect_01 = sp2.partitionSizeOf(1) - intersect_11;
+    assert(intersect_01 <= sp1.partitionSizeOf(0) && intersect_01 <= sp2.partitionSizeOf(1));
+    size_t intersect_00 = sp1.partitionSizeOf(0) - intersect_01;
+    assert(intersect_00 <= sp1.partitionSizeOf(0) && intersect_00 <= sp2.partitionSizeOf(0));
+    size_t intersect_10 = sp2.partitionSizeOf(0) - intersect_00;
+    assert(intersect_10 <= sp1.partitionSizeOf(1) && intersect_10 <= sp2.partitionSizeOf(0));
+    return std::max(phylomath::h(intersect_11, intersect_00),
+                    phylomath::h(intersect_01, intersect_10));
 
   }
   double maximum(const PllSplitList& plist1, const PllSplitList& plist2) const override {
@@ -61,34 +65,37 @@ class SPIMetric : public GeneralizedMetric {
     const PllSplit& sp2 = map[s2];
 
 
-    size_t a_1 = sp1.partitionSizeOf(1);
-    size_t a_2 = sp2.partitionSizeOf(1);
-    size_t b_1 = sp1.partitionSizeOf(0);
-    size_t b_2 = sp2.partitionSizeOf(0);
+    size_t s1_size_1 = sp1.partitionSizeOf(1);
+    size_t s2_size_1 = sp2.partitionSizeOf(1);
+    size_t s1_size_0 = sp1.partitionSizeOf(0);
+    size_t s2_size_0 = sp2.partitionSizeOf(0);
 
-    if (s1 == s2) return phylomath::h(a_2, b_2);
+    if (s1 == s2) return phylomath::h(s2_size_1, s2_size_0);
 
     double phylo_shared;
-    size_t intersect_a_a = sp1.intersectionSize(sp2);
-    size_t intersect_b_a = a_2 - intersect_a_a;
-    assert(intersect_a_a > 0);
-    if(!intersect_b_a) {
-      phylo_shared = phylomath::h(b_1, a_2, a_1 + b_1);
+    size_t intersect_11 = sp1.intersectionSize(sp2);
+    assert(intersect_11 <= s1_size_1 && intersect_11 <= s2_size_1);
+    size_t intersect_01 = s2_size_1 - intersect_11;
+    assert(intersect_01 <= s1_size_0 && intersect_01 <= s2_size_1);
+    if(!intersect_01) {
+      phylo_shared = phylomath::h(s1_size_0, s2_size_1, s1_size_1 + s1_size_0);
     } else {
-      size_t intersect_b_b = b_1 - intersect_b_a;
-      if(!intersect_b_b){
-        phylo_shared = phylomath::h(b_1, b_2, a_1 + b_1);
+      size_t intersect_00 = s1_size_0 - intersect_01;
+      assert(intersect_00 <= s1_size_0 && intersect_00 <= s2_size_0);
+      if(!intersect_00){
+        phylo_shared = phylomath::h(s1_size_0, s2_size_0, s1_size_1 + s1_size_0);
       } else {
-        size_t intersect_a_b = b_2 - intersect_b_b;
-        if(!intersect_a_b){
-          phylo_shared = phylomath::h(a_1, b_2, a_1 + b_1);
+        size_t intersect_10 = s2_size_0 - intersect_00;
+        assert(intersect_10 <= s1_size_1 && intersect_10 <= s2_size_0);
+        if(!intersect_10){
+          phylo_shared = phylomath::h(s1_size_1, s2_size_0, s1_size_1 + s1_size_0);
         } else {
           //partitions incompatible
           return 0.0;
         }
       }
     }
-    return phylomath::h(a_1, b_1) + phylomath::h(a_2, b_2) - phylo_shared;
+    return phylomath::h(s1_size_1, s1_size_0) + phylomath::h(s2_size_1, s2_size_0) - phylo_shared;
   }
 
   double maximum(const PllSplitList& plist1, const PllSplitList& plist2) const override {
@@ -109,18 +116,22 @@ class MCIMetric : public GeneralizedMetric {
       const PllSplit& sp1 = map[s1];
       const PllSplit& sp2 = map[s2];
 
-      size_t size_a1 = sp1.partitionSizeOf(1);
-      size_t size_b1 = sp1.partitionSizeOf(0);
-      size_t size_a2 = sp2.partitionSizeOf(1);
-      size_t size_b2 = sp2.partitionSizeOf(0);
-      size_t intersect_aa = sp1.intersectionSize(sp2);
-      size_t intersect_ba = size_a2 - intersect_aa;
-      size_t intersect_bb = size_b1 - intersect_ba;
-      size_t intersect_ab = size_b2 - intersect_bb;
-      return mutualInformation(intersect_aa, size_a1, size_a2) +
-             mutualInformation(intersect_ab, size_a1, size_b2) +
-             mutualInformation(intersect_ba, size_b1, size_a2) +
-             mutualInformation(intersect_bb, size_b1, size_b2);
+      size_t s1_size_1 = sp1.partitionSizeOf(1);
+      size_t s1_size_0 = sp1.partitionSizeOf(0);
+      size_t s2_size_1 = sp2.partitionSizeOf(1);
+      size_t s2_size_0 = sp2.partitionSizeOf(0);
+      size_t intersect_11 = sp1.intersectionSize(sp2);
+      assert(intersect_11 <= s1_size_1 && intersect_11 <= s2_size_1);
+      size_t intersect_01 = s2_size_1 - intersect_11;
+      assert(intersect_01 <= s1_size_0 && intersect_01 <= s2_size_1);
+      size_t intersect_00 = s1_size_0 - intersect_01;
+      assert(intersect_00 <= s1_size_0 && intersect_00 <= s2_size_0);
+      size_t intersect_10 = s2_size_0 - intersect_00;
+      assert(intersect_10 <= s1_size_1 && intersect_10 <= s2_size_0);
+      return mutualInformation(intersect_11, s1_size_1, s2_size_1) +
+             mutualInformation(intersect_10, s1_size_1, s2_size_0) +
+             mutualInformation(intersect_01, s1_size_0, s2_size_1) +
+             mutualInformation(intersect_00, s1_size_0, s2_size_0);
 
     }
     double maximum(const PllSplitList& plist1, const PllSplitList& plist2) const override {

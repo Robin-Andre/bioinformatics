@@ -19,19 +19,12 @@ class PllPointerMap {
     }
     processQueue();
     all_splits_unique.resize(map_pos);
-    for(unsigned i = 0; i < all_splits_unique.size(); ++i) {
-
-    }
   }
   //This is for testing purposes only
   explicit PllPointerMap(std::vector<PllSplit>& splits) {
     all_splits_unique = splits;
   }
-  ~PllPointerMap() {
-    for(unsigned i = 0; i < trees_as_pointers.size(); ++i) {
-      //free(trees_as_pointers[i]);
-    }
-  }
+  ~PllPointerMap() {}
   const PllSplit& operator[] (size_t index) const {
     return all_splits_unique[index];
   }
@@ -82,6 +75,7 @@ class PllPointerMap {
     }
   }
   void insertIntoMap(const SplitReference& split_and_id) {
+    assert (map_pos <= all_splits_unique.size());
     if(map_pos > 0 && all_splits_unique[map_pos - 1] == split_and_id.split_temp) {
       //TODO rewrite since nothing is executed here
       //This is extremely weird but this if block represents when a duplicate split has been found
@@ -94,6 +88,7 @@ class PllPointerMap {
     updateSplitList(all_splits_unique[map_pos - 1], split_and_id.tree_number);
   }
   void updateSplitList(const PllSplit& current_split, size_t ID) {
+    assert(ID < tree_iterator.size());
     //Since the push method always increases tree_iterator and points to the next element to be inserted into queue
     //We have to subtract 1 to find the location as where to insert the element.
     auto oldID = tree_iterator[ID] - 1;

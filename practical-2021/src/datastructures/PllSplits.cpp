@@ -8,9 +8,12 @@ pll_split_base_t PllSplit::bitmask_for_unused_bits = 0;
 
 PllSplit::PllSplit(pll_split_t s) : _split{s} {
   size_block_A = this->popcount();
+  assert(size_block_A >= 0);
   size_block_B = PllSplit::getTipCount() - this->popcount();
   h_value = phylomath::h(size_block_A, size_block_B);
+  assert(h_value >= 0);
   entropy_value = phylomath::entropy(size_block_A, size_block_B);
+  assert(entropy_value >= 0);
 }
 
 

@@ -8,6 +8,7 @@ class Solver {
     static double distanceFromSimilarity(const PllSplitList& first,
                                   const PllSplitList& second, double similarity, Mode mode, const GeneralizedMetric& metric) {
       double max_value = metric.maximum(first, second);
+      assert(max_value != 0);
       assert((max_value - 2 * similarity) > -0.000001);
       double dist = std::max(0.0, max_value - 2 * similarity);
       return (mode == RELATIVE) ? dist : (dist / max_value);

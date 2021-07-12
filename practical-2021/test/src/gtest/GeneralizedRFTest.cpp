@@ -83,7 +83,27 @@ TEST_F(GeneralizedRFTest, simple_identity) {
   EXPECT_NEAR(GRFDist::computeGeneralizedDistances(trees, metric_msi, RELATIVE).pairwise_distance_mtx[0][0], 0, epsilon);
   EXPECT_NEAR(GRFDist::computeGeneralizedDistances(trees, metric_spi, RELATIVE).pairwise_distance_mtx[0][0], 0, epsilon);
   EXPECT_NEAR(GRFDist::computeGeneralizedDistances(trees, metric_mci, RELATIVE).pairwise_distance_mtx[0][0], 0, epsilon);
+
+  /*EXPECT_EQ(GRFDist::computeGeneralizedDistances(trees, metric_msi, ABSOLUTE).number_of_unique_trees, 0);
+  EXPECT_EQ(GRFDist::computeGeneralizedDistances(trees, metric_spi, ABSOLUTE).number_of_unique_trees, 0);
+  EXPECT_EQ(GRFDist::computeGeneralizedDistances(trees, metric_mci, ABSOLUTE).number_of_unique_trees, 0);
+  EXPECT_EQ(GRFDist::computeGeneralizedDistances(trees, metric_msi, RELATIVE).number_of_unique_trees, 0);
+  EXPECT_EQ(GRFDist::computeGeneralizedDistances(trees, metric_spi, RELATIVE).number_of_unique_trees, 0);
+  EXPECT_EQ(GRFDist::computeGeneralizedDistances(trees, metric_mci, RELATIVE).number_of_unique_trees, 0);*/
 }
+
+TEST_F(GeneralizedRFTest, no_unique_tree) {
+  PllTree tree = TreeReader::readTreeFile(current_data_dir + "heads/24")[0];
+  std::vector<PllTree> trees = {tree, tree, tree, tree};
+
+  EXPECT_EQ(GRFDist::computeGeneralizedDistances(trees, metric_msi, ABSOLUTE).number_of_unique_trees, 0);
+  EXPECT_EQ(GRFDist::computeGeneralizedDistances(trees, metric_spi, ABSOLUTE).number_of_unique_trees, 0);
+  EXPECT_EQ(GRFDist::computeGeneralizedDistances(trees, metric_mci, ABSOLUTE).number_of_unique_trees, 0);
+  EXPECT_EQ(GRFDist::computeGeneralizedDistances(trees, metric_msi, RELATIVE).number_of_unique_trees, 0);
+  EXPECT_EQ(GRFDist::computeGeneralizedDistances(trees, metric_spi, RELATIVE).number_of_unique_trees, 0);
+  EXPECT_EQ(GRFDist::computeGeneralizedDistances(trees, metric_mci, RELATIVE).number_of_unique_trees, 0);
+}
+
 TEST_F(GeneralizedRFTest, ExampleFromSlideshow) {
   PllSplit::setTipCount(6);
   PllTree tree = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[0];
