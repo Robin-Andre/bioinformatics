@@ -36,7 +36,7 @@ bool operator < (const PllSplit&p1, const PllSplit& p2) {
 size_t PllSplit::popcount() const{
   size_t popcount = 0;
   for(size_t i = 0; i < PllSplit::split_len; ++i){
-    popcount += __builtin_popcount(_split[i]);
+    popcount += static_cast<size_t>(__builtin_popcount(_split[i]));
   }
   return popcount;
 }
@@ -46,10 +46,10 @@ size_t PllSplit::intersectionSize(const PllSplit& other) const {
   size_t count = 0;
 
   for (size_t i = 0; i < PllSplit::split_len - 1; ++i){
-    count += __builtin_popcount(_split[i] & other_split[i]);
+    count += static_cast<size_t>(__builtin_popcount(_split[i] & other_split[i]));
   }
-  count += __builtin_popcount(_split[PllSplit::split_len - 1] & other_split[PllSplit::split_len - 1]
-                        & PllSplit::bitmask_for_unused_bits);
+  count += static_cast<size_t>(__builtin_popcount(_split[PllSplit::split_len - 1] & other_split[PllSplit::split_len - 1]
+                        & PllSplit::bitmask_for_unused_bits));
   return count;
 }
 

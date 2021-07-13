@@ -125,7 +125,7 @@ public:
     if (a == 0 || b == 0) return 0;
     double p_a = clusteringProbability(a);
     double p_b = clusteringProbability(b);
-    assert(p_a != 0 && p_b != 0);
+    assert(p_a > 0 && p_b > 0);
     return -p_a * std::log2(p_a) - p_b * std::log2(p_b);
   }
 
