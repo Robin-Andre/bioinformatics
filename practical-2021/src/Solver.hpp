@@ -5,8 +5,11 @@ class Solver {
 
   public:
 
-    static double distanceFromSimilarity(const PllSplitList& first,
-                                  const PllSplitList& second, double similarity, Mode mode, const GeneralizedMetric& metric) {
+    static double distanceFromSimilarity( const PllSplitList& first,
+                                          const PllSplitList& second,
+                                          double similarity,
+                                          Mode mode,
+                                          const GeneralizedMetric& metric) {
       double max_value = metric.maximum(first, second);
       assert(max_value != 0);
       assert((max_value - 2 * similarity) > -0.000001);

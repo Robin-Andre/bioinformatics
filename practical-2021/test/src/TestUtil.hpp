@@ -13,11 +13,9 @@ public:
   }
 
   static void setBits(pll_split_t split_bits, std::vector<size_t> part1) {
-    size_t major_idx;
-    size_t minor_idx;
     for(size_t tip : part1){
-      major_idx = tip / (sizeof(pll_split_base_t) * 8);
-      minor_idx = tip % (sizeof(pll_split_base_t) * 8);
+      size_t major_idx = tip / (sizeof(pll_split_base_t) * 8);
+      size_t minor_idx = tip % (sizeof(pll_split_base_t) * 8);
       split_bits[major_idx] |= (1 << minor_idx);
     }
   }

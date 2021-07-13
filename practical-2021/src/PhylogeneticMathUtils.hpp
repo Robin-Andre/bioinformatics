@@ -115,8 +115,11 @@ public:
   }
   inline static double quickerClusteringProbability(size_t intersectsize, size_t size1, size_t size2) {
     assert(intersectsize > 0 && size1 > 0 && size2 > 0);
-    assert(intersectsize < PllSplit::getTipCount() && size1 < PllSplit::getTipCount() && size2 < PllSplit::getTipCount());
-    return logCache[intersectsize - 1] + logCache[PllSplit::getTipCount() - 1] - logCache[size1 - 1] - logCache[size2 - 1];
+    assert(intersectsize < PllSplit::getTipCount());
+    assert(size1 < PllSplit::getTipCount());
+    assert(size2 < PllSplit::getTipCount());
+    return logCache[intersectsize - 1] + logCache[PllSplit::getTipCount() - 1]
+          - logCache[size1 - 1] - logCache[size2 - 1];
   }
   inline static double entropy(size_t a, size_t b) {
     if (a == 0 || b == 0) return 0;

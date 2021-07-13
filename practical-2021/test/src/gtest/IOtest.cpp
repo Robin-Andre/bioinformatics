@@ -13,7 +13,6 @@ TEST_F(IOTest, tree_read) {
   PllTree tree = TreeReader::readTreeFile("../test/res/data/simple_newick")[0];
   PllSplit::setTipCount(tree.getTipCount());
   PllPointerMap map({tree});
-  PllSplitList& splits = map.vectors()[0];
   PllSplit split1 = map[0];
   PllSplit split2 = map[1];
   EXPECT_FALSE(split1==split2);

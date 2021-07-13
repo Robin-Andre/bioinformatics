@@ -74,7 +74,7 @@ private:
       return std::stod(item);
   }
   // @Softwipe unused function, needed if we want to test relative distances
-  static float getRelativeDistanceFromString(const std::string &line) {
+  /*static float getRelativeDistanceFromString(const std::string &line) {
       std::istringstream iss (line);
       std::string item;
       size_t i = 0;
@@ -82,7 +82,7 @@ private:
           i++;
       }
       return std::stod(item);
-  }
+  }*/
 
 
   static std::string parseAfterPrefix(const std::string& line, const std::string& prefix){

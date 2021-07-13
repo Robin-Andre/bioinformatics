@@ -84,18 +84,6 @@ public:
   }
 
 private:
-  constexpr size_t splitBitWidth() const {
-    return sizeof(pll_split_base_t) * 8;
-  }
-
-  constexpr size_t computeMajorIndex(size_t index) const {
-    return index / splitBitWidth();
-  }
-
-  constexpr size_t computeMinorIndex(size_t index) const {
-    return index % splitBitWidth();
-  }
-
   /* Computes the number of bits per split base */
   static inline size_t computSplitBaseSize() {
     return sizeof(pll_split_base_t) * 8;

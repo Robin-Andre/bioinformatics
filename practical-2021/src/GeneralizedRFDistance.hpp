@@ -16,7 +16,9 @@ extern "C" {
 #include <future>
 class GeneralizedRFDistance {
 public:
-  static io::IOData computeGeneralizedDistances(const std::vector<PllTree>& trees, const GeneralizedMetric& metric, Mode mode) {
+  static io::IOData computeGeneralizedDistances(const std::vector<PllTree>& trees,
+                                                const GeneralizedMetric& metric,
+                                                Mode mode) {
     PllSplit::setTipCount(trees[0].getTipCount());
     //test.initializePointerSplitLists(trees);
     size_t tree_count = trees.size();
@@ -41,7 +43,8 @@ public:
     //Required for (parallel) computation
     size_t dist_count = 0;
     size_t split_count = tree_splits[0].getSplits().size();
-    std::vector<std::vector<double>> similarities = std::vector<std::vector<double>>(split_count, std::vector<double>(split_count));
+    std::vector<std::vector<double>> similarities =
+      std::vector<std::vector<double>>(split_count, std::vector<double>(split_count));
     std::vector<std::future<double>> futures;
     bool all_trees_equal_to_last = true;
 
@@ -55,7 +58,8 @@ public:
       for(size_t j = i; j < tree_count; ++j){
         double dist = futures[j-i].get();
         assert(dist >= 0.0);
-        dist = (mode == SIMILARITY) ? dist : Solver::distanceFromSimilarity(tree_splits[i], tree_splits[j], dist, mode, metric);
+        dist = (mode == SIMILARITY) ? dist :
+          Solver::distanceFromSimilarity(tree_splits[i], tree_splits[j], dist, mode, metric);
         //TODO: Check near 0 because of numerical issues
         if (i != j && dist == 0 && is_unique){
           is_unique = false;
@@ -129,7 +133,7 @@ public:
   }
 
   private:
-  PllPointerMap _map;
+  static PllPointerMap _map;
 
 
 };

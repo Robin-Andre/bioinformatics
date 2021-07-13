@@ -4,19 +4,7 @@
 #include "../TestUtil.hpp"
 
 
-class PllSplitTest : public testing::Test {
-
-protected:
-
-  void split_vector_eq(const std::vector<PllSplit*>& l1, const std::vector<PllSplit*>& l2) {
-    EXPECT_EQ(l1.size(), l2.size());
-    for(size_t i = 0; i < l1.size(); ++i){
-      EXPECT_EQ(*l1[i], *l2[i]);
-    }
-  }
-};
-
-
+class PllSplitTest : public testing::Test {};
 
 TEST_F(PllSplitTest, test_popcount) {
   PllSplit::setTipCount(64);

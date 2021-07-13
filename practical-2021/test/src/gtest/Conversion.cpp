@@ -33,7 +33,8 @@ protected:
       std::cout << in_path << std::endl;
       DIR* dir = opendir(in_path.c_str());
       if (dir) {
-        Converter::raxmlToJSON(in_path, target_path + metric_name + "/" + mode_name + "/" + setup + "/" + size, mode_name, std::stoi(size));
+        Converter::raxmlToJSON(in_path, target_path + 
+            metric_name + "/" + mode_name + "/" + setup + "/" + size, mode_name, std::stoi(size));
       }
     }
   }
@@ -48,7 +49,8 @@ TEST_F(Conversion, convert_matrix) {
           std::string in_path = matrix_path + metric + "/" + mode + "/" + setup + "/" + size;
           std::cout << in_path << std::endl;
           if (FILE *file = fopen(in_path.c_str(), "r")) {
-            Converter::matrixToJSON(in_path, target_path + metric + "/" + mode + "/" + setup + "/" + size, metric, mode);
+            Converter::matrixToJSON(in_path, target_path + metric + 
+                "/" + mode + "/" + setup + "/" + size, metric, mode);
           }
         }
       }

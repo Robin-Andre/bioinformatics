@@ -14,7 +14,8 @@ public:
     operations_research::SimpleLinearSumAssignment assignment;
     for (size_t i = 0; i < weights.size(); ++i) {
       for(size_t j = 0; j < weights[i].size(); ++j) {
-        assignment.AddArcWithCost(static_cast<int>(i), static_cast<int>(j),  convert_weight(weights[i][j])); //@Softwipe, added explicit conversion
+        assignment.AddArcWithCost(static_cast<int>(i), static_cast<int>(j),
+          convert_weight(weights[i][j])); //@Softwipe, added explicit conversion
       }
     }
     if (assignment.Solve() == operations_research::SimpleLinearSumAssignment::OPTIMAL) {

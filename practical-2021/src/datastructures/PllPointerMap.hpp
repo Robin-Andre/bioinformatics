@@ -23,13 +23,13 @@ class PllPointerMap {
   //This is for testing purposes only
   explicit PllPointerMap(std::vector<PllSplit>& splits) {
     all_splits_unique = splits;
+    //dummy initializations for Softwipe
+    map_pos = 0;
+    limit = 0;
   }
   ~PllPointerMap() {}
   const PllSplit& operator[] (size_t index) const {
     return all_splits_unique[index];
-  }
-  std::vector<PllSplit> getMap() {
-      return all_splits_unique;
   }
   std::vector<PllSplitList>& vectors() {
       return split_lists;

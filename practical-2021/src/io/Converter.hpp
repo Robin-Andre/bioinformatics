@@ -9,7 +9,7 @@ class Converter {
 
 public:
 
-static void raxmlToJSON(const std::string& inpath, const std::string& outpath, const std::string& mode_name, size_t tip_count) {
+/*static void raxmlToJSON(const std::string& inpath, const std::string& outpath, const std::string& mode_name, size_t tip_count) {
   io::IOData data = RAXMLReader::read(inpath);
   data.mode = mode_name;
   if(mode_name == "ABSOLUTE") {
@@ -23,7 +23,7 @@ static void matrixToJSON(const std::string& inpath, const std::string& outpath, 
   data.metric = metric_name;
   data.mode = mode_name;
   JSONWriter::write(outpath, data);
-}
+}*/
 
 
 };

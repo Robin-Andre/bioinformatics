@@ -40,7 +40,10 @@ protected:
 
 
 TEST_F(MaximumMatcherTest, test_assignment) {
-    std::vector<std::vector<double>> weights = {{0.2d, 0.1d, 0.1d, -0.1d}, {0.0d, 0.2d, -0.1d, 0.1d}, {0.1d, 0.1d, 0.2d, 0.0d}, {0.0d, -0.1d, 0.1d, 0.2d}};
+    std::vector<std::vector<double>> weights = {{0.2d, 0.1d, 0.1d, -0.1d},
+                                                {0.0d, 0.2d, -0.1d, 0.1d},
+                                                {0.1d, 0.1d, 0.2d, 0.0d},
+                                                {0.0d, -0.1d, 0.1d, 0.2d}};
     EXPECT_DOUBLE_EQ(MaximumMatcher::match(weights), 0.8d);
 }
 
@@ -72,7 +75,8 @@ TEST_F(MaximumMatcherTest, test_real){
   IntersectionCacheLinear cache(map, mci);
   PllSplitList& split_list = map.vectors()[0];
   size_t split_count = split_list.getSplits().size();
-  std::vector<std::vector<double>> similarities = std::vector<std::vector<double>>(split_count, std::vector<double>(split_count));
+  std::vector<std::vector<double>> similarities =
+    std::vector<std::vector<double>>(split_count, std::vector<double>(split_count));
   Solver::similaritiesForSplits(split_list, split_list, map, &similarities, cache);
   std::vector<std::vector<double>> weights = std::vector<std::vector<double>> (n, std::vector<double>(n));
   for(size_t i = 0; i < n; ++i){
@@ -93,46 +97,11 @@ TEST_F(MaximumMatcherTest, test_unequal_mci) {
   PllSplitList& s2 = map.vectors()[1];
   PllSplit::setTipCount(tree1.getTipCount());
   size_t split_count = s1.getSplits().size();
-  std::vector<std::vector<double>> similarities = std::vector<std::vector<double>>(split_count, std::vector<double>(split_count));
+  std::vector<std::vector<double>> similarities =
+    std::vector<std::vector<double>>(split_count, std::vector<double>(split_count));
   Solver::similaritiesForSplits(s1, s2, map, &similarities, cache);
 
   //std::vector<size_t> match_results = MaximumMatcher::match_vector(similarities); We cannot trivially test matchings
   double match = MaximumMatcher::match(similarities);
   EXPECT_NEAR(match, 10.6288, 0.0001);
-}
-
-
-//This test was for debugging the normalization values, we can first reenable it as soon as alexis speaks
-//How to do the normalization.
-TEST_F(MaximumMatcherTest, test_unequal_mci2) {
-
-  PllTree tree1 = TreeReader::readTreeFile(current_data_dir + "heads/141")[2];
-  PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "heads/141")[5];
-
-  PllSplit::setTipCount(tree1.getTipCount());
-  PllPointerMap map = PllPointerMap({tree1, tree2});
-  IntersectionCacheLinear cache(map, mci);
-  PllSplitList& s1 = map.vectors()[0];
-  PllSplitList& s2 = map.vectors()[1];
-  size_t split_count = s1.getSplits().size();
-  std::vector<std::vector<double>> similarities = std::vector<std::vector<double>>(split_count, std::vector<double>(split_count));
-  Solver::similaritiesForSplits(s1, s2, map, &similarities, cache);
-  /*for(unsigned i = 0; i < similarities.size(); ++i) {
-    for(unsigned j = 0; j < similarities.size(); ++j) {
-      std::cout << similarities[i][j] << " ";
-    }
-    std::cout << "\n";
-  }*/
-  std::vector<size_t> match_results = MaximumMatcher::match_vector(similarities);
-  double match = MaximumMatcher::match(similarities);
-  /*for(unsigned i = 0; i < match_results.size(); ++i) {
-    std::cout << match_results[i] << " ";
-    std::cout << "Node: " << i << " -> " << match_results[i] << "\n";
-  }*/
-  double maximum = mci.maximum(s1, s2);
-  /*std::cout << "\nValue: " << match << "\n";
-  std::cout << "Maximum: " << maximum << "\n";
-  std::cout << "Fraction: " << match / maximum << "\n";
-  std::cout << "Normalized(x2): " << 2*(maximum - match) << "\n";
-  std::cout << "Double normalized(x2) " <<  2*(maximum - match) / (2*maximum) << "\n";*/
 }
