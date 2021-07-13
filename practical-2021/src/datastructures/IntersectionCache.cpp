@@ -4,6 +4,9 @@
       n = map.size();
       cache = std::vector<double>((n * (n + 1))/2);
       size_t k = 0;
+
+
+
       for(unsigned i = 0; i < n; ++i) {
           for(unsigned j = i; j < n; ++j) {
             assert(k < ((n * (n + 1))/2));

@@ -29,6 +29,19 @@ target_include_directories(json_lib SYSTEM INTERFACE $<BUILD_INTERFACE:${CMAKE_C
 
 
 add_executable(rfdist main.cpp)
+execute_process(
+    COMMAND git rev-parse --abbrev-ref HEAD
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    OUTPUT_VARIABLE GIT_BRANCH
+    OUTPUT_STRIP_TRAILING_WHITESPACE)
+
+# Get the latest commit hash
+execute_process(
+    COMMAND git rev-parse HEAD
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    OUTPUT_VARIABLE GIT_COMMIT_HASH
+    OUTPUT_STRIP_TRAILING_WHITESPACE)
+target_compile_definitions(rfdist PRIVATE "-DGIT_COMMIT_HASH=\"${GIT_COMMIT_HASH}MAIN\"")
 #target_include_directories(rfdist PUBLIC rf_io_lib)
 #target_link_libraries(rfdist rf_io_lib)
 #target_link_libraries(rfdist json_lib)

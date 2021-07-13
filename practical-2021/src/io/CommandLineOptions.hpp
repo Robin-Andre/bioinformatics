@@ -67,6 +67,8 @@ static void clear_benchmark_timing() {
 }
 static void write_benchmark_timing(std::string& input) {
   std::ofstream out_file(std::string("../benchmark/") + GIT_COMMIT_HASH + ".csv", std::ios::app);
+  
+
   if(out_file.is_open()) {
     out_file << input << "\n";
   }
