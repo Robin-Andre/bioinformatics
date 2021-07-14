@@ -5,8 +5,7 @@
 
 class PllPointerMap {
   public:
-  explicit PllPointerMap(const std::vector<PllTree> &trees) {
-    tree_iterator = std::vector<size_t>(trees.size());
+  explicit PllPointerMap(const std::vector<PllTree> &trees) : tree_iterator(std::vector<size_t>(trees.size())) {
     trees_as_pointers = std::vector<pll_split_t*>(trees.size());
     limit = trees[0].getTipCount() - 3;
     split_lists = std::vector<PllSplitList>(trees.size());
@@ -21,8 +20,7 @@ class PllPointerMap {
     all_splits_unique.resize(map_pos);
   }
   //This is for testing purposes only
-  explicit PllPointerMap(std::vector<PllSplit>& splits) {
-    all_splits_unique = splits;
+  explicit PllPointerMap(std::vector<PllSplit>& splits) : all_splits_unique(splits) {
     //dummy initializations for Softwipe
     map_pos = 0;
     limit = 0;

@@ -79,7 +79,7 @@ public:
     assert(a + b <= PllSplit::getTipCount());
     assert(a > 0 && b > 0);
     if ((a == 1) || (b == 1)) {
-      return 0.0d;
+      return 0.0;
     }
 
     return ldfCache[a - 2] + ldfCache[b - 2] - ldfCache[a + b - 3];
@@ -90,7 +90,7 @@ public:
   inline static double h(size_t a, size_t b) {
     assert(a + b <= PllSplit::getTipCount());
     if(a == 0 || b == 0) {
-      return 0.0d;
+      return 0.0;
     }
     return -1 * phylogeneticProbability(a, b);
   }
