@@ -1,5 +1,9 @@
 #include "IntersectionCache.hpp"
 
+   IntersectionCache::~IntersectionCache() {}
+   IntersectionCacheMatrix::~IntersectionCacheMatrix() {}
+   IntersectionCacheLinear::~IntersectionCacheLinear() {}
+
     IntersectionCacheLinear::IntersectionCacheLinear(const PllPointerMap& map, const GeneralizedMetric& metric) {
       n = map.size();
       cache = std::vector<double>((n * (n + 1))/2);

@@ -7,6 +7,8 @@ add_library(inforf STATIC
     datastructures/IntersectionCache.hpp
     PhylogeneticMathUtils.cpp
     PhylogeneticMathUtils.hpp
+    Metric.cpp
+    Metric.hpp
 
 )
 

@@ -14,14 +14,14 @@ class Metric {
     public:
     virtual double maximum(const PllSplitList& plist1, const PllSplitList& plist2) const = 0;
     virtual std::string name() const = 0;
-    virtual ~Metric() {}
+    virtual ~Metric();
 };
 
 
 class GeneralizedMetric : public Metric {
 public:
   virtual double evaluate(const PllPosition& s1, const PllPosition& s2, const PllPointerMap& map) const = 0;
-  virtual ~GeneralizedMetric() override {}
+  virtual ~GeneralizedMetric() override;
 
 };
 
@@ -50,6 +50,8 @@ class MSIMetric : public GeneralizedMetric {
   std::string name() const override {
     return "MSI";
   }
+
+  virtual ~MSIMetric() override;
 };
 
 class SPIMetric : public GeneralizedMetric {
@@ -101,6 +103,8 @@ class SPIMetric : public GeneralizedMetric {
     return "SPI";
   }
 
+  virtual ~SPIMetric() override;
+
 };
 
 
@@ -136,6 +140,8 @@ class MCIMetric : public GeneralizedMetric {
     std::string name() const override {
       return "MCI";
     }
+
+    virtual ~MCIMetric() override;
 
 
 
