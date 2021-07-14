@@ -77,7 +77,7 @@ TEST_F(MaximumMatcherTest, test_real){
   size_t split_count = split_list.getSplits().size();
   std::vector<std::vector<double>> similarities =
     std::vector<std::vector<double>>(split_count, std::vector<double>(split_count));
-  Solver::similaritiesForSplits(split_list, split_list, map, &similarities, cache);
+  Solver::similaritiesForSplits(split_list, split_list, &similarities, cache);
   std::vector<std::vector<double>> weights = std::vector<std::vector<double>> (n, std::vector<double>(n));
   for(size_t i = 0; i < n; ++i){
     for(size_t j = 0; j < n; ++j){
@@ -99,7 +99,7 @@ TEST_F(MaximumMatcherTest, test_unequal_mci) {
   size_t split_count = s1.getSplits().size();
   std::vector<std::vector<double>> similarities =
     std::vector<std::vector<double>>(split_count, std::vector<double>(split_count));
-  Solver::similaritiesForSplits(s1, s2, map, &similarities, cache);
+  Solver::similaritiesForSplits(s1, s2, &similarities, cache);
 
   //std::vector<size_t> match_results = MaximumMatcher::match_vector(similarities); We cannot trivially test matchings
   double match = MaximumMatcher::match(similarities);

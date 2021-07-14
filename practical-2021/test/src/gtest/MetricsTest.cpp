@@ -35,7 +35,7 @@ TEST_F(MetricsTest, distances_example_from_slideshow_spi) {
 
   size_t split_count = splits1.getSplits().size();
   std::vector<std::vector<double>> result = std::vector<std::vector<double>>(split_count, std::vector<double>(split_count));
-  Solver::similaritiesForSplits(splits1, splits2, map, &result, cache);
+  Solver::similaritiesForSplits(splits1, splits2, &result, cache);
   double h_standard = phylomath::h(2, 4);
   double h_i1 = phylomath::h(3, 3);
   double h_shared_beta = phylomath::h(3, 2, 6);
@@ -64,7 +64,7 @@ TEST_F(MetricsTest, distance_from_slideshow_msi) {
 
   size_t split_count = s1.getSplits().size();
   std::vector<std::vector<double>> result = std::vector<std::vector<double>>(split_count, std::vector<double>(split_count));
-  Solver::similaritiesForSplits(s1, s2, map, &result, cache);
+  Solver::similaritiesForSplits(s1, s2, &result, cache);
   double alpha = std::log2(7);
   double beta = std::log2(5);
   double gamma = std::log2(3);

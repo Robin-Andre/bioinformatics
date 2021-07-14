@@ -14,19 +14,14 @@ class Metric {
     public:
     virtual double maximum(const PllSplitList& plist1, const PllSplitList& plist2) const = 0;
     virtual std::string name() const = 0;
-    virtual ~Metric() {
-
-    }
+    virtual ~Metric() {}
 };
 
 
 class GeneralizedMetric : public Metric {
 public:
   virtual double evaluate(const PllPosition& s1, const PllPosition& s2, const PllPointerMap& map) const = 0;
-  virtual ~GeneralizedMetric() override {
-
-    }
-
+  virtual ~GeneralizedMetric() override {}
 
 };
 
@@ -162,7 +157,7 @@ class MCIMetric : public GeneralizedMetric {
 
 class RFMetric : public Metric {
 public:
-  virtual double distanceOf(const PllSplitList& plist1, const PllSplitList& plist2, Mode mode, const PllPointerMap& map) const {
+  virtual double distanceOf(const PllSplitList& plist1, const PllSplitList& plist2, Mode mode) const {
     size_t split_count1 = plist1.getSplitCount();
     size_t split_count2 = plist2.getSplitCount();
     if (split_count1 == 0) return static_cast<double> (split_count2);

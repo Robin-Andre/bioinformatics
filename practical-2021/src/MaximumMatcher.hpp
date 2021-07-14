@@ -21,7 +21,7 @@ public:
     if (assignment.Solve() == operations_research::SimpleLinearSumAssignment::OPTIMAL) {
       size_t num_nodes = static_cast<size_t> (assignment.NumNodes());
       for (size_t node = 0; node < num_nodes; ++node) {
-        matching_vector[node] = assignment.RightMate(static_cast<size_t>(node));
+        matching_vector[node] = static_cast<size_t>(assignment.RightMate(static_cast<int>(node)));
         //std::cout << "Result(Node): " << node << "->" << assignment.RightMate(node) << " = " << result << "\n";
       }
     }

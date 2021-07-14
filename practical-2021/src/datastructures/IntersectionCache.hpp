@@ -6,6 +6,7 @@
 class IntersectionCache {
     public:
     virtual double access(size_t i, size_t j) const = 0;
+    virtual ~IntersectionCache() {}
 };
 
 
@@ -15,6 +16,8 @@ class IntersectionCacheLinear : public IntersectionCache {
     double access(size_t i, size_t j) const override {
         return cache[pos(std::min(i, j), std::max(i, j))];
     }
+
+    virtual ~IntersectionCacheLinear() override {}
 
     private:
 
@@ -38,6 +41,8 @@ class IntersectionCacheMatrix : public IntersectionCache {
         assert(i < cache.size() && j < cache.size());
         return cache[std::max(i, j)][std::min(i, j)];
     }
+
+    virtual ~IntersectionCacheMatrix() override {}
 
     private:
     std::vector<std::vector<double>> cache;

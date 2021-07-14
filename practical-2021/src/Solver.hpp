@@ -11,13 +11,13 @@ class Solver {
                                           Mode mode,
                                           const GeneralizedMetric& metric) {
       double max_value = metric.maximum(first, second);
-      assert(max_value != 0);
+      assert(max_value > 0);
       assert((max_value - 2 * similarity) > -0.000001);
       double dist = std::max(0.0, max_value - 2 * similarity);
       return (mode == RELATIVE) ? dist : (dist / max_value);
     }
 
-    static void similaritiesForSplits(const PllSplitList& first, const PllSplitList& second, const PllPointerMap& map,
+    static void similaritiesForSplits(const PllSplitList& first, const PllSplitList& second,
          std::vector<std::vector<double>>* result, const IntersectionCache& cache){
       assert(first.getSplits().size() == first.getSplits().size());
       size_t n = first.getSplits().size();

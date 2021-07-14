@@ -51,7 +51,7 @@ public:
     for(size_t i = 0; i < tree_count; ++i){
       futures.clear();
       for(size_t j = i; j < tree_count; ++j){
-        Solver::similaritiesForSplits(tree_splits[i], tree_splits[j], _map, &similarities, pairwise_cache);
+        Solver::similaritiesForSplits(tree_splits[i], tree_splits[j], &similarities, pairwise_cache);
         futures.push_back(std::async(MaximumMatcher::match, similarities));
       }
       bool is_unique = true;
@@ -61,11 +61,11 @@ public:
         dist = (mode == SIMILARITY) ? dist :
           Solver::distanceFromSimilarity(tree_splits[i], tree_splits[j], dist, mode, metric);
         //TODO: Check near 0 because of numerical issues
-        if (i != j && dist == 0 && is_unique){
+        if (i != j && dist <= 0 && is_unique){
           is_unique = false;
           --result.number_of_unique_trees;
         }
-        if(j == tree_count - 1 && dist != 0){
+        if(j == tree_count - 1 && dist > 0){
           all_trees_equal_to_last = false;
         }
         result.pairwise_distance_mtx[j].emplace_back(dist);
@@ -105,14 +105,14 @@ public:
     for(size_t i = 0; i < tree_count; ++i){
       bool is_unique = true;
       for(size_t j = i; j < tree_count; ++j){
-        double dist = metric.distanceOf(tree_splits[i], tree_splits[j], mode, map);
+        double dist = metric.distanceOf(tree_splits[i], tree_splits[j], mode);
         assert(dist >= 0.0);
         //TODO: Check near 0 because of numerical issues
-        if (i != j && dist == 0 && is_unique){
+        if (i != j && dist <= 0.0 && is_unique){
           is_unique = false;
           --result.number_of_unique_trees;
         }
-        if(j == tree_count - 1 && dist != 0){
+        if(j == tree_count - 1 && dist > 0){
           all_trees_equal_to_last = false;
         }
         result.pairwise_distance_mtx[j].emplace_back(dist);
@@ -132,8 +132,6 @@ public:
     return result;
   }
 
-  private:
-  static PllPointerMap _map;
 
 
 };

@@ -13,7 +13,7 @@ class PllPointerMap {
     map_pos = 0;
     //std::cout << "Size: " << all_splits_unique.size() <<" Limit: " << limit << "\n";
     for(unsigned i = 0; i < trees.size(); ++i) {
-      trees_as_pointers[i] = pllmod_utree_split_create(trees[i].tree()->vroot, trees[0].getTipCount(), nullptr);
+      trees_as_pointers[i] = pllmod_utree_split_create(trees[i].tree()->vroot, static_cast<unsigned int>(trees[0].getTipCount()), nullptr);
       push(i); //Push the first element of every tree into the queue
     }
     processQueue();
@@ -38,7 +38,7 @@ class PllPointerMap {
   private:
   struct SplitReference {
     PllSplit split_temp;
-    int tree_number;
+    size_t tree_number;
     bool operator < (SplitReference other) const {
       return !(split_temp < other.split_temp);
     }
@@ -57,7 +57,7 @@ class PllPointerMap {
   bool push(size_t ID) {
     //Limit is hardcoded in the constructor to tipcount - 3
     if(tree_iterator[ID] < limit) {
-      queue.push({PllSplit(trees_as_pointers[ID][tree_iterator[ID]]), static_cast<int>(ID)});
+      queue.push({PllSplit(trees_as_pointers[ID][tree_iterator[ID]]), static_cast<size_t>(ID)});
       ++tree_iterator[ID];
       return true;
     }
@@ -89,7 +89,6 @@ class PllPointerMap {
     assert(ID < tree_iterator.size());
     //Since the push method always increases tree_iterator and points to the next element to be inserted into queue
     //We have to subtract 1 to find the location as where to insert the element.
-    auto oldID = tree_iterator[ID] - 1;
     split_lists[ID].push(current_split, map_pos - 1);
   }
   /*void verify(unsigned ID) {
