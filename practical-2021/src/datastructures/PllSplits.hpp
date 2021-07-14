@@ -40,6 +40,10 @@ class PllSplit {
 public:
   explicit PllSplit(pll_split_t s);
   PllSplit() {
+    size_block_A = 0;
+    size_block_B = 0;
+    h_value = 0.0;
+    entropy_value = 0.0;
     PllSplit(static_cast<pll_split_t> (calloc(PllSplit::split_len, sizeof(pll_split_base_t))));
   }
   pll_split_t operator()() const { return _split; }
