@@ -33,7 +33,7 @@ add_executable(rfdist main.cpp)
 #target_link_libraries(rfdist rf_io_lib)
 #target_link_libraries(rfdist json_lib)
 target_link_libraries(rfdist inforf)
-target_link_libraries(rfdist gmp :libgmp.a)
+#target_link_libraries(rfdist gmp :libgmp.a)
 target_include_directories(rfdist SYSTEM PUBLIC $<BUILD_INTERFACE:${LOCALDEPS_DIR}/include>)
 
 
