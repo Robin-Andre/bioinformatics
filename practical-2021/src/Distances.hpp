@@ -50,7 +50,7 @@ public:
     assert(tip_count > 3);
 
     //precalculations
-    phylomath::initLdfCache();
+    phylomath::initCache();
     PllPointerMap _map(trees);
     std::vector<PllSplitList>& tree_splits = _map.vectors();
     SimilarityCacheMatrix pairwise_cache(_map, metric);

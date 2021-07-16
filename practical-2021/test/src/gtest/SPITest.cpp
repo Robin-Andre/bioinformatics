@@ -114,8 +114,8 @@ TEST_F(SPITest, example_from_slideshow) {
   Distances::similaritiesForSplits(splits1, splits2, cache, &result);
   double h_standard = phylomath::h(2, 4);
   double h_i1 = phylomath::h(3, 3);
-  double h_shared_beta = phylomath::h(3, 2, 6);
-  double h_shared_gamma = phylomath::h(2, 2, 6);
+  double h_shared_beta = phylomath::h_shared(3, 2);
+  double h_shared_gamma = phylomath::h_shared(2, 2);
   EXPECT_EQ(result[0][0], evaluation(h_standard, h_standard, h_shared_gamma));
   EXPECT_EQ(result[0][1], h_standard);
   EXPECT_EQ(result[0][2], evaluation(h_standard, h_standard, h_shared_gamma));

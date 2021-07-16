@@ -37,7 +37,7 @@ TEST_F(PhylomathTest, test_double_factorial) {
 
 TEST_F(PhylomathTest, test_double_factorial_with_cache) {
   PllSplit::setTipCount(15);
-  phylomath::initLdfCache();
+  phylomath::initCache();
   evaluate_double_factorial(0);
   evaluate_double_factorial(1);
   evaluate_double_factorial(5);
@@ -48,7 +48,7 @@ TEST_F(PhylomathTest, test_double_factorial_with_cache) {
 }
 
 TEST_F(PhylomathTest, test_double_factorial_without_cache) {
-  phylomath::flushLdfCache();
+  phylomath::flushCache();
   evaluate_double_factorial(0);
   evaluate_double_factorial(1);
   evaluate_double_factorial(5);
@@ -56,13 +56,6 @@ TEST_F(PhylomathTest, test_double_factorial_without_cache) {
   evaluate_double_factorial(4);
   evaluate_double_factorial(17);
   evaluate_double_factorial(21);
-}
-
-TEST_F(PhylomathTest, test_factorial_quotient) {
-  EXPECT_NEAR(phylomath::logFactorialQuotient(1001, 1, 1003), std::log2(1.0d/1003), 0.000000000001);
-}
-TEST_F(PhylomathTest, test_factorial_quotient2) {
-  EXPECT_DOUBLE_EQ(phylomath::logFactorialQuotient(3, 3, 3, 9), std::log2(1.0d/35));
 }
 
 

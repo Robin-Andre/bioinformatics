@@ -107,17 +107,17 @@ class SPIMetric : public GeneralizedMetric {
     size_t intersect_01 = s2_size_1 - intersect_11;
     assert(intersect_01 <= s1_size_0 && intersect_01 <= s2_size_1);
     if(!intersect_01) {
-      phylo_shared = phylomath::h(s1_size_0, s2_size_1, s1_size_1 + s1_size_0);
+      phylo_shared = phylomath::h_shared(s1_size_0, s2_size_1);
     } else {
       size_t intersect_00 = s1_size_0 - intersect_01;
       assert(intersect_00 <= s1_size_0 && intersect_00 <= s2_size_0);
       if(!intersect_00){
-        phylo_shared = phylomath::h(s1_size_0, s2_size_0, s1_size_1 + s1_size_0);
+        phylo_shared = phylomath::h_shared(s1_size_0, s2_size_0);
       } else {
         size_t intersect_10 = s2_size_0 - intersect_00;
         assert(intersect_10 <= s1_size_1 && intersect_10 <= s2_size_0);
         if(!intersect_10){
-          phylo_shared = phylomath::h(s1_size_1, s2_size_0, s1_size_1 + s1_size_0);
+          phylo_shared = phylomath::h_shared(s1_size_1, s2_size_0);
         } else {
           //partitions incompatible
           return 0.0;
@@ -190,7 +190,7 @@ class MCIMetric : public GeneralizedMetric {
       assert(intersection_size > 0);
       //TODO most of this could be cached
       double pcl = phylomath::clusteringProbability(intersection_size);
-      return pcl * phylomath::quickerClusteringProbability(intersection_size, size_of_partition_block1, size_of_partition_block2);
+      return pcl * phylomath::clusteringProbability(intersection_size, size_of_partition_block1, size_of_partition_block2);
     }
 
 };
