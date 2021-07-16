@@ -8,12 +8,19 @@
 #include "IOUtil.hpp"
 
 enum Format {RAXML};
+
+/*
+ * Abstract class for writing IOData to file
+ */
 class RFDataWriter {
 public:
   static void write(const std::string& path, const io::IOData& data);
 
 };
 
+/*
+ * Class for writing IOData to file in the format used by RAXML
+ */
 class RAXMLWriter : public RFDataWriter {
 public:
   static void write(const std::string& path, const io::IOData& data) {
@@ -43,7 +50,9 @@ public:
 
 };
 
-
+/*
+ * Class for writing IOData to file in JSON Format
+ */
 class JSONWriter : public RFDataWriter {
 public:
   static void write(const std::string& path, const io::IOData& data) {
@@ -62,6 +71,9 @@ public:
 };
 
 
+/*
+ * Class for writing IOData to file in Matrix Format
+ */
 class MatrixWriter : public RFDataWriter {
 public:
   static void write(const std::string& path, const io::IOData& data) {

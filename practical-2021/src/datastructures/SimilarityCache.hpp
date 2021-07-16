@@ -3,13 +3,24 @@
 #include "PllPointerMap.hpp"
 #include "../Metric.hpp"
 
+/*
+ * Simple Class to store and access splitwise similarities
+ */
+
 class SimilarityCache {
     public:
+    /*
+    * @param i: The index of the first split
+    * @param j: The index of the second split
+    * @return The similarity for corresponding split
+    */
     virtual double access(size_t i, size_t j) const = 0;
     virtual ~SimilarityCache();
 };
 
-
+/*
+ * Stores similarities in a linear vector, manages index calculcations for access
+ */
 class SimilarityCacheLinear : public SimilarityCache {
     public:
     SimilarityCacheLinear(const PllPointerMap& map, const GeneralizedMetric& metric);
@@ -33,6 +44,9 @@ class SimilarityCacheLinear : public SimilarityCache {
     size_t n;
 };
 
+/*
+ * Stores similarities trivially in a two-dimensional vector
+ */
 class SimilarityCacheMatrix : public SimilarityCache {
     public:
 

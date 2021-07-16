@@ -19,25 +19,21 @@ class PllTree;
 class phylomath;
 
 /*
- * A convenience class for the purposes of doing math on the individual splits.
- * The pll_split_t is a non-owning pointer, so this class does not have a
- * destructor. The functions which are probably needed:
- *
- *  - popcount
- *  - bitextract
- *  - intersect (and)
- *  - union (or)
- *  - set minus (xor)
- *
- * I have already written an example bit extract and popcount, but they are far
- * from optimal. Remember that the underlying type is a *pointer* to an array of
- * pll_split_base_t (which is an unsigned int), because the number of taxa in
- * the could be more than 32 (or even 64). This means that you will need to
- * iterate over the array to compute the correct value for popcount etc.
+ * Represents a split, which corresponds to a branch in a phylogenetic tree.
+ * If the respective branch is removed from the tree,
+ * two disconnected subtrees are produced.
+ * Depending on the subtree, which contains a certain taxon,
+ * the taxa are assigend to the partitions of the split.
+ * According to that, bits are set in the bitvector representation
+ * which is encapsulated by this class.
  */
+
 typedef bool partition_t;
 class PllSplit {
 public:
+  /**
+   * TODO: Robin, please help here!
+   */
   explicit PllSplit(pll_split_t s);
   PllSplit() {
     size_block_A = 0;
@@ -50,22 +46,51 @@ public:
   friend bool operator == (const PllSplit& p1, const PllSplit& p2);
   friend bool operator < (const PllSplit& p1, const PllSplit& p2);
 
-
+  /**
+   * Gives the size of the partition of the PllSplit represented by 1 or 0 resp.
+   *
+   * @param block: partition (1 or 0)
+   * @return: size of the partition
+   */
   size_t partitionSizeOf (partition_t block) const {
     return block ? size_block_A : size_block_B;
   }
 
+  /**
+   * @return: The information content of the PllSplit (see Phylomath for details)
+   */
   double h() const {return h_value;}
+
+  /**
+   * @return: The entropy of the PllSplit (see Phylomath for details)
+   */
   double entropy() const {return entropy_value;}
+
+  /**
+   * Determines the size of the intersection of the 1-partition of this PllSplit
+   * and the 1-partition of the provided PllSplit
+   *
+   * @param other: split to intersect this PllSplit with
+   * @return: size of the intersection
+   */
   size_t intersectionSize(const PllSplit& other) const;
 
-
+  /**
+   * @return: A string representation for the PllSplit
+   */
   std::string toString() const;
 
+
+  /**
+   * Globally sets the tip count for all PllSplits and updates other values
+   * depending on the tip count
+   *
+   * @param val: The new tip count
+   */
   static void setTipCount(size_t val) {
     PllSplit::tip_count = val;
 
-    size_t split_base_size = PllSplit::computSplitBaseSize();
+    size_t split_base_size = sizeof(pll_split_base_t) * 8;
     PllSplit::split_len = (PllSplit::tip_count / split_base_size);
     if (tip_count % split_base_size > 0) { PllSplit::split_len += 1; }
     assert(PllSplit::split_len * split_base_size >= tip_count);
@@ -76,23 +101,23 @@ public:
       bit_mask |= (1 << i);
     }
     PllSplit::bitmask_for_unused_bits = bit_mask;
-
-
   }
+
+  /**
+   * @return: Global Tip Count
+   */
   static size_t getTipCount() {
     return PllSplit::tip_count;
   }
 
+  /**
+   * @return: The number of registers required to store the PllSplit
+   */
   static size_t getSplitLen() {
     return PllSplit::split_len;
   }
 
 private:
-  /* Computes the number of bits per split base */
-  static inline size_t computSplitBaseSize() {
-    return sizeof(pll_split_base_t) * 8;
-  }
-
   size_t  popcount() const;
 
 
@@ -108,11 +133,33 @@ private:
   static pll_split_base_t bitmask_for_unused_bits;
 
 };
+
+
+/*
+ * Encapsulates all splits corresponding to the branches in
+ * a phylogenetic tree.
+ */
+
 class PllSplitList {
 public:
+  /**
+   * Creates a split list representing the given tree
+   *
+   * @param tree: Tree for which a split list is to be created
+   */
   explicit PllSplitList(const PllTree &tree);
+
+  /**
+   * Creates a split list from the provided vector of splits
+   *
+   * @param splits: splits to encapsulate in a SplitList
+   */
   explicit PllSplitList(const std::vector<size_t> &splits);
-  //We can now actually use the default constructor since the map is constantly pushing.
+
+
+  /**
+   * TODO: Robin please help here
+   */
   //TODO buid nondefault constructor which preallocates elements
   explicit PllSplitList() {
 
@@ -138,15 +185,44 @@ public:
 
   friend bool operator == (const PllSplitList& p1, const PllSplitList& p2);
   size_t operator[](size_t index) const { return _split_offsets[index]; }
-  //size_t pos(size_t index) const {return _split_offsets[index];}
 
+  /**
+   * Creates a PllSplitList from the provided vector of PllSplits
+   *
+   * @return The splits encapsulated in the Split List Object as vector
+   */
   const std::vector<size_t>& getSplits() const {return _split_offsets;}
+
+  /**
+   * @return The number of PllSplits in the PllSplitList
+   */
   size_t getSplitCount() const {return _split_offsets.size();}
 
+  /**
+   * @return The maximum entropy, i.e. the sum of the entropy of all PllSplits in
+   * the PllSplitList
+   */
   double getMaximumEntropy() const {return maximum_entropy;}
+
+  /**
+   * @return The maximum information content , i.e. the sum of the entropy
+   * of all splits in the list
+   */
   double getMaximumInformationContent() const {return maximum_information_content;}
 
+  /**
+   * @return: A string representation for the PllSplitList
+   */
   std::string toString() const;
+
+//TODO: @Robin: Is this correct?
+  /**
+   * Inserts a new PllSplit to the PllSplitList
+   *
+   * @param split: The PllSplit to be inserted
+   * @param offset: The position where the PllSplit is to be inserted
+   *
+   */
   void push(const PllSplit& split, size_t offset);
 
 private:

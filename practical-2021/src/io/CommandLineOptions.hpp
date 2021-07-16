@@ -3,8 +3,8 @@
 #include <getopt.h>
 #include <iostream>
 #include "../Metric.hpp"
-#include <gmp.h>
 
+//TODO: @Robin: Add doc if needed
 #ifndef GIT_COMMIT_HASH
 #define GIT_COMMIT_HASH "?"
 #endif

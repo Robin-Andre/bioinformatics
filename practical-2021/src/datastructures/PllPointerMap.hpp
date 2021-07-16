@@ -3,6 +3,9 @@
 #include <queue>
 #include "PllTree.hpp"
 
+/*
+ * TODO: @Robin: Think about renaming and add docs
+ */
 class PllPointerMap {
   public:
   explicit PllPointerMap(const std::vector<PllTree> &trees) : tree_iterator(std::vector<size_t>(trees.size())) {

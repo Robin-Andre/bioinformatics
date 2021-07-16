@@ -7,12 +7,18 @@
 #include "IOData.hpp"
 #include "IOUtil.hpp"
 
+/*
+ * Abstract class for reading IOData from file
+ */
 class RFDataReader {
 public:
   static io::IOData read(const std::string& path);
 
 };
 
+/*
+ * Class for reading IOData from file in format used by RAXML
+ */
 class RAXMLReader : public RFDataReader {
 public:
   static io::IOData read(const std::string& path) {
@@ -100,7 +106,9 @@ private:
 
 };
 
-
+/*
+ * Class for reading IOData from file in JSON format
+ */
 class JSONReader : public RFDataReader {
 public:
   static io::IOData read(const std::string& path) {
@@ -125,7 +133,9 @@ public:
 
 };
 
-
+/*
+ * Class for reading IOData from file in matrix format
+ */
 class MatrixReader : RFDataReader {
 public:
   static io::IOData read(const std::string& path) {

@@ -86,7 +86,7 @@ bool operator == (const PllSplitList& p1, const PllSplitList& p2) {
     maximum_information_content += split.h();
   }
 
-  //Disabled for the restructuring of PLlSplitlists since I wanna remove _splits
+//TODO: @Robin: Can we make this work again?
 /*std::string PllSplitList::toString() const {
   std::stringstream ss;
   ss <<  "-------------------------" << std::endl;

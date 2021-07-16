@@ -9,6 +9,11 @@ class IOUtilTest : public testing::Test {
 };
 
 
+/**
+* Test functions of IOUtils using data structures filled with random values
+*
+*/
+
 TEST_F(IOUtilTest, test_half_to_full){
   size_t n = 10;
   std::vector<std::vector<double>> half = std::vector<std::vector<double>>(n, std::vector<double>());

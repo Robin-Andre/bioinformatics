@@ -12,6 +12,10 @@
 #include <iostream>
 #include "../Metric.hpp"
 
+/*
+ * Struct encapsulating result data and meta data for an RF computation
+ */
+
 namespace io {
 struct IOData {
 	double mean_dst = 0.;

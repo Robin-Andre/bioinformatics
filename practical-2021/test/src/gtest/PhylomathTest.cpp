@@ -4,7 +4,9 @@
 
 class PhylomathTest : public testing::Test {
   protected:
-
+    /**
+     * For control of log doublefactorial
+     */
     double doublefactorial(size_t n) {
       if (n < 2) {
         return 1;
@@ -13,6 +15,9 @@ class PhylomathTest : public testing::Test {
       }
     }
 
+    /**
+     * Check correctness of log doublefactorial
+     */
     void evaluate_double_factorial(size_t n){
       EXPECT_DOUBLE_EQ(std::log2(doublefactorial(n)), phylomath::logDoublefactorial(n));
     }
@@ -72,7 +77,10 @@ TEST_F(PhylomathTest, test_phylogenetic_probability) {
   PllSplit::setTipCount(24);
   evaluate_phylogenetic_probability(2,22, 1.0d/43);
 }
-//The probability of a trivial split is 1, the value of h should be 0 as in -log(1) == 0
+
+/**
+ * Assert that the information content of a trivial split is 0
+ */
 TEST_F(PhylomathTest, h_function_trivial_split) {
   PllSplit::setTipCount(4);
   PllSplit test_split = TestUtil::createSplit({0, 1, 3});

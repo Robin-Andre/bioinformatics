@@ -9,6 +9,10 @@ class IOTest : public testing::Test {
 
 };
 
+/**
+* Test tree reader with a sample file
+*/
+
 TEST_F(IOTest, tree_read) {
   PllTree tree = TreeReader::readTreeFile("../test/res/data/simple_newick")[0];
   PllSplit::setTipCount(tree.getTipCount());
@@ -19,7 +23,10 @@ TEST_F(IOTest, tree_read) {
   EXPECT_TRUE(split1 < split2);
 }
 
-
+/**
+*
+* Test reading and writing JSOM
+*/
 TEST_F(IOTest, json_read_write) {
   std::filesystem::create_directories("./foo");
   io::IOData input = JSONReader::read("../test/res/references_json/RF/ABSOLUTE/heads/24");
@@ -28,6 +35,7 @@ TEST_F(IOTest, json_read_write) {
   std::filesystem::remove_all("./foo");
 }
 
+//TODO: @Robin: Sollen wir auch den Code für die anderen Format rausschmeißen?!
 //Files of this format are no longer in repo
 /*TEST_F(IOTest, raxml_read_write) {
   std::filesystem::create_directories("./foo");
@@ -44,4 +52,3 @@ TEST_F(IOTest, matrix_read_write) {
   EXPECT_EQ(input, MatrixReader::read("foo/24"));
   std::filesystem::remove_all("./foo");
 }*/
-

@@ -8,16 +8,23 @@ extern "C" {
 #include <string>
 #include <utility>
 
-/* Why even make a class that stores the tree? Why not just have the splits
- * constructor take a newick string?
- *
- * Because you might want to make a tree -> splits map, or a splits -> treelist
- * map. At least the first example is used in "real" implementations of distance
- * functions on many trees.
+/*
+ *  Class representing a phylogenetic tree
  */
 class PllTree {
 public:
+  /*
+   * Creates a PllTree by parsing an input string in newick format
+   * @param newick_string: string encoding the tree in newick format
+   */
   explicit PllTree(const std::string &newick_string);
+
+  /*
+   * Creates a PllTree by parsing an input string in newick format
+   * and aligns its node indices with a preexisting tree
+   * @param newick_string: string encoding the tree in newick format
+   * @param alignment_tree: the tree to align node indices with
+   */
   PllTree(const std::string &newick_string, const PllTree& alignment_tree);
   PllTree()=delete;
   /* Rule of 5 constructors/destructors */
@@ -34,11 +41,24 @@ public:
 
   const pll_utree_t *tree() const { return _tree; }
 
-  /*Actually important functions */
-
+  /*
+   * Creates the PllSplitList corresponding to the PllTree
+   *
+   * @return The corresponding PllSplitList
+   */
   PllSplitList makeSplits() const;
+
+  /*
+   * Aligns this PllTree's node indices with those of the provided tree
+   *
+   * @param other: The tree to align node indices to
+   */
   void         alignNodeIndices(const PllTree &other);
 
+  /*
+   *
+   * @return The tip count, i.e. the number of taxa in the tree
+   */
   size_t getTipCount() const {return _tree->tip_count;}
 
 private:

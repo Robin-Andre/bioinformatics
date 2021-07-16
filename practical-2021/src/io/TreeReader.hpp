@@ -1,14 +1,19 @@
 #pragma once
-//#include<vector>
+
 #include <fstream>
-//#include <iostream>
 #include "../datastructures/PllTree.hpp"
-//#include "../RFDistance.hpp"
-//#include "CommandLineOptions.hpp"
+
+/*
+ * Class to read several trees in newick format from file
+ */
 class TreeReader {
 
 public:
 
+  /*
+   * @param filepath: path of file with newick strings
+   * @return vector with PllTrees read from specified file
+   */
 static std::vector<PllTree> readTreeFile(const std::string& filepath) {
   std::vector<PllTree> trees;
   std::ifstream file(filepath);

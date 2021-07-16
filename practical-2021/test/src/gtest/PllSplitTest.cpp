@@ -15,7 +15,9 @@ TEST_F(PllSplitTest, test_popcount) {
   free(split());
 }
 
-
+/*
+ * Test == and <
+ */
 TEST_F(PllSplitTest, test_operators) {
   PllSplit::setTipCount(64);
   // tips in the partition 1
@@ -51,20 +53,29 @@ TEST_F(PllSplitTest, test_intersectcount) {
 }
 
 
-//These test cases were added because of the deprecated method of bitmask
+/*
+ * Test case to ensure proper behavoir if more than one register is used
+ */
 TEST_F(PllSplitTest, popcount_2registers_nonfull) {
   PllSplit::setTipCount(36);
   PllSplit test_split = TestUtil::createSplit({0, 31, 33, 35});
   EXPECT_EQ(test_split.partitionSizeOf(1), 4);
   free(test_split());
 }
+
+/*
+ * Test case to ensure proper behavoir if more than one register is used
+ */
 TEST_F(PllSplitTest, intersectionsize_2registers_nonfull) {
   PllSplit::setTipCount(36);
   PllSplit test_split = TestUtil::createSplit({0, 31, 33, 35});
   EXPECT_EQ(test_split.intersectionSize(test_split), 4);
   free(test_split());
 }
-//Remember that the splits are sorted by LSB, but our print method is reverting the order
+
+/*
+ * Test case to ensure proper behavoir if more than one register is used
+ */
 TEST_F(PllSplitTest, lessthanoperator_2registers_nonfull) {
   PllSplit::setTipCount(36);
   PllSplit test_split1 = TestUtil::createSplit({0, 31, 33, 35});
@@ -80,6 +91,9 @@ TEST_F(PllSplitTest, lessthanoperator_2registers_nonfull) {
   free(test_split2());
   free(test_split3());
 }
+/*
+ * Test case to ensure proper behavoir if more than one register is used
+ */
 TEST_F(PllSplitTest, equaloperator_2registers_nonfull) {
   PllSplit::setTipCount(36);
   PllSplit test_split = TestUtil::createSplit({0, 31, 33, 35});
