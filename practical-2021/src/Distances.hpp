@@ -14,22 +14,30 @@ extern "C" {
 #include <queue>
 #include <future>
 
-/**
- * Calculate n-to-n Robinson-Foulds distance as described in https://doi.org/10.1093/bioinformatics/btaa614
- *
- * This sum is the arithmetic sum, not some other kind of sum that only
- * mathematicians have heard of.
- *
- * @param trees: the trees for which distances are to be calculated
- * @param metric: the desired metric (MSI, SPI, MCI)
- * @param mode: gives whether (not normalized) similarities, absolute or relative  distances
- *    are to be calculated
- * @return IOData struct containing the results of the calculation
- */
-
 
 class Distances {
+
+
+  /**
+   * Provides an interface to calculate simple and generaized n-to-n Robinson-
+   * Foulds-Distances for sets fo PllTrees
+   *
+   */
 public:
+
+  /**
+   * Calculate n-to-n Robinson-Foulds distance as described in https://doi.org/10.1093/bioinformatics/btaa614
+   *
+   * This sum is the arithmetic sum, not some other kind of sum that only
+   * mathematicians have heard of.
+   *
+   * @param trees: the trees for which distances are to be calculated
+   * @param metric: the desired metric (MSI, SPI, MCI)
+   * @param mode: gives whether (not normalized) similarities, absolute or relative  distances
+   *    are to be calculated
+   * @return IOData struct containing the results of the calculation
+   */
+
   static io::IOData computeGeneralizedDistances(const std::vector<PllTree>& trees,
                                                 const GeneralizedMetric& metric,
                                                 Mode mode) {

@@ -10,27 +10,53 @@ using PllPosition = size_t;
 enum Mode{SIMILARITY, ABSOLUTE, RELATIVE};
 static const char *ModeString[] = {"SIMILARITY", "ABSOLUTE", "RELATIVE"};
 
+/**
+ * Reprensents a metric for measuring distances amonng phylogenetic trees
+ */
 class Metric {
     public:
-    virtual double maximum(const PllSplitList& plist1, const PllSplitList& plist2) const = 0;
+    /**
+    * maximum value that can be obtained for two trees can admit in this metric
+    *
+    * @param l1: split list representing the first tree
+    * @param l2: split list representing the second tree
+    * @return maximum possible value
+    */
+    virtual double maximum(const PllSplitList& l1, const PllSplitList& l2) const = 0;
+    /**
+    * @return string identifying this metric
+    */
     virtual std::string name() const = 0;
     virtual ~Metric();
 };
 
-
+/**
+ * Reprensents a generalized Robinson-Foulds-Distance as presented in https://doi.org/10.1093/bioinformatics/btaa614
+ */
 class GeneralizedMetric : public Metric {
 public:
-  virtual double evaluate(const PllPosition& s1, const PllPosition& s2, const PllPointerMap& map) const = 0;
+  /**
+  * Evaluate the metric for a pair of splits
+  *
+  * @param pos1: position fo the first split in the pointer map
+  * @param pos2: position fo the second split in the pointer map
+  * @param map: pointer map storing the splits
+  * @return value for the splits in the metric
+  */
+  virtual double evaluate(const PllPosition& pos1, const PllPosition& pos2, const PllPointerMap& map) const = 0;
   virtual ~GeneralizedMetric() override;
 
 };
 
+/**
+ * Matching Split Information
+ */
 class MSIMetric : public GeneralizedMetric {
   public:
-  double evaluate(const PllPosition& s1, const PllPosition& s2, const PllPointerMap& map) const override {
-    const PllSplit& sp1 = map[s1];
-    if (s1 == s2) return sp1.h();
-    const PllSplit& sp2 = map[s2];
+  double evaluate(const PllPosition& pos1, const PllPosition& pos2, const PllPointerMap& map) const override {
+    const PllSplit& sp1 = map[pos1];
+    if (pos1 == pos2) return sp1.h();
+    const PllSplit& sp2 = map[pos2];
     size_t intersect_11 = sp1.intersectionSize(sp2);
     assert(intersect_11 <= sp1.partitionSizeOf(1) && intersect_11 <= sp2.partitionSizeOf(1));
     size_t intersect_01 = sp2.partitionSizeOf(1) - intersect_11;
@@ -43,8 +69,8 @@ class MSIMetric : public GeneralizedMetric {
                     phylomath::h(intersect_01, intersect_10));
 
   }
-  double maximum(const PllSplitList& plist1, const PllSplitList& plist2) const override {
-    return plist1.getMaximumInformationContent() + plist2.getMaximumInformationContent();
+  double maximum(const PllSplitList& l1, const PllSplitList& l2) const override {
+    return l1.getMaximumInformationContent() + l2.getMaximumInformationContent();
   }
 
   std::string name() const override {
@@ -54,12 +80,16 @@ class MSIMetric : public GeneralizedMetric {
   virtual ~MSIMetric() override;
 };
 
+
+/**
+ * Shared Phylogenetic Information
+ */
 class SPIMetric : public GeneralizedMetric {
   public:
-  double evaluate(const PllPosition& s1, const PllPosition& s2, const PllPointerMap& map) const override {
-    //because of normalization, the 1-Partitions of s1 and s2 always overlap
-    const PllSplit& sp1 = map[s1];
-    const PllSplit& sp2 = map[s2];
+  double evaluate(const PllPosition& pos1, const PllPosition& pos2, const PllPointerMap& map) const override {
+    //because of normalization, the 1-Partitions of pos1 and pos2 always overlap
+    const PllSplit& sp1 = map[pos1];
+    const PllSplit& sp2 = map[pos2];
 
 
     size_t s1_size_1 = sp1.partitionSizeOf(1);
@@ -95,8 +125,8 @@ class SPIMetric : public GeneralizedMetric {
     return phylomath::h(s1_size_1, s1_size_0) + phylomath::h(s2_size_1, s2_size_0) - phylo_shared;
   }
 
-  double maximum(const PllSplitList& plist1, const PllSplitList& plist2) const override {
-    return plist1.getMaximumInformationContent() + plist2.getMaximumInformationContent();
+  double maximum(const PllSplitList& l1, const PllSplitList& l2) const override {
+    return l1.getMaximumInformationContent() + l2.getMaximumInformationContent();
   }
 
   std::string name() const override {
@@ -108,12 +138,14 @@ class SPIMetric : public GeneralizedMetric {
 };
 
 
-
+/**
+ * Mutual Clustering Information
+ */
 class MCIMetric : public GeneralizedMetric {
     public:
-    double evaluate(const PllPosition& s1, const PllPosition& s2, const PllPointerMap& map) const override {
-      const PllSplit& sp1 = map[s1];
-      const PllSplit& sp2 = map[s2];
+    double evaluate(const PllPosition& pos1, const PllPosition& pos2, const PllPointerMap& map) const override {
+      const PllSplit& sp1 = map[pos1];
+      const PllSplit& sp2 = map[pos2];
 
       size_t s1_size_1 = sp1.partitionSizeOf(1);
       size_t s1_size_0 = sp1.partitionSizeOf(0);
@@ -133,8 +165,8 @@ class MCIMetric : public GeneralizedMetric {
              mutualInformation(intersect_00, s1_size_0, s2_size_0);
 
     }
-    double maximum(const PllSplitList& plist1, const PllSplitList& plist2) const override {
-      return plist1.getMaximumEntropy() + plist2.getMaximumEntropy();
+    double maximum(const PllSplitList& l1, const PllSplitList& l2) const override {
+      return l1.getMaximumEntropy() + l2.getMaximumEntropy();
     }
 
     std::string name() const override {
@@ -163,19 +195,19 @@ class MCIMetric : public GeneralizedMetric {
 
 class RFMetric : public Metric {
 public:
-  virtual double distanceOf(const PllSplitList& plist1, const PllSplitList& plist2, Mode mode) const {
-    size_t split_count1 = plist1.getSplitCount();
-    size_t split_count2 = plist2.getSplitCount();
+  virtual double distanceOf(const PllSplitList& l1, const PllSplitList& l2, Mode mode) const {
+    size_t split_count1 = l1.getSplitCount();
+    size_t split_count2 = l2.getSplitCount();
     if (split_count1 == 0) return static_cast<double> (split_count2);
     if (split_count2 == 0) return static_cast<double> (split_count1);
     size_t i = 0;
     size_t j = 0;
     size_t distance = 0;
     while (i < split_count1 && j < split_count2){
-      if (plist1[i] == plist2[j]) {
+      if (l1[i] == l2[j]) {
         ++i;
         ++j;
-      } else if (plist1[i] < plist2[j]) {
+      } else if (l1[i] < l2[j]) {
         ++distance;
         ++i;
       } else {
@@ -185,7 +217,7 @@ public:
     }
     distance += (split_count1 - i);
     distance += (split_count2 - j);
-    return (mode == RELATIVE) ? (static_cast<double>(distance) / maximum(plist1, plist2))
+    return (mode == RELATIVE) ? (static_cast<double>(distance) / maximum(l1, l2))
                               : static_cast<double>(distance);
   }
   /*OK this is a @Softwipe hack, in order to remove the unused parameter warning I had to remove the name
