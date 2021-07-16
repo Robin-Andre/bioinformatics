@@ -1,10 +1,10 @@
-#include "IntersectionCache.hpp"
+#include "SimilarityCache.hpp"
 
-   IntersectionCache::~IntersectionCache() {}
-   IntersectionCacheMatrix::~IntersectionCacheMatrix() {}
-   IntersectionCacheLinear::~IntersectionCacheLinear() {}
+   SimilarityCache::~SimilarityCache() {}
+   SimilarityCacheMatrix::~SimilarityCacheMatrix() {}
+   SimilarityCacheLinear::~SimilarityCacheLinear() {}
 
-    IntersectionCacheLinear::IntersectionCacheLinear(const PllPointerMap& map, const GeneralizedMetric& metric) {
+    SimilarityCacheLinear::SimilarityCacheLinear(const PllPointerMap& map, const GeneralizedMetric& metric) {
       n = map.size();
       cache = std::vector<double>((n * (n + 1))/2);
       size_t k = 0;
@@ -17,7 +17,7 @@
       }
     }
 
-    IntersectionCacheMatrix::IntersectionCacheMatrix(const PllPointerMap& map, const GeneralizedMetric& metric) {
+    SimilarityCacheMatrix::SimilarityCacheMatrix(const PllPointerMap& map, const GeneralizedMetric& metric) {
       for(unsigned i = 0; i < map.size(); ++i) {
           std::vector<double> line;
           for(unsigned j = 0; j <= i; ++j) {

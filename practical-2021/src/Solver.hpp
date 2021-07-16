@@ -18,7 +18,7 @@ class Solver {
     }
 
     static void similaritiesForSplits(const PllSplitList& first, const PllSplitList& second,
-         std::vector<std::vector<double>>* result, const IntersectionCache& cache){
+         std::vector<std::vector<double>>* result, const SimilarityCache& cache){
       assert(first.getSplits().size() == first.getSplits().size());
       size_t n = first.getSplits().size();
       assert(result->size() == n);

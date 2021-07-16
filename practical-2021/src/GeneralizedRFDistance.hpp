@@ -6,7 +6,7 @@ extern "C" {
 #include "datastructures/PllSplits.hpp"
 #include "datastructures/PllTree.hpp"
 #include "datastructures/PllPointerMap.hpp"
-#include "datastructures/IntersectionCache.hpp"
+#include "datastructures/SimilarityCache.hpp"
 #include "io/IOData.hpp"
 #include "Metric.hpp"
 #include "Solver.hpp"
@@ -30,7 +30,7 @@ public:
     phylomath::initLdfCache();
     PllPointerMap _map(trees);
     std::vector<PllSplitList>& tree_splits = _map.vectors();
-    IntersectionCacheMatrix pairwise_cache(_map, metric);
+    SimilarityCacheMatrix pairwise_cache(_map, metric);
 
     //Init result
     io::IOData result;

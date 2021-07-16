@@ -2,7 +2,7 @@
 #include "../../../src/datastructures/PllSplits.hpp"
 #include "../../../src/datastructures/PllPointerMap.hpp"
 #include "../../../src/Metric.hpp"
-#include "../../../src/datastructures/IntersectionCache.hpp"
+#include "../../../src/datastructures/SimilarityCache.hpp"
 #include "../../../src/io/TreeReader.hpp"
 #include "../../../src/Solver.hpp"
 #include "../TestUtil.hpp"
@@ -28,7 +28,7 @@ TEST_F(MetricsTest, distances_example_from_slideshow_spi) {
   PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[1];
   tree2.alignNodeIndices(tree1);
   PllPointerMap map({tree1, tree2});
-  IntersectionCacheLinear cache(map, spi);
+  SimilarityCacheLinear cache(map, spi);
   std::vector<PllSplitList>& vec = map.vectors();
   PllSplitList& splits1 = vec[0];
   PllSplitList& splits2 = vec[1];
@@ -57,7 +57,7 @@ TEST_F(MetricsTest, distance_from_slideshow_msi) {
   PllTree tree1 = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[0];
   PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[1];
   PllPointerMap map = PllPointerMap({tree1, tree2});
-  IntersectionCacheLinear cache(map, msi);
+  SimilarityCacheLinear cache(map, msi);
   PllSplitList& s1 = map.vectors()[0];
   PllSplitList& s2 = map.vectors()[1];
   //tree2.alignNodeIndices(tree1);

@@ -3,21 +3,21 @@
 #include "PllPointerMap.hpp"
 #include "../Metric.hpp"
 
-class IntersectionCache {
+class SimilarityCache {
     public:
     virtual double access(size_t i, size_t j) const = 0;
-    virtual ~IntersectionCache();
+    virtual ~SimilarityCache();
 };
 
 
-class IntersectionCacheLinear : public IntersectionCache {
+class SimilarityCacheLinear : public SimilarityCache {
     public:
-    IntersectionCacheLinear(const PllPointerMap& map, const GeneralizedMetric& metric);
+    SimilarityCacheLinear(const PllPointerMap& map, const GeneralizedMetric& metric);
     double access(size_t i, size_t j) const override {
         return cache[pos(std::min(i, j), std::max(i, j))];
     }
 
-    virtual ~IntersectionCacheLinear() override;
+    virtual ~SimilarityCacheLinear() override;
 
     private:
 
@@ -33,16 +33,16 @@ class IntersectionCacheLinear : public IntersectionCache {
     size_t n;
 };
 
-class IntersectionCacheMatrix : public IntersectionCache {
+class SimilarityCacheMatrix : public SimilarityCache {
     public:
 
-    IntersectionCacheMatrix(const PllPointerMap& map, const GeneralizedMetric& metric);
+    SimilarityCacheMatrix(const PllPointerMap& map, const GeneralizedMetric& metric);
     double access(size_t i, size_t j) const override{
         assert(i < cache.size() && j < cache.size());
         return cache[std::max(i, j)][std::min(i, j)];
     }
 
-    virtual ~IntersectionCacheMatrix() override;
+    virtual ~SimilarityCacheMatrix() override;
 
     private:
     std::vector<std::vector<double>> cache;
