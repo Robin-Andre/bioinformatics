@@ -15,7 +15,6 @@
 
 static constexpr bool print_execution_time = true;
 
-using GRFDist = Distances;
 class DistancesTest : public testing::Test {
 
 protected:
@@ -26,8 +25,9 @@ protected:
   }
 
 }*/
-/*Right now an instanciation of test is needed, if we turn it into a free function this needs
-to be adapted*/
+/**
+ * Loads two small trees for simple testing
+ */
 std::vector<PllTree> load_24taxa() {
    PllSplit::setTipCount(24);
   PllTree tree1 = TreeReader::readTreeFile(current_data_dir + "heads/24")[0];
@@ -35,11 +35,7 @@ std::vector<PllTree> load_24taxa() {
   std::vector<PllTree> trees = {tree1, tree2};
   return trees;
 }
-//DistancesTest test;
-/*This is a hardcoded link to the test dir. IF changes to the project structure are made this needs
-to be adjusted.
-*/
-//std::string current_test_dir = "../test/res/data/heads/BS/";
+
 std::string current_data_dir = "../test/res/data/";
 std::string current_ref_dir = "../test/res/references_json/";
 float epsilon = 0.001;
@@ -49,9 +45,9 @@ MCIMetric metric_mci;
 MSIMetric metric_msi;
 RFMetric metric_rf;
 
-/*Method to reduce code complexity :)
-*/
-
+/**
+ * Method to run and test common RF-Distance for a given test data set
+ */
 void execute_test_rf(const std::string& test_file, Mode mode) {
   io::IOData result = Distances::computeRFDistances(
                       TreeReader::readTreeFile(current_data_dir + test_file), mode);
@@ -59,7 +55,9 @@ void execute_test_rf(const std::string& test_file, Mode mode) {
     ASSERT_EQ(result, reference);
 }
 
-
+/**
+ * Method to run and test generalized RF-Distance for a given test data set
+ */
 void execute_test_generalized(const std::string& test_file, const GeneralizedMetric& metric, Mode mode) {
     std::string mode_name = ModeString[mode];
     std::vector<PllTree> trees = TreeReader::readTreeFile(current_data_dir + test_file);
@@ -81,77 +79,92 @@ void execute_test_generalized(const std::string& test_file, const GeneralizedMet
     }
 
 }
-
-
 };
 
+/**
+ * Tests that the distance of a tree to itself is always 0
+ */
 TEST_F(DistancesTest, simple_identity) {
   PllTree tree = TreeReader::readTreeFile(current_data_dir + "heads/24")[0];
   std::vector<PllTree> trees = {tree, tree};
-  EXPECT_NEAR(GRFDist::computeGeneralizedDistances(
+  EXPECT_NEAR(Distances::computeGeneralizedDistances(
     trees, metric_msi, ABSOLUTE).pairwise_distance_mtx[0][0], 0, epsilon);
-  EXPECT_NEAR(GRFDist::computeGeneralizedDistances(
+  EXPECT_NEAR(Distances::computeGeneralizedDistances(
     trees, metric_spi, ABSOLUTE).pairwise_distance_mtx[0][0], 0, epsilon);
-  EXPECT_NEAR(GRFDist::computeGeneralizedDistances(
+  EXPECT_NEAR(Distances::computeGeneralizedDistances(
     trees, metric_mci, ABSOLUTE).pairwise_distance_mtx[0][0], 0, epsilon);
-  EXPECT_NEAR(GRFDist::computeGeneralizedDistances(
+  EXPECT_NEAR(Distances::computeGeneralizedDistances(
     trees, metric_msi, RELATIVE).pairwise_distance_mtx[0][0], 0, epsilon);
-  EXPECT_NEAR(GRFDist::computeGeneralizedDistances(
+  EXPECT_NEAR(Distances::computeGeneralizedDistances(
     trees, metric_spi, RELATIVE).pairwise_distance_mtx[0][0], 0, epsilon);
-  EXPECT_NEAR(GRFDist::computeGeneralizedDistances(
+  EXPECT_NEAR(Distances::computeGeneralizedDistances(
     trees, metric_mci, RELATIVE).pairwise_distance_mtx[0][0], 0, epsilon);
 
 }
 
+/**
+ * test to ensure that number of unique trees is 0 if there is no unique tree
+ */
 TEST_F(DistancesTest, no_unique_tree) {
   PllTree tree = TreeReader::readTreeFile(current_data_dir + "heads/24")[0];
   std::vector<PllTree> trees = {tree, tree, tree, tree};
 
-  EXPECT_EQ(GRFDist::computeGeneralizedDistances(trees, metric_msi, ABSOLUTE).number_of_unique_trees, 0);
-  EXPECT_EQ(GRFDist::computeGeneralizedDistances(trees, metric_spi, ABSOLUTE).number_of_unique_trees, 0);
-  EXPECT_EQ(GRFDist::computeGeneralizedDistances(trees, metric_mci, ABSOLUTE).number_of_unique_trees, 0);
-  EXPECT_EQ(GRFDist::computeGeneralizedDistances(trees, metric_msi, RELATIVE).number_of_unique_trees, 0);
-  EXPECT_EQ(GRFDist::computeGeneralizedDistances(trees, metric_spi, RELATIVE).number_of_unique_trees, 0);
-  EXPECT_EQ(GRFDist::computeGeneralizedDistances(trees, metric_mci, RELATIVE).number_of_unique_trees, 0);
+  EXPECT_EQ(Distances::computeGeneralizedDistances(trees, metric_msi, ABSOLUTE).number_of_unique_trees, 0);
+  EXPECT_EQ(Distances::computeGeneralizedDistances(trees, metric_spi, ABSOLUTE).number_of_unique_trees, 0);
+  EXPECT_EQ(Distances::computeGeneralizedDistances(trees, metric_mci, ABSOLUTE).number_of_unique_trees, 0);
+  EXPECT_EQ(Distances::computeGeneralizedDistances(trees, metric_msi, RELATIVE).number_of_unique_trees, 0);
+  EXPECT_EQ(Distances::computeGeneralizedDistances(trees, metric_spi, RELATIVE).number_of_unique_trees, 0);
+  EXPECT_EQ(Distances::computeGeneralizedDistances(trees, metric_mci, RELATIVE).number_of_unique_trees, 0);
 }
 
-TEST_F(DistancesTest, ExampleFromSlideshow) {
+/**
+ * Tests on minimal example (one tree)
+ */
+TEST_F(DistancesTest, example_from_slideshow_1) {
   PllSplit::setTipCount(6);
   PllTree tree = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[0];
   std::vector<PllTree> trees = {tree, tree};
-  EXPECT_NEAR(GRFDist::computeGeneralizedDistances(
+  EXPECT_NEAR(Distances::computeGeneralizedDistances(
     trees, metric_msi, ABSOLUTE).pairwise_distance_mtx[0][0], 0, epsilon);
-  EXPECT_NEAR(GRFDist::computeGeneralizedDistances(
+  EXPECT_NEAR(Distances::computeGeneralizedDistances(
     trees, metric_mci, ABSOLUTE).pairwise_distance_mtx[0][0], 0, epsilon);
-  EXPECT_NEAR(GRFDist::computeGeneralizedDistances(
+  EXPECT_NEAR(Distances::computeGeneralizedDistances(
     trees, metric_spi, ABSOLUTE).pairwise_distance_mtx[0][0], 0, epsilon);
-}
-TEST_F(DistancesTest, ComparisionTree0_2taxa24) {
-  std::vector<PllTree> trees = load_24taxa();
-  EXPECT_NEAR(GRFDist::computeGeneralizedDistances(
-    trees, metric_mci, ABSOLUTE).pairwise_distance_mtx[0][0], 0, epsilon);
-  EXPECT_NEAR(GRFDist::computeGeneralizedDistances(
-    trees, metric_spi, ABSOLUTE).pairwise_distance_mtx[0][0], 0, epsilon);
-}
-TEST_F(DistancesTest, example_24_msi) {
-  std::vector<PllTree> trees = load_24taxa();
-  EXPECT_NEAR(GRFDist::computeGeneralizedDistances(
-    trees, metric_msi, ABSOLUTE).pairwise_distance_mtx[0][0], 0, epsilon);
 }
 
-TEST_F(DistancesTest, example_from_slideshow) {
+/**
+ * Tests on minimal example (two trees)
+ */
+TEST_F(DistancesTest, example_from_slideshow_2) {
   PllSplit::setTipCount(6);
   PllTree tree1 = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[0];
   PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[0];
   std::vector<PllTree> trees = {tree1, tree2};
-  EXPECT_NEAR(GRFDist::computeGeneralizedDistances(
+  EXPECT_NEAR(Distances::computeGeneralizedDistances(
     trees, metric_msi, ABSOLUTE).pairwise_distance_mtx[0][0], 0, epsilon);
-  EXPECT_NEAR(GRFDist::computeGeneralizedDistances(
+  EXPECT_NEAR(Distances::computeGeneralizedDistances(
     trees, metric_mci, ABSOLUTE).pairwise_distance_mtx[0][0], 0, epsilon);
-  EXPECT_NEAR(GRFDist::computeGeneralizedDistances(
+  EXPECT_NEAR(Distances::computeGeneralizedDistances(
     trees, metric_spi, ABSOLUTE).pairwise_distance_mtx[0][0], 0, epsilon);
 }
 
+/**
+ * Basic test with two trees
+ */
+TEST_F(DistancesTest, example_24) {
+  std::vector<PllTree> trees = load_24taxa();
+  EXPECT_NEAR(Distances::computeGeneralizedDistances(
+    trees, metric_msi, ABSOLUTE).pairwise_distance_mtx[0][0], 0, epsilon);
+  EXPECT_NEAR(Distances::computeGeneralizedDistances(
+    trees, metric_mci, ABSOLUTE).pairwise_distance_mtx[0][0], 0, epsilon);
+  EXPECT_NEAR(Distances::computeGeneralizedDistances(
+    trees, metric_spi, ABSOLUTE).pairwise_distance_mtx[0][0], 0, epsilon);
+}
+
+
+/**
+ * For the listed test instances, calculate distances and compare to reference results
+ */
 TEST_F(DistancesTest, test_instances) {
   std::vector<std::string> instance_names =
         {"24", "125", "141", "143",

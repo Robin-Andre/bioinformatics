@@ -50,6 +50,7 @@ public:
 
 /**
  * Matching Split Information
+ * For details refer to https://doi.org/10.1093/bioinformatics/btaa614
  */
 class MSIMetric : public GeneralizedMetric {
   public:
@@ -83,6 +84,7 @@ class MSIMetric : public GeneralizedMetric {
 
 /**
  * Shared Phylogenetic Information
+ * For details refer to https://doi.org/10.1093/bioinformatics/btaa614
  */
 class SPIMetric : public GeneralizedMetric {
   public:
@@ -97,7 +99,7 @@ class SPIMetric : public GeneralizedMetric {
     size_t s1_size_0 = sp1.partitionSizeOf(0);
     size_t s2_size_0 = sp2.partitionSizeOf(0);
 
-    if (s1 == s2) return phylomath::h(s2_size_1, s2_size_0);
+    if (pos1 == pos2) return phylomath::h(s2_size_1, s2_size_0);
 
     double phylo_shared;
     size_t intersect_11 = sp1.intersectionSize(sp2);
@@ -140,6 +142,7 @@ class SPIMetric : public GeneralizedMetric {
 
 /**
  * Mutual Clustering Information
+ * For details refer to https://doi.org/10.1093/bioinformatics/btaa614
  */
 class MCIMetric : public GeneralizedMetric {
     public:
@@ -192,6 +195,9 @@ class MCIMetric : public GeneralizedMetric {
 
 };
 
+/**
+  * Commom Robinson-Foulds-Distance
+  */
 
 class RFMetric : public Metric {
 public:

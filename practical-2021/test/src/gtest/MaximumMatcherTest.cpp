@@ -18,6 +18,8 @@ protected:
   SPIMetric spi;
   MCIMetric mci;
 
+
+  //Checks whether the calculated maximum is maximal among all possible matchings
   void checkAllPermutations(std::vector<std::vector<double>> weights, double maximum){
     double empirical_max = 0;
     size_t n = weights.size();
@@ -66,8 +68,10 @@ TEST_F(MaximumMatcherTest, test_maximum) {
 
 }
 
-
-TEST_F(MaximumMatcherTest, test_real){
+/**
+ * Tests the matcher with real MCI weights, using the same tree twice
+ */
+TEST_F(MaximumMatcherTest, test_mci_weights){
   size_t n = 10;
   PllTree tree = TreeReader::readTreeFile(current_data_dir + "heads/24")[0];
   PllSplit::setTipCount(tree.getTipCount());
@@ -87,8 +91,11 @@ TEST_F(MaximumMatcherTest, test_real){
   double maximum = MaximumMatcher::match(weights);
   checkAllPermutations(weights, maximum);
 }
-TEST_F(MaximumMatcherTest, test_unequal_mci) {
 
+/**
+ * Tests the matcher with real MCI weights, using two different trees
+ */
+TEST_F(MaximumMatcherTest, test_mci_weights_two_trees) {
   PllTree tree1 = TreeReader::readTreeFile(current_data_dir + "heads/24")[0];
   PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "heads/24")[2];
     PllPointerMap map = PllPointerMap({tree1, tree2});
