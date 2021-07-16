@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.10)
 project(inforf LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -11,7 +11,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
 
-set(ORTOOLS_ROOT ${CMAKE_SOURCE_DIR}/libs/ortools)
+set(ORTOOLS_ROOT ${ORTOOLS_ROOT} ${CMAKE_SOURCE_DIR}/libs/ortools)
 
 message(WARNING ${ORTOOLS_ROOT})
 
