@@ -1,6 +1,6 @@
 #include "PhylogeneticMathUtils.hpp"
 #include "io/RFDataWriter.hpp"
-#include "GeneralizedRFDistance.hpp"
+#include "Distances.hpp"
 #include "Metric.hpp"
 #include "io/TreeReader.hpp"
 
@@ -8,7 +8,7 @@ int main(int argc, char* argv[]) {
     io::Config config = io::parseCommandLineOptions(argc, argv);
     std::cout << "Input File Path: " << config.input_file_path  << std::endl;
     std::cout << "Metric Used: " << config.metric->name() <<"\n";
-    io::IOData result = GeneralizedRFDistance::computeGeneralizedDistances(
+    io::IOData result = Distances::computeGeneralizedDistances(
         TreeReader::readTreeFile(config.input_file_path), *(config.metric), ABSOLUTE);
     std::cout << result.toString();
 

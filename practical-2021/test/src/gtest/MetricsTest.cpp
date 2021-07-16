@@ -4,7 +4,7 @@
 #include "../../../src/Metric.hpp"
 #include "../../../src/datastructures/SimilarityCache.hpp"
 #include "../../../src/io/TreeReader.hpp"
-#include "../../../src/Solver.hpp"
+#include "../../../src/Distances.hpp"
 #include "../TestUtil.hpp"
 #include <gmp.h>
 
@@ -35,7 +35,7 @@ TEST_F(MetricsTest, distances_example_from_slideshow_spi) {
 
   size_t split_count = splits1.getSplits().size();
   std::vector<std::vector<double>> result = std::vector<std::vector<double>>(split_count, std::vector<double>(split_count));
-  Solver::similaritiesForSplits(splits1, splits2, &result, cache);
+  Distances::similaritiesForSplits(splits1, splits2, cache, &result);
   double h_standard = phylomath::h(2, 4);
   double h_i1 = phylomath::h(3, 3);
   double h_shared_beta = phylomath::h(3, 2, 6);
@@ -64,7 +64,7 @@ TEST_F(MetricsTest, distance_from_slideshow_msi) {
 
   size_t split_count = s1.getSplits().size();
   std::vector<std::vector<double>> result = std::vector<std::vector<double>>(split_count, std::vector<double>(split_count));
-  Solver::similaritiesForSplits(s1, s2, &result, cache);
+  Distances::similaritiesForSplits(s1, s2, cache, &result);
   double alpha = std::log2(7);
   double beta = std::log2(5);
   double gamma = std::log2(3);
