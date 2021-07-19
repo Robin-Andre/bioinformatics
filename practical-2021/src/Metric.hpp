@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include "datastructures/PllSplits.hpp"
-#include "datastructures/PllPointerMap.hpp"
+#include "datastructures/UniquePllMap.hpp"
 #include "PhylogeneticMathUtils.hpp"
 #include "MaximumMatcher.hpp"
 
@@ -43,7 +43,7 @@ public:
   * @param map: pointer map storing the splits
   * @return value for the splits in the metric
   */
-  virtual double evaluate(const PllPosition& pos1, const PllPosition& pos2, const PllPointerMap& map) const = 0;
+  virtual double evaluate(const PllPosition& pos1, const PllPosition& pos2, const UniquePllMap& map) const = 0;
   virtual ~GeneralizedMetric() override;
 
 };
@@ -54,7 +54,7 @@ public:
  */
 class MSIMetric : public GeneralizedMetric {
   public:
-  double evaluate(const PllPosition& pos1, const PllPosition& pos2, const PllPointerMap& map) const override {
+  double evaluate(const PllPosition& pos1, const PllPosition& pos2, const UniquePllMap& map) const override {
     const PllSplit& sp1 = map[pos1];
     if (pos1 == pos2) return sp1.h();
     const PllSplit& sp2 = map[pos2];
@@ -88,7 +88,7 @@ class MSIMetric : public GeneralizedMetric {
  */
 class SPIMetric : public GeneralizedMetric {
   public:
-  double evaluate(const PllPosition& pos1, const PllPosition& pos2, const PllPointerMap& map) const override {
+  double evaluate(const PllPosition& pos1, const PllPosition& pos2, const UniquePllMap& map) const override {
     //because of normalization, the 1-Partitions of pos1 and pos2 always overlap
     const PllSplit& sp1 = map[pos1];
     const PllSplit& sp2 = map[pos2];
@@ -146,7 +146,7 @@ class SPIMetric : public GeneralizedMetric {
  */
 class MCIMetric : public GeneralizedMetric {
     public:
-    double evaluate(const PllPosition& pos1, const PllPosition& pos2, const PllPointerMap& map) const override {
+    double evaluate(const PllPosition& pos1, const PllPosition& pos2, const UniquePllMap& map) const override {
       const PllSplit& sp1 = map[pos1];
       const PllSplit& sp2 = map[pos2];
 
@@ -226,8 +226,8 @@ public:
     return (mode == RELATIVE) ? (static_cast<double>(distance) / maximum(l1, l2))
                               : static_cast<double>(distance);
   }
-  /*OK this is a @Softwipe hack, in order to remove the unused parameter warning I had to remove the name
-  but since the signature is still the same its still an override */
+  /* This override does not name the parameters of the PllSplitLists since they are not required for
+     standard RF-Distance */
   double maximum(const PllSplitList&, const PllSplitList&) const override {
     assert(PllSplit::getTipCount() > 3);
     return static_cast<double> (2 * (PllSplit::getTipCount() - 3));

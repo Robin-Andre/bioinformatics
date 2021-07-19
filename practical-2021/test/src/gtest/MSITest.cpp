@@ -20,7 +20,7 @@ TEST_F(MSITest, test_identity) {
   std::vector<size_t> part1 = {0, 3, 4};
   PllSplit split = TestUtil::createSplit(part1);
   std::vector<PllSplit> vec {split};
-  PllPointerMap data(vec);
+  UniquePllMap data(vec);
 
   EXPECT_DOUBLE_EQ(metric_msi.evaluate(0, 0, data), phylomath::h(3,3));
   free(split());
@@ -34,7 +34,7 @@ TEST_F(MSITest, maximumtest) {
   PllSplit::setTipCount(6);
   PllTree tree1 = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[0];
   PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[0];
-  PllPointerMap map({tree1, tree2});
+  UniquePllMap map({tree1, tree2});
   PllSplitList& splits1 = map.vectors()[0];
   PllSplitList& splits2 = map.vectors()[1];
   tree2.alignNodeIndices(tree1);
@@ -53,7 +53,7 @@ TEST_F(MSITest, test_msi) {
   PllSplit split_b = TestUtil::createSplit(part1_b);
 
   std::vector<PllSplit> vec {split_a, split_b};
-  PllPointerMap data(vec);
+  UniquePllMap data(vec);
   EXPECT_DOUBLE_EQ(metric_msi.evaluate(0, 1, data), -std::log2(1.0d/21));
   free(split_a());
   free(split_b());
@@ -69,7 +69,7 @@ TEST_F(MSITest, test_luise_graph) {
   PllSplit split_3 = TestUtil::createSplit({0, 1, 2, 3, 6, 7});
   PllSplit split_4 = TestUtil::createSplit({0, 1, 2, 3, 4, 5});
   std::vector<PllSplit> vec {split_1, split_2, split_3, split_4};
-  PllPointerMap data(vec);
+  UniquePllMap data(vec);
   double result = std::log2(3);
   EXPECT_DOUBLE_EQ(metric_msi.evaluate(0, 1, data), result);
   EXPECT_DOUBLE_EQ(metric_msi.evaluate(0, 2, data), result);
@@ -91,7 +91,7 @@ TEST_F(MSITest, distance_from_slideshow_msi) {
   PllSplit::setTipCount(6);
   PllTree tree1 = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[0];
   PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[1];
-  PllPointerMap map = PllPointerMap({tree1, tree2});
+  UniquePllMap map = UniquePllMap({tree1, tree2});
   SimilarityCacheLinear cache(map, metric_msi);
   PllSplitList& s1 = map.vectors()[0];
   PllSplitList& s2 = map.vectors()[1];

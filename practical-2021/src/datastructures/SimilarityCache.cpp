@@ -4,7 +4,7 @@
    SimilarityCacheMatrix::~SimilarityCacheMatrix() {}
    SimilarityCacheLinear::~SimilarityCacheLinear() {}
 
-    SimilarityCacheLinear::SimilarityCacheLinear(const PllPointerMap& map, const GeneralizedMetric& metric) {
+    SimilarityCacheLinear::SimilarityCacheLinear(const UniquePllMap& map, const GeneralizedMetric& metric) {
       n = map.size();
       cache = std::vector<double>((n * (n + 1))/2);
       size_t k = 0;
@@ -17,7 +17,7 @@
       }
     }
 
-    SimilarityCacheMatrix::SimilarityCacheMatrix(const PllPointerMap& map, const GeneralizedMetric& metric) {
+    SimilarityCacheMatrix::SimilarityCacheMatrix(const UniquePllMap& map, const GeneralizedMetric& metric) {
       for(unsigned i = 0; i < map.size(); ++i) {
           std::vector<double> line;
           for(unsigned j = 0; j <= i; ++j) {

@@ -5,7 +5,7 @@ extern "C" {
 }
 #include "datastructures/PllSplits.hpp"
 #include "datastructures/PllTree.hpp"
-#include "datastructures/PllPointerMap.hpp"
+#include "datastructures/UniquePllMap.hpp"
 #include "datastructures/SimilarityCache.hpp"
 #include "io/IOData.hpp"
 #include "Metric.hpp"
@@ -51,7 +51,7 @@ public:
 
     //precalculations
     phylomath::initCache();
-    PllPointerMap _map(trees);
+    UniquePllMap _map(trees);
     std::vector<PllSplitList>& tree_splits = _map.vectors();
     SimilarityCacheMatrix pairwise_cache(_map, metric);
 
@@ -126,7 +126,7 @@ public:
 
     //precalculations
     RFMetric metric;
-    PllPointerMap map(trees);
+    UniquePllMap map(trees);
     std::vector<PllSplitList>& tree_splits = map.vectors();
 
     //Init result

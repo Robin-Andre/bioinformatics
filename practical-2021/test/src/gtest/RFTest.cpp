@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 #include "../../../src/datastructures/PllSplits.hpp"
-#include "../../../src/datastructures/PllPointerMap.hpp"
+#include "../../../src/datastructures/UniquePllMap.hpp"
 #include "../../../src/Metric.hpp"
 #include "../../../src/datastructures/SimilarityCache.hpp"
 #include "../../../src/io/TreeReader.hpp"

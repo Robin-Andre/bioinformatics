@@ -25,7 +25,7 @@ TEST_F(SPITest, test_identity) {
   std::vector<size_t> part1 = {0, 3, 4};
   PllSplit split = TestUtil::createSplit(part1);
   std::vector<PllSplit> vec {split};
-  PllPointerMap map(vec);
+  UniquePllMap map(vec);
   EXPECT_DOUBLE_EQ(metric_spi.evaluate(0, 0, map), phylomath::h(3,3));
   free(split());
 }
@@ -37,7 +37,7 @@ TEST_F(SPITest, maximumtest) {
   PllSplit::setTipCount(6);
   PllTree tree1 = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[0];
   PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[0];
-  PllPointerMap map({tree1, tree2});
+  UniquePllMap map({tree1, tree2});
 
   PllSplitList& splits1 = map.vectors()[0];
   PllSplitList& splits2 = map.vectors()[1];
@@ -58,7 +58,7 @@ TEST_F(SPITest, test_spi) {
   std::vector<size_t> part1_b = {0, 1, 2};
   PllSplit split_b = TestUtil::createSplit(part1_b);
   std::vector<PllSplit> vec {split_a, split_b};
-  PllPointerMap map(vec);
+  UniquePllMap map(vec);
   EXPECT_DOUBLE_EQ(metric_spi.evaluate(0, 1, map), -std::log2(1.0d/7) - std::log2(3.0d/35) + std::log2(1.0d/35));
   free(split_a());
   free(split_b());
@@ -79,7 +79,7 @@ TEST_F(SPITest, test_luise_graph) {
   PllSplit split_3 = TestUtil::createSplit({0, 1, 2, 3, 6, 7});
   PllSplit split_4 = TestUtil::createSplit({0, 1, 2, 3, 4, 5});
   std::vector<PllSplit> vec {split_1, split_2, split_3, split_4};
-  PllPointerMap data(vec);
+  UniquePllMap data(vec);
   double expected_probability_single = 1.0 / 11;
   double expected_probability_intersect = 1.0 / 99;
   double result = -2 * std::log2(expected_probability_single) + std::log2(expected_probability_intersect);
@@ -103,7 +103,7 @@ TEST_F(SPITest, example_from_slideshow) {
   PllTree tree1 = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[0];
   PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[1];
   tree2.alignNodeIndices(tree1);
-  PllPointerMap map({tree1, tree2});
+  UniquePllMap map({tree1, tree2});
   SimilarityCacheLinear cache(map, metric_spi);
   std::vector<PllSplitList>& vec = map.vectors();
   PllSplitList& splits1 = vec[0];
@@ -140,7 +140,7 @@ TEST_F(SPITest, test_incompatible_splits) {
   std::vector<size_t> part1_b = {0, 2};
   PllSplit split_b = TestUtil::createSplit(part1_b);
   std::vector<PllSplit> vec {split_a, split_b};
-  PllPointerMap map(vec);
+  UniquePllMap map(vec);
   EXPECT_DOUBLE_EQ(metric_spi.evaluate(0, 1 , map), 0);
   free(split_a());
   free(split_b());
@@ -163,7 +163,7 @@ TEST_F(SPITest, test_special) {
   std::vector<size_t> part1_b = {0, 1, 2, 3};
   PllSplit split_b = TestUtil::createSplit(part1_b);
   std::vector<PllSplit> vec {split_a, split_b};
-  PllPointerMap map(vec);
+  UniquePllMap map(vec);
   double h_a = -std::log2(15.0/105);
   double h_b = -std::log2(15.0/105);
   double h_a_intersect_b = -std::log2(3.0/105);

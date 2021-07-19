@@ -66,7 +66,6 @@ std::string PllSplit::toString() const {
 }
 
 
-//TODO find out if preallocation can be done THIS SHOULD NO LONGER BE CALLED
 PllSplitList::PllSplitList(const std::vector<size_t> &splits) : _split_offsets(splits) {
 }
 

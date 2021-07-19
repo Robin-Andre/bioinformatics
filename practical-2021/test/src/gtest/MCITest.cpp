@@ -20,7 +20,7 @@ TEST_F(MCITest, test_identity) {
   std::vector<size_t> part1 = {0, 3, 4};
   PllSplit split = TestUtil::createSplit(part1);
   std::vector<PllSplit> vec {split};
-  PllPointerMap data(vec);
+  UniquePllMap data(vec);
   double p_a = phylomath::clusteringProbability(split.partitionSizeOf(1));
   double p_b = phylomath::clusteringProbability(split.partitionSizeOf(0));
   EXPECT_DOUBLE_EQ(metric_mci.evaluate(0, 0, data), p_a * std::log2(6.0/3) + p_b * std::log2(6.0/3));
@@ -35,7 +35,7 @@ TEST_F(MCITest, maximumtest) {
   PllSplit::setTipCount(6);
   PllTree tree1 = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[0];
   PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[0];
-  PllPointerMap map({tree1, tree2});
+  UniquePllMap map({tree1, tree2});
 
   PllSplitList& splits1 = map.vectors()[0];
   PllSplitList& splits2 = map.vectors()[1];
@@ -57,7 +57,7 @@ TEST_F(MCITest, test_mci) {
   std::vector<size_t> part1_b = {0, 3, 4, 5, 6, 7};
   PllSplit split_b = TestUtil::createSplit(part1_b);
   std::vector<PllSplit> vec {split_a, split_b};
-  PllPointerMap data(vec);
+  UniquePllMap data(vec);
   double solution = ((1.0 / 4) * std::log2(6.0 / 5)) + ((1.0 / 6) * std::log2(4.0 / 5)) +
     ((1.0 / 4) * std::log2(6.0 / 7)) + ((1.0 / 3) * std::log2(8.0 / 7));
   EXPECT_NEAR(metric_mci.evaluate(0, 1, data), solution, 0.00000000001);
@@ -75,7 +75,7 @@ TEST_F(MCITest, test_luise_graph) {
   PllSplit split_3 = TestUtil::createSplit({0, 1, 2, 3, 6, 7});
   PllSplit split_4 = TestUtil::createSplit({0, 1, 2, 3, 4, 5});
   std::vector<PllSplit> vec {split_1, split_2, split_3, split_4};
-  PllPointerMap data(vec);
+  UniquePllMap data(vec);
   double result = 1.0 / 2 * std::log2(4.0/3) + 1.0 / 2 * std::log2(8.0 / 9); // Yeah that one was calculated by hand
   EXPECT_NEAR(metric_mci.evaluate(0, 1, data), result, 0.00000001);
   EXPECT_NEAR(metric_mci.evaluate(0, 2, data), result, 0.00000001);

@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include "PllPointerMap.hpp"
+#include "UniquePllMap.hpp"
 #include "../Metric.hpp"
 
 /*
@@ -23,7 +23,7 @@ class SimilarityCache {
  */
 class SimilarityCacheLinear : public SimilarityCache {
     public:
-    SimilarityCacheLinear(const PllPointerMap& map, const GeneralizedMetric& metric);
+    SimilarityCacheLinear(const UniquePllMap& map, const GeneralizedMetric& metric);
     double access(size_t i, size_t j) const override {
         return cache[pos(std::min(i, j), std::max(i, j))];
     }
@@ -50,7 +50,7 @@ class SimilarityCacheLinear : public SimilarityCache {
 class SimilarityCacheMatrix : public SimilarityCache {
     public:
 
-    SimilarityCacheMatrix(const PllPointerMap& map, const GeneralizedMetric& metric);
+    SimilarityCacheMatrix(const UniquePllMap& map, const GeneralizedMetric& metric);
     double access(size_t i, size_t j) const override{
         assert(i < cache.size() && j < cache.size());
         return cache[std::max(i, j)][std::min(i, j)];

@@ -16,7 +16,7 @@ class IOTest : public testing::Test {
 TEST_F(IOTest, tree_read) {
   PllTree tree = TreeReader::readTreeFile("../test/res/data/simple_newick")[0];
   PllSplit::setTipCount(tree.getTipCount());
-  PllPointerMap map({tree});
+  UniquePllMap map({tree});
   PllSplit split1 = map[0];
   PllSplit split2 = map[1];
   EXPECT_FALSE(split1==split2);

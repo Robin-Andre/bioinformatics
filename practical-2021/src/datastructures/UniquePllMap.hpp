@@ -6,9 +6,9 @@
 /*
  * TODO: @Robin: Think about renaming and add docs
  */
-class PllPointerMap {
+class UniquePllMap {
   public:
-  explicit PllPointerMap(const std::vector<PllTree> &trees) : tree_iterator(std::vector<size_t>(trees.size())) {
+  explicit UniquePllMap(const std::vector<PllTree> &trees) : tree_iterator(std::vector<size_t>(trees.size())) {
     trees_as_pointers = std::vector<pll_split_t*>(trees.size());
     limit = trees[0].getTipCount() - 3;
     split_lists = std::vector<PllSplitList>(trees.size());
@@ -23,12 +23,12 @@ class PllPointerMap {
     all_splits_unique.resize(map_pos);
   }
   //This is for testing purposes only
-  explicit PllPointerMap(std::vector<PllSplit>& splits) : all_splits_unique(splits) {
+  explicit UniquePllMap(std::vector<PllSplit>& splits) : all_splits_unique(splits) {
     //dummy initializations for Softwipe
     map_pos = 0;
     limit = 0;
   }
-  ~PllPointerMap() {}
+  ~UniquePllMap() {}
   const PllSplit& operator[] (size_t index) const {
     return all_splits_unique[index];
   }
@@ -94,10 +94,4 @@ class PllPointerMap {
     //We have to subtract 1 to find the location as where to insert the element.
     split_lists[ID].push(current_split, map_pos - 1);
   }
-  /*void verify(unsigned ID) {
-    for(unsigned i = 0; i < split_lists[ID].getSplitCount(); ++i) {
-      std::cout << split_lists[ID][i]->toString();
-    }
-  }*/
-
 };
