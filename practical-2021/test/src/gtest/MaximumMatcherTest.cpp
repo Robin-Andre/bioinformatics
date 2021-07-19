@@ -77,7 +77,7 @@ TEST_F(MaximumMatcherTest, test_mci_weights){
   PllSplit::setTipCount(tree.getTipCount());
   UniquePllMap map = UniquePllMap({tree});
   SimilarityCacheLinear cache(map, mci);
-  PllSplitList& split_list = map.vectors()[0];
+  const PllSplitList& split_list = map.vectors()[0];
   size_t split_count = split_list.getSplits().size();
   std::vector<std::vector<double>> similarities =
     std::vector<std::vector<double>>(split_count, std::vector<double>(split_count));
@@ -100,8 +100,8 @@ TEST_F(MaximumMatcherTest, test_mci_weights_two_trees) {
   PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "heads/24")[2];
   UniquePllMap map = UniquePllMap({tree1, tree2});
   SimilarityCacheLinear cache(map, mci);
-  PllSplitList& s1 = map.vectors()[0];
-  PllSplitList& s2 = map.vectors()[1];
+  const PllSplitList& s1 = map.vectors()[0];
+  const PllSplitList& s2 = map.vectors()[1];
   PllSplit::setTipCount(tree1.getTipCount());
   size_t split_count = s1.getSplits().size();
   std::vector<std::vector<double>> similarities =

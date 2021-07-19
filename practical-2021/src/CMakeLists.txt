@@ -5,6 +5,8 @@ add_library(inforf STATIC
     datastructures/PllSplits.hpp
     datastructures/SimilarityCache.cpp
     datastructures/SimilarityCache.hpp
+    datastructures/UniquePllMap.cpp
+    datastructures/UniquePllMap.hpp
     PhylogeneticMathUtils.cpp
     PhylogeneticMathUtils.hpp
     Metric.cpp
@@ -40,3 +42,4 @@ target_include_directories(rfdist SYSTEM PUBLIC $<BUILD_INTERFACE:${LOCALDEPS_DI
 
 
 add_subdirectory(io)
+add_subdirectory(datastructures)

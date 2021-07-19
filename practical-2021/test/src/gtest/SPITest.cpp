@@ -39,8 +39,8 @@ TEST_F(SPITest, maximumtest) {
   PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[0];
   UniquePllMap map({tree1, tree2});
 
-  PllSplitList& splits1 = map.vectors()[0];
-  PllSplitList& splits2 = map.vectors()[1];
+  const PllSplitList& splits1 = map.vectors()[0];
+  const PllSplitList& splits2 = map.vectors()[1];
   tree2.alignNodeIndices(tree1);
   double expected_info_content = 2 * (2 * std::log2(7) + std::log2(35.0 / 3));
   double result = metric_spi.maximum(splits1, splits2);
@@ -105,9 +105,9 @@ TEST_F(SPITest, example_from_slideshow) {
   tree2.alignNodeIndices(tree1);
   UniquePllMap map({tree1, tree2});
   SimilarityCacheLinear cache(map, metric_spi);
-  std::vector<PllSplitList>& vec = map.vectors();
-  PllSplitList& splits1 = vec[0];
-  PllSplitList& splits2 = vec[1];
+  const std::vector<PllSplitList>& vec = map.vectors();
+  const PllSplitList& splits1 = vec[0];
+  const PllSplitList& splits2 = vec[1];
 
   size_t split_count = splits1.getSplits().size();
   std::vector<std::vector<double>> result = std::vector<std::vector<double>>(split_count, std::vector<double>(split_count));

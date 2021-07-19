@@ -37,8 +37,8 @@ TEST_F(MCITest, maximumtest) {
   PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[0];
   UniquePllMap map({tree1, tree2});
 
-  PllSplitList& splits1 = map.vectors()[0];
-  PllSplitList& splits2 = map.vectors()[1];
+  const PllSplitList& splits1 = map.vectors()[0];
+  const PllSplitList& splits2 = map.vectors()[1];
   tree2.alignNodeIndices(tree1);
   double result = metric_mci.maximum(splits1, splits2);
   double expected_entropy = 2 * (2 * (std::log2(3.0) / 3 + (2.0 / 3) * std::log2(3.0 / 2)) + 1);

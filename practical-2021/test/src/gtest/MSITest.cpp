@@ -35,8 +35,8 @@ TEST_F(MSITest, maximumtest) {
   PllTree tree1 = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[0];
   PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[0];
   UniquePllMap map({tree1, tree2});
-  PllSplitList& splits1 = map.vectors()[0];
-  PllSplitList& splits2 = map.vectors()[1];
+  const PllSplitList& splits1 = map.vectors()[0];
+  const PllSplitList& splits2 = map.vectors()[1];
   tree2.alignNodeIndices(tree1);
   double result = metric_msi.maximum(splits1, splits2);
   double expected_info_content = 2 * (2 * std::log2(7) + std::log2(35.0 / 3));
@@ -93,8 +93,8 @@ TEST_F(MSITest, distance_from_slideshow_msi) {
   PllTree tree2 = TreeReader::readTreeFile(current_data_dir + "example_from_slideshow")[1];
   UniquePllMap map = UniquePllMap({tree1, tree2});
   SimilarityCacheLinear cache(map, metric_msi);
-  PllSplitList& s1 = map.vectors()[0];
-  PllSplitList& s2 = map.vectors()[1];
+  const PllSplitList& s1 = map.vectors()[0];
+  const PllSplitList& s2 = map.vectors()[1];
   //tree2.alignNodeIndices(tree1);
 
   size_t split_count = s1.getSplits().size();

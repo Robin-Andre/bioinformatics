@@ -52,7 +52,7 @@ public:
     //precalculations
     phylomath::initCache();
     UniquePllMap _map(trees);
-    std::vector<PllSplitList>& tree_splits = _map.vectors();
+    const std::vector<PllSplitList>& tree_splits = _map.vectors();
     SimilarityCacheMatrix pairwise_cache(_map, metric);
 
     //Init result
@@ -127,7 +127,7 @@ public:
     //precalculations
     RFMetric metric;
     UniquePllMap map(trees);
-    std::vector<PllSplitList>& tree_splits = map.vectors();
+    const std::vector<PllSplitList>& tree_splits = map.vectors();
 
     //Init result
     io::IOData result;
