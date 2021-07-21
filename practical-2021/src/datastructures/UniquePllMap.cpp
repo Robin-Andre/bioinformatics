@@ -13,7 +13,7 @@
     }
 
     processQueue();
-    all_splits_unique.resize(map_pos); //If duplicates exist the map won't be filled completely
+    all_splits_unique.resize(map_pos); //If duplicates exist the map won't be filled completely, therefore it is resized
   }
   //This constructor is required for testing purposes only
   UniquePllMap::UniquePllMap(std::vector<PllSplit>& splits) : all_splits_unique(splits) {

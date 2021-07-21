@@ -111,7 +111,7 @@ public:
 
   /**
    * Clustering probability for taxa to belong to A in a split A|B
-   * defined as |A|/(|A|+|B|)
+   * defined as |A|/(|A|+|B|)    |A|+|B| = N 
    *
    * @param a: |A|
    * @return: Clustering probability for A
@@ -120,15 +120,15 @@ public:
     return static_cast<double>(a) / static_cast<double>(PllSplit::getTipCount());
   }
 
-//TODO: Robin, please add doc here, I am confused
+
   /**
-   * Clustering probability for taxa to belong to A1 in a split A1|B1
-   * and to A2 in a split A2|B2 defined as ??
+   * Calculates log[p_intersect / (p_1 * p_2)]. Since p_intersect = |intersect| / N; p_1 = |a1| / N; p_2 = |a2| / N 
+   * this equation simplifies to log(|intersect| * N / |a_1| / |a_2|) => log(|intersect|) + log(N) - log(|a1|) - log(|a2|) 
    *
-   * @param a1: |A1|
-   * @param a2: |A2|
-   * @param intersectsize: |A1 intersect A2|
-   * @return: Clustering probability for A1, A2
+   * @param a1: |A1| the amount of taxa in split 1
+   * @param a2: |A2| the amount of taxa in split 2
+   * @param intersectsize: |A1 intersect A2| the amount of taxa in both split 1 and 2
+   * @return: log[p_intersect / (p_1 * p_2)]. (Needed for MCI)
    */
   inline static double clusteringProbability(size_t intersectsize, size_t a1, size_t a2) {
     assert(intersectsize > 0 && a1 > 0 && a2 > 0);

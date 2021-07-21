@@ -9,6 +9,12 @@
 #define GIT_COMMIT_HASH "?"
 #endif
 namespace io {
+  /* This struct contains the relevant configurations neccessary to run the algorithm
+   * 
+   * 
+   * 
+   * 
+   */
 struct Config {
   std::string input_file_path;
   std::string output_file_path;
@@ -20,9 +26,6 @@ struct Config {
 };
 
 static GeneralizedMetric* metricFromString(const std::string& s) {
-  /*if(s == "RF") {
-    return new RFMetric();
-  }*/
   if(s == "SPI") {
     return new SPIMetric();
   }
@@ -32,14 +35,14 @@ static GeneralizedMetric* metricFromString(const std::string& s) {
   else if(s == "MSI") {
     return new MSIMetric();
   }
-  std::cerr << "Metric misspelled: " << s <<  " exiting...\n";
+  std::cerr << "Cannot find Metric [ " << s <<  " ] Metrics are specified via -m (MSI/SPI/MCI) exiting...\n";
   exit(1);
 }
 
 static Config parseCommandLineOptions(int argc, char* argv[]){
     int opt;
     Config config;
-    std::string metric_name = "RF"; //DEFAULT OPTION
+    std::string metric_name = ""; //DEFAULT OPTION IS INVALID
     while((opt = getopt(argc, argv, "i:o:m:" )) != -1) {
       switch(opt) {
           case 'i':
@@ -60,18 +63,13 @@ static Config parseCommandLineOptions(int argc, char* argv[]){
     config.metric = io::metricFromString(metric_name);
     return config;
 }
-/*static void clear_benchmark_timing() {
-  std::cout << "Clearing: " << GIT_COMMIT_HASH << "\n";
-  //std::ofstream out_file(std::string("../benchmark/") + GIT_COMMIT_HASH + ".csv");
-  //#remove(std::string("../benchmark/") + GIT_COMMIT_HASH + ".csv");
-}*/
 static void write_benchmark_timing(std::string& input) {
   std::ofstream out_file(std::string("../benchmark/") + GIT_COMMIT_HASH + ".csv", std::ios::app);
   if(out_file.is_open()) {
     out_file << input << "\n";
   }
   else {
-    std::cerr << "Benchmark Timing File not openable\n";
+    std::cerr << "Benchmark Timing File cannot be opened\n";
   }
   out_file.close();
 }

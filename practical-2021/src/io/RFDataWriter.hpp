@@ -35,7 +35,8 @@ public:
       }
       out_file.close();
     } else {
-      throw ("Cannot write to " + path + "/distances");
+      std::cerr << "Cannot write to " << path << "/distances\n";
+      exit(1);
     }
     out_file = std::ofstream(path + "/info");
     if (out_file.is_open()) {
@@ -44,7 +45,8 @@ public:
       out_file << "Average relative RF in this set: " << data.mean_dst << std::endl;
       out_file.close();
     } else {
-      throw ("Cannot write to " + path +  "/info");
+      std::cerr << "Cannot write to " << path << "/info\n";
+      exit(1);
     }
   }
 
@@ -64,7 +66,8 @@ public:
         out_stream << j;
         out_stream.close();
     } else {
-      throw ("Cannot write JSON to " + path + ".json");
+      std::cerr << "Cannot write JSON to " << path << "/.json\n";
+      exit(1);
     }
   }
 
@@ -90,7 +93,8 @@ public:
       }
       out_file.close();
     } else {
-      throw ("Cannot write to " + path);
+      std::cerr << "Cannot write to " << path << "\n";
+      exit(1);
     }
   }
 

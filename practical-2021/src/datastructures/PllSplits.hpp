@@ -158,9 +158,8 @@ public:
 
 
   /**
-   * TODO: Robin please help here
+   * Default constructor for preallocation purposes
    */
-  //TODO buid nondefault constructor which preallocates elements
   explicit PllSplitList() {
 
   }
@@ -215,7 +214,6 @@ public:
    */
   std::string toString() const;
 
-//TODO: @Robin: Is this correct?
   /**
    * Inserts a new PllSplit to the PllSplitList
    *

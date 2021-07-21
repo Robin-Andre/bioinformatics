@@ -17,6 +17,10 @@ public:
 static std::vector<PllTree> readTreeFile(const std::string& filepath) {
   std::vector<PllTree> trees;
   std::ifstream file(filepath);
+  if(!file.good()) {
+    std::cerr << "The Input file[ " << filepath << " ] is invalid...exiting\n";
+    exit(1);
+  }
   if(file.is_open()) {
     std::string line;
     std::getline(file, line);

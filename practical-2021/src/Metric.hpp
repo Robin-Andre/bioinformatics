@@ -58,14 +58,17 @@ class MSIMetric : public GeneralizedMetric {
     const PllSplit& sp1 = map[pos1];
     if (pos1 == pos2) return sp1.h();
     const PllSplit& sp2 = map[pos2];
+
     size_t intersect_11 = sp1.intersectionSize(sp2);
-    assert(intersect_11 <= sp1.partitionSizeOf(1) && intersect_11 <= sp2.partitionSizeOf(1));
     size_t intersect_01 = sp2.partitionSizeOf(1) - intersect_11;
-    assert(intersect_01 <= sp1.partitionSizeOf(0) && intersect_01 <= sp2.partitionSizeOf(1));
     size_t intersect_00 = sp1.partitionSizeOf(0) - intersect_01;
-    assert(intersect_00 <= sp1.partitionSizeOf(0) && intersect_00 <= sp2.partitionSizeOf(0));
     size_t intersect_10 = sp2.partitionSizeOf(0) - intersect_00;
+    
+    assert(intersect_11 <= sp1.partitionSizeOf(1) && intersect_11 <= sp2.partitionSizeOf(1));
+    assert(intersect_01 <= sp1.partitionSizeOf(0) && intersect_01 <= sp2.partitionSizeOf(1));
+    assert(intersect_00 <= sp1.partitionSizeOf(0) && intersect_00 <= sp2.partitionSizeOf(0));
     assert(intersect_10 <= sp1.partitionSizeOf(1) && intersect_10 <= sp2.partitionSizeOf(0));
+    
     return std::max(phylomath::h(intersect_11, intersect_00),
                     phylomath::h(intersect_01, intersect_10));
 
@@ -103,9 +106,11 @@ class SPIMetric : public GeneralizedMetric {
 
     double phylo_shared;
     size_t intersect_11 = sp1.intersectionSize(sp2);
-    assert(intersect_11 <= s1_size_1 && intersect_11 <= s2_size_1);
     size_t intersect_01 = s2_size_1 - intersect_11;
+
+    assert(intersect_11 <= s1_size_1 && intersect_11 <= s2_size_1);
     assert(intersect_01 <= s1_size_0 && intersect_01 <= s2_size_1);
+
     if(!intersect_01) {
       phylo_shared = phylomath::h_shared(s1_size_0, s2_size_1);
     } else {
