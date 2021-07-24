@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
-#include "../../../src/datastructures/PllSplits.hpp"
-#include "TreeReader.hpp"
+#include "datastructures/PllSplits.hpp"
+#include "io/TreeReader.hpp"
 #include "../TestUtil.hpp"
 
 

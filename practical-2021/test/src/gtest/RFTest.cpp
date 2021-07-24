@@ -1,10 +1,10 @@
 #include "gtest/gtest.h"
-#include "../../../src/datastructures/PllSplits.hpp"
-#include "../../../src/datastructures/UniquePllMap.hpp"
-#include "../../../src/Metric.hpp"
-#include "../../../src/datastructures/SimilarityCache.hpp"
-#include "TreeReader.hpp"
-#include "../../../src/Distances.hpp"
+#include "datastructures/PllSplits.hpp"
+#include "datastructures/UniquePllMap.hpp"
+#include "Metric.hpp"
+#include "datastructures/SimilarityCache.hpp"
+#include "io/TreeReader.hpp"
+#include "Distances.hpp"
 #include "../TestUtil.hpp"
 
 class RFTest : public testing::Test {

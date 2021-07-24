@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "../../../src/PhylogeneticMathUtils.hpp"
+#include "PhylogeneticMathUtils.hpp"
 #include "../TestUtil.hpp"
 
 class PhylomathTest : public testing::Test {

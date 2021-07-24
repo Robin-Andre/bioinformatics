@@ -28,7 +28,7 @@ if(ENABLE_TESTS)
   message(Git Hash ${GIT_COMMIT_HASH})
   message("I do not know what to include")
   message(${CMAKE_SOURCE_DIR})
-  target_include_directories(${TEST_EXE_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/src/io/)
+  target_include_directories(${TEST_EXE_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/src/)
   target_compile_definitions(${TEST_EXE_NAME} PRIVATE "-DGIT_COMMIT_HASH=\"${GIT_COMMIT_HASH}\"")
   #googletest requires gtest as library. gtest is not linked as system library which causes a lot of
   #-Wundef errors in softwipe which are 

@@ -1,8 +1,8 @@
 #include "gtest/gtest.h"
-#include "../../../src/datastructures/PllSplits.hpp"
-#include "../../../src/Metric.hpp"
-#include "../../../src/PhylogeneticMathUtils.hpp"
-#include "TreeReader.hpp"
+#include "datastructures/PllSplits.hpp"
+#include "Metric.hpp"
+#include "PhylogeneticMathUtils.hpp"
+#include "io/TreeReader.hpp"
 #include "../TestUtil.hpp"
 class MCITest : public testing::Test {
 protected:

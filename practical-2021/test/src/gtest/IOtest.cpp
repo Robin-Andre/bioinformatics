@@ -1,8 +1,8 @@
 #include "gtest/gtest.h"
-#include "TreeReader.hpp"
-#include "RFDataReader.hpp"
-#include "RFDataWriter.hpp"
-#include "IOData.hpp"
+#include "io/TreeReader.hpp"
+#include "io/RFDataReader.hpp"
+#include "io/RFDataWriter.hpp"
+#include "io/IOData.hpp"
 #include <filesystem>
 class IOTest : public testing::Test {
   float epsilon = 0.00000001;

@@ -1,8 +1,8 @@
 #include "gtest/gtest.h"
-#include "../../../src/MaximumMatcher.hpp"
-#include "TreeReader.hpp"
-#include "../../../src/Metric.hpp"
-#include "../../../src/Distances.hpp"
+#include "MaximumMatcher.hpp"
+#include "io/TreeReader.hpp"
+#include "Metric.hpp"
+#include "Distances.hpp"
 
 #include <random>
 #include <iomanip>

@@ -1,10 +1,10 @@
 #include "gtest/gtest.h"
-#include "RFDataReader.hpp"
-#include "RFDataWriter.hpp"
-#include "TreeReader.hpp"
-#include "IOData.hpp"
-#include "../../../src/Distances.hpp"
-#include "../../../src/Metric.hpp"
+#include "io/RFDataReader.hpp"
+#include "io/RFDataWriter.hpp"
+#include "io/TreeReader.hpp"
+#include "io/IOData.hpp"
+#include "Distances.hpp"
+#include "Metric.hpp"
 
 #include <ortools/linear_solver/linear_solver.h>
 #include <string>

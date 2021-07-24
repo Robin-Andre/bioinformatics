@@ -1,10 +1,11 @@
 #include "gtest/gtest.h"
-#include "../../../src/datastructures/PllSplits.hpp"
-#include "../../../src/Metric.hpp"
-#include "../../../src/PhylogeneticMathUtils.hpp"
-#include "TreeReader.hpp"
-#include "../../../src/datastructures/SimilarityCache.hpp"
-#include "../../../src/Distances.hpp"
+#include "datastructures/PllSplits.hpp"
+#include "datastructures/SimilarityCache.hpp"
+#include "Metric.hpp"
+#include "PhylogeneticMathUtils.hpp"
+#include "io/TreeReader.hpp"
+
+#include "Distances.hpp"
 #include "../TestUtil.hpp"
 class MSITest : public testing::Test {
 protected:
