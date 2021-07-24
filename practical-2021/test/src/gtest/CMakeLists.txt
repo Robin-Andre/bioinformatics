@@ -19,13 +19,16 @@ if(ENABLE_TESTS)
     OUTPUT_STRIP_TRAILING_WHITESPACE)
 
 # Get the latest commit hash
-execute_process(
+  execute_process(
     COMMAND git rev-parse HEAD
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
     OUTPUT_VARIABLE GIT_COMMIT_HASH
     OUTPUT_STRIP_TRAILING_WHITESPACE)
 
   message(Git Hash ${GIT_COMMIT_HASH})
+  message("I do not know what to include")
+  message(${CMAKE_SOURCE_DIR})
+  target_include_directories(${TEST_EXE_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/src/io/)
   target_compile_definitions(${TEST_EXE_NAME} PRIVATE "-DGIT_COMMIT_HASH=\"${GIT_COMMIT_HASH}\"")
   #googletest requires gtest as library. gtest is not linked as system library which causes a lot of
   #-Wundef errors in softwipe which are 

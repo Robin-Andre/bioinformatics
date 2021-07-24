@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 #include "../../../src/MaximumMatcher.hpp"
-#include "../../../src/io/TreeReader.hpp"
+#include "TreeReader.hpp"
 #include "../../../src/Metric.hpp"
 #include "../../../src/Distances.hpp"
 

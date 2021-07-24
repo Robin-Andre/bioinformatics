@@ -3,7 +3,7 @@
 #include "../../../src/datastructures/UniquePllMap.hpp"
 #include "../../../src/Metric.hpp"
 #include "../../../src/datastructures/SimilarityCache.hpp"
-#include "../../../src/io/TreeReader.hpp"
+#include "TreeReader.hpp"
 #include "../../../src/Distances.hpp"
 #include "../TestUtil.hpp"
 

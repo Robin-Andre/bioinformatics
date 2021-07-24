@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "../../../src/io/IOUtil.hpp"
+#include "IOUtil.hpp"
 #include <stdlib.h>
 #include <random>
 #include <iomanip>

@@ -1,8 +1,8 @@
 #include "gtest/gtest.h"
-#include "../../../src/io/RFDataReader.hpp"
-#include "../../../src/io/RFDataWriter.hpp"
-#include "../../../src/io/TreeReader.hpp"
-#include "../../../src/io/IOData.hpp"
+#include "RFDataReader.hpp"
+#include "RFDataWriter.hpp"
+#include "TreeReader.hpp"
+#include "IOData.hpp"
 #include "../../../src/Distances.hpp"
 #include "../../../src/Metric.hpp"
 

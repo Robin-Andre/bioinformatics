@@ -2,7 +2,7 @@
 #include "../../../src/datastructures/PllSplits.hpp"
 #include "../../../src/Metric.hpp"
 #include "../../../src/PhylogeneticMathUtils.hpp"
-#include "../../../src/io/TreeReader.hpp"
+#include "TreeReader.hpp"
 #include "../TestUtil.hpp"
 class MCITest : public testing::Test {
 protected:

@@ -2,7 +2,7 @@
 #include "../../../src/datastructures/PllSplits.hpp"
 #include "../../../src/Metric.hpp"
 #include "../../../src/PhylogeneticMathUtils.hpp"
-#include "../../../src/io/TreeReader.hpp"
+#include "TreeReader.hpp"
 #include "../../../src/datastructures/SimilarityCache.hpp"
 #include "../../../src/Distances.hpp"
 #include "../TestUtil.hpp"
