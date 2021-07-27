@@ -7,9 +7,18 @@
 int main(int argc, char* argv[]) {
     io::Config config = io::parseCommandLineOptions(argc, argv);
     std::cout << "Input File Path: " << config.input_file_path  << std::endl;
-    std::cout << "Metric Used: " << config.metric->name() <<"\n";
-    io::IOData result = Distances::computeGeneralizedDistances(
-    TreeReader::readTreeFile(config.input_file_path), *(config.metric), ABSOLUTE);
+
+    io::IOData result;
+    if(config.metric == nullptr) {
+      std::cout << "Metric Used: RF\n";
+      result = Distances::computeRFDistances(
+               TreeReader::readTreeFile(config.input_file_path), ABSOLUTE);
+    }
+    else {
+      std::cout << "Metric Used: " << config.metric->name() <<"\n";
+      result = Distances::computeGeneralizedDistances(
+               TreeReader::readTreeFile(config.input_file_path), *(config.metric), ABSOLUTE);
+    }
     std::cout << result.toString();
 
 

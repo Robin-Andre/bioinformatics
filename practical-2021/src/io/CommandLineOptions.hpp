@@ -35,6 +35,9 @@ static GeneralizedMetric* metricFromString(const std::string& s) {
   else if(s == "MSI") {
     return new MSIMetric();
   }
+  else if(s == "RF") {
+    return nullptr;
+  }
   std::cerr << "Cannot find Metric [ " << s <<  " ] Metrics are specified via -m (MSI/SPI/MCI) exiting...\n";
   exit(1);
 }

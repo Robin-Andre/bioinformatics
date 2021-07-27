@@ -123,12 +123,11 @@ public:
     assert(tree_count > 0);
     size_t tip_count = trees[0].getTipCount();
     assert(tip_count > 3);
-
     //precalculations
+    phylomath::initCache();
     RFMetric metric;
     UniquePllMap map(trees);
     const std::vector<PllSplitList>& tree_splits = map.vectors();
-
     //Init result
     io::IOData result;
     result.mode = ModeString[mode];
@@ -141,7 +140,6 @@ public:
     //Required for computation
     size_t dist_count = 0;
     bool all_trees_equal_to_last = true;
-
     for(size_t i = 0; i < tree_count; ++i){
       bool is_unique = true;
       for(size_t j = i; j < tree_count; ++j){
