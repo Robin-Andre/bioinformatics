@@ -6,3 +6,4 @@ output/*
 googletest/*
 libs/ortools/*
 benchmark/*
+foo/*
