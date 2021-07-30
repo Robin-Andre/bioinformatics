@@ -13,7 +13,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
 
 set(ORTOOLS_ROOT ${ORTOOLS_ROOT} ${CMAKE_SOURCE_DIR}/libs/ortools)
 
-message(WARNING ${ORTOOLS_ROOT})
+message(${ORTOOLS_ROOT})
 
 set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${ORTOOLS_ROOT})
 
@@ -26,7 +26,6 @@ find_package(Threads REQUIRED)
 
 add_subdirectory(libs)
 add_subdirectory(src)
-add_subdirectory(utils)
 add_subdirectory(test)
 
 
