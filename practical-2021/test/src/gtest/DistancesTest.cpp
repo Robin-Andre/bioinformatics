@@ -13,18 +13,14 @@
 #define GIT_COMMIT_HASH "?"
 #endif
 
-static constexpr bool print_execution_time = true;
+//Setting this variable to true will cause this test to write the timings into a file in the folder benchmark
+//with the corresponding Git commit hash.
+static constexpr bool PRINT_EXECUTION_TIME = false;
+
 
 class DistancesTest : public testing::Test {
 
 protected:
-//TODO this should be compile macroed
-/*static void SetUpTestSuite() {
-  if(print_execution_time) {
-    io::clear_benchmark_timing();
-  }
-
-}*/
 /**
  * Loads two small trees for simple testing
  */
@@ -70,7 +66,7 @@ void execute_test_generalized(const std::string& test_file, const GeneralizedMet
     EXPECT_EQ(result, reference);
     //This is a dirty solution to get execution time on the console for measurement purposes
     //Right now all tests are intertwined and this is the easiest insertion point
-    if(print_execution_time) {
+    if(PRINT_EXECUTION_TIME) {
 
       std::string result = test_file + " " + metric.name() + " " + mode_name
                 + " " + std::to_string((std::chrono::duration<double, std::milli>(time_end - time_start)).count())
