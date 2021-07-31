@@ -2,6 +2,14 @@
 This tool calculates the pairwise distance of a set of phylogenetic trees based on the metrics found in the [TreeDist R package](https://github.com/ms609/TreeDist/tree/2.0.3) as well as the standard [Robinson-Foulds metric](https://www.sciencedirect.com/science/article/abs/pii/0025556481900432?via%3Dihub)
 The implemented metrics are Mutual Cluster Information (MSI), Shared Phylogenetic Information (SPI) and Matching Split Information (MSI).
 
+## Implementation Details
+The software calculates the pairwise distances in 3 steps: 
+
+1.) Making splits unique: Many distinct trees contain the same split. To reduce calculation time the trees are scanned and mapped to a list of unique splits.
+
+2.) Evaluating Split Pairs
+
+3.) Matching Splits
 
 ## Installation 
 ### Requirements
