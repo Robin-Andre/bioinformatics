@@ -35,8 +35,7 @@ TEST_F(IOTest, json_read_write) {
   std::filesystem::remove_all("./foo");
 }
 
-//TODO: @Robin: Sollen wir auch den Code für die anderen Format rausschmeißen?!
-//Files of this format are no longer in repo
+//Files of this format are no longer in repo, code ist kept for conversion
 /*TEST_F(IOTest, raxml_read_write) {
   std::filesystem::create_directories("./foo");
   io::IOData input = RAXMLReader::read("../test/res/reference_results/heads/24");

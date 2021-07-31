@@ -4,7 +4,9 @@
 #include "../Metric.hpp"
 
 /*
- * Simple Class to store and access splitwise similarities
+ * Simple Class to store and access the resp. splitwise values for the metrices
+ * (Matching Split Information, Shared Phylogenetic Information or
+ * Mutual Clustering Information, depending on current metric)
  */
 
 class SimilarityCache {
@@ -12,14 +14,14 @@ class SimilarityCache {
     /*
     * @param i: The index of the first split
     * @param j: The index of the second split
-    * @return The similarity for corresponding split
+    * @return The value for corresponding split pair
     */
     virtual double access(size_t i, size_t j) const = 0;
     virtual ~SimilarityCache();
 };
 
 /*
- * Stores similarities in a linear vector, manages index calculcations for access
+ * Stores values in a linear vector, manages index calculcations for access
  */
 class SimilarityCacheLinear : public SimilarityCache {
     public:
@@ -45,7 +47,7 @@ class SimilarityCacheLinear : public SimilarityCache {
 };
 
 /*
- * Stores similarities trivially in a two-dimensional vector
+ * Stores values trivially in a two-dimensional vector
  */
 class SimilarityCacheMatrix : public SimilarityCache {
     public:

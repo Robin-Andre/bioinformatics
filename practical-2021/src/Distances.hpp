@@ -19,8 +19,8 @@ class Distances {
 
 
   /**
-   * Provides an interface to calculate simple and generaized n-to-n Robinson-
-   * Foulds-Distances for sets fo PllTrees
+   * Provides an interface to calculate simple and generalized n-to-n Robinson-
+   * Foulds-Distances for sets of PllTrees
    *
    */
 public:

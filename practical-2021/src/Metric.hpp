@@ -16,7 +16,7 @@ static const char *ModeString[] = {"SIMILARITY", "ABSOLUTE", "RELATIVE"};
 class Metric {
     public:
     /**
-    * maximum value that can be obtained for two trees can admit in this metric
+    * maximum value two trees can admit in this metric
     *
     * @param l1: split list representing the first tree
     * @param l2: split list representing the second tree
@@ -63,12 +63,12 @@ class MSIMetric : public GeneralizedMetric {
     size_t intersect_01 = sp2.partitionSizeOf(1) - intersect_11;
     size_t intersect_00 = sp1.partitionSizeOf(0) - intersect_01;
     size_t intersect_10 = sp2.partitionSizeOf(0) - intersect_00;
-    
+
     assert(intersect_11 <= sp1.partitionSizeOf(1) && intersect_11 <= sp2.partitionSizeOf(1));
     assert(intersect_01 <= sp1.partitionSizeOf(0) && intersect_01 <= sp2.partitionSizeOf(1));
     assert(intersect_00 <= sp1.partitionSizeOf(0) && intersect_00 <= sp2.partitionSizeOf(0));
     assert(intersect_10 <= sp1.partitionSizeOf(1) && intersect_10 <= sp2.partitionSizeOf(0));
-    
+
     return std::max(phylomath::h(intersect_11, intersect_00),
                     phylomath::h(intersect_01, intersect_10));
 
@@ -201,7 +201,7 @@ class MCIMetric : public GeneralizedMetric {
 };
 
 /**
-  * Commom Robinson-Foulds-Distance
+  * Common Robinson-Foulds-Distance
   */
 
 class RFMetric : public Metric {

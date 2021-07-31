@@ -84,18 +84,3 @@ bool operator == (const PllSplitList& p1, const PllSplitList& p2) {
     maximum_entropy += split.entropy();
     maximum_information_content += split.h();
   }
-
-//TODO: @Robin: Can we make this work again? 
-//      @Luise: options A) just print the corresponding vector of offsets (does not grant that much insight)
-//                      B) make a print method in the map which prints the PllSplitList (print is at a different location)
-//                      C) pass the map as argument or attribute to PllSplitList (lots of effort for a print)
-//                      D) just don't give a fuck about this :P
-/*std::string PllSplitList::toString() const {
-  std::stringstream ss;
-  ss <<  "-------------------------" << std::endl;
-  for(size_t i = 0; i < _splits.size(); ++i){
-    ss << _splits[i]->toString();
-  }
-  ss << "-------------------------" << std::endl;
-  return ss.str();
-}*/

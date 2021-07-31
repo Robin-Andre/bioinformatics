@@ -37,7 +37,9 @@ TEST_F(PllSplitTest, test_operators) {
   free(trd_split());
 }
 
-
+/*
+ * Test whether intersection sizes are determined properly
+ */
 TEST_F(PllSplitTest, test_intersectcount) {
     PllSplit::setTipCount(10);
     std::vector<size_t> part1_a = {0, 2, 4, 9};
