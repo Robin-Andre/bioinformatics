@@ -12,12 +12,12 @@ int main(int argc, char* argv[]) {
     if(config.metric == nullptr) {
       std::cout << "Metric Used: RF\n";
       result = Distances::computeRFDistances(
-               TreeReader::readTreeFile(config.input_file_path), ABSOLUTE);
+               TreeReader::readTreeFile(config.input_file_path), config.mode);
     }
     else {
       std::cout << "Metric Used: " << config.metric->name() <<"\n";
       result = Distances::computeGeneralizedDistances(
-               TreeReader::readTreeFile(config.input_file_path), *(config.metric), ABSOLUTE);
+               TreeReader::readTreeFile(config.input_file_path), *(config.metric), config.mode);
     }
     std::cout << result.toString();
 

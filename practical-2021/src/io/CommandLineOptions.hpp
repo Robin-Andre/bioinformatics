@@ -16,6 +16,7 @@ struct Config {
   std::string input_file_path;
   std::string output_file_path;
   GeneralizedMetric* metric;
+  Mode mode;
   //As long as there is a raw pointer this remove is necessary when config runs out of scope
   void remove() {
     delete metric;
@@ -38,12 +39,27 @@ static GeneralizedMetric* metricFromString(const std::string& s) {
   std::cerr << "Cannot find Metric [ " << s <<  " ] Metrics are specified via -m (MSI/SPI/MCI) exiting...\n";
   exit(1);
 }
+static Mode modeFromString(const std::string& s) {
+  if(s == "A") {
+    return Mode::ABSOLUTE;
+  }
+  else if (s == "R") {
+    return Mode::RELATIVE;
+  }
+  else if (s == "S") {
+    return Mode::SIMILARITY;
+  }
+  std::cerr << "Cannot find Mode [ " << s <<  " ] Modes are specified via -n (A/R/S) "
+            << "for (Absolute/Relative/Similarity). exiting...\n";
+  exit(1);
+} 
 
 static Config parseCommandLineOptions(int argc, char* argv[]){
     int opt;
     Config config;
     std::string metric_name = ""; //DEFAULT OPTION IS INVALID
-    while((opt = getopt(argc, argv, "i:o:m:" )) != -1) {
+    std::string mode_name = "A"; //DEFAULT OPTION IS ABSOLUTE
+    while((opt = getopt(argc, argv, "i:o:m:n:" )) != -1) {
       switch(opt) {
           case 'i':
             config.input_file_path = optarg;
@@ -54,6 +70,9 @@ static Config parseCommandLineOptions(int argc, char* argv[]){
           case 'm':
             metric_name = optarg;
             break;
+          case 'n':
+            mode_name = optarg;
+            break;
           case '?':
             std::cout << "Unknown Parameter exiting ...\n";
             exit(1);
@@ -61,6 +80,7 @@ static Config parseCommandLineOptions(int argc, char* argv[]){
       }
     }
     config.metric = io::metricFromString(metric_name);
+    config.mode = io::modeFromString(mode_name);
     return config;
 }
 static void write_benchmark_timing(std::string& input) {
