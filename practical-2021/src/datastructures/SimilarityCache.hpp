@@ -12,8 +12,8 @@
 class SimilarityCache {
     public:
     /*
-    * @param i: The index of the first split
-    * @param j: The index of the second split
+    * @param i The index of the first split
+    * @param j The index of the second split
     * @return The value for corresponding split pair
     */
     virtual double access(size_t i, size_t j) const = 0;

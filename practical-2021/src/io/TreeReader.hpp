@@ -11,7 +11,7 @@ class TreeReader {
 public:
 
   /*
-   * @param filepath: path of file with newick strings
+   * @param filepath path of file with newick strings
    * @return vector with PllTrees read from specified file
    */
 static std::vector<PllTree> readTreeFile(const std::string& filepath) {

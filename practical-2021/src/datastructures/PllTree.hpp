@@ -15,15 +15,15 @@ class PllTree {
 public:
   /*
    * Creates a PllTree by parsing an input string in newick format
-   * @param newick_string: string encoding the tree in newick format
+   * @param newick_string string encoding the tree in newick format
    */
   explicit PllTree(const std::string &newick_string);
 
   /*
    * Creates a PllTree by parsing an input string in newick format
    * and aligns its node indices with a preexisting tree
-   * @param newick_string: string encoding the tree in newick format
-   * @param alignment_tree: the tree to align node indices with
+   * @param newick_string string encoding the tree in newick format
+   * @param alignment_tree the tree to align node indices with
    */
   PllTree(const std::string &newick_string, const PllTree& alignment_tree);
   PllTree()=delete;
@@ -51,7 +51,7 @@ public:
   /*
    * Aligns this PllTree's node indices with those of the provided tree
    *
-   * @param other: The tree to align node indices to
+   * @param other The tree to align node indices to
    */
   void         alignNodeIndices(const PllTree &other);
 

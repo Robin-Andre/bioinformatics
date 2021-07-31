@@ -41,6 +41,7 @@ TEST_F(MSITest, maximumtest) {
   tree2.alignNodeIndices(tree1);
   double result = metric_msi.maximum(splits1, splits2);
   double expected_info_content = 2 * (2 * std::log2(7) + std::log2(35.0 / 3));
+  EXPECT_EQ(result, expected_info_content);
 }
 
 /**
@@ -99,7 +100,8 @@ TEST_F(MSITest, distance_from_slideshow_msi) {
   //tree2.alignNodeIndices(tree1);
 
   size_t split_count = s1.getSplits().size();
-  std::vector<std::vector<double>> result = std::vector<std::vector<double>>(split_count, std::vector<double>(split_count));
+  std::vector<std::vector<double>> result = std::vector<std::vector<double>>
+    (split_count, std::vector<double>(split_count));
   Distances::similaritiesForSplits(s1, s2, cache, &result);
   double alpha = std::log2(7);
   double beta = std::log2(5);

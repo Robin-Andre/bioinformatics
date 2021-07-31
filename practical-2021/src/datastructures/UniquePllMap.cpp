@@ -4,16 +4,19 @@
     trees_as_pointers = std::vector<pll_split_t*>(trees.size());
     limit = trees[0].getTipCount() - 3;
     split_lists = std::vector<PllSplitList>(trees.size());
-    all_splits_unique = std::vector<PllSplit>(trees.size() * limit); // IN the worst case every split is unique so limit * trees
+    // IN the worst case every split is unique so limit * trees
+    all_splits_unique = std::vector<PllSplit>(trees.size() * limit);
     map_pos = 0;
 
     for(unsigned i = 0; i < trees.size(); ++i) {
-      trees_as_pointers[i] = pllmod_utree_split_create(trees[i].tree()->vroot, static_cast<unsigned int>(trees[0].getTipCount()), nullptr);
+      trees_as_pointers[i] = pllmod_utree_split_create(trees[i].tree()->vroot,
+        static_cast<unsigned int>(trees[0].getTipCount()), nullptr);
       push(i); //Push the first element of every tree into the queue
     }
 
     processQueue();
-    all_splits_unique.resize(map_pos); //If duplicates exist the map won't be filled completely, therefore it is resized
+    //If duplicates exist the map won't be filled completely, therefore it is resized
+    all_splits_unique.resize(map_pos);
   }
   //This constructor is required for testing purposes only
   UniquePllMap::UniquePllMap(std::vector<PllSplit>& splits) : all_splits_unique(splits) {

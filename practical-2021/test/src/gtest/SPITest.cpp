@@ -110,7 +110,8 @@ TEST_F(SPITest, example_from_slideshow) {
   const PllSplitList& splits2 = vec[1];
 
   size_t split_count = splits1.getSplits().size();
-  std::vector<std::vector<double>> result = std::vector<std::vector<double>>(split_count, std::vector<double>(split_count));
+  std::vector<std::vector<double>> result =
+    std::vector<std::vector<double>>(split_count, std::vector<double>(split_count));
   Distances::similaritiesForSplits(splits1, splits2, cache, &result);
   double h_standard = phylomath::h(2, 4);
   double h_i1 = phylomath::h(3, 3);

@@ -38,7 +38,7 @@ public:
   /**
    * Dual logarithm of double factorial, cache is used
    *
-   * @param n
+   * @param n Integer to get the dual log for
    * @return log_2(n!!)
    */
   inline static double logDoublefactorial(size_t n) {
@@ -57,9 +57,9 @@ public:
    * Probablility that a tree on A union B contains the Split A|B
    * defined as ((2|A|−3)!!·(2|B|−3)!!) / (2(|A|+|B|)−5)!!
    *
-   * @param a: |A|
-   * @param b: |B|
-   * @return: phylogenetic probability of A|B
+   * @param a |A|
+   * @param b |B|
+   * @return phylogenetic probability of A|B
    */
   inline static double phylogeneticProbability(size_t a, size_t b){
     assert(a + b <= PllSplit::getTipCount());
@@ -74,8 +74,8 @@ public:
    * Information content of the split Split A|B
    * defined as -1 * log_2(p), where p is the phylogenetic prob. of A|B
    *
-   * @param a: |A|
-   * @param b: |B|
+   * @param a |A|
+   * @param b |B|
    * @return information content of A|B
    */
   inline static double h(size_t a, size_t b) {
@@ -92,9 +92,8 @@ public:
    * defined as -log_2(p), where p is the phylogenetic prob. of the two splits
    * defined as (2(|A2|+ 1)−5)!!·(2(|B1|+ 1)−5)!!·(2(|A1|−|A2|+ 2)−5)!!) / (2(|A1|+|B1|)−5)!!
    * partitions are labelled such that  A2 intersect B2 =  empty set
-   * @param a: |A1|
-   * @param b: |B2|
-   * @param
+   * @param a |A1|
+   * @param b |B2|
    * @return Shared information content of splits A1|B1 and A2|B2
    */
 
@@ -111,10 +110,10 @@ public:
 
   /**
    * Clustering probability for taxa to belong to A in a split A|B
-   * defined as |A|/(|A|+|B|)    |A|+|B| = N 
+   * defined as |A|/(|A|+|B|)    |A|+|B| = N
    *
-   * @param a: |A|
-   * @return: Clustering probability for A
+   * @param a |A|
+   * @return Clustering probability for A
    */
   inline static double clusteringProbability(size_t a) {
     return static_cast<double>(a) / static_cast<double>(PllSplit::getTipCount());
@@ -122,13 +121,14 @@ public:
 
 
   /**
-   * Calculates log[p_intersect / (p_1 * p_2)]. Since p_intersect = |intersect| / N; p_1 = |a1| / N; p_2 = |a2| / N 
-   * this equation simplifies to log(|intersect| * N / |a_1| / |a_2|) => log(|intersect|) + log(N) - log(|a1|) - log(|a2|) 
+   * Calculates log[p_intersect / (p_1 * p_2)]. Since p_intersect = |intersect| / N; p_1 = |a1| / N; p_2 = |a2| / N
+   * this equation simplifies to
+   * log(|intersect| * N / |a_1| / |a_2|) => log(|intersect|) + log(N) - log(|a1|) - log(|a2|)
    *
-   * @param a1: |A1| the amount of taxa in split 1
-   * @param a2: |A2| the amount of taxa in split 2
-   * @param intersectsize: |A1 intersect A2| the amount of taxa in both split 1 and 2
-   * @return: log[p_intersect / (p_1 * p_2)]. (Needed for MCI)
+   * @param a1 |A1| the amount of taxa in split 1
+   * @param a2 |A2| the amount of taxa in split 2
+   * @param intersectsize |A1 intersect A2| the amount of taxa in both split 1 and 2
+   * @return log[p_intersect / (p_1 * p_2)]. (Needed for MCI)
    */
   inline static double clusteringProbability(size_t intersectsize, size_t a1, size_t a2) {
     assert(intersectsize > 0 && a1 > 0 && a2 > 0);
@@ -144,9 +144,9 @@ public:
    * −PCl(A)*log(PCl(A))−PCl(B)*log(PCl(B))
    * where PCl is the clustering probability
    *
-   * @param a: |A|
-   * @param b: |B|
-   * @return: Entropy for A|B
+   * @param a |A|
+   * @param b |B|
+   * @return Entropy for A|B
    */
   inline static double entropy(size_t a, size_t b) {
     if (a == 0 || b == 0) return 0;

@@ -49,20 +49,20 @@ public:
   /**
    * Gives the size of the partition of the PllSplit represented by 1 or 0 resp.
    *
-   * @param block: partition (1 or 0)
-   * @return: size of the partition
+   * @param block Partition (1 or 0)
+   * @return Size of the partition
    */
   size_t partitionSizeOf (partition_t block) const {
     return block ? size_block_A : size_block_B;
   }
 
   /**
-   * @return: The information content of the PllSplit (see Phylomath for details)
+   * @return The information content of the PllSplit (see Phylomath for details)
    */
   double h() const {return h_value;}
 
   /**
-   * @return: The entropy of the PllSplit (see Phylomath for details)
+   * @return The entropy of the PllSplit (see Phylomath for details)
    */
   double entropy() const {return entropy_value;}
 
@@ -70,13 +70,13 @@ public:
    * Determines the size of the intersection of the 1-partition of this PllSplit
    * and the 1-partition of the provided PllSplit
    *
-   * @param other: split to intersect this PllSplit with
-   * @return: size of the intersection
+   * @param other Split to intersect this PllSplit with
+   * @return size of the intersection
    */
   size_t intersectionSize(const PllSplit& other) const;
 
   /**
-   * @return: A string representation for the PllSplit
+   * @return A string representation for the PllSplit
    */
   std::string toString() const;
 
@@ -85,7 +85,7 @@ public:
    * Globally sets the tip count for all PllSplits and updates other values
    * depending on the tip count
    *
-   * @param val: The new tip count
+   * @param val The new tip count
    */
   static void setTipCount(size_t val) {
     PllSplit::tip_count = val;
@@ -104,14 +104,14 @@ public:
   }
 
   /**
-   * @return: Global Tip Count
+   * @return Global Tip Count
    */
   static size_t getTipCount() {
     return PllSplit::tip_count;
   }
 
   /**
-   * @return: The number of registers required to store the PllSplit
+   * @return The number of registers required to store the PllSplit
    */
   static size_t getSplitLen() {
     return PllSplit::split_len;
@@ -145,14 +145,14 @@ public:
   /**
    * Creates a split list representing the given tree
    *
-   * @param tree: Tree for which a split list is to be created
+   * @param tree Tree for which a split list is to be created
    */
   explicit PllSplitList(const PllTree &tree);
 
   /**
    * Creates a split list from the provided vector of splits
    *
-   * @param splits: splits to encapsulate in a SplitList
+   * @param splits splits to encapsulate in a SplitList
    */
   explicit PllSplitList(const std::vector<size_t> &splits);
 
@@ -210,15 +210,15 @@ public:
   double getMaximumInformationContent() const {return maximum_information_content;}
 
   /**
-   * @return: A string representation for the PllSplitList
+   * @return A string representation for the PllSplitList
    */
   std::string toString() const;
 
   /**
    * Inserts a new PllSplit to the PllSplitList
    *
-   * @param split: The PllSplit to be inserted
-   * @param offset: The position where the PllSplit is to be inserted
+   * @param split The PllSplit to be inserted
+   * @param offset The position where the PllSplit is to be inserted
    *
    */
   void push(const PllSplit& split, size_t offset);

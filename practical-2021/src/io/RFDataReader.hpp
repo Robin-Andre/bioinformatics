@@ -79,7 +79,7 @@ private:
       }
       return std::stod(item);
   }
-  // @Softwipe unused function, needed if we want to test relative distances
+  // Needed if we want to test relative distances
   /*static float getRelativeDistanceFromString(const std::string &line) {
       std::istringstream iss (line);
       std::string item;

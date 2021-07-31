@@ -10,10 +10,7 @@
 #endif
 namespace io {
   /* This struct contains the relevant configurations neccessary to run the algorithm
-   * 
-   * 
-   * 
-   * 
+   *
    */
 struct Config {
   std::string input_file_path;

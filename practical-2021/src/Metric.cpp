@@ -5,3 +5,4 @@
  MSIMetric::~MSIMetric() {}
  SPIMetric::~SPIMetric() {}
  MCIMetric::~MCIMetric() {}
+ RFMetric::~RFMetric() {}

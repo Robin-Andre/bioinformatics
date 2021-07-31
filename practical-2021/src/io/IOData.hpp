@@ -84,56 +84,6 @@ struct IOData {
 	}
 
   private:
-	// parsing helpers
-	/* @Softwipe not used so commented
-	bool handle_pairwise_dst(size_t major,
-	                                 size_t minor,
-	                                 std::ifstream &stream,
-	                                 std::vector<double> &out) {
-		std::string regex_str = R"((\d+) (\d+): (\d+) (([0-9]*[.])?[0-9]+))";
-		const std::regex pairwise_regex(regex_str);
-		std::string curr_line;
-		std::smatch match;
-		// read line and match if successful
-		if (std::getline(stream, curr_line) && std::regex_search(curr_line, match, pairwise_regex)) {
-			if (match.size() <= 5) {
-				return false;
-			}
-			if (std::stoul(match[1]) != major || std::stoul(match[2]) != minor) {
-				return false;
-			}
-			out[major] = std::stod(match[4]);
-			return true;
-		}
-		return false;
-	}
-    */
-    //This method is private and not referenced. For @Softwipe it is commented
-    /*
-	bool parse_pairwise_file(const std::string &distances_path,
-	                                 size_t num_taxa,
-	                                 std::vector<std::vector<double>> &res) {
-		assert(res.empty());
-		std::ifstream pairwise_file(distances_path);
-		if (!pairwise_file.is_open()) {
-			return false;
-		}
-		// preallocate LOWER triangle matrix
-		for (size_t row = 0; row < num_taxa; ++row) {
-			res.emplace_back(row + 1);
-		}
-		// assume UPPER triangle matrix input
-		for (size_t expect_major = 0; expect_major < num_taxa - 1; ++expect_major) {
-			// loop over every entry
-			for (size_t expect_minor = expect_major + 1; expect_minor < num_taxa; ++expect_minor) {
-				if (!handle_pairwise_dst(
-				        expect_major, expect_minor, pairwise_file, res[expect_minor])) {
-					return false;
-				}
-			}
-		}
-		return true;
-	}*/
 
 	bool nearly_eq_floating(double a, double b) const {
 		auto absA = std::abs(a);

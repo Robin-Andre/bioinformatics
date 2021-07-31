@@ -31,9 +31,9 @@ public:
    * This sum is the arithmetic sum, not some other kind of sum that only
    * mathematicians have heard of.
    *
-   * @param trees: the trees for which distances are to be calculated
-   * @param metric: the desired metric (MSI, SPI, MCI)
-   * @param mode: gives whether (not normalized) similarities, absolute or relative  distances
+   * @param trees The trees for which distances are to be calculated
+   * @param metric The desired metric (MSI, SPI, MCI)
+   * @param mode Gives whether (not normalized) similarities, absolute or relative  distances
    *    are to be calculated
    * @return IOData struct containing the results of the calculation
    */
@@ -111,8 +111,8 @@ public:
   /**
    * Calculate n-to-n Robinson-Foulds distance
    *
-   * @param trees: the trees for which distances are to be calculated
-   * @param mode: gives whether absolute or relative distances are to be calculated
+   * @param trees The trees for which distances are to be calculated
+   * @param mode Gives whether absolute or relative distances are to be calculated
    * @return IOData struct containing the results of the calculation
    */
 
@@ -174,12 +174,12 @@ public:
    * Returns the absolute or relative distance of two trees represented by the provieded
    * split lists based on their similarity
    *
-   * @param l1: first split list
-   * @param l2: second split list
-   * @param similarity: the trees similarity
-   * @param mode: gives whether absolute or relative distances are to be calculated
-   * @param metric: the considered metric
-   * @return distance of the trees represented by the split lists
+   * @param l1 First split list
+   * @param l2 Second split list
+   * @param similarity The trees similarity
+   * @param mode Gives whether absolute or relative distances are to be calculated
+   * @param metric The considered metric
+   * @return Distance of the trees represented by the split lists
    */
 
   static double distanceFromSimilarity( const PllSplitList& l1,
@@ -198,10 +198,10 @@ public:
    * Writes the pairwise similarities for all splits in the provided split lists
    * into the provieded result vector
    *
-   * @param l1: first split list
-   * @param l2: second split list
-   * @param cache: SimilarityCache holding the pairwise values for all splits
-   * @param result: similarities are written in that vector
+   * @param l1 First split list
+   * @param l2 Second split list
+   * @param cache SimilarityCache holding the pairwise values for all splits
+   * @param result Similarities are written in that vector
    */
 
   static void similaritiesForSplits(const PllSplitList& l1, const PllSplitList& l2, const SimilarityCache& cache,

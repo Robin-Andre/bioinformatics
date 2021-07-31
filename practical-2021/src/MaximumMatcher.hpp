@@ -13,7 +13,7 @@ public:
   /**
    * Determines a maximum matching for a bipartite graph with the provided weights
    *
-   * @param weights: edge weights for the bipartite graph
+   * @param weights Edge weights for the bipartite graph
    * @return permutation coresponding a maximum matching
    */
 
@@ -40,7 +40,7 @@ public:
    * Determines the weight a maximum matching for a bipartite
    * graph with the provided weights
    *
-   * @param weights: edge weights for the bipartite graph
+   * @param weights Edge weights for the bipartite graph
    * @return weight of a maximum matching
    */
 
@@ -58,7 +58,7 @@ private:
   /**
    * Rescales the weights to make them proper for ortools linear solver
    *
-   * @param weights: weights to be converted
+   * @param weight Weight to be converted
    * @return converted weights
    */
 

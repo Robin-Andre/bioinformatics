@@ -17,7 +17,7 @@ public:
   /**
   * Converts a (symmetric) square matrix in an upper triangle matrix (with diagonal)
   *
-  * @param full: square matrix
+  * @param full square matrix
   * @return triangle matrix
   */
 static std::vector<std::vector<double>> fullMatrixToHalfMatrix(const std::vector<std::vector<double>>& full) {
@@ -36,7 +36,7 @@ static std::vector<std::vector<double>> fullMatrixToHalfMatrix(const std::vector
 /**
 * Converts an upper triangle matrix (with diagonal) into a (symmetric) square matrix
 *
-* @param half: triangle matrix
+* @param half triangle matrix
 * @return square matrix
 */
 static std::vector<std::vector<double>> halfMatrixToFullMatrix(const std::vector<std::vector<double>>& half) {
@@ -57,7 +57,7 @@ static std::vector<std::vector<double>> halfMatrixToFullMatrix(const std::vector
 
 /**
 *
-* @param matrix: square matrix containing the tree distances
+* @param matrix square matrix containing the tree distances
 * @return unique count for the corresponding set of trees
 */
 static size_t calculateUniqueCount(const std::vector<std::vector<double>>& matrix) {
@@ -79,7 +79,7 @@ static size_t calculateUniqueCount(const std::vector<std::vector<double>>& matri
 * Converts an linear representation of a triangle matrix (without diagonal)
 * into a 2-dimensional representation of an upper triangle matrix (with diagonal)
 *
-* @param full: triangle matrix, linear representation
+* @param distances triangle matrix, linear representation
 * @return triangle matrix, 2-dimensional representation
 */
 static std::vector<std::vector<double>> vectorToHalfMatrix(const std::vector<double>& distances, size_t tree_count) {
@@ -100,7 +100,7 @@ static std::vector<std::vector<double>> vectorToHalfMatrix(const std::vector<dou
 
 /**
 *
-* @param matrix: upper triangle matrix containing the tree distances
+* @param half upper triangle matrix containing the tree distances
 * @return average distance
 */
 static double calculateAverageDistance(const std::vector<std::vector<double>>& half) {

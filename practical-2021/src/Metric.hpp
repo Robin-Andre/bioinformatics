@@ -18,8 +18,8 @@ class Metric {
     /**
     * maximum value two trees can admit in this metric
     *
-    * @param l1: split list representing the first tree
-    * @param l2: split list representing the second tree
+    * @param l1 Split list representing the first tree
+    * @param l2 Split list representing the second tree
     * @return maximum possible value
     */
     virtual double maximum(const PllSplitList& l1, const PllSplitList& l2) const = 0;
@@ -38,9 +38,9 @@ public:
   /**
   * Evaluate the metric for a pair of splits
   *
-  * @param pos1: position fo the first split in the pointer map
-  * @param pos2: position fo the second split in the pointer map
-  * @param map: pointer map storing the splits
+  * @param pos1 Position fo the first split in the pointer map
+  * @param pos2 Position fo the second split in the pointer map
+  * @param map Pointer map storing the splits
   * @return value for the splits in the metric
   */
   virtual double evaluate(const PllPosition& pos1, const PllPosition& pos2, const UniquePllMap& map) const = 0;
@@ -195,7 +195,8 @@ class MCIMetric : public GeneralizedMetric {
       assert(intersection_size > 0);
       //TODO most of this could be cached
       double pcl = phylomath::clusteringProbability(intersection_size);
-      return pcl * phylomath::clusteringProbability(intersection_size, size_of_partition_block1, size_of_partition_block2);
+      return pcl * phylomath::clusteringProbability(intersection_size,
+          size_of_partition_block1, size_of_partition_block2);
     }
 
 };
@@ -242,5 +243,7 @@ public:
   virtual std::string name() const override {
     return "RF";
   }
+
+  virtual ~RFMetric() override;
 
 };
