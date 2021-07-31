@@ -34,15 +34,15 @@ The software was compiled via installation guide using g++ 10.3. The TreeDist R 
 
 The experiments have been run on the first 10/100 trees of the dataset for each of the three new metrics respectively. 
 
-<img align="left" width="420" src="https://github.com/Robin-Andre/bioinformatics/blob/main/practical-2021/plots_python/output/reference_comparisonMSI_10_trees.png">
-<img align="left" width="420" src="https://github.com/Robin-Andre/bioinformatics/blob/main/practical-2021/plots_python/output/reference_comparisonMSI_100_trees.png">
+<img align="left" width="47%" src="https://github.com/Robin-Andre/bioinformatics/blob/main/practical-2021/plots_python/output/reference_comparisonMSI_10_trees.png">
+<img align="left" width="47%" src="https://github.com/Robin-Andre/bioinformatics/blob/main/practical-2021/plots_python/output/reference_comparisonMSI_100_trees.png">
 
-<img align="left" width="420" src="https://github.com/Robin-Andre/bioinformatics/blob/main/practical-2021/plots_python/output/reference_comparisonSPI_10_trees.png">
-<img align="left" width="420" src="https://github.com/Robin-Andre/bioinformatics/blob/main/practical-2021/plots_python/output/reference_comparisonSPI_100_trees.png">
+<img align="left" width="47%" src="https://github.com/Robin-Andre/bioinformatics/blob/main/practical-2021/plots_python/output/reference_comparisonSPI_10_trees.png">
+<img align="left" width="47%" src="https://github.com/Robin-Andre/bioinformatics/blob/main/practical-2021/plots_python/output/reference_comparisonSPI_100_trees.png">
 
 
-<img align="left" width="420" src="https://github.com/Robin-Andre/bioinformatics/blob/main/practical-2021/plots_python/output/reference_comparisonMCI_10_trees.png">
-<img align="left" width="420" src="https://github.com/Robin-Andre/bioinformatics/blob/main/practical-2021/plots_python/output/reference_comparisonMCI_100_trees.png">
+<img align="left" width="47%" src="https://github.com/Robin-Andre/bioinformatics/blob/main/practical-2021/plots_python/output/reference_comparisonMCI_10_trees.png">
+<img align="left" width="47%" src="https://github.com/Robin-Andre/bioinformatics/blob/main/practical-2021/plots_python/output/reference_comparisonMCI_100_trees.png">
 
 
 
