@@ -32,6 +32,7 @@ The binary file will be located in the folder `bin/`
 - (mandatory) -i *path_to_file* specifies a path to a file with phylogenetic trees in the [Newick format](https://en.wikipedia.org/wiki/Newick_format)
 - (optional) -o *path_to_file* specifies an output path. Two files will be written an output and an info file.
 - (mandatory) -m (MSI/SPI/MCI/RF) specifies the metric for evaluation
+- (optional) -n (A) (default) (R/S) specifies the normalization method of either absolute, relative or similarity normalization.
 
 ### Example Calls
  To run an example call just copy and paste the following code in the `bin/` folder.
@@ -41,8 +42,22 @@ The binary file will be located in the folder `bin/`
  `./rfdist -i ../test/res/data/heads/24 -m MCI -o ../foo/` with output files
 
 ## Code Quality
-TODO SOFTWIPE SCORE
+We used [Softwipe](https://github.com/adrianzap/softwipe) for code quality assessment. 
 
+
+| Criteria        | Score         | 
+| :------------- |:-------------:|
+| Compiler + Sanitizer Score | 10.0/10|
+|Assertion Score| 10.0/10|
+|Clang-tidy Score|10.0/10|
+|Cppcheck Score|9.7/10|
+|Cyclomatic Complexity Score|9.1/10|
+|*Unique Score*|*0.0/10*| 
+|KWStyle Score|10.0/10|
+|TestCount Score| 10.0/10|
+|**Overall score**| **8.8/10**|
+
+The version of softwipe seemed to have a bugged Unique Code calculation. 
 ## Experimental Results
 The Experiments have been performed on Ubuntu 20.04 with a AMD Ryzen 5 2500U Radeon Vega Mobile Gfx @2.0Ghz and L1 128KiB, L2 2MiB, L3 4 MiB, 8GB RAM
 The software was compiled via installation guide using g++ 10.3. The TreeDist R Package was installed via the R installer. The dataset can be found [here](https://cme.h-its.org/exelixis/resource/download/software/data.tbz).
