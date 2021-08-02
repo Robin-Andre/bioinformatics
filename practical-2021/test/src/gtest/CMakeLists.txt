@@ -32,7 +32,7 @@ if(ENABLE_TESTS)
   #-Wundef errors in softwipe which are 
   target_link_libraries(${TEST_EXE_NAME} gtest_main)
   #gtest now requires gmp 
-  target_link_libraries(${TEST_EXE_NAME} gmp :libgmp.a)
+  target_link_libraries(${TEST_EXE_NAME} gmp)
   #gtest also requires json_lib
   #target_link_libraries(${TEST_EXE_NAME} json_lib)
   #Linking the entire project might be a bit overkill but the test cases need a link to the classes somewhere
